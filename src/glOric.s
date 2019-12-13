@@ -180,7 +180,7 @@ doprojloop:
 //  	}
     dex
     bpl doprojloop   ;; FIXME : does not allows more than 127 points
-doprojdone:
+dofastprojdone:
 //  }
 .)
     rts
@@ -253,7 +253,7 @@ _project:
     sta _AngleH
 
     // Norm = norm (DeltaX, DeltaY)
-    jsr fastnorm
+    jsr ultrafastnorm ;fastnorm
 
    	// DeltaZ = CamPosZ - PointZ
 	sec

@@ -27,7 +27,7 @@ extern char points2d[];
 
 
 const char sentence[] = "MERCI RENE";
-;
+
 void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigned char nSeg, char offsetPos){
 	unsigned char jj;
 	for (jj=0; jj < nPoint; jj++){
@@ -112,6 +112,12 @@ void drawSegments(){
 	}
 }
 */
+char status_string[50];
+void dispInfo(){
+		sprintf(status_string,"(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+		AdvancedPrint(2,1,status_string);
+
+}
 
 void forward() {
 	if (-112 >= CamRotZ) {
@@ -249,12 +255,6 @@ void gameLoop() {
 	}
 }
 
-char status_string[50];
-void dispInfo(){
-		sprintf(status_string,"(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
-		AdvancedPrint(2,1,status_string);
-
-}
 
 void intro (){
     int i;
