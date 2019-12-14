@@ -6,6 +6,16 @@
 #include "externs.c"
 #include "alphabet.c"
 
+
+//
+// ===== Display.s =====
+//
+extern unsigned char CurrentPixelX;             // Coordinate X of edited pixel/byte
+extern unsigned char CurrentPixelY;             // Coordinate Y of edited pixel/byte
+
+extern unsigned char OtherPixelX;               // Coordinate X of other edited pixel/byte
+extern unsigned char OtherPixelY;               // Coordinate Y of other edited pixel/byte
+
  // Camera Position
 extern int CamPosX;
 extern int CamPosY;
@@ -333,12 +343,8 @@ void intro (){
     leaveSC();
 }
 
-void main()
-{
 
-	char * adrN, *adrSquare;
-    int i, j;
-    //cls();
+void textDemo(){
 	text();
     //kernelInit();
 	initBuffers();
@@ -364,7 +370,114 @@ void main()
    
  	gameLoop();
     
+
+}
+
+
+
+void hrDrawSegments(){
+	unsigned char ii = 0;
+	unsigned char idxPt1, idxPt2;
+	for (ii = 0; ii< nbSegments; ii++){
+
+		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
+		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
+		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
+        
+		
+        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
+        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
+        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
+        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 1];
+		if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
+			DrawLine8();
+		}
+	}
+}
+void hrIntro (){
+    int i;
 	
+    enterSC();
+
+
+	CamPosX = -15;
+	CamPosY = -85;
+	CamPosZ = 2;
+
+ 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = -4;
+
+    for (i=0;i<40;i++,
+			CamPosX=(i%4==0)?CamPosX+1:CamPosX, 
+			CamPosY+=2,
+			CamRotZ-=1,
+			CamRotX=(i%2==0)?CamRotX+1:CamRotX
+		) {
+
+        doFastProjection();
+        hires(); //cls() ; //gotoxy(26, 40);
+		hrDrawSegments();
+ 		//dispInfo();
+    }
+	CamPosX = -5;
+	CamPosY = -5;
+	CamPosZ = 2;
+	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 16;
+	
+    for (i=0;i<72;i++,CamPosX++) {
+        
+        doFastProjection();             // 25  s => 20s         => 15s
+        hires();//cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
+		hrDrawSegments();             // 11.5 s  => 34s (11s)
+		//dispInfo();
+    }
+  	
+	leaveSC();
+
+}
+void main()
+{
+
+	char * adrN, *adrSquare;
+    int i, j;
+
+	//textDemo();
+
+	GenerateTables();
+    hires();
+	initBuffers();
+	
+ // Camera Position
+	CamPosX = -14;
+	CamPosY = -87;
+	CamPosZ = 2;
+
+ // Camera Orientation
+	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 0;
+	
+	doFastProjection();
+	hrDrawSegments();
+	hrIntro();
+    //for (i=0;i<239;i++)
+    //{
+    //    OtherPixelX=i;
+    //    OtherPixelY=0;
+    //    CurrentPixelX=239-i;
+    //    CurrentPixelY=199;
+    //    DrawLine8();
+    //}
+    //for (i=198;i>=0;i--)
+    //{
+    //    OtherPixelX=0;
+    //    OtherPixelY=i;
+    //    CurrentPixelX=239;
+    //    CurrentPixelY=199-i;
+    //    DrawLine8();
+    //}
+
+
     // TEST OF FAST ATAN2
 	/*
 	tx=-16; ty=-1; res=0; fastatan2(); printf("ERR atan(%d, %d)= %d\n",tx,ty,res);

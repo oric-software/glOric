@@ -195,8 +195,8 @@ _PointZ:		.dsb 2
 
 
  // Point 2D Projected Coordinates
-_ResX:			.dsb 1			// -128 -> -127
-_ResY:			.dsb 1			// -128 -> -127
+_ResX:			.dsb 1			// -128 -> 127
+_ResY:			.dsb 1			// -128 -> 127
 
  // Intermediary Computation
 _DeltaX:		.dsb 2
@@ -285,7 +285,7 @@ _project:
     sbc _CamRotX
     sta AnglePV
 
-
+#ifdef TEXTMODE
 	// Quick Disgusting Hack
 	lda AnglePH
 	eor #$FF
@@ -306,6 +306,27 @@ _project:
 	clc
     adc #SCREEN_HEIGHT/2
 	sta _ResY
+#else
+	lda AnglePH
+	eor #$FF
+	sec
+	adc #$00
+	asl
+	asl
+	clc
+    adc #120 ; 240/2 = WIDTH/2
+	sta _ResX
+
+	lda AnglePV
+	eor #$FF
+	sec
+	adc #$00
+	asl
+	asl
+	adc #100 ; = 200 /2 SCREEN_HEIGHT/2
+	sta _ResY
+
+#endif
 
 
 //  ; http://nparker.llx.com/a2/mult.html
