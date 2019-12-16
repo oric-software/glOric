@@ -1,20 +1,19 @@
-
-#define X_SIZE      240
-#define Y_SIZE      200
-#define ROW_SIZE    X_SIZE/6
-
-    .dsb 256-(*&255)
-
-_HiresAddrLow           .dsb Y_SIZE
+; http://miniserve.defence-force.org/svn/public/oric/routines/rasterization/linebench/
+#include "config.h"
+#define ROW_SIZE    SCREEN_WIDTH/6
 
     .dsb 256-(*&255)
 
-_HiresAddrHigh          .dsb Y_SIZE
+_HiresAddrLow           .dsb SCREEN_HEIGHT
+
+    .dsb 256-(*&255)
+
+_HiresAddrHigh          .dsb SCREEN_HEIGHT
 
     .dsb 256-(*&255)
 
     .byt 0
-_TableDiv6              .dsb X_SIZE
+_TableDiv6              .dsb SCREEN_WIDTH
 
     .dsb 256-(*&255)
 
@@ -137,7 +136,7 @@ loop
     sta tmp0+1
 
     inx
-    cpx #Y_SIZE
+    cpx #SCREEN_HEIGHT
     bne loop
 .)
 
@@ -157,7 +156,7 @@ loop
 skip_mod
 
     inx
-    cpx #X_SIZE
+    cpx #SCREEN_WIDTH
     bne loop
 .)
 .)

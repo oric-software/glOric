@@ -219,7 +219,7 @@ void gameLoop() {
 
 	char key;
 	key=get();
-	doProjection();
+	doFastProjection();
 
     while (1==1) {
 		cls(); gotoxy(26, 40);//clearScreen();
@@ -261,7 +261,7 @@ void gameLoop() {
 			shiftRight();
 			break;
 		}
-		doProjection();
+		doFastProjection();
 	}
 }
 
@@ -278,6 +278,11 @@ void intro (){
 
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = -4;
+    
+    
+    doFastProjection();
+    cls() ; //gotoxy(26, 40);
+    drawSegments();
 
     for (i=0;i<40;i++,
 			CamPosX=(i%4==0)?CamPosX+1:CamPosX, 
@@ -365,7 +370,7 @@ void textDemo(){
 	gotoxy(26, 40);
 	
 	
-
+    get ();
     intro ();
    
  	gameLoop();
@@ -425,7 +430,7 @@ void hrIntro (){
 	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 16;
 	
-    for (i=0;i<72;i++,CamPosX++) {
+    for (i=0;i<40;i++,CamPosX++) {
         
         doFastProjection();             // 25  s => 20s         => 15s
         hires();//cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
@@ -436,14 +441,7 @@ void hrIntro (){
 	leaveSC();
 
 }
-void main()
-{
-
-	char * adrN, *adrSquare;
-    int i, j;
-
-	//textDemo();
-
+void hiresDemo(){
 	GenerateTables();
     hires();
 	initBuffers();
@@ -460,23 +458,34 @@ void main()
 	doFastProjection();
 	hrDrawSegments();
 	hrIntro();
-    //for (i=0;i<239;i++)
-    //{
-    //    OtherPixelX=i;
-    //    OtherPixelY=0;
-    //    CurrentPixelX=239-i;
-    //    CurrentPixelY=199;
-    //    DrawLine8();
-    //}
-    //for (i=198;i>=0;i--)
-    //{
-    //    OtherPixelX=0;
-    //    OtherPixelY=i;
-    //    CurrentPixelX=239;
-    //    CurrentPixelY=199-i;
-    //    DrawLine8();
-    //}
 
+}
+
+int proto (unsigned char nbPoints, char *tabpoint3D, char *tabpoint2D){
+	int local_var;
+	local_var = nbPoints+1;
+	
+	return local_var;
+}
+char tab1[]={1, 2};
+
+char tab2[]={3, 4};
+
+void main()
+{
+
+	char * adrN, *adrSquare;
+    int i, j;
+#ifdef TEXTMODE
+	textDemo();
+#else
+	hiresDemo();
+#endif
+	//i=12;
+	//j= proto(i, tab1, tab2);
+	
+	
+	
 
     // TEST OF FAST ATAN2
 	/*

@@ -5,6 +5,6 @@
 
 #define SIZEOF_SEGMENT 4
 
-#define SIZEOF_2DPOINT 2
+#define SIZEOF_2DPOINT 4
 
 #endif
