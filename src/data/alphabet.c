@@ -1,4 +1,32 @@
 
+#define CUBE_SIZE	4
+#define NB_POINTS_CUBE		8
+#define NB_SEGMENTS_CUBE 	12
+const char ptsCube[]={
+	 -CUBE_SIZE, -CUBE_SIZE, +CUBE_SIZE, 0 // P0
+	,-CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE, 0 // P1
+	,+CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE, 0 // P2
+	,+CUBE_SIZE, -CUBE_SIZE, +CUBE_SIZE, 0 // P3
+	,-CUBE_SIZE, +CUBE_SIZE, +CUBE_SIZE, 0 // P4
+	,-CUBE_SIZE, +CUBE_SIZE, -CUBE_SIZE, 0 // P5
+	,+CUBE_SIZE, +CUBE_SIZE, -CUBE_SIZE, 0 // P6
+	,+CUBE_SIZE, +CUBE_SIZE, +CUBE_SIZE, 0 // P7
+};
+const char segCube[]={		
+	  0, 1, 124, 0 //124, 0
+	, 1, 2, 45 , 0 //92, 0
+	, 2, 3, 124, 0 //47, 0
+	, 3, 0, 45 , 0 //124, 0
+	, 4, 5, 124, 0 //124, 0
+	, 5, 6, 45 , 0 //124, 0
+	, 6, 7, 124, 0 //92, 0
+	, 7, 4, 45 , 0 //47, 0
+	, 0, 4, 45 , 0 //124, 0
+	, 1, 5, 45 , 0 //124, 0
+	, 2, 6, 45 , 0 //124, 0
+	, 3, 7, 45 , 0 //124, 0
+};
+
 
 #define NB_POINTS_M		5
 #define NB_SEGMENTS_M 	4

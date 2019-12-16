@@ -5,7 +5,7 @@
 
 #include "externs.c"
 #include "alphabet.c"
-
+#include "traj.c"
 
 //
 // ===== Display.s =====
@@ -76,6 +76,23 @@ void initBuffers(){
 		ii++;
 	}
 }
+
+void addCube(char X, char Y, char Z){
+	unsigned char ii, jj;
+	for (jj=0; jj < NB_POINTS_CUBE; jj++){
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
+		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
+	}
+	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1 
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
+	}
+	nbPoints += NB_POINTS_CUBE; 
+	nbSegments += NB_SEGMENTS_CUBE;
+}
+
 void test_atan2() {
 
 tx=0; ty=0; res=0; atan2_8();if (res!=0) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
@@ -124,9 +141,13 @@ void drawSegments(){
 */
 char status_string[50];
 void dispInfo(){
+#ifdef TEXTMODE
 		sprintf(status_string,"(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
 		AdvancedPrint(2,1,status_string);
-
+#else
+	printf("\nMike 8bit: ");
+	printf ("(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+#endif
 }
 
 void forward() {
@@ -215,6 +236,27 @@ void shiftRight() {
 	}
 	
 }
+
+void hrDrawSegments(){
+	unsigned char ii = 0;
+	unsigned char idxPt1, idxPt2;
+	for (ii = 0; ii< nbSegments; ii++){
+
+		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
+		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
+		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
+        
+		
+        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
+        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
+        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
+        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 1];
+		if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
+			DrawLine8();
+		}
+	}
+}
+
 void gameLoop() {
 
 	char key;
@@ -222,9 +264,14 @@ void gameLoop() {
 	doFastProjection();
 
     while (1==1) {
+#ifdef TEXTMODE
 		cls(); gotoxy(26, 40);//clearScreen();
 		drawSegments();
 		dispInfo();
+#else
+		hires();
+		hrDrawSegments();
+#endif
 
 		key=get();
 		switch (key)	// key
@@ -380,85 +427,60 @@ void textDemo(){
 
 
 
-void hrDrawSegments(){
-	unsigned char ii = 0;
-	unsigned char idxPt1, idxPt2;
-	for (ii = 0; ii< nbSegments; ii++){
-
-		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
-		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-        
-		
-        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
-        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 1];
-		if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
-			DrawLine8();
-		}
-	}
-}
 void hrIntro (){
     int i;
 	
     enterSC();
 
 
-	CamPosX = -15;
-	CamPosY = -85;
-	CamPosZ = 2;
+	CamPosX = -24;
+	CamPosY = 0;
+	CamPosZ = 3;
 
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = -4;
+	CamRotX = 2;
 
-    for (i=0;i<40;i++,
-			CamPosX=(i%4==0)?CamPosX+1:CamPosX, 
-			CamPosY+=2,
-			CamRotZ-=1,
-			CamRotX=(i%2==0)?CamRotX+1:CamRotX
-		) {
-
+    for (i=0;i<120;) {
+		CamPosX = traj[i++];
+		CamPosY = traj[i++];
+		CamRotZ = traj[i++];
+		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         doFastProjection();
         hires(); //cls() ; //gotoxy(26, 40);
 		hrDrawSegments();
  		//dispInfo();
     }
-	CamPosX = -5;
-	CamPosY = -5;
-	CamPosZ = 2;
-	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = 16;
+
 	
-    for (i=0;i<40;i++,CamPosX++) {
-        
-        doFastProjection();             // 25  s => 20s         => 15s
-        hires();//cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
-		hrDrawSegments();             // 11.5 s  => 34s (11s)
-		//dispInfo();
-    }
   	
 	leaveSC();
 
 }
 void hiresDemo(){
 	GenerateTables();
+	nbPoints =0 ;
+		
     hires();
-	initBuffers();
-	
- // Camera Position
-	CamPosX = -14;
-	CamPosY = -87;
-	CamPosZ = 2;
 
- // Camera Orientation
-	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-	CamRotX = 0;
+ 
+	nbSegments =0 ;
+	addCube(-4, -4, 2);
+	addCube(4, 4, 10);
 	
-	doFastProjection();
-	hrDrawSegments();
 	hrIntro();
+	
+	CamPosX = -20;
+	CamPosY = -20;
+	CamPosZ = 2;
+	CamRotZ = 32 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 3;
+	shiftRight();
+	shiftRight();
+	doFastProjection();
+	hires(); //cls() ; //gotoxy(26, 40);
+	hrDrawSegments();
 
+	gameLoop();
 }
 
 int proto (unsigned char nbPoints, char *tabpoint3D, char *tabpoint2D){
