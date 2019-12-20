@@ -207,9 +207,92 @@ tMultSqrt2m1
 	
 	
 .text
-hyperfastnorm:
+_hyperfastnorm:
 .(
+    lda _DeltaX
+    lda _DeltaY
+	sta _Norm
+
+//  IF DX == 0 THEN
+    lda _DeltaX
+	bne dxNotNull
+//    IF DY > 0 THEN
+		lda _DeltaY
+		bmi dyNegativ_01
+//      RETURN DY
+		sta _Norm
+		jmp hfndone
+dyNegativ_01
+//    ELSE
+//      RETURN -DY
+		eor $#FF
+		sec
+		adc #$00
+		sta _Norm
+		jmp hfndone
+dxNotNull
+//  ELSE IF DX > 0 THEN
+	bmi dxNegativ_01
+//    AX = DX
+		sta absX
+		jmp computeAbsY
+dxNegativ_01
+//  ELSE (DX < 0)
+//    AX = -DX
+		eor $#FF
+		sec
+		adc #$00
+		sta absX
+//  ENDIF
+computeAbsY
+//  IF DY == 0 THEN
+	lda _DeltaY
+	bne dyNotNull
+//    RETURN AX
+		lda absX
+		sta _Norm
+		jmp hfndone
+dyNotNull
+//  ELSE IF DY > 0 THEN
+	bmi dyNegativ_02
+//    AY = DY
+		sta absY
+		jmp sortAbsVal
+dyNegativ_02
+//  ELSE (DY < 0)
+		eor #$FF
+		sec
+		adc #$00
+		sta absY
+//    AY = -DY
+//  ENDIF
+sortAbsVal
+//  IF AX > AY THEN
+	cmp absX
+	bcs ayOverOrEqualAx
+//    TY = AY
+		tay
+//    TX = AX
+		lda absX
+		tax
+		jmp approxim
+ayOverOrEqualAx
+//  ELSE
+//    TX = AY
+		tax
+//    TY = AX
+		lda absX
+		tay
+//  END
+approxim
+//  IF TY >= TX/2 THEN
+//    RETURN TAB_C[TX] + TAB_D[TY]
+//  ELSE (TX < TY)
+//    RETURN TAB_A[TX] + TAB_B[TY]
+//  END IF
+//  	
 	
+hfndone
 .)
   rts
 	

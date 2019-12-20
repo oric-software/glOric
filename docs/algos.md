@@ -287,6 +287,7 @@ plotLine(int x0, int y0, int x1, int y1)
 
 ## Algo de geometrie
 
+
 ### Norme euclidienne
 ```
 IF DX == 0 THEN
@@ -300,7 +301,7 @@ ELSE (DX < 0)
   AX = -DX
 ENDIF
 IF DY == 0 THEN
-  RETURN TX
+  RETURN AX
 ELSE IF DY > 0 THEN
   AY = DY
 ELSE (DY < 0)

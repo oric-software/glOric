@@ -46,11 +46,11 @@ void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigne
 		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = tPoint[jj*SIZEOF_3DPOINT + 2];                // Z coord
 	}
 	for (jj=0; jj < nSeg; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1 
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1
 		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = tSeg[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
 		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = tSeg[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
-	nbPoints += nPoint; 
+	nbPoints += nPoint;
 	nbSegments += nSeg;
 
 }
@@ -61,7 +61,7 @@ void initBuffers(){
 	unsigned char nPoint, nSeg;
 	const char *tPoint, *tSeg;
 	while((c=sentence[ii]) != 0) {
-		
+
 		switch (c) {
 			case 'M':addData(ptsM, NB_POINTS_M, segM, NB_SEGMENTS_M, ii);break;
 			case 'C':addData(ptsC, NB_POINTS_C, segC, NB_SEGMENTS_C, ii);break;
@@ -85,11 +85,11 @@ void addCube(char X, char Y, char Z){
 		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
 	}
 	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1 
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1
 		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
 		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
-	nbPoints += NB_POINTS_CUBE; 
+	nbPoints += NB_POINTS_CUBE;
 	nbSegments += NB_SEGMENTS_CUBE;
 }
 
@@ -103,9 +103,9 @@ tx=-1; ty=0; res=0; atan2_8();if (res!=-128) printf("ERR atan(%d, %d)= %d\n",tx,
 tx=1; ty=1; res=0; atan2_8();if (res!=32) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
 tx=-1; ty=1; res=0; atan2_8();if (res!=96) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
 tx=1; ty=-1; res=0; atan2_8();if (res!=-32) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
-tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);	        
-//#include "output.txt"                 
-             
+tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,ty,res);
+//#include "output.txt"
+
 }
 /*
 void doProjection(){
@@ -129,12 +129,12 @@ void drawSegments(){
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
 		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-        
+
 		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
 		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
 		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
 		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
-         
+
 		drawLine ();
 	}
 }
@@ -152,15 +152,15 @@ void dispInfo(){
 
 void forward() {
 	if (-112 >= CamRotZ) {
-		CamPosX--; 
+		CamPosX--;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
 		CamPosX--; CamPosY--;
 	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
 		CamPosY--;
 	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
 		CamPosX++; CamPosY--;
-	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
-		CamPosX++; 
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){
+		CamPosX++;
 	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
 		CamPosX++; CamPosY++;
 	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
@@ -173,15 +173,15 @@ void forward() {
 }
 void backward() {
 	if (-112 >= CamRotZ) {
-		CamPosX++; 
+		CamPosX++;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
 		CamPosX++; CamPosY++;
 	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
 		CamPosY++;
 	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
 		CamPosX--; CamPosY++;
-	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
-		CamPosX--; 
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){
+		CamPosX--;
 	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
 		CamPosX--; CamPosY--;
 	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
@@ -189,21 +189,21 @@ void backward() {
 	} else if ((  80 < CamRotZ) && (112 >= CamRotZ)){
 		CamPosX++; CamPosY--;
 	} else {
-		CamPosX++; 
+		CamPosX++;
 	}
-	
+
 }
 void shiftLeft() {
 	if (-112 >= CamRotZ) {
-		CamPosY--; 
+		CamPosY--;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
 		CamPosX++; CamPosY--;
 	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
 		CamPosX--;
 	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
 		CamPosX++; CamPosY++;
-	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
-		CamPosY++; 
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){
+		CamPosY++;
 	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
 		CamPosX--; CamPosY++;
 	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
@@ -216,15 +216,15 @@ void shiftLeft() {
 }
 void shiftRight() {
 	if (-112 >= CamRotZ) {
-		CamPosY++; 
+		CamPosY++;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
 		CamPosX--; CamPosY++;
 	} else if (( -80 < CamRotZ) && (-48 >= CamRotZ)){
 		CamPosX++;
 	} else if (( -48 < CamRotZ) && (-16 >= CamRotZ)){
 		CamPosX--; CamPosY--;
-	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){		
-		CamPosY--; 
+	} else if (( -16 < CamRotZ) && ( 16 >= CamRotZ)){
+		CamPosY--;
 	} else if ((  16 < CamRotZ) && ( 48 >= CamRotZ)){
 		CamPosX++; CamPosY--;
 	} else if ((  48 < CamRotZ) && ( 80 >= CamRotZ)){
@@ -232,9 +232,9 @@ void shiftRight() {
 	} else if ((  80 < CamRotZ) && (112 >= CamRotZ)){
 		CamPosX++; CamPosY++;
 	} else {
-		CamPosX++; 
+		CamPosX++;
 	}
-	
+
 }
 
 void hrDrawSegments(){
@@ -245,8 +245,8 @@ void hrDrawSegments(){
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
 		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-        
-		
+
+
         OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
         OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
         CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
@@ -269,7 +269,7 @@ void gameLoop() {
 		drawSegments();
 		dispInfo();
 #else
-		hires();
+		hires(); // memset de 8000 octets en a000 avec la valeur 64
 		hrDrawSegments();
 #endif
 
@@ -315,7 +315,7 @@ void gameLoop() {
 
 void intro (){
     int i;
-	
+
     enterSC();
 
 
@@ -325,14 +325,14 @@ void intro (){
 
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = -4;
-    
-    
+
+
     doFastProjection();
     cls() ; //gotoxy(26, 40);
     drawSegments();
 
     for (i=0;i<40;i++,
-			CamPosX=(i%4==0)?CamPosX+1:CamPosX, 
+			CamPosX=(i%4==0)?CamPosX+1:CamPosX,
 			CamPosY+=2,
 			CamRotZ-=1,
 			CamRotX=(i%2==0)?CamRotX+1:CamRotX
@@ -343,21 +343,21 @@ void intro (){
 		drawSegments();
  		//dispInfo();
     }
-	
+
 	CamPosX = -5;
 	CamPosY = -5;
 	CamPosZ = 2;
 	CamRotZ = 24 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 16;
-	
+
     for (i=0;i<72;i++,CamPosX++) {
-        
+
         doFastProjection();             // 25  s => 20s         => 15s
         cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
 		drawSegments();             // 11.5 s  => 34s (11s)
 		//dispInfo();
     }
-    
+
     for (i=0;i<40;i++,CamPosX=(i%4==0)?CamPosX-1:CamPosX, CamRotX=(i%4==0)?CamRotX-1:CamRotX , CamPosY=(i%4==0)?CamPosY-1:CamPosY,  CamRotZ++) {
 
         doFastProjection();
@@ -373,7 +373,7 @@ void intro (){
 
 
     for (i=0;i<25;i++, CamPosX-=2) {
-		
+
         doFastProjection();
         cls() ; //gotoxy(26, 40);
 		drawSegments();
@@ -381,7 +381,7 @@ void intro (){
     }
 	CamRotZ-=1;
     for (i=0;i<11;i++, CamPosY-=2, CamRotZ-=3) {
-		
+
         doFastProjection();
         cls() ; //gotoxy(26, 40);
 		drawSegments();
@@ -400,7 +400,7 @@ void textDemo(){
 	text();
     //kernelInit();
 	initBuffers();
-	
+
  // Camera Position
 	CamPosX = -14;
 	CamPosY = -87;
@@ -409,19 +409,19 @@ void textDemo(){
  // Camera Orientation
 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 0;
-	
+
 	//get ();
-	
+
     clearScreen();
     //curset(36, 40, 0);
 	gotoxy(26, 40);
-	
-	
+
+
     get ();
     intro ();
-   
+
  	gameLoop();
-    
+
 
 }
 
@@ -429,7 +429,7 @@ void textDemo(){
 
 void hrIntro (){
     int i;
-	
+
     enterSC();
 
 
@@ -446,29 +446,29 @@ void hrIntro (){
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         doFastProjection();
-        hires(); //cls() ; //gotoxy(26, 40);
+        hires(); //memset de 8000 octets en a000 avec la valeur 64
 		hrDrawSegments();
  		//dispInfo();
     }
 
-	
-  	
+
+
 	leaveSC();
 
 }
 void hiresDemo(){
 	GenerateTables();
 	nbPoints =0 ;
-		
-    hires();
 
- 
+    hires(); // memset de 8000 octets en a000 avec la valeur 64
+
+
 	nbSegments =0 ;
 	addCube(-4, -4, 2);
 	addCube(4, 4, 10);
-	
+
 	hrIntro();
-	
+
 	CamPosX = -20;
 	CamPosY = -20;
 	CamPosZ = 2;
@@ -477,7 +477,7 @@ void hiresDemo(){
 	shiftRight();
 	shiftRight();
 	doFastProjection();
-	hires(); //cls() ; //gotoxy(26, 40);
+	hires(); //memset de 8000 octets en a000 avec la valeur 64
 	hrDrawSegments();
 
 	gameLoop();
@@ -486,7 +486,7 @@ void hiresDemo(){
 int proto (unsigned char nbPoints, char *tabpoint3D, char *tabpoint2D){
 	int local_var;
 	local_var = nbPoints+1;
-	
+
 	return local_var;
 }
 char tab1[]={1, 2};
@@ -498,16 +498,25 @@ void main()
 
 	char * adrN, *adrSquare;
     int i, j;
+	
+	get ();
+	
+	
+/*	
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
+*/
 	//i=12;
 	//j= proto(i, tab1, tab2);
-	
-	
-	
+
+
+	DeltaX = 3;
+	DeltaY = 4;
+	hyperfastnorm();
+	printf ("norm (%d, %d) = %d ",DeltaX, DeltaY, Norm);
 
     // TEST OF FAST ATAN2
 	/*
@@ -527,10 +536,10 @@ void main()
 	/* CamPosX = 0;
 	CamPosY = 0;
 	CamPosZ = 1;
-	
+
 	CamRotZ = 0;
 	CamRotX = 0;
-	
+
 	PointX = 4;
 	PointY = -2;
 	PointZ = 0;
@@ -546,9 +555,9 @@ void main()
 	printf(" AngleH = %d, Norm = %d, AngleV =%d\n", AngleH, Norm, AngleV);
 	printf(" ResX = %d, ResY = %d\n", ResX, ResY);
     */
-    
-    
- /*   
+
+
+ /*
     // TEST OF SQUARE 8
 	Numberl = 0x04;
 	Numberh = 0x00;
@@ -558,13 +567,13 @@ void main()
 
 	Square8 ();
 	printf("square of  = %d is %d \n", Numberh *256  + Numberl, Squareh*256 +Squarel);
-    
+
     adrSquare = (char*)&square;
-    
+
     *(adrSquare+0) = Squarel;
     *(adrSquare+1) = Squareh;
     sqrt_16 ();
-    
+
 	printf("root of  %d is %d \n", square, thesqrt);
 */
 
