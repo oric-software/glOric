@@ -287,6 +287,40 @@ plotLine(int x0, int y0, int x1, int y1)
 
 ## Algo de geometrie
 
+### Norme euclidienne
+```
+IF DX == 0 THEN
+  IF DY > 0 THEN
+    RETURN DY
+  ELSE
+    RETURN -DY
+ELSE IF DX > 0 THEN
+  AX = DX
+ELSE (DX < 0)
+  AX = -DX
+ENDIF
+IF DY == 0 THEN
+  RETURN TX
+ELSE IF DY > 0 THEN
+  AY = DY
+ELSE (DY < 0)
+  AY = -DY
+ENDIF
+IF AX > AY THEN
+  TX = AX
+  TY = AY
+ELSE
+  TX = AY
+  TY = AX
+END
+IF TY >= TX/2 THEN
+  RETURN TAB_C[TX] + TAB_D[TY]
+ELSE (TX < TY)
+  RETURN TAB_A[TX] + TAB_B[TY]
+END IF
+```
+
+### géométrie 3D
 
 http://geomalgorithms.com/
 

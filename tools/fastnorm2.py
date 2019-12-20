@@ -103,9 +103,33 @@ known_issues = [
  [6, 3]
 ]
 
+
+def exportTable (table2export):
+    strres= ""
+    ii=0
+    for v in table2export:
+        
+        if (ii == 0):
+            strres += "\t .byt %d"%(v)
+        elif (ii % 8 == 0) :
+            strres += ",\n\t .byt %d"%(v)
+        else:
+            strres += ", %d"%(v)
+        ii += 1
+    strres += ""
+    return strres
+    
 def main():
     fixTable ()
 
+    print ("tabmult_A")
+    print (exportTable (tabmult_A))
+    print ("tabmult_B")
+    print (exportTable (tabmult_B))
+    print ("tabmult_C")
+    print (exportTable (tabmult_C))
+    print ("tabmult_D")
+    print (exportTable (tabmult_D))
     #t1=np.linspace(0,127,128)
 
     #plt.plot(t1, np.asarray(tabmult_sqrt5_m2), 'r--')
