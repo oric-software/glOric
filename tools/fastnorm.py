@@ -1,5 +1,9 @@
 import math
 from operator import itemgetter, attrgetter, methodcaller
+
+import matplotlib.pyplot as plt
+import numpy as np
+from mpl_toolkits import mplot3d
 tabmult_sqrt2 = [round (  i*(math.sqrt(2))) for i in range (128) ]
 
 tabmult_sqrt2_m1 = [round (  i*(math.sqrt(2)-1)) for i in range (128) ]
@@ -10,7 +14,7 @@ tabmult_sqrt5_m_sqrt2 = [round (  i*(math.sqrt(5)-math.sqrt(2))) for i in range 
 
 tabmult_2sqrt2_m_sqrt5 = [round (  i*(2*math.sqrt(2)-math.sqrt(5))) for i in range (128) ]
 
-tabmult_sqrt5_div2_m1 = [round ( i*(  (math.sqrt(5)-2.0))  ) for i in range (128) ]
+tabmult_sqrt5_m2 = [round ( i*(  (math.sqrt(5)-2.0))  ) for i in range (128) ]
 
 def norm (x,y):
     return math.sqrt(x**2 + y**2)
@@ -39,20 +43,22 @@ def fakenorm2ndOrder (px,py):
 
 def fakenorm2ndOrder_int (px,py):
     ax, ay = abs(px), abs(py)
-    if ax==ay:
-       return tabmult_sqrt2[ax]
-    elif ax >= ay:
+    #if ax==ay:
+    #   return tabmult_sqrt2[ax]
+    #el
+    if ax >= ay:
         x, y = ax, ay
     else:
         x, y = ay, ax
-    if y == x/2:
-        return tabmult_sqrt5_div2[x] #x*(math.sqrt(5)/2)
-    elif y > x/2 :
+    #if y == x/2:
+    #    return tabmult_sqrt5_div2[x] #x*(math.sqrt(5)/2)
+    #el
+    if y > x/2 :
         # N = (math.sqrt(5)-math.sqrt(2))*x + (2*math.sqrt(2) - math.sqrt(5))*y
         N = tabmult_sqrt5_m_sqrt2 [x] + tabmult_2sqrt2_m_sqrt5[y]
     else:
         # N = x+(math.sqrt(5)/2 - 1)*y
-        N = x + tabmult_sqrt5_div2_m1 [y]
+        N = x + tabmult_sqrt5_m2 [y]
     return N
 
 nb_max = 127
@@ -91,24 +97,34 @@ def analyseErr (x, y):
     else:
         print ("y <= x/2")
         # N = x+(math.sqrt(5)/2 - 1)*y
-        intN = x + tabmult_sqrt5_div2_m1 [y]
+        intN = x + tabmult_sqrt5_m2 [y]
         fltN = x+(math.sqrt(5)/2 - 1)*y
-        print ("tabmult_sqrt5_div2_m1 [%d] = %d ins of %f"%(y, tabmult_sqrt5_div2_m1 [y] , (math.sqrt(5) - 2)*y))
+        print ("tabmult_sqrt5_m2 [%d] = %d ins of %f"%(y, tabmult_sqrt5_m2 [y] , (math.sqrt(5) - 2)*y))
     print ("intN = %d , fltN = %f"%(intN, fltN))
 
 def fixTable ():
-    tabmult_sqrt5_m_sqrt2 [3]=3
-    #tabmult_sqrt5_m_sqrt2 [8] = 6
+    tabmult_sqrt5_m_sqrt2 [3]=2
+    #tabmult_sqrt5_m_sqrt2 [7] = 5
+    #tabmult_sqrt5_m_sqrt2[6] = 4
+    tabmult_sqrt5_m_sqrt2 [8] = 6
     #tabmult_sqrt5_m_sqrt2 [15]=13
     #tabmult_sqrt5_m_sqrt2 [20] = 17
     tabmult_sqrt5_m_sqrt2 [78]=63
-    
-    
+
+
     #tabmult_2sqrt2_m_sqrt5 [6] = 4
     #tabmult_2sqrt2_m_sqrt5 [16] = 10
-    #tabmult_sqrt5_div2_m1 []=
-    #tabmult_sqrt5_m_sqrt2 [] = 
-    #tabmult_2sqrt2_m_sqrt5 [] = 
+    #tabmult_sqrt5_m2 []=
+    #tabmult_sqrt5_m_sqrt2 [] =
+
+    #tabmult_2sqrt2_m_sqrt5 [] =
+    tabmult_2sqrt2_m_sqrt5[1] = 0
+    tabmult_2sqrt2_m_sqrt5[2] = 2
+    tabmult_2sqrt2_m_sqrt5[4] = 2
+    #tabmult_2sqrt2_m_sqrt5[7] = 5
+    tabmult_2sqrt2_m_sqrt5[11] = 6
+    #tabmult_2sqrt2_m_sqrt5[6] = 3
+    #tabmult_2sqrt2_m_sqrt5[6] = 3
     tabmult_2sqrt2_m_sqrt5[50] = 29
     tabmult_2sqrt2_m_sqrt5[51] = 30
     tabmult_2sqrt2_m_sqrt5[52] = 30
@@ -174,65 +190,66 @@ def fixTable ():
     tabmult_2sqrt2_m_sqrt5[112] = 66
     tabmult_2sqrt2_m_sqrt5[113] = 66
     tabmult_2sqrt2_m_sqrt5[114] = 66
-    #tabmult_sqrt5_div2_m1 [3]=1
-    #tabmult_sqrt5_div2_m1 [4]=1
-    #tabmult_sqrt5_div2_m1 [7]=2
-    #tabmult_sqrt5_div2_m1 [8]=2
-    #tabmult_sqrt5_div2_m1 [9]=2
-    #tabmult_sqrt5_div2_m1 [10]=3
-    #tabmult_sqrt5_div2_m1 [11]=3
-    #tabmult_sqrt5_div2_m1 [12]=2
-    #tabmult_sqrt5_div2_m1 [15] =3
-    tabmult_sqrt5_div2_m1 [11] =2    
-    tabmult_sqrt5_div2_m1 [12] =2     
-    tabmult_sqrt5_div2_m1 [13] =2     
-    tabmult_sqrt5_div2_m1 [14] =2     
-    tabmult_sqrt5_div2_m1 [15] =2
-    tabmult_sqrt5_div2_m1 [16] =2
-    tabmult_sqrt5_div2_m1 [17] =3
-    tabmult_sqrt5_div2_m1 [18] =3
-    tabmult_sqrt5_div2_m1 [19] =3
-    tabmult_sqrt5_div2_m1 [20]=3
-    tabmult_sqrt5_div2_m1 [21]=3
-    tabmult_sqrt5_div2_m1 [22]=3
-    tabmult_sqrt5_div2_m1 [23]=3
-    tabmult_sqrt5_div2_m1 [24]=4
-    tabmult_sqrt5_div2_m1 [25]=4
-    tabmult_sqrt5_div2_m1 [26]=4
-    tabmult_sqrt5_div2_m1 [27]=4
-    tabmult_sqrt5_div2_m1 [28]=4
-    tabmult_sqrt5_div2_m1 [29]=5
-    tabmult_sqrt5_div2_m1 [30]=5
-    tabmult_sqrt5_div2_m1 [31]=5
-    tabmult_sqrt5_div2_m1 [32]=5
-    tabmult_sqrt5_div2_m1 [33]=6
-    tabmult_sqrt5_div2_m1 [34]=6
-    tabmult_sqrt5_div2_m1 [35]=6
-    tabmult_sqrt5_div2_m1 [36]=6
-    tabmult_sqrt5_div2_m1 [37]=7
-    tabmult_sqrt5_div2_m1 [38]=7
-    tabmult_sqrt5_div2_m1 [39]=7
-    tabmult_sqrt5_div2_m1 [40]=8
-    tabmult_sqrt5_div2_m1 [41] = 8
-    tabmult_sqrt5_div2_m1 [42] = 8
-    tabmult_sqrt5_div2_m1 [43] = 8
-    tabmult_sqrt5_div2_m1 [44] = 9
-    tabmult_sqrt5_div2_m1 [45] = 9
-    tabmult_sqrt5_div2_m1 [46] = 9
-    tabmult_sqrt5_div2_m1 [47] = 10
-    tabmult_sqrt5_div2_m1 [48] = 10
-    tabmult_sqrt5_div2_m1 [49] = 10
-    tabmult_sqrt5_div2_m1 [50] = 10
-    tabmult_sqrt5_div2_m1 [51] = 11
-    tabmult_sqrt5_div2_m1 [52] = 11
-    tabmult_sqrt5_div2_m1 [53] = 11
-    tabmult_sqrt5_div2_m1 [54] = 11
+    #tabmult_sqrt5_m2 [3]=1
+    #tabmult_sqrt5_m2 [4]=1
+    #tabmult_sqrt5_m2 [7]=2
+    #tabmult_sqrt5_m2 [8]=2
+    #tabmult_sqrt5_m2 [9]=2
+    #tabmult_sqrt5_m2 [10]=3
+    #tabmult_sqrt5_m2 [11]=3
+    #tabmult_sqrt5_m2 [12]=2
+    #tabmult_sqrt5_m2 [15] =3
+    tabmult_sqrt5_m2 [11] =2
+    tabmult_sqrt5_m2 [12] =2
+    tabmult_sqrt5_m2 [13] =2
+    tabmult_sqrt5_m2 [14] =2
+    tabmult_sqrt5_m2 [15] =2
+    tabmult_sqrt5_m2 [16] =2
+    tabmult_sqrt5_m2 [17] =3
+    tabmult_sqrt5_m2 [18] =3
+    tabmult_sqrt5_m2 [19] =3
+    tabmult_sqrt5_m2 [20]=3
+    tabmult_sqrt5_m2 [21]=3
+    tabmult_sqrt5_m2 [22]=3
+    tabmult_sqrt5_m2 [23]=3
+    tabmult_sqrt5_m2 [24]=4
+    tabmult_sqrt5_m2 [25]=4
+    tabmult_sqrt5_m2 [26]=4
+    tabmult_sqrt5_m2 [27]=4
+    tabmult_sqrt5_m2 [28]=4
+    tabmult_sqrt5_m2 [29]=5
+    tabmult_sqrt5_m2 [30]=5
+    tabmult_sqrt5_m2 [31]=5
+    tabmult_sqrt5_m2 [32]=5
+    tabmult_sqrt5_m2 [33]=6
+    tabmult_sqrt5_m2 [34]=6
+    tabmult_sqrt5_m2 [35]=6
+    tabmult_sqrt5_m2 [36]=6
+    tabmult_sqrt5_m2 [37]=7
+    tabmult_sqrt5_m2 [38]=7
+    tabmult_sqrt5_m2 [39]=7
+    tabmult_sqrt5_m2 [40]=8
+    tabmult_sqrt5_m2 [41] = 8
+    tabmult_sqrt5_m2 [42] = 8
+    tabmult_sqrt5_m2 [43] = 8
+    tabmult_sqrt5_m2 [44] = 9
+    tabmult_sqrt5_m2 [45] = 9
+    tabmult_sqrt5_m2 [46] = 9
+    tabmult_sqrt5_m2 [47] = 10
+    tabmult_sqrt5_m2 [48] = 10
+    tabmult_sqrt5_m2 [49] = 10
+    tabmult_sqrt5_m2 [50] = 10
+    tabmult_sqrt5_m2 [51] = 11
+    tabmult_sqrt5_m2 [52] = 11
+    tabmult_sqrt5_m2 [53] = 11
+    tabmult_sqrt5_m2 [54] = 11
     pass
-    
+
 known_issues = [
-#[7, 3], [7, 6], [8,3], [8,5], [8,6], [9,4], [9,6], [10,4], [12,8]
+#[7, 3],
+[7, 6], #[8,3], [8,5], [8,6], [9,4], [9,6], [10,4], [12,8]
 [47, 23], [48, 23], [49, 23],[50, 23],[51, 23],
-[78, 77], [78, 75], 
+[78, 77], [78, 75], [78, 76],
 [73, 36], [74, 36], [75, 36], [71,35], [76,36], [72,35],[77,36], [78,36],
 [61, 30],[63, 31],[64, 31], [65, 31], [65, 32], [66, 31], [66, 32],[67, 32],[68, 32],[69, 32],[69, 34],[70, 32],[73, 35],
 [54, 26],
@@ -243,16 +260,41 @@ known_issues = [
 
 def main():
     fixTable ()
+
+    #t1=np.linspace(0,127,128)
+
+    #plt.plot(t1, np.asarray(tabmult_sqrt5_m2), 'r--')
+    #plt.show()
+
+
     exploreDomain()
-    print ("\n".join([str(er) for er in tab_err]))
+
+
+    #fig = plt.figure()
+    #ax = plt.axes(projection='3d')
+
+    #x_data = np.asarray([er[0] for er in tab_err])
+    #y_data = np.asarray([er[1] for er in tab_err])
+    #err_data = np.asarray([er[3] for er in tab_err])
+
+    #ax.scatter3D(x_data, y_data, err_data,  cmap='binary');
+    #ax.contour3D(x_data, y_data, err_data, 50, cmap='binary')
+    #plt.show()
+    # print ("\n".join([str(er) for er in tab_err]))
+
+
+    print ("--------------")
     stab = sorted(tab_err, key=itemgetter(2), reverse=True)
-    #stab = tab_err
     print ("\n".join([str(er) for er in stab[0:10]]))
+    print ("--------------")
+    stab2 = sorted(tab_err, key=itemgetter(3), reverse=True)
+    print ("\n".join([str(er) for er in stab2[0:10]]))
+    print ("--------------")
     ii=0
-    cur_err = stab [ii]
-    while ([cur_err[0], cur_err[1]] in known_issues): 
+    cur_err = stab2 [ii]
+    while ([cur_err[0], cur_err[1]] in known_issues):
         ii+=1
-        cur_err = stab [ii]
+        cur_err = stab2 [ii]
     analyseErr (cur_err[0], cur_err[1])
 if __name__ == '__main__':
     main()
