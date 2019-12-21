@@ -205,13 +205,13 @@ tMultSqrt2m1
 	.byt 46, 47, 47, 48, 48, 48, 49, 49 
 	.byt 50, 50, 51, 51, 51, 52, 52, 53
 	
+.zero
+absX .dsb 1
+absY .dsb 1
 	
 .text
 _hyperfastnorm:
 .(
-    lda _DeltaX
-    lda _DeltaY
-	sta _Norm
 
 //  IF DX == 0 THEN
     lda _DeltaX
@@ -225,7 +225,7 @@ _hyperfastnorm:
 dyNegativ_01
 //    ELSE
 //      RETURN -DY
-		eor $#FF
+		eor #$FF
 		sec
 		adc #$00
 		sta _Norm
@@ -239,7 +239,7 @@ dxNotNull
 dxNegativ_01
 //  ELSE (DX < 0)
 //    AX = -DX
-		eor $#FF
+		eor #$FF
 		sec
 		adc #$00
 		sta absX
@@ -272,25 +272,49 @@ sortAbsVal
 	bcs ayOverOrEqualAx
 //    TY = AY
 		tay
+		sta tmpufnY
 //    TX = AX
 		lda absX
 		tax
+		sta tmpufnX
 		jmp approxim
 ayOverOrEqualAx
 //  ELSE
 //    TX = AY
 		tax
+		sta tmpufnX
 //    TY = AX
 		lda absX
 		tay
+		sta tmpufnY
 //  END
 approxim
-//  IF TY >= TX/2 THEN
-//    RETURN TAB_C[TX] + TAB_D[TY]
-//  ELSE (TX < TY)
+//  IF TY > TX/2 THEN
+	lda tmpufnX
+	lsr 
+	cmp tmpufnY
+	bcc tyLowerOrEqualTxDiv2
+	beq tyLowerOrEqualTxDiv2	
 //    RETURN TAB_A[TX] + TAB_B[TY]
-//  END IF
-//  	
+		lda tabmult_A,X
+		clc
+		adc tabmult_B,Y
+		sta _Norm
+		lda #$00
+		adc #$00 ; propagate carry
+		sta _Norm+1
+		jmp hfndone
+tyLowerOrEqualTxDiv2
+//  ELSE (TX/2 <= TY)
+//    RETURN TAB_C[TX] + TAB_D[TY]
+		lda tabmult_C,X
+		clc
+		adc tabmult_D,Y
+		sta _Norm
+		lda #$00
+		adc #$00 ; propagate carry
+		sta _Norm+1
+//  END IF 	
 	
 hfndone
 .)

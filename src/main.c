@@ -502,21 +502,22 @@ void main()
 	get ();
 	
 	
-/*	
+	
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-*/
+
 	//i=12;
 	//j= proto(i, tab1, tab2);
 
 
-	DeltaX = 3;
-	DeltaY = 4;
-	hyperfastnorm();
-	printf ("norm (%d, %d) = %d ",DeltaX, DeltaY, Norm);
+	//DeltaX = 3;	DeltaY = 4;	hyperfastnorm();
+	//if (Norm != 5) printf ("norm (%d, %d) = %d ",DeltaX, DeltaY, Norm);
+	//DeltaX = 4;	DeltaY = 4;	hyperfastnorm();
+	//if (Norm != 16) printf ("norm (%d, %d) = %d ",DeltaX, DeltaY, Norm);
+	
 
     // TEST OF FAST ATAN2
 	/*
