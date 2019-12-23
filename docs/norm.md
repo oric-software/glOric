@@ -36,7 +36,7 @@ Mais il s'est avéré que l'approximation par un plan était trop imprécise com
 
 ![](imgs/FirstOrderNormError.JPG)
 
-Obtenu en tapant :`if (x>y, sqrt (x^2 + y^2) - (x + y * (sqrt(2) -1)), sqrt (x^2 + y^2) -(y + x * (sqrt(2) -1)))` sur [academo.org]()
+Obtenu en tapant :`if (x>y, sqrt (x^2 + y^2) - (x + y * (sqrt(2) -1)), sqrt (x^2 + y^2) -(y + x * (sqrt(2) -1)))` sur [academo.org](https://academo.org/demos/3d-surface-plotter/?expression=if(x%3Ey%2Csqrt(x%5E2%2By%5E2)-(x%2By*(sqrt(2)-1))%2Csqrt(x%5E2%2By%5E2)-(y%2Bx*(sqrt(2)-1)))&xRange=0%2C+128&yRange=0%2C+128&resolution=25)
 
 L'erreur arrive à plus de 10 en valeur absolue.
 
