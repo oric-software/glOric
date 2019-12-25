@@ -27,39 +27,41 @@ extern char CamRotX;
 
 
  // GEOMETRY BUFFERS
-extern char points3d[];
-extern unsigned char nbPoints;
+//extern char points3d[];
+char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
+//extern unsigned char nbPts;
+unsigned char nbPts;
 
 extern char segments[];
 extern unsigned char nbSegments;
 
-extern char points2d[];
-
+//extern char points2d[];
+char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
 const char sentence[] = "MERCI RENE";
 
 void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigned char nSeg, char offsetPos){
 	unsigned char jj;
 	for (jj=0; jj < nPoint; jj++){
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = tPoint[jj*SIZEOF_3DPOINT + 0] + offsetPos*8;  // X coord
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = tPoint[jj*SIZEOF_3DPOINT + 1];                // Y coord
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = tPoint[jj*SIZEOF_3DPOINT + 2];                // Z coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 0] = tPoint[jj*SIZEOF_3DPOINT + 0] + offsetPos*8;  // X coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 1] = tPoint[jj*SIZEOF_3DPOINT + 1];                // Y coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 2] = tPoint[jj*SIZEOF_3DPOINT + 2];                // Z coord
 	}
 	for (jj=0; jj < nSeg; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = tSeg[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = tSeg[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = tSeg[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
 		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = tSeg[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
-	nbPoints += nPoint;
+	nbPts += nPoint;
 	nbSegments += nSeg;
 
 }
 
 void initBuffers(){
-	unsigned char ii, jj;
+	unsigned char ii;
 	char c;
-	unsigned char nPoint, nSeg;
-	const char *tPoint, *tSeg;
+	ii = 0;
+	nbPts = 0;
 	while((c=sentence[ii]) != 0) {
 
 		switch (c) {
@@ -80,16 +82,16 @@ void initBuffers(){
 void addCube(char X, char Y, char Z){
 	unsigned char ii, jj;
 	for (jj=0; jj < NB_POINTS_CUBE; jj++){
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
-		points3d[(nbPoints+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
 	}
 	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPoints; // Index Point 1
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPoints; // Index Point 2
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
 		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
-	nbPoints += NB_POINTS_CUBE;
+	nbPts += NB_POINTS_CUBE;
 	nbSegments += NB_SEGMENTS_CUBE;
 }
 
@@ -110,7 +112,7 @@ tx=-1; ty=-1; res=0; atan2_8();if (res!=-96) printf("ERR atan(%d, %d)= %d\n",tx,
 /*
 void doProjection(){
 	unsigned char ii = 0;
-	for (ii = 0; ii< nbPoints; ii++){
+	for (ii = 0; ii< nbPts; ii++){
 		PointX = points3d[ii*SIZEOF_3DPOINT + 0];
 		PointY = points3d[ii*SIZEOF_3DPOINT + 1];
 		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
@@ -270,7 +272,7 @@ void txtIntro (){
 	CamRotX = -4;
 
 
-    doFastProjection();
+    glProject (points2d, points3d, nbPts); //doFastProjection();
     cls() ; //gotoxy(26, 40);
     drawSegments();
 
@@ -281,7 +283,7 @@ void txtIntro (){
 			CamRotX=(i%2==0)?CamRotX+1:CamRotX
 		) {
 
-        doFastProjection();
+        glProject (points2d, points3d, nbPts); //doFastProjection();
         cls() ; //gotoxy(26, 40);
 		drawSegments();
  		//dispInfo();
@@ -295,7 +297,7 @@ void txtIntro (){
 
     for (i=0;i<72;i++,CamPosX++) {
 
-        doFastProjection();             // 25  s => 20s         => 15s
+        glProject (points2d, points3d, nbPts); //doFastProjection();             // 25  s => 20s         => 15s
         cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
 		drawSegments();             // 11.5 s  => 34s (11s)
 		//dispInfo();
@@ -303,13 +305,13 @@ void txtIntro (){
 
     for (i=0;i<40;i++,CamPosX=(i%4==0)?CamPosX-1:CamPosX, CamRotX=(i%4==0)?CamRotX-1:CamRotX , CamPosY=(i%4==0)?CamPosY-1:CamPosY,  CamRotZ++) {
 
-        doFastProjection();
+        glProject (points2d, points3d, nbPts); //doFastProjection();
         cls() ; //gotoxy(26, 40);
 		drawSegments();
  		//dispInfo();
     }
     forward ();
-	doFastProjection();
+	glProject (points2d, points3d, nbPts); //doFastProjection();
 	cls() ; //gotoxy(26, 40);
 	drawSegments();
 	// dispInfo();
@@ -317,7 +319,7 @@ void txtIntro (){
 
     for (i=0;i<25;i++, CamPosX-=2) {
 
-        doFastProjection();
+        glProject (points2d, points3d, nbPts); //doFastProjection();
         cls() ; //gotoxy(26, 40);
 		drawSegments();
  		//dispInfo();
@@ -325,13 +327,13 @@ void txtIntro (){
 	CamRotZ-=1;
     for (i=0;i<11;i++, CamPosY-=2, CamRotZ-=3) {
 
-        doFastProjection();
+        glProject (points2d, points3d, nbPts); //doFastProjection();
         cls() ; //gotoxy(26, 40);
 		drawSegments();
  		// dispInfo();
     }
 	CamRotZ-=3;
-	doFastProjection();
+	glProject (points2d, points3d, nbPts); //doFastProjection();
 	cls() ; // gotoxy(26, 40);
 	drawSegments();
 	//dispInfo();
@@ -342,7 +344,7 @@ void txtGameLoop() {
 
 	char key;
 	//key=get();
-	doFastProjection();
+	glProject (points2d, points3d, nbPts); //doFastProjection();
 
     while (1==1) {
 		cls(); gotoxy(26, 40);//clearScreen();
@@ -383,7 +385,7 @@ void txtGameLoop() {
 			shiftRight();
 			break;
 		}
-		doFastProjection();
+		glProject (points2d, points3d, nbPts); //doFastProjection();
 	}
 }
 
@@ -433,7 +435,7 @@ void hiresIntro (){
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
-        doFastProjection();
+        glProject (points2d, points3d, nbPts); //doFastProjection();
         memset ( 0xa000, 64, 8000); // clear screen
 		hrDrawSegments();
  		//dispInfo();
@@ -447,7 +449,7 @@ void hiresGameLoop() {
 	char key;
 	unsigned char i=0;
 	key=get();
-	doFastProjection();
+	glProject (points2d, points3d, nbPts); //doFastProjection();
 
     while (1==1) {
 		memset ( 0xa000, 64, 8000); // clear screen
@@ -477,7 +479,7 @@ void hiresGameLoop() {
 		CamPosY = traj[i+1];
 		CamRotZ = traj[i+2];
 
-		doFastProjection();
+		glProject (points2d, points3d, nbPts); //doFastProjection();
 	}
 }
 
@@ -492,158 +494,181 @@ void hiresDemo(){
 
     hires(); 
 
-	nbPoints =0 ;
+	nbPts =0 ;
 	nbSegments =0 ;
 	addCube(-4, -4, 2);
 	addCube(4, 4, 10);
 	
 	hiresIntro();
 	
-	nbPoints =0 ;
+	nbPts =0 ;
 	nbSegments =0 ;
 	addCube(0, 0, 2);
 	
 //	for (jj=0; jj < NB_POINTS_CUBE; jj++){
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -3;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 7;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -1;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 9;                // Z coord
-	nbPoints ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-3; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = -3;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 7;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = -1;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 9;                // Z coord
+	nbPts ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-3; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-2; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-3; // Index Point 2
-	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
-	nbSegments ++;
-
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 3;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 7;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 1;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 9;                // Z coord
-	nbPoints ++;
-
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-5; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
-	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
-	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
-	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
-	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-5; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-3; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
 
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 3;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 7;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 1;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 9;                // Z coord
+	nbPts ++;
 
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -4;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 4;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
-	nbPoints ++;
-
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 4;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = -4;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
-	nbPoints ++;
-
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-4; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-3; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-5; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-2; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-3; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
-	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
-	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-4; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-5; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
 
 
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = -4;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 4;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
-	nbPoints ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = -4;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 4;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPts ++;
 
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = 4;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
-	nbPoints ++;
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 1] = -4;                // Y coord
-	points3d[(nbPoints)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
-	nbPoints ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 4;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = -4;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 0;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPts ++;
 
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-4; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-3; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-4; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-3; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-3; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-3; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-2; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-2; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
-	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPoints-1; // Index Point 1
-	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPoints-4; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-4; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+
+
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = -4;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 4;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = 6;                // Z coord
+	nbPts ++;
+
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = 4;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPts ++;
+	points3d[(nbPts)* SIZEOF_3DPOINT + 0] = 0;  				// X coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 1] = -4;                // Y coord
+	points3d[(nbPts)* SIZEOF_3DPOINT + 2] = -2;                // Z coord
+	nbPts ++;
+
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-4; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-3; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-3; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-2; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-2; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-1; // Index Point 2
+	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
+	nbSegments ++;
+	segments[(nbSegments)* SIZEOF_SEGMENT + 0] = nbPts-1; // Index Point 1
+	segments[(nbSegments)* SIZEOF_SEGMENT + 1] = nbPts-4; // Index Point 2
 	segments[(nbSegments)* SIZEOF_SEGMENT + 2] = 65; // Character
 	nbSegments ++;
 	
 
-	doFastProjection();
+	glProject (points2d, points3d, nbPts); //doFastProjection();
 	memset ( 0xa000, 64, 8000);
 	hrDrawSegments();
 
 	hiresGameLoop();
 }
 
-int proto (unsigned char nbPoints, char *tabpoint3D, char *tabpoint2D){
-	int local_var;
-	local_var = nbPoints+1;
-
-	return local_var;
-}
 
 // char tab1[]={1, 2};
 
 // char tab2[]={3, 4};
+//#include <glOric.h>
+
+//#define CUBSIZ	4
+//#define NB_P3D_CUBE		8
+//
+//const char p3d_Cube[]={
+//	 -CUBSIZ, -CUBSIZ, +CUBSIZ, 0 // P0
+//	,-CUBSIZ, -CUBSIZ, -CUBSIZ, 0 // P1
+//	,+CUBSIZ, -CUBSIZ, -CUBSIZ, 0 // P2
+//	,+CUBSIZ, -CUBSIZ, +CUBSIZ, 0 // P3
+//	,-CUBSIZ, +CUBSIZ, +CUBSIZ, 0 // P4
+//	,-CUBSIZ, +CUBSIZ, -CUBSIZ, 0 // P5
+//	,+CUBSIZ, +CUBSIZ, -CUBSIZ, 0 // P6
+//	,+CUBSIZ, +CUBSIZ, +CUBSIZ, 0 // P7
+//};
+//char pts2D [NB_P3D_CUBE	* SIZEOF_2DPOINT];
+
 
 void main()
 {
+	int i=0;
+	CamPosX = -24;
+	CamPosY = 0;
+	CamPosZ = 3;
+
+ 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 2;
+
+//	glProject (pts2D, p3d_Cube, NB_P3D_CUBE);
+//	for (i=0; i< NB_P3D_CUBE; i++) {
+//		printf("%d %d %d => %d %d\n",p3d_Cube[(i<<2) + 0],p3d_Cube[(i<<2) + 1],p3d_Cube[(i<<2) + 2],pts2D[(i<<2) + 0],pts2D[(i<<2) + 1]);
+//	}
 	
 #ifdef TEXTMODE
 	textDemo();

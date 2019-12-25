@@ -125,6 +125,29 @@ def displaySol (state):
     ax.contour3D(X, Y, Z, 50, cmap='binary')
     plt.show()
 
+def displayPerfect ():
+    x = np.linspace(-127, 127, 255)
+    y = np.linspace(-127, 127, 255)
+    #x_data = np.asarray([er[0] for er in tab_err])
+    #y_data = np.asarray([er[1] for er in tab_err])
+    X, Y = np.meshgrid(x, y)
+    Z = npnorm(X, Y)
+    #print (Z[0][0])
+    #for i in range (-127, 128):
+    #    for j in range (-127, 128):
+    #        nor = norm (i,j)
+    #        Z[i+127][j+127] = nor
+    #print (fakenorm2ndOrder(i,j))
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+
+    #err_data = np.asarray([er[3] for er in tab_err])
+
+    #ax.scatter3D(x_data, y_data, err_data,  cmap='binary');
+    ax.contour3D(X, Y, Z, 50, cmap='binary')
+    plt.show()
+
+
 def displaySol2 (state):
     A0, A1, A2, B0, B1, B2, C0, C1, C2, D0, D1, D2 = state
     x = np.linspace(-127, 127, 255)
@@ -148,6 +171,30 @@ def displaySol2 (state):
     #ax.scatter3D(x_data, y_data, err_data,  cmap='binary');
     ax.contour3D(X, Y, Z, 50, cmap='binary')
     plt.show()
+    
+def displayShape2 (state):
+    A0, A1, A2, B0, B1, B2, C0, C1, C2, D0, D1, D2 = state
+    x = np.linspace(-127, 127, 255)
+    y = np.linspace(-127, 127, 255)
+    #x_data = np.asarray([er[0] for er in tab_err])
+    #y_data = np.asarray([er[1] for er in tab_err])
+    X, Y = np.meshgrid(x, y)
+    Z = npnorm(X, Y)
+    #print (Z[0][0])
+    for i in range (-127, 128):
+        for j in range (-127, 128):
+            res = fastnorm2(i,j, A0, A1, A2, B0, B1, B2, C0, C1, C2, D0, D1, D2)
+            #nor = norm (i,j)
+            Z[i+127][j+127] = res #- nor
+    #print (fakenorm2ndOrder(i,j))
+    fig = plt.figure()
+    ax = plt.axes(projection='3d')
+
+    #err_data = np.asarray([er[3] for er in tab_err])
+
+    #ax.scatter3D(x_data, y_data, err_data,  cmap='binary');
+    ax.contour3D(X, Y, Z, 50, cmap='binary')
+    plt.show()
 
 def main():
     # x0 = np.array(start)
@@ -158,11 +205,12 @@ def main():
     # displaySol (res.x)
     
     x0 = np.array(start2)
-    displaySol2 (start2)
-    print (start2)
+    #displaySol2 (start2)
+   # print (start2)
     #res = minimize(rosen2, x0, method='nelder-mead', options={'xatol': 1e-8, 'disp': True})
     #print (res.x)
-    displaySol2 ([ 1.60431525e-02,  1.01438538e+00, -2.23050176e-04, -4.95743532e-03,
+    displayPerfect ()
+    displayShape2 ([ 1.60431525e-02,  1.01438538e+00, -2.23050176e-04, -4.95743532e-03,
   1.03966260e-01,  2.65156968e-03, -1.25399371e-02,  8.51173164e-01,
  -2.18092268e-04,  2.02032598e-03,  5.39223578e-01,  3.71083013e-04])
    
