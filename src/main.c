@@ -74,7 +74,6 @@ void initBuffers(){
 			default:
 				break;
 		}
-
 		ii++;
 	}
 }
@@ -144,8 +143,8 @@ void drawSegments(){
 char status_string[50];
 void dispInfo(){
 #ifdef TEXTMODE
-		sprintf(status_string,"(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
-		AdvancedPrint(2,1,status_string);
+	sprintf(status_string,"(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+	AdvancedPrint(2,1,status_string);
 #else
 	printf("\nMike 8bit: ");
 	printf ("(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
@@ -236,7 +235,6 @@ void shiftRight() {
 	} else {
 		CamPosX++;
 	}
-
 }
 
 void hrDrawSegments(){
@@ -247,7 +245,6 @@ void hrDrawSegments(){
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
 		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-
 
         OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
         OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 1];
@@ -263,7 +260,6 @@ void txtIntro (){
 
     enterSC();
 
-
 	CamPosX = -15;
 	CamPosY = -85;
 	CamPosZ = 2;
@@ -272,21 +268,20 @@ void txtIntro (){
 	CamRotX = -4;
 
 
-    glProject (points2d, points3d, nbPts); //doFastProjection();
-    cls() ; //gotoxy(26, 40);
-    drawSegments();
+    glProject (points2d, points3d, nbPts);
+	clearScreen(); 
 
+    drawSegments();
+	
     for (i=0;i<40;i++,
 			CamPosX=(i%4==0)?CamPosX+1:CamPosX,
 			CamPosY+=2,
 			CamRotZ-=1,
 			CamRotX=(i%2==0)?CamRotX+1:CamRotX
 		) {
-
-        glProject (points2d, points3d, nbPts); //doFastProjection();
-        cls() ; //gotoxy(26, 40);
+        glProject (points2d, points3d, nbPts); 
+        clearScreen();
 		drawSegments();
- 		//dispInfo();
     }
 
 	CamPosX = -5;
@@ -296,47 +291,40 @@ void txtIntro (){
 	CamRotX = 16;
 
     for (i=0;i<72;i++,CamPosX++) {
-
-        glProject (points2d, points3d, nbPts); //doFastProjection();             // 25  s => 20s         => 15s
-        cls (); // gotoxy(26, 40);// clearScreen();   //  1.51 s => 23s (3s)
-		drawSegments();             // 11.5 s  => 34s (11s)
-		//dispInfo();
+        glProject (points2d, points3d, nbPts);
+        clearScreen();
+		drawSegments();             
     }
 
     for (i=0;i<40;i++,CamPosX=(i%4==0)?CamPosX-1:CamPosX, CamRotX=(i%4==0)?CamRotX-1:CamRotX , CamPosY=(i%4==0)?CamPosY-1:CamPosY,  CamRotZ++) {
 
-        glProject (points2d, points3d, nbPts); //doFastProjection();
-        cls() ; //gotoxy(26, 40);
+        glProject (points2d, points3d, nbPts); 
+        clearScreen();
 		drawSegments();
- 		//dispInfo();
     }
     forward ();
-	glProject (points2d, points3d, nbPts); //doFastProjection();
-	cls() ; //gotoxy(26, 40);
+	glProject (points2d, points3d, nbPts); 
+	clearScreen();
 	drawSegments();
-	// dispInfo();
-
 
     for (i=0;i<25;i++, CamPosX-=2) {
 
-        glProject (points2d, points3d, nbPts); //doFastProjection();
-        cls() ; //gotoxy(26, 40);
+        glProject (points2d, points3d, nbPts);
+        clearScreen();
 		drawSegments();
- 		//dispInfo();
     }
 	CamRotZ-=1;
     for (i=0;i<11;i++, CamPosY-=2, CamRotZ-=3) {
 
-        glProject (points2d, points3d, nbPts); //doFastProjection();
-        cls() ; //gotoxy(26, 40);
+        glProject (points2d, points3d, nbPts);
+        clearScreen();
 		drawSegments();
- 		// dispInfo();
     }
 	CamRotZ-=3;
-	glProject (points2d, points3d, nbPts); //doFastProjection();
-	cls() ; // gotoxy(26, 40);
+	glProject (points2d, points3d, nbPts); 
+	clearScreen();
 	drawSegments();
-	//dispInfo();
+
     leaveSC();
 }
 
@@ -344,10 +332,10 @@ void txtGameLoop() {
 
 	char key;
 	//key=get();
-	glProject (points2d, points3d, nbPts); //doFastProjection();
+	glProject (points2d, points3d, nbPts);
 
     while (1==1) {
-		cls(); gotoxy(26, 40);//clearScreen();
+		clearScreen();
 		drawSegments();
 		dispInfo();
 		key=get();
@@ -362,7 +350,6 @@ void txtGameLoop() {
 		case 10: // bas => recule
 			backward();
 			break;
-
 		case 11: // haut => avance
 			forward();
 			break;
@@ -385,14 +372,15 @@ void txtGameLoop() {
 			shiftRight();
 			break;
 		}
-		glProject (points2d, points3d, nbPts); //doFastProjection();
+		glProject (points2d, points3d, nbPts);
 	}
 }
 
 
 void textDemo(){
 	
-	text();
+	lores0();
+
     //kernelInit();
 	initBuffers();
 
@@ -405,15 +393,9 @@ void textDemo(){
 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 0;
 
-    clearScreen();
-	gotoxy(26, 40);
-
-
     txtIntro ();
 
  	txtGameLoop();
-
-
 }
 
 
@@ -421,7 +403,6 @@ void hiresIntro (){
     int i;
 
     enterSC();
-
 
 	CamPosX = -24;
 	CamPosY = 0;
@@ -435,10 +416,9 @@ void hiresIntro (){
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
-        glProject (points2d, points3d, nbPts); //doFastProjection();
+        glProject (points2d, points3d, nbPts);
         memset ( 0xa000, 64, 8000); // clear screen
 		hrDrawSegments();
- 		//dispInfo();
     }
 
 	leaveSC();
@@ -449,7 +429,7 @@ void hiresGameLoop() {
 	char key;
 	unsigned char i=0;
 	key=get();
-	glProject (points2d, points3d, nbPts); //doFastProjection();
+	glProject (points2d, points3d, nbPts); 
 
     while (1==1) {
 		memset ( 0xa000, 64, 8000); // clear screen
@@ -479,15 +459,9 @@ void hiresGameLoop() {
 		CamPosY = traj[i+1];
 		CamRotZ = traj[i+2];
 
-		glProject (points2d, points3d, nbPts); //doFastProjection();
+		glProject (points2d, points3d, nbPts);
 	}
 }
-
-
-
-
-
-
 
 void hiresDemo(){
 	GenerateTables();
@@ -634,27 +608,6 @@ void hiresDemo(){
 }
 
 
-// char tab1[]={1, 2};
-
-// char tab2[]={3, 4};
-//#include <glOric.h>
-
-//#define CUBSIZ	4
-//#define NB_P3D_CUBE		8
-//
-//const char p3d_Cube[]={
-//	 -CUBSIZ, -CUBSIZ, +CUBSIZ, 0 // P0
-//	,-CUBSIZ, -CUBSIZ, -CUBSIZ, 0 // P1
-//	,+CUBSIZ, -CUBSIZ, -CUBSIZ, 0 // P2
-//	,+CUBSIZ, -CUBSIZ, +CUBSIZ, 0 // P3
-//	,-CUBSIZ, +CUBSIZ, +CUBSIZ, 0 // P4
-//	,-CUBSIZ, +CUBSIZ, -CUBSIZ, 0 // P5
-//	,+CUBSIZ, +CUBSIZ, -CUBSIZ, 0 // P6
-//	,+CUBSIZ, +CUBSIZ, +CUBSIZ, 0 // P7
-//};
-//char pts2D [NB_P3D_CUBE	* SIZEOF_2DPOINT];
-
-
 void main()
 {
 	int i=0;
@@ -662,21 +615,13 @@ void main()
 	CamPosY = 0;
 	CamPosZ = 3;
 
- 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+ 	CamRotZ = 64 ;	
 	CamRotX = 2;
 
-//	glProject (pts2D, p3d_Cube, NB_P3D_CUBE);
-//	for (i=0; i< NB_P3D_CUBE; i++) {
-//		printf("%d %d %d => %d %d\n",p3d_Cube[(i<<2) + 0],p3d_Cube[(i<<2) + 1],p3d_Cube[(i<<2) + 2],pts2D[(i<<2) + 0],pts2D[(i<<2) + 1]);
-//	}
-	
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-
-	// i=12;
-	// j= proto(i, tab1, tab2);
 
 }

@@ -41,7 +41,7 @@ _clearScreen:
     
     lda #$20
 
-    ldx #38
+    ldx #40
 
 clrscrLoop:
     sta ADR_BASE_SCREEN+SCREEN_WIDTH*0 , x
