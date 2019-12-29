@@ -5,9 +5,9 @@
 #include "glOric.h"
 #include "config.h"
 
-extern unsigned char une_fonction();
+/*extern unsigned char une_fonction();
 extern void glProject2 (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
-
+*/
 
 unsigned char nbPts;
 char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
@@ -33,9 +33,9 @@ tgi_setpixel(200,100);
 tgi_line(1,1,100,100);
 */
 
-val = une_fonction();
-glProject2 (points2d, points3d, 1, 0);
-printf("Press a key to return to basic %d", val);
+//val = une_fonction();
+//glProject2 (points2d, points3d, 1, 0);
+printf("Press a key to return to basic \n");
 cgetc();
 
 tgi_done();
