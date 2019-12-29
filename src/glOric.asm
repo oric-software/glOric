@@ -16,13 +16,18 @@ _Norm:          .word 0
 _ResX:			.byte 0	
 _ResY:			.byte 0
 
-.segment  "ZEROPAGE"
+.importzp ptr2, ptr3 ; 16 bits
+.importzp tmp1,tmp2; 8 bits
 
-ptrpt3:				.word 0
-ptrpt2:				.word 0
-nbPoints:			.byte 0
-opts:				.byte 0
+;;ptrpt3:				.word 0
+;;ptrpt2:				.word 0
+;;nbPoints:			.byte 0
+;;opts:				.byte 0
 
+ptrpt3 		:= ptr3
+ptrpt2 		:= ptr2
+nbPoints 	:= tmp2
+opts 		:= tmp1
 
 			.segment "CODE"
 
@@ -32,9 +37,9 @@ opts:				.byte 0
 .export _glProject2
 
 .proc _glProject2
-	sta opts		;opts
+	sta tmp1		;opts
 	jsr popa
-	sta nbPoints		;nbPoints
+	sta tmp2		;nbPoints
 	jsr popax		;get tabpoint3D
 	sta ptrpt3
 	stx ptrpt3+1
@@ -42,7 +47,7 @@ opts:				.byte 0
 	sta ptrpt2
 	stx ptrpt2+1
 
-    ldx nbPoints
+    ldx nbPoints		;nbPoints
     dex
     txa ; ii = nbPoints - 1
     asl
@@ -51,7 +56,7 @@ opts:				.byte 0
     adc #$03
     tay
     
-    ldx nbPoints
+    ldx nbPoints		;nbPoints
     dex
     txa ; ii = nbPoints - 1
     asl
