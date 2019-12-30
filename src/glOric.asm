@@ -82,7 +82,7 @@ dofastprojloop:
         dey
 
 ;;  		project();
-        ;;jsr _project
+        jsr _project
         
 ;;  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
         tya
@@ -118,6 +118,29 @@ dofastprojdone:
 	
     rts
 .endproc
+
+
+;---------------------------------------------------------------------------------
+;_project
+;---------------------------------------------------------------------------------
+.proc _project
+	;; save context
+    pha
+	txa
+	pha
+	tya
+	pha
+
+	
+	;; restore context
+	pla
+	tay
+	pla
+	tax
+	pla
+    rts
+.endproc
+
 
 .export _une_fonction
  

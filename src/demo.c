@@ -35,7 +35,7 @@ tgi_line(1,1,100,100);
 
 val = une_fonction();
 glProject2 (points2d, points3d, 1, 0);
-printf("Press a key to return to basic \n");
+printf("Press a key to return to basic %d\n", val);
 cgetc();
 
 tgi_done();
