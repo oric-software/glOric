@@ -43,7 +43,7 @@ int main ()
 
 	val = une_fonction();
 	glProject (points2d, points3d, 1, 0);
-	printf("Press a key to return to basic %d\n", val);
+	printf("Value returned by function: %d\n", val);
 	cgetc();
 
 	tgi_done();
