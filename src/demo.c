@@ -6,7 +6,9 @@
 #include "config.h"
 
 extern unsigned char une_fonction();
-extern void glProject2 (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
+extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
+extern int CamPosX, CamPosY, CamPosZ;
+extern char CamRotZ, CamRotX;
 
 
 unsigned char nbPts;
@@ -18,27 +20,33 @@ char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 int main ()
 {
 
-unsigned char val;
+	unsigned char val;
 
-tgi_install (tgi_static_stddrv);
+	tgi_install (tgi_static_stddrv);
 
-tgi_init ();
-tgi_clear ();
+	tgi_init ();
+	tgi_clear ();
 
-/*
-blit_picture(1,1,william_pic[0]/6,william_pic[1], william_pic);
+	/*
+	blit_picture(1,1,william_pic[0]/6,william_pic[1], william_pic);
 
-tgi_outtextxy (50,50,"hello");
-tgi_setpixel(200,100);
-tgi_line(1,1,100,100);
-*/
+	tgi_outtextxy (50,50,"hello");
+	tgi_setpixel(200,100);
+	tgi_line(1,1,100,100);
+	*/
+	CamPosX = -24;
+	CamPosY = 0;
+	CamPosZ = 3;
 
-val = une_fonction();
-glProject2 (points2d, points3d, 1, 0);
-printf("Press a key to return to basic %d\n", val);
-cgetc();
+	CamRotZ = 64 ;	
+	CamRotX = 2;
 
-tgi_done();
+	val = une_fonction();
+	glProject (points2d, points3d, 1, 0);
+	printf("Press a key to return to basic %d\n", val);
+	cgetc();
 
-return 0;
+	tgi_done();
+
+	return 0;
 }
