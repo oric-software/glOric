@@ -32,8 +32,8 @@ _PointZ:		.word 0
 
 
 ;; Point 2D Projected Coordinates
-_ResX:			.byte 0	
-_ResY:			.byte 0
+_ResX:			.word 0	
+_ResY:			.word 0
 
 
 ;; Intermediary Computation
@@ -112,31 +112,51 @@ dofastprojloop:
 ;;  		project();
         jsr _project
         
-;;  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
         tya
         pha
         txa
         tay
-        
-        lda _Norm+1
+;; #ifdef TEXTMODE      
+;;  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
+;;        
+;;        lda _Norm+1
+;;        sta (ptrpt2), y
+;;        dey 
+;;
+;;        lda _Norm
+;;        sta (ptrpt2), y
+;;        dey
+;;
+;;        lda _ResY
+;;        sta (ptrpt2), y
+;;;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
+;;        dey
+;;        lda _ResX
+;;        sta (ptrpt2), y
+
+;; #else
+
+        lda _ResY+1
         sta (ptrpt2), y
         dey 
 
-        lda _Norm
+        lda _ResY
         sta (ptrpt2), y
         dey
 
-        lda _ResY
+        lda _ResX+1
         sta (ptrpt2), y
 ;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
         dey
         lda _ResX
         sta (ptrpt2), y
 
+
         tya
         tax
         pla
-;;  	}
+		tay
+;;;;  	}
     dex
     txa
     cmp #$FF
@@ -222,7 +242,101 @@ dofastprojdone:
     sbc _CamRotX
     sta AnglePV
 	
+;; #ifdef TEXTMODE
+;; 	// Quick Disgusting Hack
+;; 	lda AnglePH
+;; 	eor #$FF
+;; 	sec
+;; 	adc #$00
+;; 	cmp #$80
+;; 	ror
+;; 	clc
+;;     adc #SCREEN_WIDTH/2
+;; 	sta _ResX
+;; 
+;; 	lda AnglePV
+;; 	eor #$FF
+;; 	sec
+;; 	adc #$00
+;; 	cmp #$80
+;; 	ror
+;; 	clc
+;;     adc #SCREEN_HEIGHT/2
+;; 	sta _ResY
+;; #else
+
+	;; Extend AnglePH on 16 bits
+	lda #$00
+	sta _ResX+1
+	lda AnglePH
+	sta _ResX
+	bpl angHpositiv
+	lda #$FF
+	sta _ResX+1
+angHpositiv:
+	;; Invert AnglePH on 16 bits
+	sec 
+	lda #$00
+	sbc _ResX
+	sta _ResX
+	lda #$00
+	sbc _ResX+1
+	sta _ResX+1
+	;; Multiply by 4
+	asl _ResX
+	rol _ResX+1
+	asl _ResX
+	rol _ResX+1
+	;; Add offset of screen center
+	clc
+	lda _ResX
+	adc #120
+	sta _ResX
+	lda _ResX+1
+	adc #$00
+	sta _ResX+1
 	
+	;; lda AnglePV
+	;; eor #$FF
+	;; sec
+	;; adc #$00
+	;; asl
+	;; asl
+	;; adc #100 ; = 200 /2 SCREEN_HEIGHT/2
+	;; sta _ResY
+	
+	;; Extend AnglePV on 16 bits
+	lda #$00
+	sta _ResY+1
+	lda AnglePV
+	sta _ResY
+	bpl angVpositiv
+	lda #$FF
+	sta _ResY+1
+angVpositiv:
+	;; Invert AnglePV on 16 bits
+	sec 
+	lda #$00
+	sbc _ResY
+	sta _ResY
+	lda #$00
+	sbc _ResY+1
+	sta _ResY+1
+	;; Multiply by 4
+	asl _ResY
+	rol _ResY+1
+	asl _ResY
+	rol _ResY+1
+	;; Add offset of screen center
+	clc
+	lda _ResY
+	adc #100
+	sta _ResY
+	lda _ResY+1
+	adc #$00
+	sta _ResY+1
+
+;; #endif	
 	
 	;; restore context
 	pla

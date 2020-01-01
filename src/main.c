@@ -117,14 +117,41 @@ void dispInfo(){
 
 void main()
 {
-	int i=0;
+/*	int i=0;
+	
 	CamPosX = -24;
 	CamPosY = 0;
 	CamPosZ = 3;
 
- 	CamRotZ = 64 ;	
+ 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 2;
+	get();
+	nbPts =0 ;
+	nbSegments =0 ;
+	addCube(-4, -4, 2);
+	//addCube(4, 4, 10);
+	glProject (points2d, points3d, nbPts);
 
+	for (i=0; i< 12; i+=4) {
+		printf ("%d %d %d %d =>", 
+			points3d[i+0], 
+			points3d[i+1], 
+			points3d[i+2], 
+			points3d[i+3] 
+		);
+		printf ("%d %d %d %d\n", 
+			points2d[i+0], 
+			points2d[i+1], 
+			points2d[i+2], 
+			points2d[i+3] 
+		);
+	}
+*/
+	/* printf("Value before	glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
+	glProject (points2d, points3d, nbPts);
+	printf("Value returned by glProject: %d %d %d %d \n", points2d[0], points2d[1], points2d[2], points2d[3]);
+	printf("Value returned by glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
+	*/
 #ifdef TEXTMODE
 	textDemo();
 #else
