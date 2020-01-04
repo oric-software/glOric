@@ -1,4 +1,4 @@
-set PATH_TO_ORICUTRON=C:\Users\Public\Oricutron
+set PATH_TO_ORICUTRON=C:\Users\Public\Orix
 set PLATFORM=telestrat
 
 ca65 -t%PLATFORM% glOric.asm -g -l glOric.lst -o glOric.o  --include-dir .
