@@ -116,26 +116,27 @@ dofastprojloop:
         pha
         txa
         tay
-;; #ifdef TEXTMODE      
+;; #ifdef TEXTMODE  
+.IFDEF TEXTMODE    
 ;;  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
-;;        
-;;        lda _Norm+1
-;;        sta (ptrpt2), y
-;;        dey 
-;;
-;;        lda _Norm
-;;        sta (ptrpt2), y
-;;        dey
-;;
-;;        lda _ResY
-;;        sta (ptrpt2), y
-;;;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
-;;        dey
-;;        lda _ResX
-;;        sta (ptrpt2), y
+        
+        lda _Norm+1
+        sta (ptrpt2), y
+        dey 
+
+        lda _Norm
+        sta (ptrpt2), y
+        dey
+
+        lda _ResY
+        sta (ptrpt2), y
+;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
+        dey
+        lda _ResX
+        sta (ptrpt2), y
 
 ;; #else
-
+.ELSE
         lda _ResY+1
         sta (ptrpt2), y
         dey 
@@ -146,11 +147,11 @@ dofastprojloop:
 
         lda _ResX+1
         sta (ptrpt2), y
-;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
         dey
+
         lda _ResX
         sta (ptrpt2), y
-
+.ENDIF
 
         tya
         tax
@@ -242,28 +243,29 @@ dofastprojdone:
     sbc _CamRotX
     sta AnglePV
 	
-;; #ifdef TEXTMODE
-;; 	// Quick Disgusting Hack
-;; 	lda AnglePH
-;; 	eor #$FF
-;; 	sec
-;; 	adc #$00
-;; 	cmp #$80
-;; 	ror
-;; 	clc
-;;     adc #SCREEN_WIDTH/2
-;; 	sta _ResX
-;; 
-;; 	lda AnglePV
-;; 	eor #$FF
-;; 	sec
-;; 	adc #$00
-;; 	cmp #$80
-;; 	ror
-;; 	clc
-;;     adc #SCREEN_HEIGHT/2
-;; 	sta _ResY
+.IFDEF TEXTMODE
+ 	;; Quick Disgusting Hack
+ 	lda AnglePH
+ 	eor #$FF
+ 	sec
+ 	adc #$00
+ 	cmp #$80
+ 	ror
+ 	clc
+    adc #SCREEN_WIDTH/2
+ 	sta _ResX
+ 
+ 	lda AnglePV
+ 	eor #$FF
+ 	sec
+ 	adc #$00
+ 	cmp #$80
+ 	ror
+ 	clc
+    adc #SCREEN_HEIGHT/2
+ 	sta _ResY
 ;; #else
+.ELSE
 
 	;; Extend AnglePH on 16 bits
 	lda #$00
@@ -295,7 +297,17 @@ angHpositiv:
 	lda _ResX+1
 	adc #$00
 	sta _ResX+1
-	
+
+	;; lda AnglePH
+	;; eor #$FF
+	;; sec
+	;; adc #$00
+	;; asl
+	;; asl
+	;; clc
+    ;; adc #120 ; 240/2 = WIDTH/2
+	;; sta _ResX
+    ;; 
 	;; lda AnglePV
 	;; eor #$FF
 	;; sec
@@ -337,7 +349,7 @@ angVpositiv:
 	sta _ResY+1
 
 ;; #endif	
-	
+.ENDIF	
 	;; restore context
 	pla
 	tay

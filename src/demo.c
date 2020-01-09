@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <conio.h>
 #include <tgi.h>
 
@@ -7,6 +8,8 @@
 
 #include "alphabet.c"
 #include "traj.c"
+#include "fill8.c"
+
 extern unsigned char une_fonction();
 extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
 extern int CamPosX, CamPosY, CamPosZ;
@@ -38,31 +41,28 @@ void addCube(char X, char Y, char Z){
 
 
 void hrDrawSegments(){
+
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
-	char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
+	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
 	for (ii = 0; ii< nbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-		//char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
 
-        OtherPixelX=points2d[idxPt1*SIZEOF_2DPOINT + 0];
-		//OtherPixelX=((int *)points2d)[idxPt1*2];
-        OtherPixelY=points2d[idxPt1*SIZEOF_2DPOINT + 2];
-		//OtherPixelX=((int *)points2d)[idxPt1*2+1];
+        //OtherPixelX= (int)points2d[idxPt1*SIZEOF_2DPOINT + 0];
+		OtherPixelX=((int *)points2d)[idxPt1*2];
+        //OtherPixelY= (int)points2d[idxPt1*SIZEOF_2DPOINT + 2];
+		OtherPixelY=((int *)points2d)[idxPt1*2+1];
 
-        CurrentPixelX=points2d[idxPt2*SIZEOF_2DPOINT + 0];
-		//CurrentPixelX=((int *)points2d)[idxPt2*2];
-        CurrentPixelY=points2d[idxPt2*SIZEOF_2DPOINT + 2];
-		//CurrentPixelY=((int *)points2d)[idxPt2*2+1];
+        //CurrentPixelX=(int)points2d[idxPt2*SIZEOF_2DPOINT + 0];
+		CurrentPixelX=((int *)points2d)[idxPt2*2];
+        //CurrentPixelY=(int)points2d[idxPt2*SIZEOF_2DPOINT + 2];
+		CurrentPixelY=((int *)points2d)[idxPt2*2+1];
 		printf("%d %d %d %d \n",
 		OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY);
 		cgetc();
-		tgi_line((int)OtherPixelX,(int)OtherPixelY,(int)CurrentPixelX,(int)CurrentPixelY);
-		/*if ((OtherPixelX >0 ) && (OtherPixelX <240 ) && (CurrentPixelY>0) && (CurrentPixelY<200)) {
-			DrawLine8();
-		}*/
+		tgi_line(OtherPixelX,OtherPixelY,CurrentPixelX,CurrentPixelY);
 	}
 }
 
@@ -74,10 +74,10 @@ void hiresIntro (){
 	CamPosY = 0;
 	CamPosZ = 3;
 
- 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+ 	CamRotZ = 64 ;
 	CamRotX = 2;
 
-    for (i=0;i<120;) {
+    for (i=0;i<2;) {
 		CamPosX = traj[i++];
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
@@ -96,20 +96,25 @@ int main ()
 {
 
 	//unsigned char val;
-	int i;
-
+	signed char i;
+	fill8(7,3,3,1,1,5);
+	printf ("----------\n");
+	fill8(1,5,6,5,5,1);
+	printf ("----------\n");
+	fill8(-1,3,2,-1,5,5);
+	/*
 	tgi_install (tgi_static_stddrv);
 
 	tgi_init ();
 	tgi_clear ();
-
+	*/
 
 	/*initBuffers();*/
 
 	/*
 	blit_picture(1,1,william_pic[0]/6,william_pic[1], william_pic);
 */
-	tgi_outtextxy (50,50,"hello");
+	//tgi_outtextxy (50,50,"hello");
 	/*tgi_setpixel(200,100);
 	tgi_line(-10,-10,100,100);
 */
@@ -121,9 +126,9 @@ int main ()
  	CamRotZ = 64 ;
 	CamRotX = 2;
 	*/
-	nbPts =0 ;
+	/*nbPts =0 ;
 	nbSegments =0 ;
-	addCube(-4, -4, 2);
+	addCube(-4, -4, 2);*/
 
 	/*glProject (points2d, points3d, nbPts, 0);
 	for (i=0; i< 12; i+=4) {
@@ -143,7 +148,8 @@ int main ()
 
 	//	addCube(4, 4, 10);
 	//tgi_line(135,7, 128, 124);
-	hiresIntro();
+	//hiresIntro();
+
 /*
 	//val = une_fonction();
 	printf("Value before	glProject: %d %d %d %d \n", points2d[1]<<8+points2d[0], points2d[3]<<8+points2d[2], points2d[5]<<8+points2d[4], points2d[7]<<8+points2d[6]);
@@ -159,7 +165,7 @@ int main ()
 	*/
 	cgetc();
 
-	tgi_done();
+	//tgi_done();
 
 	return 0;
 }

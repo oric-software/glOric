@@ -56,7 +56,7 @@ plotOrNot:
     lda _Point1Y
 	bmi plotdone
 	beq plotdone
-	cmp SCREEN_HEIGHT
+	cmp #SCREEN_HEIGHT
 	bpl plotdone
     sta _PrintY
     jsr _computePosPrint
@@ -136,10 +136,10 @@ y1overy0:
 ; endif
 computeErr:
 //  err = dx+dy;  /* error value e_xy */
-; a = dx 
+; a = dx
     lda dX
 ; a = a + dy
-    clc 
+    clc
     adc dY
 ; err = a
     sta err
@@ -196,14 +196,14 @@ dyovera:
 //      if (e2 <= dx) /* e_xy+e_y < 0 */
 ;       a = dx
         lda dX
-;       if a < e2 then goto e2overdx   
+;       if a < e2 then goto e2overdx
         cmp e2
         bmi e2overdx
 //          err += dx;
 ;           a = err
             lda err
 ;           a = a + dx
-            clc 
+            clc
             adc dX
 ;           err = a
             sta err
@@ -229,4 +229,3 @@ endloop:
 
 .)
     rts
-

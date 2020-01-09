@@ -2,6 +2,7 @@
 #define CUBE_SIZE	4
 #define NB_POINTS_CUBE		8
 #define NB_SEGMENTS_CUBE 	12
+#define NB_FACES_CUBE 	12
 const char ptsCube[]={
 	 -CUBE_SIZE, -CUBE_SIZE, +CUBE_SIZE, 0 // P0
 	,-CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE, 0 // P1
@@ -12,7 +13,7 @@ const char ptsCube[]={
 	,+CUBE_SIZE, +CUBE_SIZE, -CUBE_SIZE, 0 // P6
 	,+CUBE_SIZE, +CUBE_SIZE, +CUBE_SIZE, 0 // P7
 };
-const char segCube[]={		
+const char segCube[]={
 	  0, 1, 124, 0 //124, 0
 	, 1, 2, 45 , 0 //92, 0
 	, 2, 3, 124, 0 //47, 0
@@ -27,6 +28,20 @@ const char segCube[]={
 	, 3, 7, 45 , 0 //124, 0
 };
 
+const char facCube[]={
+	  0, 1, 2, 77 //124, 0
+	, 0, 2, 3, 77 //92, 0
+	, 4, 5, 1, 78 //47, 0
+	, 4, 1, 0, 78 //124, 0
+	, 7, 6, 5, 79 //124, 0
+	, 7, 5, 4, 79 //124, 0
+	, 3, 2, 6, 80 //92, 0
+	, 3, 6, 7, 80 //47, 0
+	, 4, 0, 3, 81 //124, 0
+	, 4, 3, 7, 81 //124, 0
+	, 5, 1, 2, 82 //124, 0
+	, 5, 2, 6, 82 //124, 0
+};
 
 #define NB_POINTS_M		5
 #define NB_SEGMENTS_M 	4
@@ -53,7 +68,7 @@ const char ptsC[]={
 	,0, 0, 6, 0 // P4
 	,1, 0, 7, 0 // P5
 	,3, 0, 7, 0 // P6
-	,4, 0, 6, 0 // P7	
+	,4, 0, 6, 0 // P7
 };
 const char segC[]={			// 67
 	  0, 1, 67, 0 // 47, 0
@@ -100,11 +115,11 @@ const char segR[]={		// chr 82
 	, 3, 4, 82, 0 // 124, 0
 	, 4, 5, 82, 0 // 47, 0
 	, 5, 6, 82, 0 // 45, 0
-	, 7, 8, 82, 0 // 92, 0	
+	, 7, 8, 82, 0 // 92, 0
 };
 #define NB_POINTS_E		6
 #define NB_SEGMENTS_E 	4
-const char ptsE[]={	 
+const char ptsE[]={
 	 0, 0, 7, 0 // P0
 	,4, 0, 7, 0 // P1
 	,0, 0, 1, 0 // P2
@@ -125,7 +140,7 @@ const char ptsN[]={
 	,0, 0, 7, 0 // P1
 	,4, 0, 1, 0 // P2
 	,4, 0, 7, 0 // P3
-	
+
 };
 const char segN[]={		// chr 78
 	  0, 1, 78, 0 //124, 0

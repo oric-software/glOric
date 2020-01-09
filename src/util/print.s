@@ -93,7 +93,7 @@ ScreenAdressHigh
 ; sp+4 => Adress of the message to display
 ;
 _AdvancedPrint
-
+.(
 	; Initialise display adress
 	; this uses self-modifying code
 	; (the $0123 is replaced by display adress)
@@ -148,5 +148,50 @@ write
 
 	; Finished !
 end_loop_char
+.)
+	rts
+
+;
+; The message and display position will be read from the stack.
+; sp+0 => X coordinate
+; sp+2 => Y coordinate
+; sp+4 => ascii code of character to display
+;
+_PutChar
+.(
+	; Initialise display adress
+	; this uses self-modifying code
+	; (the $0123 is replaced by display adress)
+	
+	; The idea is to get the Y position from the stack,
+	; and use it as an index in the two adress tables.
+	; We also need to add the value of the X position,
+	; also taken from the stack to the resulting value.
+	
+	ldy #2
+	lda (sp),y				; Access Y coordinate
+	tax
+	
+	lda ScreenAdressLow,x	; Get the LOW part of the screen adress
+	clc						; Clear the carry (because we will do an addition after)
+	ldy #0
+	adc (sp),y				; Add X coordinate
+	sta write+1
+	lda ScreenAdressHigh,x	; Get the HIGH part of the screen adress
+	adc #0					; Eventually add the carry to complete the 16 bits addition
+	sta write+2				
+
+
+
+	; Initialise message adress using the stack parameter
+	; this uses self-modifying code
+	; (the $0123 is replaced by message adress)
+	ldy #4
+	lda (sp),y
+
+	; Write the character on screen
+write
+	sta $0123
+.)
 	rts
 

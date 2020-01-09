@@ -1,4 +1,6 @@
-set PATH_TO_ORICUTRON=C:\Users\Public\Orix
+set PATH_TO_ORICUTRON=C:\Users\tbpk7658\Applis\Orix
+REM C:\Users\Public\Oricutron
+set ORICUTRON=oricutron-sdl2.exe
 set PLATFORM=telestrat
 
 ca65 -t%PLATFORM% glOric.asm -g -l glOric.lst -o glOric.o  --include-dir .
@@ -11,5 +13,5 @@ copy demoGlOric.tap %PATH_TO_ORICUTRON%\tapes
 copy demoGlOric.tap %PATH_TO_ORICUTRON%\usbdrive\bin\d
 
 REM PUSHD %PATH_TO_ORICUTRON%
-REM START .\oricutron.exe
+REM START .\%ORICUTRON%
 REM POPD

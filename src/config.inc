@@ -1,5 +1,6 @@
 ; 
 ; 
+;.DEFINE TEXTMODE
 
 SCREEN_WIDTH			= 40 ;// $01
 SCREEN_HEIGHT			= 26
