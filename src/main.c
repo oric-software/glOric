@@ -53,7 +53,7 @@ char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 #ifdef TEXTMODE
 char faces[NB_MAX_FACES*SIZEOF_FACES];
 unsigned char nbFaces=0;
-unsigned char distFaces[NB_MAX_FACES];
+//unsigned char distFaces[NB_MAX_FACES];
 
 // TEXT SCREEN TEMPORARY BUFFERS
 // z-depth buffer
@@ -214,45 +214,92 @@ void debugHiresIntro (){
 #include "fill8.c"
 
 void buffer2screen(){
-	int ii, jj;
-	clearScreen(); 
+	/*int ii, jj;*/
+    memcpy((void*)0xBB80, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
+	/* clearScreen(); 
 	for (ii=0;ii<SCREEN_HEIGHT; ii++){
 		for (jj=2; jj < SCREEN_WIDTH; jj++){
 			PutChar(jj,ii,fbuffer[ii*SCREEN_WIDTH+jj]);
 		}
-	}
+	}*/
 }
 // extern void PutChar(char x_pos,char y_pos,char ch2disp);
-
-
 void fillFaces() {
 
-    int ii=0;
+    unsigned char ii=0;
+    unsigned char jj = 0;
     int d1, d2, d3;
     int dmoy;
-    unsigned char idxPt1, idxPt2, idxPt3;
-
+    unsigned char idxPt1, idxPt2, idxPt3, distface;
+    unsigned char offPt1, offPt2, offPt3;
+    
 	for (ii=0; ii< nbFaces; ii++) {
-        idxPt1 = faces[ii*SIZEOF_FACES+0];
+        jj = ii << 2;
+        /*idxPt1 = faces[ii*SIZEOF_FACES+0];
         idxPt2 = faces[ii*SIZEOF_FACES+1];
-        idxPt3 = faces[ii*SIZEOF_FACES+2];
-		
-        d1 = points2d [idxPt1*SIZEOF_2DPOINT+3]*256 + points2d [idxPt1*SIZEOF_2DPOINT+2];
-        d2 = points2d [idxPt2*SIZEOF_2DPOINT+3]*256 + points2d [idxPt2*SIZEOF_2DPOINT+2];
-        d3 = points2d [idxPt3*SIZEOF_2DPOINT+3]*256 + points2d [idxPt3*SIZEOF_2DPOINT+2];
-        dmoy = (d1+d2+d3)/3;
+        idxPt3 = faces[ii*SIZEOF_FACES+2];*/
+        
+		/*idxPt1 = faces[jj++];
+        idxPt2 = faces[jj++];
+        idxPt3 = faces[jj++];*/
+        
+        offPt1 = faces[jj++] << 2;
+        offPt2 = faces[jj++] << 2;
+        offPt3 = faces[jj++] << 2;
+        
+        //d1 = points2d [idxPt1*SIZEOF_2DPOINT+3]*256 + points2d [idxPt1*SIZEOF_2DPOINT+2];
+        //d1 = points2d [(idxPt1<<2)+3]*256 + points2d [(idxPt1<<2)+2];
+        //d1 = points2d [(idxPt1<<2)+3];
+        //d1 <<= 8;
+        //d1 |= points2d [(idxPt1<<2)+2];
+        d1 = *((int*)(points2d+offPt1+2));
+        //d2 = points2d [idxPt2*SIZEOF_2DPOINT+3]*256 + points2d [idxPt2*SIZEOF_2DPOINT+2];
+        d2 = *((int*)(points2d+offPt2+2));
+        //d3 = points2d [idxPt3*SIZEOF_2DPOINT+3]*256 + points2d [idxPt3*SIZEOF_2DPOINT+2];
+        d3 = *((int*)(points2d+offPt3+2));
+        
+
+        //dmoy = (d1+d2+d3)/3;
+        dmoy = (d1+d2+d3)>>2;
         if (dmoy >= 256) {
-            distFaces[ii] = 256;
-        } else {			
+            //distFaces[ii] = 256;
+            dmoy = 256;
+        }/* else {			
             distFaces[ii] = dmoy;
-        }
+        }*/
+        distface = (unsigned char)(dmoy & 0x00FF);
         //printf ("face %d: %d, %d, %d => %d\n", ii, faces[ii*SIZEOF_FACES+0], faces[ii*SIZEOF_FACES+1], faces[ii*SIZEOF_FACES+2], distFaces[ii]);
         
-        fill8(points2d [idxPt1*SIZEOF_2DPOINT+0], points2d [idxPt1*SIZEOF_2DPOINT+1], 
-            points2d [idxPt2*SIZEOF_2DPOINT+0], points2d [idxPt2*SIZEOF_2DPOINT+1], 
-            points2d [idxPt3*SIZEOF_2DPOINT+0], points2d [idxPt3*SIZEOF_2DPOINT+1],
-            distFaces[ii], faces[ii*SIZEOF_FACES+3]);
+        fill8(points2d [offPt1+0], points2d [offPt1+1], 
+            points2d [offPt2+0], points2d [offPt2+1], 
+            points2d [offPt3+0], points2d [offPt3+1],
+            distface, faces[jj]);
     }
+}
+void faceIntro() {
+    int i;
+    get();
+    enterSC();
+
+	CamPosX = -24;
+	CamPosY = 0;
+	CamPosZ = 0;
+
+ 	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+	CamRotX = 2;
+
+    for (i=0;i<120;) {
+		CamPosX = traj[i++];
+		CamPosY = traj[i++];
+		CamRotZ = traj[i++];
+		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
+        glProject (points2d, points3d, nbPts);
+        initScreenBuffers();
+        fillFaces();
+        buffer2screen();
+    }
+
+	leaveSC();
 
 }
 void txtGameLoop2() {
@@ -315,13 +362,13 @@ void faceDemo(){
     addCube3(0, 0, 0);
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
-	
-    CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	faceIntro();
+    CamPosX = -9;
+	CamPosY = 10;
+	CamPosZ = 1;
 
- 	CamRotZ = 20 ;
-	CamRotX = 2;
+ 	CamRotZ = -32 ;
+	CamRotX = 0;
 
 	txtGameLoop2();
 
@@ -332,10 +379,11 @@ void main()
 {
     
 	//faceDemo();
+    
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-
+    
 }
