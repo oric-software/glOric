@@ -143,6 +143,19 @@ computeErr:
     adc dY
 ; err = a
     sta err
+//  if ((A1err >= 64) ||(A1err < -64)) return;  
+    sec
+    sbc #$40
+    bvc *+4
+    eor #$80
+    bpl endloop
+    lda err
+    sec
+    sbc #$C0
+    bvc *+4
+    eor #$80
+    bmi endloop
+    
 //  while (true)   /* loop */
 drawloop:
 //      PLOT (x0, y0)
@@ -172,7 +185,10 @@ continue:
 //      if (e2 >= dy)
 ;       a = e2 (opt)
 ;       if a < dy then goto dyovera
-        cmp dY
+        sec
+        sbc dY
+        bvc *+4
+        eor #$80
         bmi dyovera
 //          err += dy; /* e_xy+e_x > 0 */
 ;           a = err
@@ -197,7 +213,10 @@ dyovera:
 ;       a = dx
         lda dX
 ;       if a < e2 then goto e2overdx
-        cmp e2
+        sec
+        sbc e2
+        bvc*+4
+        eor #$80
         bmi e2overdx
 //          err += dx;
 ;           a = err

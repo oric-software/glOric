@@ -37,6 +37,7 @@ class bres_agent :
     def step(self,):
 
         e2 = 2*self.err;
+        
         if (e2 >= self.dY):
             self.err += self.dY; # e_xy+e_x > 0 */
             self.X += self.sx;
@@ -54,6 +55,7 @@ class bres_agent :
     def stepY(self,):
         nxtY = self.Y+self.sy
         e2 = 2*self.err;
+        if ((e2>127) or (e2<=-128)): print ("Error %d"%(e2))
         while ( not self.arrived and ((e2 > self.dX ) or (self.Y != nxtY))):
             if (e2 >= self.dY):
                 self.err += self.dY; # e_xy+e_x > 0 */
@@ -65,6 +67,7 @@ class bres_agent :
             if (self.X == self.destX) and ( self.Y == self.destY):
                 self.arrived = True
             e2 = 2*self.err;
+            if ((e2>127) or (e2<=-128)): print ("Error %d"%(e2))
             
         retval = [self.X, self.Y]
         return retval

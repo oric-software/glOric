@@ -1,3 +1,30 @@
+
+
+
+;;	hseg8 (
+;;		signed char p1x			sp+0
+;;		, signed char p2x		sp+2
+;;		, signed char py		sp+4	tmp2
+;;		, unsigned char dist	sp+6
+;;		, char char2disp		sp+8
+;;	)
+
+/*
+_hseg8:
+.(
+    ;; if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
+	ldy #4
+	lda (sp),y				; Access py parameter
+	bmi hseg8_done
+	cmp #SCREEN_HEIGHT
+	bpl hseg8_done
+	sta tmp2 
+hseg8_inheight:
+
+hseg8_done:
+.)
+	rts
+	
 _hfill8
 	ldx #7 : lda #5 : jsr enter :
 	ldy #4 : lda (ap),y : sta reg0 :
@@ -48,3 +75,4 @@ JBLmainbis366
 	lda #0 : ldx reg4 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
 	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp JBLmainbis363 : : :
 	jmp leave :
+*/

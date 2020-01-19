@@ -216,7 +216,7 @@ void debugHiresIntro (){
 void buffer2screen(){
 	/*int ii, jj;*/
     memcpy((void*)0xBB80, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
-	/* clearScreen(); 
+	/* clearScreen();
 	for (ii=0;ii<SCREEN_HEIGHT; ii++){
 		for (jj=2; jj < SCREEN_WIDTH; jj++){
 			PutChar(jj,ii,fbuffer[ii*SCREEN_WIDTH+jj]);
@@ -232,21 +232,22 @@ void fillFaces() {
     int dmoy;
     unsigned char idxPt1, idxPt2, idxPt3, distface;
     unsigned char offPt1, offPt2, offPt3;
-    
+    signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
+
 	for (ii=0; ii< nbFaces; ii++) {
         jj = ii << 2;
         /*idxPt1 = faces[ii*SIZEOF_FACES+0];
         idxPt2 = faces[ii*SIZEOF_FACES+1];
         idxPt3 = faces[ii*SIZEOF_FACES+2];*/
-        
+
 		/*idxPt1 = faces[jj++];
         idxPt2 = faces[jj++];
         idxPt3 = faces[jj++];*/
-        
+
         offPt1 = faces[jj++] << 2;
         offPt2 = faces[jj++] << 2;
         offPt3 = faces[jj++] << 2;
-        
+
         //d1 = points2d [idxPt1*SIZEOF_2DPOINT+3]*256 + points2d [idxPt1*SIZEOF_2DPOINT+2];
         //d1 = points2d [(idxPt1<<2)+3]*256 + points2d [(idxPt1<<2)+2];
         //d1 = points2d [(idxPt1<<2)+3];
@@ -257,24 +258,33 @@ void fillFaces() {
         d2 = *((int*)(points2d+offPt2+2));
         //d3 = points2d [idxPt3*SIZEOF_2DPOINT+3]*256 + points2d [idxPt3*SIZEOF_2DPOINT+2];
         d3 = *((int*)(points2d+offPt3+2));
-        
+
 
         //dmoy = (d1+d2+d3)/3;
         dmoy = (d1+d2+d3)>>2;
         if (dmoy >= 256) {
             //distFaces[ii] = 256;
             dmoy = 256;
-        }/* else {			
+        }/* else {
             distFaces[ii] = dmoy;
         }*/
         distface = (unsigned char)(dmoy & 0x00FF);
-        //printf ("face %d: %d, %d, %d => %d\n", ii, faces[ii*SIZEOF_FACES+0], faces[ii*SIZEOF_FACES+1], faces[ii*SIZEOF_FACES+2], distFaces[ii]);
-        
-        fill8(points2d [offPt1+0], points2d [offPt1+1], 
-            points2d [offPt2+0], points2d [offPt2+1], 
-            points2d [offPt3+0], points2d [offPt3+1],
+
+        P1X=points2d [offPt1+0];
+        P1Y=points2d [offPt1+1];
+        P2X=points2d [offPt2+0];
+        P2Y=points2d [offPt2+1];
+        P3X=points2d [offPt3+0];
+        P3Y=points2d [offPt3+1];
+        //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
+        //get();
+        fill8(P1X, P1Y,
+            P2X, P2Y,
+            P3X, P3Y,
             distface, faces[jj]);
+
     }
+
 }
 void faceIntro() {
     int i;
@@ -288,7 +298,7 @@ void faceIntro() {
  	CamRotZ = 64 ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
 	CamRotX = 2;
 
-    for (i=0;i<120;) {
+    for (i=0;i<60;) {
 		CamPosX = traj[i++];
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
@@ -299,14 +309,39 @@ void faceIntro() {
         buffer2screen();
     }
 
+	CamPosX = -8;
+	CamPosY = 8;
+	CamPosZ = 1;
+
+ 	CamRotZ = -32 ;
+	CamRotX = 0;
+	for (i= 0; i< 10; i++) {
+		forward();
+        glProject (points2d, points3d, nbPts);
+        initScreenBuffers();
+        fillFaces();
+        buffer2screen();
+	}
+
 	leaveSC();
 
 }
 void txtGameLoop2() {
 
 	char key;
-	//key=get();
+    unsigned char ii;
+	key=get();
 	glProject (points2d, points3d, nbPts);
+
+    /*printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+        for (ii=0; ii< nbPts; ii++){
+            printf ("[%d %d %d] => [%d %d] %d \n"
+            , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
+            , points2d [ii*SIZEOF_2DPOINT+0], points2d [ii*SIZEOF_2DPOINT+1], points2d[ii*SIZEOF_2DPOINT+2]
+            );
+        }
+        get();
+    */
 	initScreenBuffers();
 	fillFaces();
     while (1==1) {
@@ -363,12 +398,20 @@ void faceDemo(){
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
 	lores0();
 	faceIntro();
-    CamPosX = -9;
-	CamPosY = 10;
+/*    CamPosX = -3;
+	CamPosY = 3;
 	CamPosZ = 1;
 
  	CamRotZ = -32 ;
 	CamRotX = 0;
+
+    CamPosX = 0;
+	CamPosY = -4;
+	CamPosZ = 1;
+
+ 	CamRotZ = -64 ;
+	CamRotX = 0;
+*/
 
 	txtGameLoop2();
 
@@ -377,13 +420,13 @@ void faceDemo(){
 
 void main()
 {
-    
+
 	//faceDemo();
-    
+
 #ifdef TEXTMODE
 	textDemo();
 #else
 	hiresDemo();
 #endif
-    
+  
 }

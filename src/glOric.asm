@@ -47,6 +47,8 @@ _AngleV:        .byte 0
 
 AnglePH: .byte 0 ; horizontal angle of point from player pov
 AnglePV: .byte 0 ; vertical angle of point from player pov
+HAngleOverflow: .byte 0 
+VAngleOverflow: .byte 0 
 
 
 ptrpt3 		:= ptr3
@@ -182,6 +184,10 @@ dofastprojdone:
 	tya
 	pha
 
+    lda #0
+    sta HAngleOverflow
+    sta VAngleOverflow
+
 	;; DeltaX = CamPosX - PointX
 	;; Divisor = DeltaX
 	sec
@@ -236,31 +242,44 @@ dofastprojdone:
     lda _AngleH
     sbc _CamRotZ
     sta AnglePH
+    bvc project_noHAngleOverflow
+    lda #$80
+    sta HAngleOverflow
 
+project_noHAngleOverflow:
     ;; AnglePV = AngleV - CamRotX
     sec
     lda _AngleV
     sbc _CamRotX
     sta AnglePV
+    bvc project_noVAngleOverflow
+    lda #$80
+    sta VAngleOverflow
+
+project_noVAngleOverflow:   
 	
 .IFDEF TEXTMODE
- 	;; Quick Disgusting Hack
+ 	;; Quick Disgusting Hack  X = (-AnglePH //2 ) + LE / 2
  	lda AnglePH
+	cmp #$80
+	ror
+    ora HAngleOverflow
+   
  	eor #$FF
  	sec
  	adc #$00
- 	cmp #$80
- 	ror
  	clc
     adc #SCREEN_WIDTH/2
  	sta _ResX
  
  	lda AnglePV
+	cmp #$80
+	ror
+    ora VAngleOverflow
+    
  	eor #$FF
  	sec
  	adc #$00
- 	cmp #$80
- 	ror
  	clc
     adc #SCREEN_HEIGHT/2
  	sta _ResY
