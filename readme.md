@@ -19,4 +19,4 @@ __Screenshots__
 |--|--|
 |![](docs/imgs/ExampleText.JPG)|![](docs/imgs/ExampleHires.JPG)|
 
-![](docs/imgs/RasterizingWithFiller.jpg)
+![](docs/imgs/RasterizingWithFiller.JPG)
