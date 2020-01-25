@@ -168,7 +168,7 @@ dofastprojloop:
         txa
         tay
 		
-#ifdef TEXTMODE      
+#ifndef HRSMODE      
  //  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
      
         lda _Norm+1

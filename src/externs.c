@@ -1,3 +1,6 @@
+
+
+
  // Point 3D Coordinates
 extern int PointX;
 extern int PointY;
@@ -69,3 +72,24 @@ extern char Point2X;
 extern char Point2Y;
 extern int PosPrint;
 extern char char2Display;
+
+
+//
+// ===== Display.s =====
+//
+extern unsigned char CurrentPixelX;             // Coordinate X of edited pixel/byte
+extern unsigned char CurrentPixelY;             // Coordinate Y of edited pixel/byte
+
+extern unsigned char OtherPixelX;               // Coordinate X of other edited pixel/byte
+extern unsigned char OtherPixelY;               // Coordinate Y of other edited pixel/byte
+
+
+//
+// ====== Filler.s ==========
+
+unsigned int	CurrentPattern=0;
+extern	unsigned char	X0;
+extern	unsigned char	Y0;
+extern	unsigned char	X1;
+extern	unsigned char	Y1;
+
