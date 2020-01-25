@@ -37,7 +37,7 @@ class bres_agent :
     def step(self,):
 
         e2 = 2*self.err;
-        
+
         if (e2 >= self.dY):
             self.err += self.dY; # e_xy+e_x > 0 */
             self.X += self.sx;
@@ -54,8 +54,11 @@ class bres_agent :
 
     def stepY(self,):
         nxtY = self.Y+self.sy
-        e2 = 2*self.err;
-        if ((e2>127) or (e2<=-128)): print ("Error %d"%(e2))
+        #e2 = 2*self.err;
+        if (self.err > 63): e2 = 128
+        elif (self.err < -64): e2 = -127
+        else : e2 = 2*self.err
+
         while ( not self.arrived and ((e2 > self.dX ) or (self.Y != nxtY))):
             if (e2 >= self.dY):
                 self.err += self.dY; # e_xy+e_x > 0 */
@@ -63,19 +66,21 @@ class bres_agent :
             if (e2 <= self.dX): # e_xy+e_y < 0 */
                 self.err += self.dX;
                 self.Y += self.sy;
-    
+
             if (self.X == self.destX) and ( self.Y == self.destY):
                 self.arrived = True
-            e2 = 2*self.err;
-            if ((e2>127) or (e2<=-128)): print ("Error %d"%(e2))
-            
+            #e2 = 2*self.err;
+            if (self.err > 63): e2 = 128
+            elif (self.err < -64): e2 = -127
+            else : e2 = 2*self.err
+
         retval = [self.X, self.Y]
         return retval
 
 def fillclip (p1, p2, p3):
     if (p1[1] <= p2[1]):
         if (p2[1] <= p3[1]):
-            pDep = p3 
+            pDep = p3
             pArr1 = p2
             pArr2 = p1
         else:
@@ -87,23 +92,23 @@ def fillclip (p1, p2, p3):
                 pArr1 = p1
                 pArr2 = p3
     else:
-        if (p1[1] <= p3[1]): 
-            pDep = p3 
+        if (p1[1] <= p3[1]):
+            pDep = p3
             pArr1 = p1
             pArr2 = p2
         else:
-            pDep = p1 
+            pDep = p1
             if (p2[1] <= p3[1]):
                 pArr1 = p3
                 pArr2 = p2
             else:
                 pArr1 = p2
                 pArr2 = p3
-                
-    if (pDep[1] != pArr1[1]):       
+
+    if (pDep[1] != pArr1[1]):
         a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
         a2 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
-        print ([a1.X, a1.Y], [a2.X, a2.Y])   
+        print ([a1.X, a1.Y], [a2.X, a2.Y])
         # state = 0
         # while (not (a1.arrived and a2.arrived)):
         #     print (a1.stepY(), a2.stepY())
@@ -118,7 +123,7 @@ def fillclip (p1, p2, p3):
         a1 = bres_agent(pArr1[0],pArr1[1],pArr2[0],pArr2[1])
         while (not (a1.arrived and a2.arrived)):
             print (a1.stepY(), a2.stepY())
-        
+
     else:
         a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
         a2 = bres_agent(pArr1[0],pArr1[1],pArr2[0],pArr2[1])
@@ -143,7 +148,7 @@ def attempt1():
         elif ((a1.arrived) and (state == 0)):
             a1 = bres_agent(pArr1[0],pArr1[1],pArr2[0],pArr2[1])
             state = 1
-            
+
 def main():
     fillclip ([7,3], [3,1], [1,5])
     print ("-----------------")

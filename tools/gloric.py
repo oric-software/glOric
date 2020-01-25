@@ -15,8 +15,9 @@ nbfaces = 2
 nbpoints = 4
 faces = [[3, 2, 6]]
 points = [[4,4,4],[4,4,-4], [-4, 4, -4],[-4, 4, 4],[4,-4,4],[4,-4,-4],[-4,-4,-4],[-4,-4,4]]
-campos=[0, -4, 1]
-camori=[-64, 0] # rotation Z puis X en 127ème de Pi radian
+#points = [[-4,4,-4],[-4,-4,-4],[-4,-4,4]]
+campos=[-4, 4, 1]
+camori=[-32, 0] # rotation Z puis X en 127ème de Pi radian
 
 #system
 screen = [[' ' for i in range(LE+1)] for j in range(HE+1)]
@@ -291,8 +292,6 @@ def project ():
 
 def intProject ():
     global points2
-    LV = LE / 2
-    HV = HE / 2
 
     points2 = []
     for p in points:
@@ -309,9 +308,9 @@ def intProject ():
         AnglePH = AngleH - camori[0]
         AnglePV = AngleV -camori[1]
 
-        X = (-AnglePH //2 ) + LE / 2 # ((AngleH * LV) / math.radians(EAH)) + LV
-        Y = (-AnglePV //2 ) + HE / 2 #((-AngleV * HV) / math.radians(EAV)) + HV
-        p2d = [int(round(X)), int(round(Y))]
+        X = -(AnglePH //2 ) + LE // 2 # ((AngleH * LV) / math.radians(EAH)) + LV
+        Y = -(AnglePV //2 ) + HE // 2 #((-AngleV * HV) / math.radians(EAV)) + HV
+        p2d = [int(X), int(Y)]
         print (str (p), str(p2d), AnglePH, Norm, AnglePV)
         points2.append (p2d)
 
@@ -363,10 +362,10 @@ def main():
     initScreen ()
     #project ()
 
-    #intProject ()
+    intProject ()
     #print (points2[7], points2[6], points2[5])
     #fillclip(points2[7], points2[6], points2[5])
-    fillclip([59, 1], [-16, 29], [-16,1])
+    #fillclip([59, 1], [-16, 29], [-16,1])
     #drawLine( -16, 29,  59, 1)
     #drawLine(59, 1, -16, 29)
     #print (fastAtan (-3, 3))

@@ -330,7 +330,8 @@ project_noHAngleOverflow
     lda #$80
     sta VAngleOverflow
     
-project_noVAngleOverflow    
+project_noVAngleOverflow  
+#ifndef ANGLEONLY  
 #ifdef TEXTMODE
 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
 	lda AnglePH
@@ -439,7 +440,12 @@ angVpositiv:
 	sta _ResY+1
 
 #endif
-
+#else 
+    lda AnglePH
+    sta _ResX
+    lda AnglePV
+    sta _ResY
+#endif
 
 //  ; http://nparker.llx.com/a2/mult.html
 //	// Quotient, Remainder = Quotient / Divisor

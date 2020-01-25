@@ -9,7 +9,7 @@
 ;;		, char char2disp		sp+8
 ;;	)
 
-/*
+
 _hseg8:
 .(
     ;; if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
@@ -24,7 +24,9 @@ hseg8_inheight:
 hseg8_done:
 .)
 	rts
-	
+
+
+/*	
 _hfill8
 	ldx #7 : lda #5 : jsr enter :
 	ldy #4 : lda (ap),y : sta reg0 :

@@ -156,7 +156,7 @@ void A2stepY(){
 	}
 }
 */
-
+/*
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
     signed char dx, fx;
@@ -181,20 +181,26 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         }
     }
 }
+*/
 
-/*
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
     signed char dx, fx;
     signed char ii;
+
     int  offset;
     char *ptrFbuf;
     unsigned char *ptrZbuf;
     signed char nbpoints;
     
     if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
-	dx = max(0, p1x);
-    fx = min(p2x, SCREEN_WIDTH);
+    if (p1x > p2x) {
+        dx = max(0, p2x);
+        fx = min(p1x, SCREEN_WIDTH);
+    } else {
+        dx = max(0, p1x);
+        fx = min(p2x, SCREEN_WIDTH);
+    }
 
     nbpoints = fx - dx;
     if (nbpoints <0) return;
@@ -204,14 +210,14 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     ptrFbuf = fbuffer+offset;
     while (nbpoints >=0){
         if (dist < ptrZbuf[nbpoints] ){
+			//printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf [nbpoints]);
             ptrFbuf [nbpoints] = char2disp;
             ptrZbuf [nbpoints] = dist;
         }
         nbpoints --;
     }
-    
 }
-*/
+
 
 void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, signed char  p3x, signed char  p3y, unsigned char dist, char char2disp){
 	signed char  pDepX;
@@ -220,9 +226,9 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	signed char  pArr1Y;
 	signed char  pArr2X;
 	signed char  pArr2Y;
-	signed char  *ptrPtLeftX;
-	signed char  *ptrPtRightX;
-	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp);
+	//signed char  *ptrPtLeftX;
+	//signed char  *ptrPtRightX;
+	//printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
 
 	if (p1y <= p2y) {
 		if (p2y <= p3y) {
@@ -271,7 +277,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			}
 		}
 	}
-
+    //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
 	if (pDepY != pArr1Y) {
         //printf ("ici1 \n");
 
@@ -302,17 +308,25 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
 
-		if (pArr1X < pArr2X) {
+		/*if (pArr1X == pArr2X) {
+            if (pDepX < pArr1X) {
+                ptrPtLeftX = &A2X;
+                ptrPtRightX = &A1X;		
+            } else {
+                ptrPtLeftX = &A1X;
+                ptrPtRightX = &A2X;		
+            }
+        } else if (pArr1X < pArr2X) {
 			ptrPtLeftX = &A1X;
 			ptrPtRightX = &A2X;		
 		} else {
 			ptrPtLeftX = &A2X;
 			ptrPtRightX = &A1X;
-		}
+		}*/
 
-		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		//printf ("ici1: %d %d %d  \n", A1X, A2X, A1Y);
-		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		while (A1arrived == 0){
 
 			A1stepY();
@@ -320,8 +334,8 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			//printf ("A1 ={%d %d %d %d %d %d } \n", A1X, A1Y, A1err, A1sX, A1dX, A1dY);
 			//printf ("ici2: %d %d %d  \n", A1X, A2X, A1Y);
 			//get();
-			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
-			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}
 
 		A1X = pArr1X;
@@ -338,8 +352,8 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
-			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	} else {
         
@@ -370,23 +384,23 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
 
 
-		if (A1X < A2X) {
-			ptrPtLeftX = &A1X;
-			ptrPtRightX = &A2X;		
-		} else {
-			ptrPtLeftX = &A2X;
-			ptrPtRightX = &A1X;
-		}
+		/*if (pDepX < pArr1X) {
+            ptrPtLeftX = &A1X;
+            ptrPtRightX = &A2X;		
+        } else {
+            ptrPtLeftX = &A2X;
+            ptrPtRightX = &A1X;		
+        }*/
         //printf ("ici2 \n%d %d %d  \n", A1X, A2X, A1Y);
-		//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+		hfill8 (A1X, A2X, A1Y, dist, char2disp);
+		//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		
 		while ((A1arrived == 0) && (A2arrived == 0)){
             //printf ("ici2 \n%d %d %d  \n", A1X, A2X, A1Y);
 			A1stepY();
 			A2stepY();
-			//hfill8 (A1X, A2X, A1Y, dist, char2disp);
-			hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
+			hfill8 (A1X, A2X, A1Y, dist, char2disp);
+			//hfill8 (*ptrPtLeftX, *ptrPtRightX, A1Y, dist, char2disp);
 		}
 	}
 }
