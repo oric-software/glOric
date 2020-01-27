@@ -30,8 +30,6 @@ void zplot(unsigned char X, unsigned char Y, unsigned char dist, char char2disp)
 
 
 void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1, unsigned char distseg, char ch2disp) {
-
-
 	
 	signed char e2;
 	
@@ -47,10 +45,11 @@ void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1,
     if ((_brErr > 64) ||(_brErr < -63)) return;
 	
 	
-	while ((_brX != _brDestX) || (_brY != _brDestY)) { // loop 
+	while (1) { // loop 
         // plot (brX, brY, distseg, ch2disp)
 		//printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
 		zplot(_brX, _brY, distseg, ch2disp);
+        if ((_brX == _brDestX) && (_brY == _brDestY)) break;
         //e2 = 2*err;
 		e2 = (_brErr < 0) ? (
 			((_brErr & 0x40) == 0)?(
@@ -113,6 +112,7 @@ def drawLine( x0,  y0,  x1,  y1):
 
 void lrDrawSegments(){
 	unsigned char ii = 0;
+	unsigned char jj = 0;
 	unsigned char idxPt1, idxPt2;
     unsigned char offPt1, offPt2;
     int d1, d2;
@@ -124,44 +124,54 @@ void lrDrawSegments(){
 #endif
 
 	for (ii = 0; ii< nbSegments; ii++){
-
-		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
-		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
+        
+        jj = ii << 2; // ii*SIZEOF_SEGMENT
+        
+		idxPt1 =            segments[jj++]; // ii*SIZEOF_SEGMENT +0
+		idxPt2 =            segments[jj++]; // ii*SIZEOF_SEGMENT +1
+		char2Display =      segments[jj];   // ii*SIZEOF_SEGMENT +2
         
         offPt1 = idxPt1<<2;
         offPt2 = idxPt2<<2;
-        d1 = *((int*)(points2d+offPt1+2));
-        //d2 = points2d [idxPt2*SIZEOF_2DPOINT+3]*256 + points2d [idxPt2*SIZEOF_2DPOINT+2];
-        d2 = *((int*)(points2d+offPt2+2));
         
-        dmoy = (d1+d2)>>1;
-        if (dmoy >= 256) {
-            //distFaces[ii] = 256;
-            dmoy = 256;
-        }/* else {			
-            distFaces[ii] = dmoy;
-        }*/
-        distseg = (unsigned char)((dmoy-1) & 0x00FF); // FIXME -1 is a ugly hack
+        // dmoy = (d1+d2)/2;
+        dmoy = *((int*)(points2d+(offPt1 | 0x02))); // points2d[offPt1+2]
+        dmoy += *((int*)(points2d+(offPt2 | 0x02))); // points2d[offPt2+2]
+        dmoy = dmoy>>1;
+        
+        //if (dmoy >= 256) {
+        if ((dmoy & 0xFF00) != 0) continue;
+        distseg = (unsigned char)((dmoy) & 0x00FF);
+        distseg --; // FIXME 
         
 #ifndef ANGLEONLY
-		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
-		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
-		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
-		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
+        jj = idxPt1 << 4; // idxPt1*SIZEOF_2DPOINT
+		Point1X = points2d[jj++];
+		Point1Y = points2d[jj];
+        jj = idxPt2 << 4; // idxPt2*SIZEOF_2DPOINT
+		Point2X = points2d[jj++];
+		Point2Y = points2d[jj];
         
         //printf ("dl ([%d, %d] %d, [%d, %d] %d =>  %d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg);
         //get();
 #else
- 		P1AH = points2d[idxPt1*SIZEOF_2DPOINT + 0];
+ 		/*
+        P1AH = points2d[idxPt1*SIZEOF_2DPOINT + 0];
 		P1AV = points2d[idxPt1*SIZEOF_2DPOINT + 1];
 		P2AH = points2d[idxPt2*SIZEOF_2DPOINT + 0];
 		P2AV = points2d[idxPt2*SIZEOF_2DPOINT + 1];
+        */
+        jj = idxPt1 << 2; // idxPt1*SIZEOF_2DPOINT
+		P1AH = points2d[jj++];
+		P1AV = points2d[jj];
+        jj = idxPt2 << 2; // idxPt2*SIZEOF_2DPOINT
+		P2AH = points2d[jj++];
+		P2AV = points2d[jj];
    
-        Point1X  =  (SCREEN_WIDTH-P1AH)/2;
-        Point1Y  =  (SCREEN_HEIGHT-P1AV)/2;
-        Point2X  =  (SCREEN_WIDTH-P2AH)/2;
-        Point2Y  =  (SCREEN_HEIGHT-P2AV)/2;
+        Point1X  =  (SCREEN_WIDTH-P1AH)>>1;
+        Point1Y  =  (SCREEN_HEIGHT-P1AV)>>1;
+        Point2X  =  (SCREEN_WIDTH-P2AH)>>1;
+        Point2Y  =  (SCREEN_HEIGHT-P2AV)>>1;
 
         //printf ("dl ([%d, %d] %d, [%d, %d] %d => %d c=%d\n", Point1X, Point1Y, d1, Point2X, Point2Y, d2, distseg, 0);
         //get();

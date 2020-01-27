@@ -6,8 +6,8 @@
 #include "glOric.h"
 #include "config.h"
 
-#include "alphabet.c"
-#include "traj.c"
+#include "data/alphabet.c"
+#include "data/traj.c"
 #include "fill8.c"
 
 extern unsigned char une_fonction();

@@ -14,8 +14,8 @@ void faceIntro() {
 	CamRotX = 0;
 
     for (i=0;i<120;) {
-		CamPosX = traj[i++]/4;
-		CamPosY = traj[i++]/4;
+		CamPosX = traj[i++];
+		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts);
@@ -24,25 +24,9 @@ void faceIntro() {
         lrDrawSegments();
         buffer2screen();
     }
-
-/*	CamPosX = -8;
-	CamPosY = 8;
-	CamPosZ = 1;
-
- 	CamRotZ = -32 ;
-	CamRotX = 0;
-	for (i= 0; i< 16; i++) {
-		forward();
-        glProject (points2d, points3d, nbPts);
-        initScreenBuffers();
-        fillFaces();
-        lrDrawSegments();
-        buffer2screen();
-	}
-*/
 	leaveSC();
-
 }
+
 void txtGameLoop2() {
 
 	char key;
@@ -113,19 +97,26 @@ void faceDemo(){
 	nbPts =0 ;
 	nbSegments =0 ;
     nbFaces =0 ;
+    
 	//addCube3(-12, -12, 0);
     //addCube3(0, 0, 0);
     //addPlan();
+    
     addPlan(0, 2, 2, 64, '.');
     addPlan(2, 0, 2, 0, ':');
-    addPlan(0, -2, 2, 64, ';');
+    //addPlan(0, -2, 2, 64, ';');
     addPlan(-2, 0, 2, 0, '\'');
+    
+    
     //addPlan(4, 4, 2, 64, ':');
     //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
+    
+    
 	lores0();
 	faceIntro();
 
-    /*CamPosX = -8;
+    /*
+    CamPosX = -8;
 	CamPosY = 0;
 	CamPosZ = 2;
 
