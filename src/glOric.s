@@ -134,7 +134,7 @@ _doFastProjection:
     clc
     adc #$03
     tay
-    
+
     ldx _nbPoints
     dex
     txa ; ii = nbPoints - 1
@@ -143,7 +143,7 @@ _doFastProjection:
     clc
     adc #$03
     tax
-    
+
 dofastprojloop:
 //          Status = points3d[ii*SIZEOF_3DPOINT + 3]
         dey
@@ -162,18 +162,18 @@ dofastprojloop:
 
 //  		project();
         jsr _project
-		
+
         tya
         pha
         txa
         tay
-		
-#ifndef HRSMODE      
+
+#ifndef HRSMODE
  //  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
-     
+
         lda _Norm+1
         sta (ptrpt2), y
-        dey 
+        dey
 
         lda _Norm
         sta (ptrpt2), y
@@ -189,7 +189,7 @@ dofastprojloop:
 #else
         lda _ResY+1
         sta (ptrpt2), y
-        dey 
+        dey
 
         lda _ResY
         sta (ptrpt2), y
@@ -201,8 +201,8 @@ dofastprojloop:
         dey
         lda _ResX
         sta (ptrpt2), y
-		
-#endif		
+
+#endif
         tya
         tax
         pla
@@ -291,7 +291,7 @@ _project:
     sta _AngleH
 
     // Norm = norm (DeltaX, DeltaY)
-    jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ; 
+    jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
 
    	// DeltaZ = CamPosZ - PointZ
 	sec
@@ -320,7 +320,7 @@ _project:
     lda #$80
     sta HAngleOverflow
 
-project_noHAngleOverflow    
+project_noHAngleOverflow
     // AnglePV = AngleV - CamRotX
     sec
     lda _AngleV
@@ -329,16 +329,16 @@ project_noHAngleOverflow
     bvc project_noVAngleOverflow
     lda #$80
     sta VAngleOverflow
-    
-project_noVAngleOverflow  
-#ifndef ANGLEONLY  
+
+project_noVAngleOverflow
+#ifndef ANGLEONLY
 #ifdef TEXTMODE
 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
 	lda AnglePH
 	cmp #$80
 	ror
     ora HAngleOverflow
-   
+
 	eor #$FF
 	sec
 	adc #$00
@@ -350,7 +350,7 @@ project_noVAngleOverflow
 	cmp #$80
 	ror
     ora VAngleOverflow
-    
+
 	eor #$FF
 	sec
 	adc #$00
@@ -378,7 +378,7 @@ debugici:
 	sta _ResX+1
 angHpositiv:
 	// Invert AnglePH on 16 bits
-	sec 
+	sec
 	lda #$00
 	sbc _ResX
 	sta _ResX
@@ -398,7 +398,7 @@ angHpositiv:
 	lda _ResX+1
 	adc #$00
 	sta _ResX+1
-	
+
 	;; lda AnglePV
 	;; eor #$FF
 	;; sec
@@ -407,7 +407,7 @@ angHpositiv:
 	;; asl
 	;; adc #100 ; = 200 /2 SCREEN_HEIGHT/2
 	;; sta _ResY
-	
+
 	// Extend AnglePV on 16 bits
 	lda #$00
 	sta _ResY+1
@@ -418,7 +418,7 @@ angHpositiv:
 	sta _ResY+1
 angVpositiv:
 	// Invert AnglePV on 16 bits
-	sec 
+	sec
 	lda #$00
 	sbc _ResY
 	sta _ResY
@@ -440,7 +440,7 @@ angVpositiv:
 	sta _ResY+1
 
 #endif
-#else 
+#else
     lda AnglePH
     sta _ResX
     lda AnglePV
@@ -483,7 +483,16 @@ pSeg .dsb 2
 .text
 idxPt1 .dsb 1
 idxPt2 .dsb 1
-//char2Display .dsb 1
+//_char2Display .dsb 1
+
+_Point1X .dsb 1
+_Point1Y .dsb 1
+_Point2X .dsb 1
+_Point2Y .dsb 1
+_char2Display .dsb 1
+
+
+#ifdef  TEXTMODE
 
 //  void drawSegments(){
 _drawSegments:
@@ -500,7 +509,7 @@ _drawSegments:
     dex
 
 drwloop:
-//  
+//
 //  		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
         txa ; ii
         asl
@@ -521,15 +530,15 @@ drwloop:
         iny
         lda (pSeg),y
         sta idxPt2
-        
+
 //  		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
         iny
         lda (pSeg),y
         sta _char2Display
-        
-//          
+
+//
 //  		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        lda idxPt1  ; 
+        lda idxPt1  ;
         asl         ; idxPt1 * SIZEOF_2DPOINT
         asl
         sta ptrpt2L
@@ -544,14 +553,14 @@ drwloop:
         ldy #$00
         lda (ptrpt2),y
         sta _Point1X
-       
+
 //  		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
         iny
         lda (ptrpt2),y
         sta _Point1Y
-       
+
 //  		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        lda idxPt2  ; 
+        lda idxPt2  ;
         asl         ; idxPt2 * SIZEOF_2DPOINT
         asl
         sta ptrpt2L
@@ -586,8 +595,11 @@ drwsgdone
 .)
     rts
 
+#endif
 
 
+
+/*
 //  void fastdrawSegments(){
 _fastDrawSegments:
 .(
@@ -605,7 +617,7 @@ _fastDrawSegments:
     dex
 
 drwloop:
-//  
+//
 //  		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
         txa ; ii
         asl
@@ -626,15 +638,15 @@ drwloop:
         iny
         lda (pSeg),y
         sta idxPt2
-        
+
 //  		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
         iny
         lda (pSeg),y
         sta _char2Display
-        
-//          
+
+//
 //  		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        lda idxPt1  ; 
+        lda idxPt1  ;
         asl         ; idxPt1 * SIZEOF_2DPOINT
         asl
         sta ptrpt2L
@@ -649,14 +661,14 @@ drwloop:
         ldy #$00
         lda (ptrpt2),y
         sta _Point1X
-       
+
 //  		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
         iny
         lda (ptrpt2),y
         sta _Point1Y
-       
+
 //  		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        lda idxPt2  ; 
+        lda idxPt2  ;
         asl         ; idxPt1 * SIZEOF_2DPOINT
         asl
         sta ptrpt2L
@@ -688,13 +700,15 @@ drwsgdone
 	pla:tay:pla:tax:pla
 .)
     rts
+*/
+
 
 // void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints){
 	// int local_var;
 	// for (local_var = 0; local_var< nbPoints; local_var++) {
 		// tabpoint2D[local_var] = local_var;
 	// }
-	
+
 // }
 //    lda #>_points3d
 //    sta ptrpt3H
@@ -706,14 +720,14 @@ drwsgdone
 //    sta ptrpt2H
 //
 //    ldx _nbPoints
-	
+
 _glProject
 .(
 	ldx #6 : lda #3 : jsr enter :
 	ldy #0 : lda (ap),y : sta reg0 : sta ptrpt2L : iny : lda (ap),y : sta reg0+1 : sta ptrpt2H :
 	ldy #2 : lda (ap),y : sta reg0 : sta ptrpt3L : iny : lda (ap),y : sta reg0+1 : sta ptrpt3H :
 	ldy #4 : lda (ap),y : sta tmp0 : sta _nbPoints ; iny : lda (ap),y : sta tmp0+1 :
-	
+
 	jsr _doFastProjection
 //	lda tmp0 : sta reg1 :
 //	lda #<(0) : sta reg2 : lda #>(0) : sta reg2+1 :

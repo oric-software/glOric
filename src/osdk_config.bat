@@ -12,8 +12,10 @@ SET OSDKFILE=main
 
 
 SET OSDKFILE=%OSDKFILE%  glOric kernel
-SET OSDKFILE=%OSDKFILE% math\atan2 math\div math\norm math\root math\square
-SET OSDKFILE=%OSDKFILE% raster\buffer raster\filler raster\line raster\line8 raster\fill8
+REM SET OSDKFILE=%OSDKFILE% math\div math\root math\square
+SET OSDKFILE=%OSDKFILE% math\atan2 math\norm
+REM SET OSDKFILE=%OSDKFILE% raster\buffer raster\filler raster\line8
+SET OSDKFILE=%OSDKFILE% raster\fill8 raster\line
 SET OSDKFILE=%OSDKFILE% util\print util\screen util\display
 
 :: List of files to put in the DSK file.

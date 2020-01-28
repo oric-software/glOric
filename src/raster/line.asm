@@ -1,15 +1,18 @@
-#include "config.h"
+.include "config.inc" ; #include "config.h"
 
-.zero
-_PosPrint .dsb 2
+.importzp ptr1
 
-.text
+_PosPrint := ptr1
 
-_PrintX .dsb 1
-_PrintY .dsb 1
 
-_computePosPrint:
-.(
+
+_PrintX: .byte 0
+_PrintY: .byte 0
+
+.segment "CODE"
+
+.proc _computePosPrint
+
     lda #$BB
     sta _PosPrint+1
     clc
@@ -27,21 +30,26 @@ noincline:
     bne nxtline
 prdone:
     sta _PosPrint
-.)
+
     rts
+.endproc
 
+err: .byte 0
+e2: .byte 0
 
-err .dsb 1
-e2 .dsb 1
+_Point1X: .byte 0
+_Point1Y: .byte 0
+_Point2X: .byte 0
+_Point2Y: .byte 0
+_char2Display: .byte 0
 
+dX: .byte 0
+dY: .byte 0
+stepX: .byte 0
+stepY: .byte 0
 
-dX .dsb 1
-dY .dsb 1
-stepX .dsb 1
-stepY .dsb 1
+.proc plotOrNot
 
-plotOrNot:
-.(
     lda _Point1X
 	bmi plotdone
 	beq plotdone
@@ -51,7 +59,7 @@ plotOrNot:
     lda _Point1Y
 	bmi plotdone
 	beq plotdone
-	cmp #SCREEN_HEIGHT
+	cmp SCREEN_HEIGHT
 	bpl plotdone
     sta _PrintY
     jsr _computePosPrint
@@ -59,13 +67,23 @@ plotOrNot:
     ldy #00
     sta (_PosPrint),y
 plotdone:
-.)
     rts
+.endproc
 
-_drawLine:
-.(
-	// save context
-    pha:txa:pha:tya:pha
+;---------------------------------------------------------------------------------
+; drawLine
+;---------------------------------------------------------------------------------
+
+.export _drawLine
+ 
+.proc _drawLine
+
+	;; save context
+    pha
+	txa
+	pha
+	tya
+	pha
 
 
     ;lda _Point1X
@@ -78,8 +96,8 @@ _drawLine:
     ;sta (_PosPrint),y
 
 
-//  dx =  abs(x1-x0);
-//  sx = x0<x1 ? 1 : -1;
+;;  dx =  abs(x1-x0);
+;;  sx = x0<x1 ? 1 : -1;
 ; a = x0-x1
     sec
     lda _Point1X
@@ -104,8 +122,8 @@ x1overx0:
     sta stepX
 ; endif
 computeDy:
-//  dy = -abs(y1-y0);
-//  sy = y0<y1 ? 1 : -1;
+;;  dy = -abs(y1-y0);
+;;  sy = y0<y1 ? 1 : -1;
 ; a = y0-y1
     lda _Point1Y
     sec
@@ -130,32 +148,19 @@ y1overy0:
     sta stepY
 ; endif
 computeErr:
-//  err = dx+dy;  /* error value e_xy */
-; a = dx
+;;  err = dx+dy;  /* error value e_xy */
+; a = dx 
     lda dX
 ; a = a + dy
-    clc
+    clc 
     adc dY
 ; err = a
     sta err
-//  if ((A1err >= 64) ||(A1err < -64)) return;
-    sec
-    sbc #$40
-    bvc *+4
-    eor #$80
-    bpl endloop
-    lda err
-    sec
-    sbc #$C0
-    bvc *+4
-    eor #$80
-    bmi endloop
-
-//  while (true)   /* loop */
+;;  while (true)   /* loop */
 drawloop:
-//      PLOT (x0, y0)
+;;      PLOT (x0, y0)
         jsr plotOrNot
-//      if (x0==x1 && y0==y1) break;
+;;      if (x0==x1 && y0==y1) break;
 ;       a = x0
         lda _Point1X
 ;       if a != x1 goto continue
@@ -170,22 +175,19 @@ drawloop:
         jmp endloop
 ;continue:
 continue:
-//      e2 = 2*err;
+;;      e2 = 2*err;
 ;       a = err
         lda err
 ;       a = a << 2
         asl
 ;       e2 = a
         sta e2
-//      if (e2 >= dy)
+;;      if (e2 >= dy)
 ;       a = e2 (opt)
 ;       if a < dy then goto dyovera
-        sec
-        sbc dY
-        bvc *+4
-        eor #$80
+        cmp dY
         bmi dyovera
-//          err += dy; /* e_xy+e_x > 0 */
+;;          err += dy; /* e_xy+e_x > 0 */
 ;           a = err
             lda err
 ;           a = a + dy
@@ -193,7 +195,7 @@ continue:
             adc dY
 ;           err = a
             sta err
-//          x0 += sx;
+;;          x0 += sx;
 ;           a = x0
             lda _Point1X
 ;           a = a + sx
@@ -203,25 +205,22 @@ continue:
             sta _Point1X
 ;dyovera:
 dyovera:
-//      end if
-//      if (e2 <= dx) /* e_xy+e_y < 0 */
+;;      end if
+;;      if (e2 <= dx) /* e_xy+e_y < 0 */
 ;       a = dx
         lda dX
-;       if a < e2 then goto e2overdx
-        sec
-        sbc e2
-        bvc*+4
-        eor #$80
+;       if a < e2 then goto e2overdx   
+        cmp e2
         bmi e2overdx
-//          err += dx;
+;;          err += dx;
 ;           a = err
             lda err
 ;           a = a + dx
-            clc
+            clc 
             adc dX
 ;           err = a
             sta err
-//          y0 += sy;
+;;          y0 += sy;
 ;           a = y0
             lda _Point1Y
 ;           a = a + sy
@@ -229,17 +228,22 @@ dyovera:
             adc stepY
 ;           y0 = a
             sta _Point1Y
-//      end if
+;;      end if
 ;e2overdx:
 e2overdx:
 ;   goto drawloop
     jmp drawloop
-//  end while
+;;  end while
 ;endloop:
 endloop:
 
-	// restore context
-	pla:tay:pla:tax:pla
+	;; restore context
+	pla
+	tay
+	pla
+	tax
+	pla
 
-.)
     rts
+.endproc
+

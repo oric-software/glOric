@@ -7,7 +7,7 @@
 #include "config.h"
 
 #include "data/alphabet.c"
-#include "data/traj.c"
+#include "traj.c"
 #include "fill8.c"
 
 extern unsigned char une_fonction();

@@ -34,7 +34,7 @@ extern char Square2;
 extern char Square3;
 extern char Square4;
 
-extern char N;
+// extern char N;
 
 // ATAN on 1 octant
 extern char ArcTang;
@@ -47,7 +47,7 @@ extern int TanY;
 extern char Arctan8;
 extern int TmpX;
 extern int TmpY;
-extern char Octant;
+//extern char Octant;
 extern char NegIt;
 extern char Ratio;
 
@@ -60,11 +60,11 @@ extern char y2;
 extern char atanres;
 
 // My ATAN2_8
-
+/*
 extern char tx;
 extern char ty;
 extern char res;
-
+*/
 // LINE
 extern char Point1X;
 extern char Point1Y;
@@ -72,7 +72,6 @@ extern char Point2X;
 extern char Point2Y;
 extern int PosPrint;
 extern char char2Display;
-
 
 //
 // ===== Display.s =====
@@ -92,4 +91,3 @@ extern	unsigned char	X0;
 extern	unsigned char	Y0;
 extern	unsigned char	X1;
 extern	unsigned char	Y1;
-

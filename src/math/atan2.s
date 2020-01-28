@@ -8,15 +8,18 @@
 #define A_3_PI_OVER_2 #$C0
 #define A_7_PI_OVER_4 #$E0
 
-.zero
 
+.zero
+octant .dsb 1          ;
+
+/*
 ; Used by atan2
 
 FC .byt 00    			;
 FD .byt 00    			;
 FE .byt 00    			;
-octant .dsb 1          ;
 
+*/
 
 .text
 _tx .dsb 1
@@ -24,7 +27,7 @@ _ty .dsb 1
 _res .dsb 1
 
 
-
+/*
 _atan2_8
 .(
 //  INIT
@@ -275,6 +278,11 @@ SumPart:
 atdone
 .)
 	RTS
+*/
+
+
+
+/*
 
 ; By Jean-Baptiste PERIN (jbperin)
 ; calculates the atan2 of two 16-bits value coordinates [TanX, Tany]
@@ -758,8 +766,11 @@ dontNegIt:
 done:
 .)
     RTS
+*/
 
 
+
+/*
 ; By Jean-Baptiste PERIN (jbperin)
 ; calculate the atan of a Q0.6 value stored in
 ; six least significant bits of _ArcTang
@@ -850,7 +861,7 @@ atan_table:
     .byt 32
 
 
-
+*/
 
 .text
 

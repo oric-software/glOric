@@ -1,5 +1,5 @@
 
-#include "alphabet.c"
+#include "data/alphabet.c"
 
 
 const char sentence[] = "MERCI RENE";

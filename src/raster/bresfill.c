@@ -26,9 +26,9 @@ extern char A2arrived;
 #define min(a,b)            (((a) < (b)) ? (a) : (b))
 /*
 void A1reachY(signed char  nxtY){
-	
+
 	signed char  e2;
-	
+
 	//printf ("nxtY = %d\n", nxtY);
 	e2 = (A1err < 0) ? (
 			((A1err & 0x40) == 0)?(
@@ -43,7 +43,7 @@ void A1reachY(signed char  nxtY){
 				A1err << 1
 			)
 		);
-		
+
 	//printf ("e2 = %d\n", e2);
 	while (A1arrived != 0){
 		if (e2 >= A1dY){
@@ -77,9 +77,9 @@ void A1reachY(signed char  nxtY){
 }
 
 void A2reachY(signed char  nxtY){
-	
+
 	signed char  e2;
-	
+
 	//printf ("nxtY = %d\n", nxtY);
 	e2 = (A2err < 0) ? (
 			((A2err & 0x40) == 0)?(
@@ -94,7 +94,7 @@ void A2reachY(signed char  nxtY){
 				A2err << 1
 			)
 		);
-		
+
 	//printf ("e2 = %d\n", e2);
 	while (A2arrived!=0){
 		if (e2 >= A2dY){
@@ -142,7 +142,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
         dx = p2x;
         fx = p1x;
     }
-    
+
     for (ii=dx; ii<=fx; ii++ ) {
         if ((ii >= 1) && (ii<SCREEN_WIDTH)) {
             offset = py*SCREEN_WIDTH+ii;
@@ -155,7 +155,6 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 }
 */
 
-//static int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800, 840, 880, 920, 960, 1000, 1040};
 
 void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
 
@@ -178,8 +177,8 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 
     nbpoints = fx - dx;
     if (nbpoints <0) return;
-    
-    offset = py*SCREEN_WIDTH+dx;//
+
+    offset = py*SCREEN_WIDTH+dx;//multi40[py] + dx;
     ptrZbuf = zbuffer+offset;
     ptrFbuf = fbuffer+offset;
     while (nbpoints >=0){
@@ -251,7 +250,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 	}
     //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
 	if (pDepY != pArr1Y) {
-		
+
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
 		A1X = pDepX;
 		A1Y = pDepY;
@@ -305,7 +304,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 
 		}
 	} else {
-        
+
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
 		A1X 		= pDepX;
 		A1Y 		= pDepY;
@@ -314,12 +313,12 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A1dX		=abs(A1destX-A1X);
 		A1dY		=-abs(A1destY-A1Y);
 		A1err		=A1dX+A1dY;
-		
+
         if ((A1err > 64) ||(A1err < -63)) return;
-		
+
 		A1sX=(A1X<A1destX)?1:-1;
 		A1sY=(A1Y<A1destY)?1:-1;
-		
+
 		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
 
         // a2 = bres_agent(pArr1[0],pArr1[1],pArr2[0],pArr2[1])
@@ -330,15 +329,15 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 		A2dX		= abs(A2destX-A2X);
 		A2dY		= -abs(A2destY-A2Y);
 		A2err		= A2dX+A2dY;
-		
+
         if ((A2err > 64) ||(A2err < -63)) return;
-		
+
 		A2sX=(A2X<A2destX)?1:-1;
 		A2sY=(A2Y<A2destY)?1:-1;
 		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
 
 		hfill8 (A1X, A2X, A1Y, dist, char2disp);
-		
+
 		while ((A1arrived == 0) && (A2arrived == 0)){
 			A1stepY();
 			A2stepY();
@@ -349,9 +348,9 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 
 
 fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV, signed char P3AH, signed char P3AV, unsigned char distface, char ch2disp) {
-    
+
     signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
-    
+
     P1X  =  (SCREEN_WIDTH-P1AH)/2;
     P1Y  =  (SCREEN_HEIGHT-P1AV)/2;
     P2X  =  (SCREEN_WIDTH-P2AH)/2;
@@ -361,8 +360,8 @@ fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV
     //printf ("P1A: [%d, %d], P2A: [%d, %d], P3A [%d, %d]\n", P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
     //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
     //get();
-    fill8(P1X, P1Y, 
-        P2X, P2Y, 
+    fill8(P1X, P1Y,
+        P2X, P2Y,
         P3X, P3Y,
         distface, ch2disp);
 
@@ -390,11 +389,11 @@ void fillFaces() {
         /*idxPt1 = faces[ii*SIZEOF_FACES+0];
         idxPt2 = faces[ii*SIZEOF_FACES+1];
         idxPt3 = faces[ii*SIZEOF_FACES+2];*/
-        
+
 		/*idxPt1 = faces[jj++];
         idxPt2 = faces[jj++];
         idxPt3 = faces[jj++];*/
-        
+
         offPt1 = faces[jj++] << 2;
         offPt2 = faces[jj++] << 2;
         offPt3 = faces[jj++] << 2;
@@ -410,7 +409,7 @@ void fillFaces() {
         if (dmoy >= 256) {
             //distFaces[ii] = 256;
             dmoy = 256;
-        }/* else {			
+        }/* else {
             distFaces[ii] = dmoy;
         }*/
         distface = (unsigned char)(dmoy & 0x00FF);
@@ -423,8 +422,8 @@ void fillFaces() {
         P3Y=points2d [offPt3+1];
 
         //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);get();
-        fill8(P1X, P1Y, 
-            P2X, P2Y, 
+        fill8(P1X, P1Y,
+            P2X, P2Y,
             P3X, P3Y,
             distface, faces[jj]);
 
@@ -435,7 +434,7 @@ void fillFaces() {
 		P2AV =  points2d [offPt2+1];
 		P3AH =  points2d [offPt3+0];
 		P3AV =  points2d [offPt3+1];
-        
+
         //printf ("P1 [%d, %d], P2 [%d, %d], P3 [%d %d]\n", P1AH, P1AV, P2AH, P2AV,  P3AH, P3AV); get();
 
         if (abs(P2AH) < abs(P1AH)){
@@ -445,15 +444,15 @@ void fillFaces() {
             P1AV = P2AV;
             P2AH = tmpH;
             P2AV = tmpV;
-        } 
+        }
         if (abs(P3AH) < abs(P1AH)){
             tmpH = P1AH;
             tmpV = P1AV;
             P1AH = P3AH;
             P1AV = P3AV;
             P3AH = tmpH;
-            P3AV = tmpV;            
-        } 
+            P3AV = tmpV;
+        }
         if (abs(P3AH) < abs(P2AH)){
             tmpH = P2AH;
             tmpV = P2AV;
@@ -461,10 +460,10 @@ void fillFaces() {
             P2AV = P3AV;
             P3AH = tmpH;
             P3AV = tmpV;
-            
-        } 
-#define ANGLE_MAX 0xC0        
-#define ANGLE_VIEW 0xE0        
+
+        }
+#define ANGLE_MAX 0xC0
+#define ANGLE_VIEW 0xE0
 
         m1 = P1AH & ANGLE_MAX;
         m2 = P2AH & ANGLE_MAX;
@@ -474,7 +473,7 @@ void fillFaces() {
         v3 = P3AH & ANGLE_VIEW;
         //printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);
         //get();
-      
+
         if ((m1 == 0x00) || (m1 == ANGLE_MAX)){
             if ((v1 == 0x00) || (v1 == ANGLE_VIEW)) {
                 if (
@@ -516,7 +515,7 @@ void fillFaces() {
                                 }
                             }
                         }
-                                            
+
                         if ((P1AH & 0x80) != (P3AH & 0x80)) {
                             if (abs (P3AH) < 127 - abs (P1AH)) {
                                 fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
@@ -525,7 +524,7 @@ void fillFaces() {
                     }
                 } else {
                     // P2 BACK
-                    // _2_ nothing to do 
+                    // _2_ nothing to do
                     if ((P1AH & 0x80) != (P2AH & 0x80)) {
                         if (abs (P2AH) < 127 - abs (P1AH)) {
                             fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
@@ -537,7 +536,7 @@ void fillFaces() {
                             }
                         }
                     }
-                                        
+
                     if ((P1AH & 0x80) != (P3AH & 0x80)) {
                         if (abs (P3AH) < 127 - abs (P1AH)) {
                             fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
@@ -547,7 +546,7 @@ void fillFaces() {
             }
         } else {
             // P1 BACK
-            // _1_ nothing to do 
+            // _1_ nothing to do
         }
 #endif
     }
