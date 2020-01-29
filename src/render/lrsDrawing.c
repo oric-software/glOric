@@ -19,7 +19,7 @@ void zplot(unsigned char X, unsigned char Y, unsigned char dist, char char2disp)
 	if ((Y <= 0) || (Y>=SCREEN_HEIGHT) || (X <= 0) || (X>=SCREEN_WIDTH)) return;
 
 
-		offset = Y*SCREEN_WIDTH+X; //multi40[Y] + X;
+		offset = multi40[Y] + X; //Y*SCREEN_WIDTH+X; //
     ptrZbuf = zbuffer+offset;
     ptrFbuf = fbuffer+offset;
 	//printf ("pl [%d %d] zbuff = %d , pointDist = %d\n", X, Y, *ptrZbuf, dist);
