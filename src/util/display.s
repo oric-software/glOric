@@ -1,5 +1,8 @@
 ; http://miniserve.defence-force.org/svn/public/oric/routines/rasterization/linebench/
+
 #include "config.h"
+#ifdef USE_HIRES_RASTER
+
 #define ROW_SIZE    SCREEN_WIDTH/6
 
     .dsb 256-(*&255)
@@ -164,7 +167,7 @@ skip_mod
 
 
 
-
+#endif
 
 
 

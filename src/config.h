@@ -1,8 +1,9 @@
+
 #ifndef CONFIG_H
 #define CONFIG_H
 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define HRSMODE
+#define TEXTMODE
 // !!!!!! IF HRS MODE .. in osdk_config.bat .. uncomment OSDK_FILE
 
 /*

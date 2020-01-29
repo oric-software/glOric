@@ -82,7 +82,7 @@ extern unsigned char CurrentPixelY;             // Coordinate Y of edited pixel/
 extern unsigned char OtherPixelX;               // Coordinate X of other edited pixel/byte
 extern unsigned char OtherPixelY;               // Coordinate Y of other edited pixel/byte
 
-
+#ifdef USE_HIRES_RASTER
 //
 // ====== Filler.s ==========
 
@@ -91,3 +91,4 @@ extern	unsigned char	X0;
 extern	unsigned char	Y0;
 extern	unsigned char	X1;
 extern	unsigned char	Y1;
+#endif

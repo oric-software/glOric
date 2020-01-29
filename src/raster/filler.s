@@ -1,4 +1,8 @@
 
+
+#include "config.h"
+#ifdef USE_HIRES_RASTER
+
 /*
 	*= $50
 
@@ -1038,5 +1042,4 @@ _RightPattern
     .byt 64+63-(1+2+4)
     .byt 64+63-(1+2)
     .byt 64+63-(1)
-
-    
+#endif

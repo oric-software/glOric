@@ -446,6 +446,27 @@ const char facCube[]={
 };
 
 
+
+void addCube(char X, char Y, char Z){
+	unsigned char ii, jj;
+	for (jj=0; jj < NB_POINTS_CUBE; jj++){
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
+		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
+	}
+	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
+		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
+	}
+	nbPts += NB_POINTS_CUBE;
+	nbSegments += NB_SEGMENTS_CUBE;
+}
+
+
+#endif // HRSMODE
+
+#ifdef USE_HIRES_RASTER
 void AddTriangle(unsigned char x0,unsigned char y0,unsigned char x1,unsigned char y1,unsigned char x2,unsigned char y2,unsigned char pattern)
 {
     X0=x0;
@@ -467,22 +488,4 @@ void AddTriangle(unsigned char x0,unsigned char y0,unsigned char x1,unsigned cha
     CurrentPattern=pattern<<3;
     FillTablesASM();
 }
-
-void addCube(char X, char Y, char Z){
-	unsigned char ii, jj;
-	for (jj=0; jj < NB_POINTS_CUBE; jj++){
-		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 0] = ptsCube[jj*SIZEOF_3DPOINT + 0] + X;  				// X coord
-		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 1] = ptsCube[jj*SIZEOF_3DPOINT + 1] + Y;                // Y coord
-		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
-	}
-	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
-	}
-	nbPts += NB_POINTS_CUBE;
-	nbSegments += NB_SEGMENTS_CUBE;
-}
-
-
-#endif // HRSMODE
+#endif
