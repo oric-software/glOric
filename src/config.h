@@ -2,7 +2,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define LRSMODE
+#define HRSMODE
 // !!!!!! IF HRS MODE .. in osdk_config.bat .. uncomment OSDK_FILE
 
 /*
@@ -21,6 +21,7 @@
 #endif
 
 #ifdef HRSMODE
+#define USE_HIRES_RASTER
 #define SCREEN_WIDTH      240
 #define SCREEN_HEIGHT      200
 #endif
@@ -37,6 +38,8 @@
  *  SCREEN BUFFER
  */
 #define ADR_BASE_SCREEN 48041//BB80
+
+
 
 
 #endif

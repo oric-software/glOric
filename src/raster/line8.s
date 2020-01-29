@@ -1,5 +1,6 @@
 ; http://miniserve.defence-force.org/svn/public/oric/routines/rasterization/linebench/
-
+#include "config.h"
+#ifdef USE_HIRES_RASTER
 ; History of linebench timings...
 ;649
 ;614 (replacing the update of tmp0)
@@ -719,3 +720,4 @@ _patch_clc2
 ; draw_mainly_vertical_8   (50.0%): 42.41 (was 43.77)
 ;----------------------------------------
 ; total average           (100.0%): 37.07 (was 37.94)
+#endif

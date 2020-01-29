@@ -1,3 +1,5 @@
+#include "config.h"
+#ifdef USE_HIRES_RASTER
 
 ;http://miniserve.defence-force.org/svn/public/oric/routines/rasterization/linebench/
 	.zero
@@ -381,3 +383,4 @@ done
 .)
 
 
+#endif
