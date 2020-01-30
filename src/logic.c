@@ -2,14 +2,19 @@
 #include "glOric.h"
 
 #include "util\util.h"
+
+#ifdef USE_COLLISION_DETECTION
 extern unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z);
+#endif
 
 void forward() {
 	
+#ifdef USE_COLLISION_DETECTION
 	signed int X, Y;
 	X = CamPosX;
 	Y = CamPosY;
-	
+#endif
+
 	if (-112 >= CamRotZ) {
 		CamPosX--;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
@@ -29,16 +34,19 @@ void forward() {
 	} else {
 		CamPosX--;
 	}
+#ifdef USE_COLLISION_DETECTION
 	if (! isAllowedPosition(CamPosX, CamPosY, CamPosZ)){
 		CamPosX = X;
 		CamPosY = Y;
 	}
+#endif
 }
 void backward() {
+#ifdef USE_COLLISION_DETECTION
 	signed int X, Y;
 	X = CamPosX;
 	Y = CamPosY;
-
+#endif
 	if (-112 >= CamRotZ) {
 		CamPosX++;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
@@ -58,17 +66,19 @@ void backward() {
 	} else {
 		CamPosX++;
 	}
+#ifdef USE_COLLISION_DETECTION
 	if (! isAllowedPosition(CamPosX, CamPosY, CamPosZ)){
 		CamPosX = X;
 		CamPosY = Y;
 	}
-
+#endif
 }
 void shiftLeft() {
+#ifdef USE_COLLISION_DETECTION
 	signed int X, Y;
 	X = CamPosX;
 	Y = CamPosY;
-
+#endif
 	if (-112 >= CamRotZ) {
 		CamPosY--;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
@@ -88,16 +98,19 @@ void shiftLeft() {
 	} else {
 		CamPosY--;
 	}
+#ifdef USE_COLLISION_DETECTION
 	if (! isAllowedPosition(CamPosX, CamPosY, CamPosZ)){
 		CamPosX = X;
 		CamPosY = Y;
 	}
+#endif
 }
 void shiftRight() {
+#ifdef USE_COLLISION_DETECTION
 	signed int X, Y;
 	X = CamPosX;
 	Y = CamPosY;
-
+#endif
 	if (-112 >= CamRotZ) {
 		CamPosY++;
 	} else if ((-112 < CamRotZ) && (-80 >= CamRotZ)){
@@ -117,8 +130,11 @@ void shiftRight() {
 	} else {
 		CamPosX++;
 	}
+#ifdef USE_COLLISION_DETECTION
 	if (! isAllowedPosition(CamPosX, CamPosY, CamPosZ)){
 		CamPosX = X;
 		CamPosY = Y;
 	}
+#endif
+
 }

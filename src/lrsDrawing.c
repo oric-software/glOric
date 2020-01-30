@@ -60,15 +60,15 @@ void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1,
 		char2disp = ch2disp;
 	}
 
-
 	while (1) { // loop
         // plot (brX, brY, distseg, ch2disp)
 		//printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
 #ifdef USE_ZBUFFER        
 		zplot(_brX, _brY, distseg, char2disp);
 #else
-        // TODO : plot a point whit ni z-buffer
+        // TODO : plot a point with no z-buffer
 #endif
+        if ((_brX == _brDestX) && (_brY == _brDestY)) break;
         //e2 = 2*err;
 		e2 = (_brErr < 0) ? (
 			((_brErr & 0x40) == 0)?(
@@ -201,6 +201,8 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
         //printf ("dl ([%d, %d] %d, [%d, %d] %d => %d c=%d\n", P1X, P1Y, d1, P2X, P2Y, d2, distseg, 0);
         //get();
 		lrDrawLine (P1X, P1Y, P2X, P2Y, distseg, char2disp);
+        		
+
 #endif
 	}
 }

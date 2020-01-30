@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define TEXTMODE
+#define LRSMODE
 
 /*
  *  SCREEN DIMENSION
@@ -17,6 +17,7 @@
 #ifdef LRSMODE
 #define ANGLEONLY
 #define USE_ZBUFFER
+#define USE_COLLISION_DETECTION
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif
