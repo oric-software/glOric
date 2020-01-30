@@ -15,12 +15,16 @@ SET OSDKFILE=%OSDKFILE%  glOric kernel
 SET OSDKFILE=%OSDKFILE% lrsDemo
 SET OSDKFILE=%OSDKFILE% traj
 SET OSDKFILE=%OSDKFILE% zbuffer
+
 SET OSDKFILE=%OSDKFILE% lrsDrawing
+REM SET OSDKFILE=%OSDKFILE% render\lrsDrawing
+
+
 SET OSDKFILE=%OSDKFILE% bresfill
 REM SET OSDKFILE=%OSDKFILE% math\div math\root math\square
 SET OSDKFILE=%OSDKFILE% math\atan2 math\norm
 
-REM SET OSDKFILE=%OSDKFILE% render\lrsDrawing
+
 SET OSDKFILE=%OSDKFILE% render\lrsSegments
 REM SET OSDKFILE=%OSDKFILE% render\zbuffer
 REM SET OSDKFILE=%OSDKFILE% raster\bresfill
