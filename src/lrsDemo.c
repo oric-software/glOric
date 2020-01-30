@@ -20,6 +20,7 @@ void faceIntro() {
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts);
+		//glProject2 (points2d, points3d, nbPts, 0x00);
         initScreenBuffers();
         fillFaces();
         lrDrawSegments();

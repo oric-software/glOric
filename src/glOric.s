@@ -703,7 +703,7 @@ drwsgdone
 */
 
 
-// void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints){
+// void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options){
 	// int local_var;
 	// for (local_var = 0; local_var< nbPoints; local_var++) {
 		// tabpoint2D[local_var] = local_var;
