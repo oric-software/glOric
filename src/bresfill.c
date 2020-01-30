@@ -1,4 +1,10 @@
 
+// FIXME using parent directory resource is UGLY !!!!
+#include "config.h"
+#include "glOric.h"
+
+#include "util\util.h"
+
 
 extern signed char  A1X;
 extern signed char  A1Y;
@@ -22,8 +28,7 @@ extern signed char A2sX;
 extern signed char A2sY;
 extern char A2arrived;
 
-#define max(a,b)            (((a) > (b)) ? (a) : (b))
-#define min(a,b)            (((a) < (b)) ? (a) : (b))
+
 /*
 void A1reachY(signed char  nxtY){
 
@@ -161,9 +166,6 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     signed char dx, fx;
     signed char ii;
 
-    int  offset;
-    char *ptrFbuf;
-    unsigned char *ptrZbuf;
     signed char nbpoints;
     int val;
     if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
@@ -177,19 +179,11 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 
     nbpoints = fx - dx;
     if (nbpoints <0) return;
-
-    offset = multi40[py] + dx; //py*SCREEN_WIDTH+dx;//
-    ptrZbuf = zbuffer+offset;
-    ptrFbuf = fbuffer+offset;
-    while (nbpoints >=0){
-        if (dist < ptrZbuf[nbpoints] ){
-			//printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf [nbpoints]);
-            ptrFbuf [nbpoints] = char2disp;
-            ptrZbuf [nbpoints] = dist;
-        }
-        nbpoints --;
-    }
+	
+	zline(dx, py, nbpoints,  dist, char2disp);
+	
 }
+
 
 
 void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, signed char  p3x, signed char  p3y, unsigned char dist, char char2disp){
@@ -248,6 +242,7 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			}
 		}
 	}
+	
     //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
 	if (pDepY != pArr1Y) {
 
@@ -344,10 +339,11 @@ void fill8(signed char p1x, signed char p1y, signed char p2x,signed char  p2y, s
 			hfill8 (A1X, A2X, A1Y, dist, char2disp);
 		}
 	}
+	
 }
 
 
-fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV, signed char P3AH, signed char P3AV, unsigned char distface, char ch2disp) {
+void fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV, signed char P3AH, signed char P3AV, unsigned char distface, char ch2disp) {
 
     signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
 
@@ -368,187 +364,3 @@ fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV
 }
 
 
-void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
-
-    unsigned char ii=0;
-    unsigned char jj = 0;
-    int d1, d2, d3;
-    int dmoy;
-    unsigned char idxPt1, idxPt2, idxPt3, distface;
-    unsigned char offPt1, offPt2, offPt3;
-    signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
-#ifdef ANGLEONLY
-	signed char tmpH, tmpV;
-	signed char P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
-    unsigned char m1, m2, m3;
-	unsigned char v1, v2, v3;
-#endif
-	//printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
-	for (ii=0; ii< nbFaces; ii++) {
-        jj = ii << 2;
-        /*idxPt1 = faces[ii*SIZEOF_FACES+0];
-        idxPt2 = faces[ii*SIZEOF_FACES+1];
-        idxPt3 = faces[ii*SIZEOF_FACES+2];*/
-
-		/*idxPt1 = faces[jj++];
-        idxPt2 = faces[jj++];
-        idxPt3 = faces[jj++];*/
-
-        offPt1 = faces[jj++] << 2;
-        offPt2 = faces[jj++] << 2;
-        offPt3 = faces[jj++] << 2;
-        //printf ("face %d : %d %d %d\n",ii, offPt1, offPt2, offPt3);get();
-        d1 = *((int*)(points2d+offPt1+2));
-
-        d2 = *((int*)(points2d+offPt2+2));
-
-        d3 = *((int*)(points2d+offPt3+2));
-
-        //dmoy = (d1+d2+d3)/3;
-        dmoy = (d1+d2+d3)/3;
-        if (dmoy >= 256) {
-            //distFaces[ii] = 256;
-            dmoy = 256;
-        }/* else {
-            distFaces[ii] = dmoy;
-        }*/
-        distface = (unsigned char)(dmoy & 0x00FF);
-#ifndef ANGLEONLY
-        P1X=points2d [offPt1+0];
-        P1Y=points2d [offPt1+1];
-        P2X=points2d [offPt2+0];
-        P2Y=points2d [offPt2+1];
-        P3X=points2d [offPt3+0];
-        P3Y=points2d [offPt3+1];
-
-        //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);get();
-        fill8(P1X, P1Y,
-            P2X, P2Y,
-            P3X, P3Y,
-            distface, faces[jj]);
-
-#else
-		P1AH =  points2d [offPt1+0];
-		P1AV =  points2d [offPt1+1];
-		P2AH =  points2d [offPt2+0];
-		P2AV =  points2d [offPt2+1];
-		P3AH =  points2d [offPt3+0];
-		P3AV =  points2d [offPt3+1];
-
-        //printf ("P1 [%d, %d], P2 [%d, %d], P3 [%d %d]\n", P1AH, P1AV, P2AH, P2AV,  P3AH, P3AV); get();
-
-        if (abs(P2AH) < abs(P1AH)){
-            tmpH = P1AH;
-            tmpV = P1AV;
-            P1AH = P2AH;
-            P1AV = P2AV;
-            P2AH = tmpH;
-            P2AV = tmpV;
-        }
-        if (abs(P3AH) < abs(P1AH)){
-            tmpH = P1AH;
-            tmpV = P1AV;
-            P1AH = P3AH;
-            P1AV = P3AV;
-            P3AH = tmpH;
-            P3AV = tmpV;
-        }
-        if (abs(P3AH) < abs(P2AH)){
-            tmpH = P2AH;
-            tmpV = P2AV;
-            P2AH = P3AH;
-            P2AV = P3AV;
-            P3AH = tmpH;
-            P3AV = tmpV;
-
-        }
-#define ANGLE_MAX 0xC0
-#define ANGLE_VIEW 0xE0
-
-        m1 = P1AH & ANGLE_MAX;
-        m2 = P2AH & ANGLE_MAX;
-        m3 = P3AH & ANGLE_MAX;
-        v1 = P1AH & ANGLE_VIEW;
-        v2 = P2AH & ANGLE_VIEW;
-        v3 = P3AH & ANGLE_VIEW;
-        //printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);
-        //get();
-
-        if ((m1 == 0x00) || (m1 == ANGLE_MAX)){
-            if ((v1 == 0x00) || (v1 == ANGLE_VIEW)) {
-                if (
-                    (
-                        (P1AH & 0x80) != (P2AH & 0x80)
-                    )||(
-                        (P1AH & 0x80) != (P3AH & 0x80)
-                    )
-                ){
-                    if ((abs(P3AH) < 127 - abs(P1AH))){
-                        fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                    }
-                } else {
-                    fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                }
-            } else {
-                // P1 FRONT
-                if ((m2 == 0x00) || (m2 == ANGLE_MAX)){
-                    // P2 FRONT
-                    if ((m3 == 0x00) || (m3 == ANGLE_MAX)){
-                        // P3 FRONT
-                        // _4_
-                        if (((P1AH & 0x80) != (P2AH & 0x80)) || ((P1AH & 0x80) != (P3AH & 0x80))) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV,distface, faces[jj]);
-                        } else {
-                            // nothing to do
-                        }
-                    } else {
-                        // P3 BACK
-                        // _3_
-                        if ((P1AH & 0x80) != (P2AH & 0x80)) {
-                            if (abs (P2AH) < 127 - abs (P1AH)) {
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                            }
-                        } else {
-                            if ((P1AH & 0x80) != (P3AH & 0x80)) {
-                                if (abs (P3AH) < 127 - abs (P1AH)) {
-                                    fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                                }
-                            }
-                        }
-
-                        if ((P1AH & 0x80) != (P3AH & 0x80)) {
-                            if (abs (P3AH) < 127 - abs (P1AH)) {
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                            }
-                        }
-                    }
-                } else {
-                    // P2 BACK
-                    // _2_ nothing to do
-                    if ((P1AH & 0x80) != (P2AH & 0x80)) {
-                        if (abs (P2AH) < 127 - abs (P1AH)) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                        }
-                    } else {
-                        if ((P1AH & 0x80) != (P3AH & 0x80)) {
-                            if (abs (P3AH) < 127 - abs (P1AH)) {
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                            }
-                        }
-                    }
-
-                    if ((P1AH & 0x80) != (P3AH & 0x80)) {
-                        if (abs (P3AH) < 127 - abs (P1AH)) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
-                        }
-                    }
-                }
-            }
-        } else {
-            // P1 BACK
-            // _1_ nothing to do
-        }
-#endif
-    }
-
-}

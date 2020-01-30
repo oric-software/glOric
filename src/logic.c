@@ -1,3 +1,8 @@
+#include "config.h"
+#include "glOric.h"
+
+#include "util\util.h"
+
 unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z){
 	unsigned int aX = abs(X);
 	unsigned int aY = abs(Y);

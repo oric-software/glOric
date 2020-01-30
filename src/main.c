@@ -3,38 +3,11 @@
 #include "config.h"
 #include "glOric.h"
 
-#include "externs.c"
-#include "data/geom.c"
-
-#define abs(x) (((x)<0)?-(x):(x))
-
-#ifndef TEXTMODE
-#include "data/traj.c"
-#endif
+//#include "externs.c"
+//#include "data/geom.c"
 
 
-static int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800, 840, 880, 920, 960, 1000, 1040};
 
-
-#ifdef LRSMODE
-
-// TEXT SCREEN TEMPORARY BUFFERS
-// z-depth buffer
-unsigned char zbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
-// frame buffer
-char fbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
-
-void initScreenBuffers(){
-	memset (zbuffer, 0xFF, SCREEN_WIDTH*SCREEN_HEIGHT);
-	memset (fbuffer, 0x20, SCREEN_WIDTH*SCREEN_HEIGHT); // Space
-}
-
-void buffer2screen(){
-    memcpy((void*)0xBB80, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
-}
-
-
-#endif
 
 #ifndef HRSMODE
 char status_string[50];
@@ -45,7 +18,7 @@ void dispInfo(){
 
 }
 #endif
-
+/*
 #ifdef TEXTMODE
 #include "logic.c"
 #include "txtDemo.c"
@@ -57,12 +30,12 @@ void dispInfo(){
 #endif
 
 #ifdef LRSMODE
-#include "raster\bresfill.c"
-#include "render\lrsDrawing.c"
-#include "logic.c"
-#include "lrsDemo.c"
+//#include "raster\bresfill.c"
+//#include "render\lrsDrawing.c"
+//#include "logic.c"
+//#include "lrsDemo.c"
 #endif
-
+*/
 
 void main()
 {

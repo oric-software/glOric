@@ -1,9 +1,9 @@
 
-#define NB_POINTS_TRAJ		64
-#define SIZE_POINTS_TRAJ 	3
+#include "config.h"
+
 
 #ifdef HRSMODE
-const char traj[]={
+char traj[]={
 24, 0, 128
 , 24, 2, -125
 , 24, 5, -120
@@ -71,7 +71,7 @@ const char traj[]={
 #endif
 
 #ifdef LRSMODE
-const char traj[]={
+char traj[]={
 8, 0, -128
 ,7, 0, -124
 ,7, 1, -120

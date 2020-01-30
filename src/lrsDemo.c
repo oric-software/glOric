@@ -2,8 +2,12 @@
 #include "config.h"
 #include "glOric.h"
 
+
+
 #ifdef LRSMODE
 
+#include "data\traj.h"
+#include "render\zbuffer.h"
 
  // GEOMETRY BUFFERS
 //extern char points3d[];
@@ -230,6 +234,7 @@ void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l){
 	 }
 }*/
 
+
 void faceIntro() {
     int i;
     int j;
@@ -248,17 +253,19 @@ void faceIntro() {
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
+		
 		glProject (points2d, points3d, nbPts, 0);
-        //glProject (points2d, points3d, nbPts);
 		
         initScreenBuffers();
-        fillFaces(points2d, faces, nbFaces);
+		fillFaces(points2d, faces, nbFaces);
         lrDrawSegments(points2d, segments, nbSegments);
-        buffer2screen();
+        buffer2screen((void*)ADR_BASE_SCREEN);
+		
     }
 	leaveSC();
 }
 
+/*
 void txtGameLoop2() {
 
 	char key;
@@ -267,22 +274,22 @@ void txtGameLoop2() {
 	glProject (points2d, points3d, nbPts, 0);
 
 
-    /*printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
-        for (ii=0; ii< nbPts; ii++){
-            printf ("[%d %d %d] => [%d %d] %d \n"
-            , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
-            , points2d [ii*SIZEOF_2DPOINT+0], points2d [ii*SIZEOF_2DPOINT+1], points2d[ii*SIZEOF_2DPOINT+2]
-            );
-        }
-        get();
-    */
+    // printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    //     for (ii=0; ii< nbPts; ii++){
+    //         printf ("[%d %d %d] => [%d %d] %d \n"
+    //         , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
+    //         , points2d [ii*SIZEOF_2DPOINT+0], points2d [ii*SIZEOF_2DPOINT+1], points2d[ii*SIZEOF_2DPOINT+2]
+    //         );
+    //     }
+    //     get();
+    
 	initScreenBuffers();
 	fillFaces(points2d, faces, nbFaces);
     lrDrawSegments(points2d, segments, nbSegments);
     while (1==1) {
 		//clearScreen();
 		//drawSegments();
-		buffer2screen();
+		buffer2screen((void*)ADR_BASE_SCREEN);
 		dispInfo();
 		key=get();
 		switch (key)	// key
@@ -324,7 +331,7 @@ void txtGameLoop2() {
         lrDrawSegments(points2d, segments, nbSegments);
 	}
 }
-
+*/
 void faceDemo(){
 	nbPts =0 ;
 	nbSegments =0 ;
@@ -332,7 +339,7 @@ void faceDemo(){
 	//addCube3(-12, -12, 0);
     //addCube3(0, 0, 0);
     //addPlan();
-    change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
+    //change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
     //addPlan(0, 2, 2, 64, '.');
     //addPlan(2, 0, 2, 0, ':');
     //addPlan(0, -2, 2, 64, ';');
@@ -341,23 +348,11 @@ void faceDemo(){
     //addTePee(0, 0, 3);
     addHouse(0, 0, 3, 2);
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
-    //addPlan(4, 4, 2, 64, ':');
-    //printf ("nbPoints = %d, nbSegments = %d, nbFaces = %d\n",nbPts, nbSegments, nbFaces);
-
 
 	lores0();
 	faceIntro();
 
-    /*
-    CamPosX = -8;
-	CamPosY = 0;
-	CamPosZ = 2;
-
- 	CamRotZ = 0;
-	CamRotX = 0;
-    */
-
-	txtGameLoop2();
+	//txtGameLoop2();
 
 }
 #endif

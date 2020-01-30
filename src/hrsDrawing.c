@@ -1,5 +1,11 @@
 
+#include "config.h"
+#include "glOric.h"
+
+
 extern unsigned char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
+
+#ifdef HRSMODE
 
 void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char nbSegments){
 
@@ -82,3 +88,6 @@ void debugHiresIntro (){
 
 }
 */
+
+
+#endif

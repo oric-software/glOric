@@ -17,6 +17,7 @@
 
 #ifdef LRSMODE
 #define ANGLEONLY
+#define USE_ZBUFFER
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif
