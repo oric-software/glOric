@@ -3,8 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define LRSMODE
-// !!!!!! IF HRS MODE .. in osdk_config.bat .. uncomment OSDK_FILE
+#define TEXTMODE
 
 /*
  *  SCREEN DIMENSION

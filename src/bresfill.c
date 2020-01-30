@@ -181,7 +181,12 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
     nbpoints = fx - dx;
     if (nbpoints <0) return;
 	//printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
+	
+#ifdef USE_ZBUFFER        
 	zline(dx, py, nbpoints,  dist, char2disp);
+#else
+    // TODO : draw a line whit no z-buffer
+#endif
 	
 }
 

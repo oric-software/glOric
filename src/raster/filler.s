@@ -60,6 +60,7 @@ _PolyY1 		.dsb 1
 	
 	.text
 
+_CurrentPattern .dsb 2
 	
 #define COLOR_PAPER	4
 #define COLOR_INK	3

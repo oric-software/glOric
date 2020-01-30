@@ -2,8 +2,20 @@
 #include "config.h"
 #include "glOric.h"
 
+#ifdef USE_HIRES_RASTER
+extern unsigned int	CurrentPattern;
+
+//
+// ====== Filler.s ==========
+
+
+extern	unsigned char	X0;
+extern	unsigned char	Y0;
+extern	unsigned char	X1;
+extern	unsigned char	Y1;
 
 extern unsigned char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
+#endif
 
 #ifdef HRSMODE
 
@@ -15,7 +27,7 @@ void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char nbSegmen
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
+		//char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
 
         OtherPixelX =		p2d[idxPt1*SIZEOF_2DPOINT + 0];
         OtherPixelY =		p2d[idxPt1*SIZEOF_2DPOINT + 2];
@@ -26,6 +38,31 @@ void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char nbSegmen
 		}
 	}
 }
+
+#ifdef USE_HIRES_RASTER
+void AddTriangle(unsigned char x0,unsigned char y0,unsigned char x1,unsigned char y1,unsigned char x2,unsigned char y2,unsigned char pattern)
+{
+    X0=x0;
+    Y0=y0;
+    X1=x1;
+    Y1=y1;
+    AddLineASM();
+    X0=x0;
+    Y0=y0;
+    X1=x2;
+    Y1=y2;
+    AddLineASM();
+    X0=x2;
+    Y0=y2;
+    X1=x1;
+    Y1=y1;
+    AddLineASM();
+
+    CurrentPattern=pattern<<3;
+    FillTablesASM();
+}
+
+
 void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned char idxPt3, unsigned char pattern){
 	AddTriangle(
 		p2d[idxPt1*SIZEOF_2DPOINT + 0],p2d[idxPt1*SIZEOF_2DPOINT + 2],
@@ -34,7 +71,7 @@ void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned
 		(pattern&3));
 }
 
-
+#endif
 /*
 void hrDrawSegments2(){
 	unsigned char ii = 0;

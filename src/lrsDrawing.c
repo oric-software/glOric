@@ -64,8 +64,11 @@ void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1,
 	while (1) { // loop
         // plot (brX, brY, distseg, ch2disp)
 		//printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
+#ifdef USE_ZBUFFER        
 		zplot(_brX, _brY, distseg, char2disp);
-        if ((_brX == _brDestX) && (_brY == _brDestY)) break;
+#else
+        // TODO : plot a point whit ni z-buffer
+#endif
         //e2 = 2*err;
 		e2 = (_brErr < 0) ? (
 			((_brErr & 0x40) == 0)?(

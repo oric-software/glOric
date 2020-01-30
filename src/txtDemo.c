@@ -2,8 +2,8 @@
 #include "glOric.h"
 
 #ifdef TEXTMODE
-
-#include "data/alphabet.c"
+#include "util/util.h"
+#include "data/alphabet.h"
 
  // GEOMETRY BUFFERS
 //extern char points3d[];
@@ -17,6 +17,20 @@ extern unsigned char nbSegments;
 
 
 const char sentence[] = "MERCI RENE";
+
+unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z){
+	unsigned int aX = abs(X);
+	unsigned int aY = abs(Y);
+	if ((aX<=4) && (aY<=3)){
+		if ((aY <= 1) && (X >= -1)){
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	return 1;
+}
+
 
 void addData(const char *tPoint, unsigned char nPoint, const char *tSeg, unsigned char nSeg, char offsetPos){
 	unsigned char jj;

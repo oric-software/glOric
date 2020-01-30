@@ -5,6 +5,7 @@
 #ifdef HRSMODE
 
 #include "data\traj.h"
+#include "data\geom.h"
 
  // GEOMETRY BUFFERS
 //extern char points3d[];
