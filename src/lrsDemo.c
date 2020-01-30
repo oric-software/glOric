@@ -1,5 +1,11 @@
 
 
+/*void glProject2 (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options){
+	 int local_var;
+	 for (local_var = 0; local_var< nbPoints; local_var++) {
+		 tabpoint2D[local_var] = options;
+	 }
+}*/
 
 void faceIntro() {
     int i;
@@ -19,8 +25,9 @@ void faceIntro() {
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
-        glProject (points2d, points3d, nbPts);
-		//glProject2 (points2d, points3d, nbPts, 0x00);
+		glProject (points2d, points3d, nbPts, 0);
+        //glProject (points2d, points3d, nbPts);
+		
         initScreenBuffers();
         fillFaces();
         lrDrawSegments();
@@ -34,7 +41,7 @@ void txtGameLoop2() {
 	char key;
     unsigned char ii;
 	//key=get();
-	glProject (points2d, points3d, nbPts);
+	glProject (points2d, points3d, nbPts, 0);
 
 
     /*printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
@@ -88,7 +95,7 @@ void txtGameLoop2() {
 			shiftRight();
 			break;
 		}
-		glProject (points2d, points3d, nbPts);
+		glProject (points2d, points3d, nbPts, 0);
 		initScreenBuffers();
 		fillFaces();
         lrDrawSegments();

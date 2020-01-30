@@ -21,6 +21,7 @@ _CamRotX:		.dsb 1
 //char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 //unsigned char nbPoints=0;
 _nbPoints       .dsb 1
+_projOptions    .dsb 1
 //.dsb 256-(*&255)
 //_points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
 
@@ -701,45 +702,17 @@ drwsgdone
 .)
     rts
 */
-
-
-// void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options){
-	// int local_var;
-	// for (local_var = 0; local_var< nbPoints; local_var++) {
-		// tabpoint2D[local_var] = local_var;
-	// }
-
-// }
-//    lda #>_points3d
-//    sta ptrpt3H
-//    lda #<_points3d  ;; TODO : use 0 instead if table is aligned on page
-//    sta ptrpt3L
-//    lda #<_points2d
-//    sta ptrpt2L
-//    lda #>_points2d
-//    sta ptrpt2H
-//
-//    ldx _nbPoints
-
+// void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
 _glProject
 .(
-	ldx #6 : lda #3 : jsr enter :
+	ldx #6 : lda #4 : jsr enter :
 	ldy #0 : lda (ap),y : sta reg0 : sta ptrpt2L : iny : lda (ap),y : sta reg0+1 : sta ptrpt2H :
 	ldy #2 : lda (ap),y : sta reg0 : sta ptrpt3L : iny : lda (ap),y : sta reg0+1 : sta ptrpt3H :
 	ldy #4 : lda (ap),y : sta tmp0 : sta _nbPoints ; iny : lda (ap),y : sta tmp0+1 :
+	ldy #6 : lda (ap),y : sta tmp0 : sta _projOptions ; iny : lda (ap),y : sta tmp0+1 :
 
 	jsr _doFastProjection
-//	lda tmp0 : sta reg1 :
-//	lda #<(0) : sta reg2 : lda #>(0) : sta reg2+1 :
-//	jmp Lmain405 :
-//Lmain402
-//	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
-//	clc : lda tmp0 : adc reg0 : sta tmp1 : lda tmp0+1 : adc reg0+1 : sta tmp1+1 :
-//	ldy #0 : lda tmp0 : sta (tmp1),y :
-//
-//	inc reg2 : .( : bne skip : inc reg2+1 :skip : .)  :
-//Lmain405
-//	lda reg1 : sta tmp0 : lda #0 : sta tmp0+1 :
-//	lda reg2 : cmp tmp0 : lda reg2+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp Lmain402 :skip : .) : :
 	jmp leave :
 .)
+
+

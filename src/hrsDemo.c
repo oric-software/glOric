@@ -21,7 +21,7 @@ void hiresIntro (){
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
-        glProject (points2d, points3d, nbPts);
+        glProject (points2d, points3d, nbPts, 0);
         memset ( 0xa000, 64, 8000); // clear screen
 		hrDrawSegments();
 		hrDrawFaces();
@@ -35,7 +35,7 @@ void hiresGameLoop() {
 	char key;
 	unsigned char i=0;
 	key=get();
-	glProject (points2d, points3d, nbPts); 
+	glProject (points2d, points3d, nbPts, 0); 
 
     while (1==1) {
 		memset ( 0xa000, 64, 8000); // clear screen
@@ -66,7 +66,7 @@ void hiresGameLoop() {
 		CamPosY = traj[i+1];
 		CamRotZ = traj[i+2];
 
-		glProject (points2d, points3d, nbPts);
+		glProject (points2d, points3d, nbPts, 0);
 	}
 }
 

@@ -79,7 +79,7 @@ void debugHiresIntro (){
 		CamPosY = traj[i++];
 		CamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
-        glProject (points2d, points3d, nbPts);
+        glProject (points2d, points3d, nbPts, 0);
         //memset ( 0xa000, 64, 8000); // clear screen
 		hrDrawSegments2();
 		//hrDrawFaces();

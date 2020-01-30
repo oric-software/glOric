@@ -17,7 +17,7 @@ extern int CamPosZ;
 extern char CamRotZ;
 extern char CamRotX;
 
-void glProject (char points2D[], char points3D[], unsigned char nbPoints);
+void glProject (char points2D[], char points3D[], unsigned char nbPoints, unsigned char options);
 ```
 
 
@@ -45,7 +45,7 @@ const char ptsCube3D[]={
 };
 char ptsCube2D [NB_POINTS_CUBE	* SIZEOF_2DPOINT];
 
-glProject (points2D, points3D, NB_POINTS_CUBE);
+glProject (points2D, points3D, NB_POINTS_CUBE, 0);
 ```
 
 after the call to `glProject` array `points2D` contains 2D coordinates of points in `points3D`

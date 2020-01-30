@@ -56,7 +56,7 @@ void txtIntro (){
 	CamRotX = -4;
 
 
-    glProject (points2d, points3d, nbPts);
+    glProject (points2d, points3d, nbPts, 0);
 	clearScreen(); 
 
     drawSegments();
@@ -67,7 +67,7 @@ void txtIntro (){
 			CamRotZ-=1,
 			CamRotX=(i%2==0)?CamRotX+1:CamRotX
 		) {
-        glProject (points2d, points3d, nbPts); 
+        glProject (points2d, points3d, nbPts, 0); 
         clearScreen();
 		drawSegments();
     }
@@ -79,37 +79,37 @@ void txtIntro (){
 	CamRotX = 16;
 
     for (i=0;i<72;i++,CamPosX++) {
-        glProject (points2d, points3d, nbPts);
+        glProject (points2d, points3d, nbPts, 0);
         clearScreen();
 		drawSegments();             
     }
 
     for (i=0;i<40;i++,CamPosX=(i%4==0)?CamPosX-1:CamPosX, CamRotX=(i%4==0)?CamRotX-1:CamRotX , CamPosY=(i%4==0)?CamPosY-1:CamPosY,  CamRotZ++) {
 
-        glProject (points2d, points3d, nbPts); 
+        glProject (points2d, points3d, nbPts, 0); 
         clearScreen();
 		drawSegments();
     }
     forward ();
-	glProject (points2d, points3d, nbPts); 
+	glProject (points2d, points3d, nbPts, 0); 
 	clearScreen();
 	drawSegments();
 
     for (i=0;i<25;i++, CamPosX-=2) {
 
-        glProject (points2d, points3d, nbPts);
+        glProject (points2d, points3d, nbPts, 0);
         clearScreen();
 		drawSegments();
     }
 	CamRotZ-=1;
     for (i=0;i<11;i++, CamPosY-=2, CamRotZ-=3) {
 
-        glProject (points2d, points3d, nbPts);
+        glProject (points2d, points3d, nbPts, 0);
         clearScreen();
 		drawSegments();
     }
 	CamRotZ-=3;
-	glProject (points2d, points3d, nbPts); 
+	glProject (points2d, points3d, nbPts, 0); 
 	clearScreen();
 	drawSegments();
 
@@ -120,7 +120,7 @@ void txtGameLoop() {
 
 	char key;
 	//key=get();
-	glProject (points2d, points3d, nbPts);
+	glProject (points2d, points3d, nbPts, 0);
 
     while (1==1) {
 		clearScreen();
@@ -160,7 +160,7 @@ void txtGameLoop() {
 			shiftRight();
 			break;
 		}
-		glProject (points2d, points3d, nbPts);
+		glProject (points2d, points3d, nbPts, 0);
 	}
 }
 
