@@ -40,7 +40,14 @@
  */
 #define ADR_BASE_SCREEN 48041//BB80
 
+/*
+ *  ELEMENTS SIZE
+ */
 
+#define SIZEOF_3DPOINT 4
+#define SIZEOF_SEGMENT 4
+#define SIZEOF_2DPOINT 4
+#define SIZEOF_FACES 4
 
 
 #endif

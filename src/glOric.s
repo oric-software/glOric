@@ -2,8 +2,6 @@
 
 
 #include "config.h"
-#include "glOric.h"
-
 
 .text
 

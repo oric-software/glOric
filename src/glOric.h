@@ -2,14 +2,17 @@
 #ifndef GLORIC_H
 #define GLORIC_H
 
-#define SIZEOF_3DPOINT 4
 
-#define SIZEOF_SEGMENT 4
+extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
 
-#define SIZEOF_2DPOINT 4
+ // Camera Position
+extern int CamPosX;
+extern int CamPosY;
+extern int CamPosZ;
 
-#define SIZEOF_FACES 4
+ // Camera Orientation
+extern char CamRotZ;			// -128 -> 127 unit : 2PI/(2^8 - 1)
+extern char CamRotX;
 
-//extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
 
 #endif
