@@ -18,7 +18,7 @@ signed char _brSy;
 
 
 
-/*
+
 void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08)
 {
 
@@ -34,7 +34,7 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 	 *(adr++) = patt08;
 
 }
-*/
+
 #define DOLLAR 36
 
 void lrDrawLine (signed char x0, signed char y0, signed char x1, signed char y1, unsigned char distseg, char ch2disp) {

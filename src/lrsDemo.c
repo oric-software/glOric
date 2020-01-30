@@ -239,7 +239,7 @@ void faceIntro() {
     int i;
     int j;
     //get();
-    //enterSC();
+    enterSC();
 
 	CamPosX = 0;
 	CamPosY = 0;
@@ -262,7 +262,7 @@ void faceIntro() {
         buffer2screen((void*)ADR_BASE_SCREEN);
 		
     }
-	//leaveSC();
+	leaveSC();
 }
 
 /*
@@ -339,7 +339,7 @@ void faceDemo(){
 	//addCube3(-12, -12, 0);
     //addCube3(0, 0, 0);
     //addPlan();
-    //change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
+    change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
     //addPlan(0, 2, 2, 64, '.');
     //addPlan(2, 0, 2, 0, ':');
     //addPlan(0, -2, 2, 64, ';');
