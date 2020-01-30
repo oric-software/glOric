@@ -239,7 +239,7 @@ void faceIntro() {
     int i;
     int j;
     //get();
-    enterSC();
+    //enterSC();
 
 	CamPosX = 0;
 	CamPosY = 0;
@@ -262,7 +262,7 @@ void faceIntro() {
         buffer2screen((void*)ADR_BASE_SCREEN);
 		
     }
-	leaveSC();
+	//leaveSC();
 }
 
 /*

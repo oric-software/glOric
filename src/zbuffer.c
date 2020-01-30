@@ -41,17 +41,19 @@ void zplot(unsigned char X, unsigned char Y, unsigned char dist, char char2disp)
 }
 
 
-void zline(signed char dx, signed char py, unsigned char nbpoints, unsigned char dist, char char2disp) {
+void zline(signed char dx, signed char py, signed char nbpoints, unsigned char dist, char char2disp) {
 
 	int  offset;
     char *ptrFbuf;
     unsigned char *ptrZbuf;
-    unsigned char nbp;
+    signed char nbp;
     
     nbp = nbpoints;
     offset = multi40[py] + dx; //py*SCREEN_WIDTH+dx;//
     ptrZbuf = zbuffer+offset;
     ptrFbuf = fbuffer+offset;
+    //printf ("zline from [%d %d] . %d points at dist %d \n", dx, py, nbpoints, dist);
+
     while (nbp >=0){
         
         if (dist < ptrZbuf[nbp] ){

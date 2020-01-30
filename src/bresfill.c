@@ -4,7 +4,7 @@
 #include "glOric.h"
 
 #include "util\util.h"
-
+#include "render\zbuffer.h"
 
 extern signed char  A1X;
 extern signed char  A1Y;
@@ -168,6 +168,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 
     signed char nbpoints;
     int val;
+	//printf ("p1x=%d p2x=%d py=%d dist= %d, char2disp= %d\n", p1x, p2x, dist,  dist, char2disp);get();
     if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
     if (p1x > p2x) {
         dx = max(0, p2x);
@@ -179,7 +180,7 @@ void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dis
 
     nbpoints = fx - dx;
     if (nbpoints <0) return;
-	
+	//printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
 	zline(dx, py, nbpoints,  dist, char2disp);
 	
 }
