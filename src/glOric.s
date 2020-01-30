@@ -1,10 +1,7 @@
 
-
-
 #include "config.h"
 
 .text
-
 
  // Camera Position
 _CamPosX:		.dsb 2
@@ -16,16 +13,21 @@ _CamRotZ:		.dsb 1			// -128 -> -127 unit : 2PI/(2^8 - 1)
 _CamRotX:		.dsb 1
 
 
-//char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
+//unsigned char projOptions=0;
+_projOptions            .dsb 1
+
 //unsigned char nbPoints=0;
-_nbPoints       .dsb 1
-_projOptions    .dsb 1
+_nbPoints               .dsb 1
+
+
+//char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 //.dsb 256-(*&255)
 //_points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
 
-//char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 //unsigned char nbSegments=0;
 _nbSegments     .dsb 1
+
+//char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 .dsb 256-(*&255)
 _segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
 
@@ -44,88 +46,12 @@ ptrpt2H .dsb 1
 
 .text
 
-/*
-//  void doProjection(){
-_doProjection:
-.(
-//  	unsigned char ii = 0;
-//  	for (ii = 0; ii< nbPoints; ii++){
-    lda _nbPoints
-    beq doprojdone
-    tax
-    dex
-doprojloop:
-//  		PointX = points3d[ii*SIZEOF_3DPOINT + 0];
-        txa
-        asl
-        asl
-        sta ptrpt3L
-        lda #<_points3d
-        clc
-        adc ptrpt3L
-        sta ptrpt3L
-        lda #>_points3d
-        adc #$00
-        sta ptrpt3H
-        ldy #$00
-        lda (ptrpt3),y
-        sta _PointX
-
-//  		PointY = points3d[ii*SIZEOF_3DPOINT + 1];
-        iny
-        lda (ptrpt3),y
-        sta _PointY
-
-//  		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
-        iny
-        lda (ptrpt3),y
-        sta _PointZ
-
-//  		project();
-        jsr _project
-//  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
-        txa
-        asl
-        sta ptrpt2L
-        lda #<_points2d
-        clc
-        adc ptrpt2L
-        sta ptrpt2L
-        lda #>_points2d
-        adc #$00
-        sta ptrpt2H
-
-        ldy #$00
-        lda _ResX
-        sta (ptrpt2),y
-
-//  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
-        iny
-        lda _ResY
-        sta (ptrpt2),y
-//  	}
-    dex
-    bpl doprojloop   ;; FIXME : does not allows more than 127 points
-doprojdone:
-//  }
-.)
-    rts
-*/
-
-//  void doProjection(){
+//  void doFastProjection(){
 _doFastProjection:
 .(
 //  	unsigned char ii = 0;
+
 //  	for (ii = nbPoints-1; ii< 0; ii--){
-    ;; TODO : move this in an init function to save instruction
-//    lda #>_points3d
-//    sta ptrpt3H
-//    lda #<_points3d  ;; TODO : use 0 instead if table is aligned on page
-//    sta ptrpt3L
-//    lda #<_points2d
-//    sta ptrpt2L
-//    lda #>_points2d
-//    sta ptrpt2H
 
     ldx _nbPoints
     dex
@@ -244,10 +170,6 @@ _AngleH:        .dsb 1
 _AngleV:        .dsb 1
 
 
-//_Quotient:		.dsb 2
-//_Divisor:		.dsb 2
-//_Remainder :	.dsb 2
-//
 AnglePH .dsb 1 ; horizontal angle of point from player pov
 AnglePV .dsb 1 ; vertical angle of point from player pov
 
@@ -257,11 +179,11 @@ VAngleOverflow .dsb 1
 _project:
 .(
 	// save context
-    pha:txa:pha:tya:pha
+        pha:txa:pha:tya:pha
 
-    lda #0
-    sta HAngleOverflow
-    sta VAngleOverflow
+        lda #0
+        sta HAngleOverflow
+        sta VAngleOverflow
 
 	// DeltaX = CamPosX - PointX
 	// Divisor = DeltaX
@@ -282,17 +204,17 @@ _project:
 	sbc _CamPosY+1
 	sta _DeltaY+1
 
-    // AngleH = atan2 (DeltaY, DeltaX)
-    lda _DeltaY
-    sta _ty
-    lda _DeltaX
-    sta _tx
-    jsr _fastatan2 ; _atan2_8
-    lda _res
-    sta _AngleH
+        // AngleH = atan2 (DeltaY, DeltaX)
+        lda _DeltaY
+        sta _ty
+        lda _DeltaX
+        sta _tx
+        jsr _fastatan2 ; _atan2_8
+        lda _res
+        sta _AngleH
 
-    // Norm = norm (DeltaX, DeltaY)
-    jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
+        // Norm = norm (DeltaX, DeltaY)
+        jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
 
         // DeltaZ = CamPosZ - PointZ
         sec
@@ -303,33 +225,33 @@ _project:
         sbc _CamPosZ+1
         sta _DeltaZ+1
 
-    // AngleV = atan2 (DeltaZ, Norm)
-    lda _DeltaZ
-    sta _ty
-    lda _Norm
-    sta _tx
-    jsr _fastatan2 ; _atan2_8
-    lda _res
-    sta _AngleV
+        // AngleV = atan2 (DeltaZ, Norm)
+        lda _DeltaZ
+        sta _ty
+        lda _Norm
+        sta _tx
+        jsr _fastatan2 ; _atan2_8
+        lda _res
+        sta _AngleV
 
-    // AnglePH = AngleH - CamRotZ
-    sec
-    lda _AngleH
-    sbc _CamRotZ
-    sta AnglePH
-    bvc project_noHAngleOverflow
-    lda #$80
-    sta HAngleOverflow
+        // AnglePH = AngleH - CamRotZ
+        sec
+        lda _AngleH
+        sbc _CamRotZ
+        sta AnglePH
+        bvc project_noHAngleOverflow
+        lda #$80
+        sta HAngleOverflow
 
-project_noHAngleOverflow
-    // AnglePV = AngleV - CamRotX
-    sec
-    lda _AngleV
-    sbc _CamRotX
-    sta AnglePV
-    bvc project_noVAngleOverflow
-    lda #$80
-    sta VAngleOverflow
+        project_noHAngleOverflow
+        // AnglePV = AngleV - CamRotX
+        sec
+        lda _AngleV
+        sbc _CamRotX
+        sta AnglePV
+        bvc project_noVAngleOverflow
+        lda #$80
+        sta VAngleOverflow
 
 project_noVAngleOverflow
 #ifndef ANGLEONLY
@@ -338,25 +260,25 @@ project_noVAngleOverflow
 	lda AnglePH
 	cmp #$80
 	ror
-    ora HAngleOverflow
+        ora HAngleOverflow
 
 	eor #$FF
 	sec
 	adc #$00
 	clc
-    adc #SCREEN_WIDTH/2
+        adc #SCREEN_WIDTH/2
 	sta _ResX
 
 	lda AnglePV
 	cmp #$80
 	ror
-    ora VAngleOverflow
+        ora VAngleOverflow
 
 	eor #$FF
 	sec
 	adc #$00
 	clc
-    adc #SCREEN_HEIGHT/2
+        adc #SCREEN_HEIGHT/2
 	sta _ResY
 #else
 	;; lda AnglePH
@@ -442,10 +364,10 @@ angVpositiv:
 
 #endif
 #else
-    lda AnglePH
-    sta _ResX
-    lda AnglePV
-    sta _ResY
+        lda AnglePH
+        sta _ResX
+        lda AnglePV
+        sta _ResY
 #endif
 
 prodone:

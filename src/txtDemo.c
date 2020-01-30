@@ -1,5 +1,19 @@
+#include "config.h"
+#include "glOric.h"
+
+#ifdef TEXTMODE
 
 #include "data/alphabet.c"
+
+ // GEOMETRY BUFFERS
+//extern char points3d[];
+char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
+//extern unsigned char nbPts;
+unsigned char nbPts=0;
+char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
+extern unsigned char segments[];
+extern unsigned char nbSegments;
+
 
 
 const char sentence[] = "MERCI RENE";
@@ -185,3 +199,4 @@ void textDemo(){
 
  	txtGameLoop();
 }
+#endif

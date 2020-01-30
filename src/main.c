@@ -12,14 +12,6 @@
 #include "data/traj.c"
 #endif
 
- // Camera Position
-extern int CamPosX;
-extern int CamPosY;
-extern int CamPosZ;
-
- // Camera Orientation
-extern char CamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-extern char CamRotX;
 
 static int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320, 360, 400, 440, 480, 520, 560, 600, 640, 680, 720, 760, 800, 840, 880, 920, 960, 1000, 1040};
 

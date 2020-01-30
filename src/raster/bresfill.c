@@ -368,7 +368,7 @@ fillFace (signed char P1AH, signed char P1AV, signed char P2AH, signed char P2AV
 }
 
 
-void fillFaces() {
+void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
 
     unsigned char ii=0;
     unsigned char jj = 0;

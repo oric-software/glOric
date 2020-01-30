@@ -135,7 +135,7 @@ def drawLine( x0,  y0,  x1,  y1):
 */
 
 
-void lrDrawSegments(){
+void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbSegments){
 	unsigned char ii = 0;
 	unsigned char jj = 0;
 	unsigned char idxPt1, idxPt2;
