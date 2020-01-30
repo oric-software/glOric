@@ -14,6 +14,7 @@ SET OSDKFILE=main
 SET OSDKFILE=%OSDKFILE%  glOric kernel
 REM SET OSDKFILE=%OSDKFILE% math\div math\root math\square
 SET OSDKFILE=%OSDKFILE% math\atan2 math\norm
+SET OSDKFILE=%OSDKFILE% render\lrsSegments
 SET OSDKFILE=%OSDKFILE% raster\buffer raster\line8
 REM SET OSDKFILE=%OSDKFILE%  raster\filler 
 SET OSDKFILE=%OSDKFILE% raster\fill8 raster\line

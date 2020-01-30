@@ -45,6 +45,8 @@ ptrpt2L .dsb 1
 ptrpt2H .dsb 1
 
 .text
+
+/*
 //  void doProjection(){
 _doProjection:
 .(
@@ -110,7 +112,7 @@ doprojdone:
 //  }
 .)
     rts
-
+*/
 
 //  void doProjection(){
 _doFastProjection:
@@ -294,14 +296,14 @@ _project:
     // Norm = norm (DeltaX, DeltaY)
     jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
 
-   	// DeltaZ = CamPosZ - PointZ
-	sec
-	lda _PointZ
-	sbc _CamPosZ
-	sta _DeltaZ
-	lda _PointZ+1
-	sbc _CamPosZ+1
-	sta _DeltaZ+1
+        // DeltaZ = CamPosZ - PointZ
+        sec
+        lda _PointZ
+        sbc _CamPosZ
+        sta _DeltaZ
+        lda _PointZ+1
+        sbc _CamPosZ+1
+        sta _DeltaZ+1
 
     // AngleV = atan2 (DeltaZ, Norm)
     lda _DeltaZ
@@ -448,29 +450,6 @@ angVpositiv:
     sta _ResY
 #endif
 
-//  ; http://nparker.llx.com/a2/mult.html
-//	// Quotient, Remainder = Quotient / Divisor
-//	lda #0      ;Initialize _Remainder to 0
-//	sta _Remainder
-//	sta _Remainder+1
-//	ldx #16     ;There are 16 bits in _Quotient
-//L1  asl _Quotient    ;Shift hi bit of _Quotient into _Remainder
-//	rol _Quotient+1  ;(vacating the lo bit, which will be used for the quotient)
-//	rol _Remainder
-//	rol _Remainder+1
-//	lda _Remainder
-//	sec         ;Trial subtraction
-//	sbc _Divisor
-//	tay
-//	lda _Remainder+1
-//	sbc _Divisor+1
-//	bcc L2      ;Did subtraction succeed?
-//	sta _Remainder+1   ;If yes, save it
-//	sty _Remainder
-//	inc _Quotient    ;and record a 1 in the quotient
-//L2  dex
-//	bne L1
-
 prodone:
 	// restore context
 	pla:tay:pla:tax:pla
@@ -478,230 +457,7 @@ prodone:
 	rts
 
 
-.zero
-pSeg .dsb 2
 
-.text
-idxPt1 .dsb 1
-idxPt2 .dsb 1
-//_char2Display .dsb 1
-
-_Point1X .dsb 1
-_Point1Y .dsb 1
-_Point2X .dsb 1
-_Point2Y .dsb 1
-_char2Display .dsb 1
-
-
-#ifdef  TEXTMODE
-
-//  void drawSegments(){
-_drawSegments:
-.(
-	// save context
-    pha:txa:pha:tya:pha
-//  	unsigned char ii = 0;
-//  	unsigned char idxPt1, idxPt2;
-//  	for (ii = 0; ii< nbSegments; ii++){
-    ;lda #<pSeg
-
-    ldx _nbSegments
-    beq drwsgdone
-    dex
-
-drwloop:
-//
-//  		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
-        txa ; ii
-        asl
-        asl ; ii * SIZEOF_SEGMENT
-        sta pSeg
-        lda #<_segments
-        clc
-        adc pSeg
-        sta pSeg
-        lda #>_segments
-        adc #$00
-        sta pSeg+1
-        ldy #$00
-        lda (pSeg),y
-        sta idxPt1
-
-//  		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-        iny
-        lda (pSeg),y
-        sta idxPt2
-
-//  		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-        iny
-        lda (pSeg),y
-        sta _char2Display
-
-//
-//  		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        lda idxPt1  ;
-        asl         ; idxPt1 * SIZEOF_2DPOINT
-        asl
-        sta ptrpt2L
-        lda #<_points2d
-        clc
-        adc ptrpt2L
-        sta ptrpt2L
-        lda #>_points2d
-        adc #$00
-        sta ptrpt2H
-
-        ldy #$00
-        lda (ptrpt2),y
-        sta _Point1X
-
-//  		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
-        iny
-        lda (ptrpt2),y
-        sta _Point1Y
-
-//  		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        lda idxPt2  ;
-        asl         ; idxPt2 * SIZEOF_2DPOINT
-        asl
-        sta ptrpt2L
-        lda #<_points2d
-        clc
-        adc ptrpt2L
-        sta ptrpt2L
-        lda #>_points2d
-        adc #$00
-        sta ptrpt2H
-
-        ldy #$00
-        lda (ptrpt2),y
-        sta _Point2X
-
-//  		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
-        iny
-        lda (ptrpt2),y
-        sta _Point2Y
-
-//  		drawLine ();
-        jsr _drawLine
-//  	}
-    dex
-    txa
-    cmp #$FF
-    bne drwloop
-drwsgdone
-//  }
-	// restore context
-	pla:tay:pla:tax:pla
-.)
-    rts
-
-#endif
-
-
-
-/*
-//  void fastdrawSegments(){
-_fastDrawSegments:
-.(
-	// save context
-    pha:txa:pha:tya:pha
-
-
-//  	unsigned char ii = 0;
-//  	unsigned char idxPt1, idxPt2;
-//  	for (ii = 0; ii< nbSegments; ii++){
-    ;lda #<pSeg
-
-    ldx _nbSegments
-    beq drwsgdone
-    dex
-
-drwloop:
-//
-//  		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
-        txa ; ii
-        asl
-        asl ; ii * SIZEOF_SEGMENT
-        sta pSeg
-        lda #<_segments
-        clc
-        adc pSeg
-        sta pSeg
-        lda #>_segments
-        adc #$00
-        sta pSeg+1
-        ldy #$00
-        lda (pSeg),y
-        sta idxPt1
-
-//  		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
-        iny
-        lda (pSeg),y
-        sta idxPt2
-
-//  		char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
-        iny
-        lda (pSeg),y
-        sta _char2Display
-
-//
-//  		Point1X = points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        lda idxPt1  ;
-        asl         ; idxPt1 * SIZEOF_2DPOINT
-        asl
-        sta ptrpt2L
-        lda #<_points2d
-        clc
-        adc ptrpt2L
-        sta ptrpt2L
-        lda #>_points2d
-        adc #$00
-        sta ptrpt2H
-
-        ldy #$00
-        lda (ptrpt2),y
-        sta _Point1X
-
-//  		Point1Y = points2d[idxPt1*SIZEOF_2DPOINT + 1];
-        iny
-        lda (ptrpt2),y
-        sta _Point1Y
-
-//  		Point2X = points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        lda idxPt2  ;
-        asl         ; idxPt1 * SIZEOF_2DPOINT
-        asl
-        sta ptrpt2L
-        lda #<_points2d
-        clc
-        adc ptrpt2L
-        sta ptrpt2L
-        lda #>_points2d
-        adc #$00
-        sta ptrpt2H
-
-        ldy #$00
-        lda (ptrpt2),y
-        sta _Point2X
-
-//  		Point2Y = points2d[idxPt2*SIZEOF_2DPOINT + 1];
-        iny
-        lda (ptrpt2),y
-        sta _Point2Y
-
-//  		drawLine ();
-        jsr _drawLine
-//  	}
-    dex
-    bpl drwloop
-drwsgdone
-//  }
-	// restore context
-	pla:tay:pla:tax:pla
-.)
-    rts
-*/
 // void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
 _glProject
 .(
