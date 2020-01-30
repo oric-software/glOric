@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define LRSMODE
+#define HRSMODE
 
 /*
  *  SCREEN DIMENSION
