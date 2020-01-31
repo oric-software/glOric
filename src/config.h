@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define HRSMODE
+#define LRSMODE
 
 /*
  *  SCREEN DIMENSION
@@ -24,8 +24,8 @@
 
 #ifdef HRSMODE
 #define USE_HIRES_RASTER
-#define SCREEN_WIDTH      240
-#define SCREEN_HEIGHT      200
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 200
 #endif
 
 /*
@@ -39,7 +39,7 @@
 /*
  *  SCREEN BUFFER
  */
-#define ADR_BASE_SCREEN 48041//BB80
+#define ADR_BASE_SCREEN 48040  //BB80
 
 /*
  *  ELEMENTS SIZE
@@ -49,6 +49,5 @@
 #define SIZEOF_SEGMENT 4
 #define SIZEOF_2DPOINT 4
 #define SIZEOF_FACES 4
-
 
 #endif

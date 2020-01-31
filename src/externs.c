@@ -1,6 +1,6 @@
 
 
-
+/*
  // Point 3D Coordinates
 extern int PointX;
 extern int PointY;
@@ -59,12 +59,7 @@ extern char y1;
 extern char y2;
 extern char atanres;
 
-// My ATAN2_8
-/*
-extern char tx;
-extern char ty;
-extern char res;
-*/
+
 // LINE
 extern char Point1X;
 extern char Point1Y;
@@ -82,3 +77,4 @@ extern unsigned char CurrentPixelY;             // Coordinate Y of edited pixel/
 extern unsigned char OtherPixelX;               // Coordinate X of other edited pixel/byte
 extern unsigned char OtherPixelY;               // Coordinate Y of other edited pixel/byte
 
+*/
