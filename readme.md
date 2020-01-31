@@ -59,6 +59,7 @@ Change the line to `#define TEXTMODE` if you want ot build the text mode demo.
 Once you have selected the demo you want to build, just open a shell command in the directory where you placed the source code and run following commands:
 
 ```
+cd src
 osdk_build.bat && osdk_execute.bat
 ```
 
