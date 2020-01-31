@@ -2,14 +2,17 @@
 #include "glOric.h"
 
 #ifdef USE_ZBUFFER
+extern char fbuffer[];
+void buffer2screenopt() {
+    memcpy(ADR_BASE_SCREEN, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
+}
 
+/*
 const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
                        360, 400, 440, 480, 520, 560, 600, 640, 680,
                        720, 760, 800, 840, 880, 920, 960, 1000, 1040};
 
-/*
- * TEXT SCREEN TEMPORARY BUFFERS
- */
+
 
 unsigned char zbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // z-depth buffer
 char          fbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // frame buffer
@@ -73,5 +76,5 @@ void zline(signed char   dx,
         nbp--;
     }
 }
-
+*/
 #endif
