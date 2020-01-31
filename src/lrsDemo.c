@@ -41,19 +41,13 @@ void faceDemo() {
     //addPlan(-2, 0, 2, 0, '\'');
 
     //addTePee(0, 0, 3);
-    addHouse(0, 0, 3, 2);
+    addHouse(0, 0, 12, 8);
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 
     lores0();
 
     faceIntro();
-    CamPosX = 5;
-    CamPosY = 0;
-    CamPosZ = 2;
-
-    CamRotZ = 124;
-    CamRotX = 0;
-
+ 
     txtGameLoop2();
 }
 
@@ -65,7 +59,7 @@ void faceIntro() {
 
     CamPosX = 0;
     CamPosY = 0;
-    CamPosZ = 2;
+    CamPosZ = 6;
 
     CamRotZ = 0;
     CamRotX = 0;
@@ -150,7 +144,7 @@ void txtGameLoop2() {
 
 #ifdef USE_COLLISION_DETECTION
 unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
-    unsigned int aX = abs(X);
+    /*unsigned int aX = abs(X);
     unsigned int aY = abs(Y);
     if ((aX <= 4) && (aY <= 3)) {
         if ((aY <= 1) && (X >= -1)) {
@@ -158,7 +152,7 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
         } else {
             return 0;
         }
-    }
+    }*/
     return 1;
 }
 #endif
@@ -187,28 +181,28 @@ void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l) {
 
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 3;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
     nbPts++;
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 3;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
     nbPts++;
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 3;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
     nbPts++;
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 3;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
     nbPts++;
 
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 5;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 12;
     nbPts++;
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 5;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 12;
     nbPts++;
 
     segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 10;
