@@ -2,6 +2,8 @@
 
 Project __glOric__ aims at providing Oric's developpers with an hyper fast 3D library to use in real time applications.
 
+
+
 ## Starting with glOric
 
 ### Installing Pre-requisites
@@ -28,9 +30,15 @@ Or, if you don't have GIT client installed, you can download an [archive of the 
 A good starting point in using glOric consist in building and testing the demo which are provided with the project.
 
 3 demos are provided :
-- a text base demo
+- a text base demo 
+
+![TextModeDemo](docs/imgs/TextModeDemo.gif)
 - a hires demo
+
+![HiresModeDemo](docs/imgs/HiresModeDemo.gif)
 - a lores demo 
+
+![LoresModeDemo](docs/imgs/LoresModeDemo.gif)
 
 #### Selecting a demo to build
 To choose between demos, open the config.h file located in the src directory of glOric and find the following section at the beginning of the file:
