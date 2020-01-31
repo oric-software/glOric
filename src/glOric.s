@@ -162,9 +162,6 @@ _DeltaX:		.dsb 2
 _DeltaY:		.dsb 2
 _DeltaZ:		.dsb 2
 
-_DeltaXSquare:	.dsb 4
-_DeltaYSquare:	.dsb 4
-
 _Norm:          .dsb 2
 _AngleH:        .dsb 1
 _AngleV:        .dsb 1
@@ -179,11 +176,11 @@ VAngleOverflow .dsb 1
 _project:
 .(
 	// save context
-        pha:txa:pha:tya:pha
+	pha:txa:pha:tya:pha
 
-        lda #0
-        sta HAngleOverflow
-        sta VAngleOverflow
+	lda #0
+	sta HAngleOverflow
+	sta VAngleOverflow
 
 	// DeltaX = CamPosX - PointX
 	// Divisor = DeltaX
@@ -204,81 +201,81 @@ _project:
 	sbc _CamPosY+1
 	sta _DeltaY+1
 
-        // AngleH = atan2 (DeltaY, DeltaX)
-        lda _DeltaY
-        sta _ty
-        lda _DeltaX
-        sta _tx
-        jsr _fastatan2 ; _atan2_8
-        lda _res
-        sta _AngleH
+	// AngleH = atan2 (DeltaY, DeltaX)
+	lda _DeltaY
+	sta _ty
+	lda _DeltaX
+	sta _tx
+	jsr _fastatan2 ; _atan2_8
+	lda _res
+	sta _AngleH
 
-        // Norm = norm (DeltaX, DeltaY)
-        jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
+	// Norm = norm (DeltaX, DeltaY)
+	jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
 
-        // DeltaZ = CamPosZ - PointZ
-        sec
-        lda _PointZ
-        sbc _CamPosZ
-        sta _DeltaZ
-        lda _PointZ+1
-        sbc _CamPosZ+1
-        sta _DeltaZ+1
+	// DeltaZ = CamPosZ - PointZ
+	sec
+	lda _PointZ
+	sbc _CamPosZ
+	sta _DeltaZ
+	lda _PointZ+1
+	sbc _CamPosZ+1
+	sta _DeltaZ+1
 
-        // AngleV = atan2 (DeltaZ, Norm)
-        lda _DeltaZ
-        sta _ty
-        lda _Norm
-        sta _tx
-        jsr _fastatan2 ; _atan2_8
-        lda _res
-        sta _AngleV
+	// AngleV = atan2 (DeltaZ, Norm)
+	lda _DeltaZ
+	sta _ty
+	lda _Norm
+	sta _tx
+	jsr _fastatan2 ; _atan2_8
+	lda _res
+	sta _AngleV
 
-        // AnglePH = AngleH - CamRotZ
-        sec
-        lda _AngleH
-        sbc _CamRotZ
-        sta AnglePH
-        bvc project_noHAngleOverflow
-        lda #$80
-        sta HAngleOverflow
+	// AnglePH = AngleH - CamRotZ
+	sec
+	lda _AngleH
+	sbc _CamRotZ
+	sta AnglePH
+	bvc project_noHAngleOverflow
+	lda #$80
+	sta HAngleOverflow
 
-        project_noHAngleOverflow
-        // AnglePV = AngleV - CamRotX
-        sec
-        lda _AngleV
-        sbc _CamRotX
-        sta AnglePV
-        bvc project_noVAngleOverflow
-        lda #$80
-        sta VAngleOverflow
+project_noHAngleOverflow:
+	// AnglePV = AngleV - CamRotX
+	sec
+	lda _AngleV
+	sbc _CamRotX
+	sta AnglePV
+	bvc project_noVAngleOverflow
+	lda #$80
+	sta VAngleOverflow
 
-project_noVAngleOverflow
+project_noVAngleOverflow:
 #ifndef ANGLEONLY
 #ifdef TEXTMODE
 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
 	lda AnglePH
 	cmp #$80
 	ror
-        ora HAngleOverflow
+    ora HAngleOverflow
 
 	eor #$FF
 	sec
 	adc #$00
 	clc
-        adc #SCREEN_WIDTH/2
+    adc #SCREEN_WIDTH/2
 	sta _ResX
 
 	lda AnglePV
 	cmp #$80
 	ror
-        ora VAngleOverflow
+    ora VAngleOverflow
 
 	eor #$FF
 	sec
 	adc #$00
 	clc
-        adc #SCREEN_HEIGHT/2
+    adc #SCREEN_HEIGHT/2
 	sta _ResY
 #else
 	;; lda AnglePH
@@ -364,10 +361,10 @@ angVpositiv:
 
 #endif
 #else
-        lda AnglePH
-        sta _ResX
-        lda AnglePV
-        sta _ResY
+	lda AnglePH
+	sta _ResX
+	lda AnglePV
+	sta _ResY
 #endif
 
 prodone:
