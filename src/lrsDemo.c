@@ -46,7 +46,7 @@ void faceDemo() {
 
     lores0();
 
-    //faceIntro();
+    faceIntro();
     CamPosX = 5;
     CamPosY = 0;
     CamPosZ = 2;
