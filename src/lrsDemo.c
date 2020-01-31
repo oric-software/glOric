@@ -20,13 +20,6 @@ unsigned char        nbFaces = 0;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
 
-#ifdef USE_COLLISION_DETECTION
-unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z);
-#endif
-void faceIntro();
-void txtGameLoop2();
-void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l);
-
 void faceDemo() {
     nbPts      = 0;
     nbSegments = 0;
