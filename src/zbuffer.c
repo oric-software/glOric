@@ -3,9 +3,6 @@
 
 #ifdef USE_ZBUFFER
 extern char fbuffer[];
-void buffer2screenopt() {
-    memcpy(ADR_BASE_SCREEN, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
-}
 
 /*
 const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
@@ -26,8 +23,8 @@ void buffer2screen(char destAdr[]) {
     memcpy(destAdr, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
 }
 
-void zplot(unsigned char X,
-           unsigned char Y,
+void zplot(signed char X,
+           signed char Y,
            unsigned char dist,
            char          char2disp) {
     int            offset;

@@ -29,6 +29,133 @@ _multi40
 	.word 1000
 	.word 1040
 
+
+
+; This table contains lower 8 bits of the adress
+ZBufferAdressLow
+	.byt <(_zbuffer+40*0)
+	.byt <(_zbuffer+40*1)
+	.byt <(_zbuffer+40*2)
+	.byt <(_zbuffer+40*3)
+	.byt <(_zbuffer+40*4)
+	.byt <(_zbuffer+40*5)
+	.byt <(_zbuffer+40*6)
+	.byt <(_zbuffer+40*7)
+	.byt <(_zbuffer+40*8)
+	.byt <(_zbuffer+40*9)
+	.byt <(_zbuffer+40*10)
+	.byt <(_zbuffer+40*11)
+	.byt <(_zbuffer+40*12)
+	.byt <(_zbuffer+40*13)
+	.byt <(_zbuffer+40*14)
+	.byt <(_zbuffer+40*15)
+	.byt <(_zbuffer+40*16)
+	.byt <(_zbuffer+40*17)
+	.byt <(_zbuffer+40*18)
+	.byt <(_zbuffer+40*19)
+	.byt <(_zbuffer+40*20)
+	.byt <(_zbuffer+40*21)
+	.byt <(_zbuffer+40*22)
+	.byt <(_zbuffer+40*23)
+	.byt <(_zbuffer+40*24)
+	.byt <(_zbuffer+40*25)
+	.byt <(_zbuffer+40*26)
+	.byt <(_zbuffer+40*27)
+
+; This table contains hight 8 bits of the adress
+ZBufferAdressHigh
+	.byt >(_zbuffer+40*0)
+	.byt >(_zbuffer+40*1)
+	.byt >(_zbuffer+40*2)
+	.byt >(_zbuffer+40*3)
+	.byt >(_zbuffer+40*4)
+	.byt >(_zbuffer+40*5)
+	.byt >(_zbuffer+40*6)
+	.byt >(_zbuffer+40*7)
+	.byt >(_zbuffer+40*8)
+	.byt >(_zbuffer+40*9)
+	.byt >(_zbuffer+40*10)
+	.byt >(_zbuffer+40*11)
+	.byt >(_zbuffer+40*12)
+	.byt >(_zbuffer+40*13)
+	.byt >(_zbuffer+40*14)
+	.byt >(_zbuffer+40*15)
+	.byt >(_zbuffer+40*16)
+	.byt >(_zbuffer+40*17)
+	.byt >(_zbuffer+40*18)
+	.byt >(_zbuffer+40*19)
+	.byt >(_zbuffer+40*20)
+	.byt >(_zbuffer+40*21)
+	.byt >(_zbuffer+40*22)
+	.byt >(_zbuffer+40*23)
+	.byt >(_zbuffer+40*24)
+	.byt >(_zbuffer+40*25)
+	.byt >(_zbuffer+40*26)
+	.byt >(_zbuffer+40*27)
+
+
+; This table contains lower 8 bits of the adress
+FBufferAdressLow
+	.byt <(_fbuffer+40*0)
+	.byt <(_fbuffer+40*1)
+	.byt <(_fbuffer+40*2)
+	.byt <(_fbuffer+40*3)
+	.byt <(_fbuffer+40*4)
+	.byt <(_fbuffer+40*5)
+	.byt <(_fbuffer+40*6)
+	.byt <(_fbuffer+40*7)
+	.byt <(_fbuffer+40*8)
+	.byt <(_fbuffer+40*9)
+	.byt <(_fbuffer+40*10)
+	.byt <(_fbuffer+40*11)
+	.byt <(_fbuffer+40*12)
+	.byt <(_fbuffer+40*13)
+	.byt <(_fbuffer+40*14)
+	.byt <(_fbuffer+40*15)
+	.byt <(_fbuffer+40*16)
+	.byt <(_fbuffer+40*17)
+	.byt <(_fbuffer+40*18)
+	.byt <(_fbuffer+40*19)
+	.byt <(_fbuffer+40*20)
+	.byt <(_fbuffer+40*21)
+	.byt <(_fbuffer+40*22)
+	.byt <(_fbuffer+40*23)
+	.byt <(_fbuffer+40*24)
+	.byt <(_fbuffer+40*25)
+	.byt <(_fbuffer+40*26)
+	.byt <(_fbuffer+40*27)
+
+; This table contains hight 8 bits of the adress
+FBufferAdressHigh
+	.byt >(_fbuffer+40*0)
+	.byt >(_fbuffer+40*1)
+	.byt >(_fbuffer+40*2)
+	.byt >(_fbuffer+40*3)
+	.byt >(_fbuffer+40*4)
+	.byt >(_fbuffer+40*5)
+	.byt >(_fbuffer+40*6)
+	.byt >(_fbuffer+40*7)
+	.byt >(_fbuffer+40*8)
+	.byt >(_fbuffer+40*9)
+	.byt >(_fbuffer+40*10)
+	.byt >(_fbuffer+40*11)
+	.byt >(_fbuffer+40*12)
+	.byt >(_fbuffer+40*13)
+	.byt >(_fbuffer+40*14)
+	.byt >(_fbuffer+40*15)
+	.byt >(_fbuffer+40*16)
+	.byt >(_fbuffer+40*17)
+	.byt >(_fbuffer+40*18)
+	.byt >(_fbuffer+40*19)
+	.byt >(_fbuffer+40*20)
+	.byt >(_fbuffer+40*21)
+	.byt >(_fbuffer+40*22)
+	.byt >(_fbuffer+40*23)
+	.byt >(_fbuffer+40*24)
+	.byt >(_fbuffer+40*25)
+	.byt >(_fbuffer+40*26)
+	.byt >(_fbuffer+40*27)
+
 // void initScreenBuffers()
 _initScreenBuffers:
 .(
@@ -156,72 +283,136 @@ MD4
 //           char          char2disp) {
 
 _zplot:
-;.(
-	ldx #10 : lda #3 : jsr enter :
-	ldy #0 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
-	lda tmp0 : sta reg0 :
-	ldy #2 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
-	lda tmp0 : sta reg1 :
-	ldy #4 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
-	ldy #4 : lda tmp0 : sta (ap),y :
-	ldy #6 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
-	ldy #6 : lda tmp0 : sta (ap),y :
-	lda reg1 : sta tmp0 :
-	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda #<(0) : cmp tmp0 : lda #>(0) : sbc tmp0+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer133 : : :
-	lda tmp0 : cmp #<(26) : lda tmp0+1 : sbc #>(26) : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer133 : :
-	lda reg0 : sta tmp0 :
-	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda #<(0) : cmp tmp0 : lda #>(0) : sbc tmp0+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer133 : : :
-	lda tmp0 : cmp #<(40) : lda tmp0+1 : sbc #>(40) : .( : bvc *+4 : eor #$80 : bpl skip : jmp Lzbuffer129 :skip : .) : :
-Lzbuffer133
-	jmp leave :
-Lzbuffer129
-	lda reg1 : sta tmp0 :
-	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	lda tmp0 : asl : sta tmp0 : lda tmp0+1 : rol : sta tmp0+1 :
-	clc : lda #<(_multi40) : adc tmp0 : sta tmp0 : lda #>(_multi40) : adc tmp0+1 : sta tmp0+1 :
-	ldy #0 : lda (tmp0),y : tax : iny : lda (tmp0),y : stx tmp0 : sta tmp0+1 :
-	lda reg0 : sta tmp1 :
-	lda tmp1 : sta tmp1 : lda #0 : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg2 : lda tmp0+1 : sta reg2+1 :
-	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
-	clc : lda #<(_zbuffer) : adc tmp0 : sta tmp1 : lda #>(_zbuffer) : adc tmp0+1 : sta tmp1+1 :
-	ldy #6 : lda tmp1 : sta (fp),y : iny : lda tmp1+1 : sta (fp),y :
-	clc : lda #<(_fbuffer) : adc tmp0 : sta tmp0 : lda #>(_fbuffer) : adc tmp0+1 : sta tmp0+1 :
-	ldy #8 : lda tmp0 : sta (fp),y : iny : lda tmp0+1 : sta (fp),y :
-	ldy #4 : lda (ap),y : sta tmp0 :
-	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
-	ldy #6 : lda (fp),y : sta tmp1 : iny : lda (fp),y : sta tmp1+1 :
-	ldy #0 : lda (tmp1),y : sta tmp1 :
-	lda tmp1 : sta tmp1 : lda #0 : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer134 : :
-	ldy #8 : lda (fp),y : sta tmp0 : iny : lda (fp),y : sta tmp0+1 :
-	ldy #6 : lda (ap),y : sta tmp1 :
-	ldy #0 : lda tmp1 : sta (tmp0),y :
-	ldy #6 : lda (fp),y : sta tmp0 : iny : lda (fp),y : sta tmp0+1 :
-	ldy #4 : lda (ap),y : sta tmp1 :
-	ldy #0 : lda tmp1 : sta (tmp0),y :
-Lzbuffer134
-	jmp leave :
+.(
+; 	ldx #10 : lda #3 : jsr enter :
+; 	ldy #0 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
+; 	lda tmp0 : sta reg0 :
+; 	ldy #2 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
+; 	lda tmp0 : sta reg1 :
+; 	ldy #4 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
+; 	ldy #4 : lda tmp0 : sta (ap),y :
+; 	ldy #6 : lda (ap),y : sta tmp0 : iny : lda (ap),y : sta tmp0+1 :
+; 	ldy #6 : lda tmp0 : sta (ap),y :
+; 	lda reg1 : sta tmp0 :
+; 	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
+; 	lda #<(0) : cmp tmp0 : lda #>(0) : sbc tmp0+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer133 : : :
+; 	lda tmp0 : cmp #<(26) : lda tmp0+1 : sbc #>(26) : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer133 : :
+; 	lda reg0 : sta tmp0 :
+; 	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
+; 	lda #<(0) : cmp tmp0 : lda #>(0) : sbc tmp0+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer133 : : :
+; 	lda tmp0 : cmp #<(40) : lda tmp0+1 : sbc #>(40) : .( : bvc *+4 : eor #$80 : bpl skip : jmp Lzbuffer129 :skip : .) : :
+; Lzbuffer133
+; 	jmp leave :
+; Lzbuffer129
+; 	lda reg1 : sta tmp0 :
+; 	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
+; 	lda tmp0 : asl : sta tmp0 : lda tmp0+1 : rol : sta tmp0+1 :
+; 	clc : lda #<(_multi40) : adc tmp0 : sta tmp0 : lda #>(_multi40) : adc tmp0+1 : sta tmp0+1 :
+; 	ldy #0 : lda (tmp0),y : tax : iny : lda (tmp0),y : stx tmp0 : sta tmp0+1 :
+; 	lda reg0 : sta tmp1 :
+; 	lda tmp1 : sta tmp1 : lda #0 : sta tmp1+1 :
+; 	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
+; 	lda tmp0 : sta reg2 : lda tmp0+1 : sta reg2+1 :
+; 	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
+; 	clc : lda #<(_zbuffer) : adc tmp0 : sta tmp1 : lda #>(_zbuffer) : adc tmp0+1 : sta tmp1+1 :
+; 	ldy #6 : lda tmp1 : sta (fp),y : iny : lda tmp1+1 : sta (fp),y :
+; 	clc : lda #<(_fbuffer) : adc tmp0 : sta tmp0 : lda #>(_fbuffer) : adc tmp0+1 : sta tmp0+1 :
+; 	ldy #8 : lda tmp0 : sta (fp),y : iny : lda tmp0+1 : sta (fp),y :
+; 	ldy #4 : lda (ap),y : sta tmp0 :
+; 	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
+; 	ldy #6 : lda (fp),y : sta tmp1 : iny : lda (fp),y : sta tmp1+1 :
+; 	ldy #0 : lda (tmp1),y : sta tmp1 :
+; 	lda tmp1 : sta tmp1 : lda #0 : sta tmp1+1 :
+; 	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp Lzbuffer134 : :
+; 	ldy #8 : lda (fp),y : sta tmp0 : iny : lda (fp),y : sta tmp0+1 :
+; 	ldy #6 : lda (ap),y : sta tmp1 :
+; 	ldy #0 : lda tmp1 : sta (tmp0),y :
+; 	ldy #6 : lda (fp),y : sta tmp0 : iny : lda (fp),y : sta tmp0+1 :
+; 	ldy #4 : lda (ap),y : sta tmp1 :
+; 	ldy #0 : lda tmp1 : sta (tmp0),y :
+; Lzbuffer134
+; 	jmp leave :
 
-; ; sp+0 => X coordinate
-; ; sp+2 => Y coordinate
-; ; sp+4 => dist
-; ; sp+4 => char2disp
-; 	ldy #2
-; 	lda (sp),y				; Access Y coordinate
-; 
-; 
-; 	ldy #0
-; 	lda (sp),y				; Access X coordinate
-; 
-; 
-; 
-; zplot_done:
-; .)
-;     rts
+; sp+0 => X coordinate
+; sp+2 => Y coordinate
+; sp+4 => dist
+; sp+4 => char2disp
+
+	// save context
+    pha
+	lda tmp0: pha: lda tmp0+1 : pha ;; ptrFbuf
+	lda tmp1: pha: lda tmp1+1 : pha ;; ptrZbuf
+	lda reg0: pha ;; store Y temporarily
+    lda reg1 : pha ;; 
+
+
+
+//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))        return;
+	ldy #2
+	lda (sp),y				; Access Y coordinate
+    beq zplot_done
+    bmi zplot_done
+    cmp #SCREEN_HEIGHT
+    bcs zplot_done
+    sta reg0
+    tax
+
+	ldy #0
+	lda (sp),y				; Access X coordinate
+    beq zplot_done
+    bmi zplot_done
+    cmp #SCREEN_WIDTH
+    bcs zplot_done
+    sta reg1
+
+    // ptrZbuf = zbuffer + Y*SCREEN_WIDTH+X;;
+	lda ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
+	clc						; Clear the carry (because we will do an addition after)
+	;;ldy #0
+	adc reg1				; Add X coordinate
+	sta tmp1 ; ptrZbuf
+	lda ZBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
+	adc #0					; Eventually add the carry to complete the 16 bits addition
+	sta tmp1+1	 ; ptrZbuf+ 1			
+
+    // if (dist < *ptrZbuf) {
+    ldy #4
+    lda (sp),y				; Access dist
+    ldx #0
+    cmp (tmp1,x)
+    bcs zplot_done
+ 
+    //    *ptrZbuf = dist;
+        ldx #0
+        sta (tmp1, x)
+    //    *ptrFbuf = char2disp;
+        ldx reg0    ; reload Y coordinate
+    	lda FBufferAdressLow,x	; Get the LOW part of the zbuffer adress
+        clc						; Clear the carry (because we will do an addition after)
+        ;;ldy #0
+        adc reg1				; Add X coordinate
+        sta tmp0 ; ptrFbuf
+        lda FBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
+        adc #0					; Eventually add the carry to complete the 16 bits addition
+        sta tmp0+1	 ; ptrFbuf+ 1			
+
+        ldy #6
+        lda (sp),y				; Access char2disp
+        ldx #0
+        sta (tmp0,x)
+
+    //}
+
+zplot_done:
+	// restore context
+	pla: sta reg1
+    pla: sta reg0
+	pla: sta tmp1+1: pla: sta tmp1
+	pla: sta tmp0+1: pla: sta tmp0
+	pla
+
+.)
+    rts
 
 
 

@@ -129,10 +129,10 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
     unsigned char distseg;
     char          char2disp;
 
-    char P1X;
-    char P1Y;
-    char P2X;
-    char P2Y;
+    signed char P1X;
+    signed char P1Y;
+    signed char P2X;
+    signed char P2Y;
 
 #ifdef ANGLEONLY
     signed char P1AH, P1AV, P2AH, P2AV;
