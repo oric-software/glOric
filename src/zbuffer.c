@@ -2,26 +2,26 @@
 #include "glOric.h"
 
 #ifdef USE_ZBUFFER
-extern char fbuffer[];
 
-/*
-const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
-                       360, 400, 440, 480, 520, 560, 600, 640, 680,
-                       720, 760, 800, 840, 880, 920, 960, 1000, 1040};
+extern unsigned char zbuffer[];  // z-depth buffer SCREEN_WIDTH * SCREEN_HEIGHT
+extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
 
+//const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
+//                       360, 400, 440, 480, 520, 560, 600, 640, 680,
+//                       720, 760, 800, 840, 880, 920, 960, 1000, 1040};
 
-
-unsigned char zbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // z-depth buffer
-char          fbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // frame buffer
-
-void initScreenBuffers() {
+void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents dispinfo from working
     memset(zbuffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT);
     memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT);  // Space
 }
 
+
+#ifdef USE_C_ZBUFFER
+
 void buffer2screen(char destAdr[]) {
     memcpy(destAdr, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
 }
+
 
 void zplot(signed char X,
            signed char Y,
@@ -34,7 +34,7 @@ void zplot(signed char X,
     if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
         return;
 
-    offset  = multi40[Y] + X;  // Y*SCREEN_WIDTH+X; //
+    offset  = Y*SCREEN_WIDTH+X; // multi40[Y] + X;  // 
     ptrZbuf = zbuffer + offset;
     ptrFbuf = fbuffer + offset;
 
@@ -44,6 +44,9 @@ void zplot(signed char X,
         *ptrZbuf = dist;
     }
 }
+
+
+#endif //USE_C_ZBUFFER
 
 void zline(signed char   dx,
            signed char   py,
@@ -73,5 +76,9 @@ void zline(signed char   dx,
         nbp--;
     }
 }
-*/
-#endif
+
+
+
+
+
+#endif // USE_ZBUFFER

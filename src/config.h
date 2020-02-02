@@ -50,4 +50,11 @@
 #define SIZEOF_2DPOINT 4
 #define SIZEOF_FACES 4
 
+
+#undef USE_C_BRESFILL
+#define USE_ASM_BRESFILL
+#undef USE_C_ZBUFFER
+#define USE_ASM_ZBUFFER
+
+
 #endif

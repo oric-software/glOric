@@ -56,7 +56,7 @@ void lrDrawLine(signed char x0, signed char y0, signed char x1, signed char y1, 
 
     while (1) {  // loop
                  // plot (brX, brY, distseg, ch2disp)
-                 //printf ("plot [%d, %d] %d %s\n", _brX, _brY, distseg, ch2disp);
+        //printf ("plot [%d, %d] %d %d\n", _brX, _brY, distseg, ch2disp);get ();          
 #ifdef USE_ZBUFFER
         zplot(_brX, _brY, distseg, char2disp);
 #else
@@ -188,8 +188,7 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
         P2X = (SCREEN_WIDTH - P2AH) >> 1;
         P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
 
-        //printf ("dl ([%d, %d] %d, [%d, %d] %d => %d c=%d\n", P1X, P1Y, d1, P2X, P2Y, d2, distseg, 0);
-        //get();
+        // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
         lrDrawLine(P1X, P1Y, P2X, P2Y, distseg, char2disp);
 
 #endif

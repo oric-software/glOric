@@ -15,6 +15,14 @@ extern unsigned char segments[];
 extern unsigned char nbSegments;
 
 const char sentence[] = "MERCI RENE";
+
+char status_string[50];
+
+void dispInfo() {
+    sprintf(status_string, "(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    AdvancedPrint(2, 1, status_string);
+}
+
 #ifdef USE_COLLISION_DETECTION
 unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
     return 1;

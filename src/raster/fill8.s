@@ -1,45 +1,5 @@
 
 
-/*
-void A1stepY(){
-	signed char  nxtY, e2;
-	nxtY = A1Y+A1sY;
-	e2 = A1err << 1; // 2*A1err;
-
-	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
-		if (e2 >= A1dY){
-			A1err += A1dY;
-			A1X += A1sX;
-		}
-		if (e2 <= A1dX){
-			A1err += A1dX;
-			A1Y += A1sY;
-		}
-		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
-		e2 = A1err << 1; // 2*A1err;
-	}
-}
-
-void A2stepY(){
-	signed char  nxtY, e2;
-	nxtY = A2Y+A2sY	;
-	e2 = A2err << 1; // 2*A2err;
-	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
-		if (e2 >= A2dY){
-			A2err += A2dY;
-			A2X += A2sX;
-		}
-		if (e2 <= A2dX){
-			A2err += A2dX;
-			A2Y += A2sY;
-		}
-		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
-		e2 = A2err << 1; // 2*A2err;
-	}
-}
-*/
-
-
 
 _A1X
 	.byt 0
@@ -134,6 +94,7 @@ void A1stepY(){
 }
 */
 
+#ifdef USE_ASM_BRESFILL
 _A1stepY
 .(
 	// save context
@@ -265,6 +226,8 @@ A1stepYdone:
 
 .)
 	rts
+#endif
+
 
 /*
 void A2stepY(){
@@ -310,7 +273,7 @@ void A2stepY(){
 }
 */
 	
-	
+#ifdef USE_ASM_BRESFILL
 _A2stepY
 .(
 	// save context
@@ -438,3 +401,4 @@ A2stepYdone:
 
 .)
 	rts
+#endif 

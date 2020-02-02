@@ -27,6 +27,119 @@ extern signed char A2sX;
 extern signed char A2sY;
 extern char        A2arrived;
 
+
+void fill8(signed char   p1x,
+           signed char   p1y,
+           signed char   p2x,
+           signed char   p2y,
+           signed char   p3x,
+           signed char   p3y,
+           unsigned char dist,
+           char          char2disp);
+
+void hfill8(signed char   p1x,
+            signed char   p2x,
+            signed char   py,
+            unsigned char dist,
+            char          char2disp);
+
+
+
+#ifdef USE_C_BRESFILL
+
+void A1stepY(){
+	signed char  nxtY, e2;
+	nxtY = A1Y+A1sY;
+	//printf ("nxtY = %d\n", nxtY);
+	e2 = (A1err < 0) ? (
+			((A1err & 0x40) == 0)?(
+				0x80
+			):(
+				A1err << 1
+			)
+		):(
+			((A1err & 0x40) != 0)?(
+				0x7F
+			):(
+				A1err << 1
+			)
+		);
+	//printf ("e2 = %d\n", e2);
+	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
+		if (e2 >= A1dY){
+			A1err += A1dY;
+			//printf ("A1err = %d\n", A1err);
+			A1X += A1sX;
+			//printf ("A1X = %d\n", A1X);
+		}
+		if (e2 <= A1dX){
+			A1err += A1dX;
+			//printf ("A1err = %d\n", A1err);
+			A1Y += A1sY;
+			//printf ("A1Y = %d\n", A1Y);
+		}
+		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
+		e2 = (A1err < 0) ? (
+				((A1err & 0x40) == 0)?(
+					0x80
+				):(
+					A1err << 1
+				)
+			):(
+				((A1err & 0x40) != 0)?(
+					0x7F
+				):(
+					A1err << 1
+				)
+			);
+		//printf ("e2 = %d\n", e2);
+
+	}
+}
+
+void A2stepY(){
+	signed char  nxtY, e2;
+	nxtY = A2Y+A2sY	;
+	e2 = (A2err < 0) ? (
+			((A2err & 0x40) == 0)?(
+				0x80
+			):(
+				A2err << 1
+			)
+		):(
+			((A2err & 0x40) != 0)?(
+				0x7F
+			):(
+				A2err << 1
+			)
+		);
+	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
+		if (e2 >= A2dY){
+			A2err += A2dY;
+			A2X += A2sX;
+		}
+		if (e2 <= A2dX){
+			A2err += A2dX;
+			A2Y += A2sY;
+		}
+		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
+		e2 = (A2err < 0) ? (
+				((A2err & 0x40) == 0)?(
+					0x80
+				):(
+					A2err << 1
+				)
+			):(
+				((A2err & 0x40) != 0)?(
+					0x7F
+				):(
+					A2err << 1
+				)
+			);
+	}
+}
+#endif
+
 void fillFace(signed char   P1AH,
               signed char   P1AV,
               signed char   P2AH,
@@ -46,6 +159,7 @@ void fillFace(signed char   P1AH,
 
     // printf ("P1A: [%d, %d], P2A: [%d, %d], P3A [%d, %d]\n", P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
     // printf ("P1:[%d, %d], P2:[%d, %d], P3[%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
+    // printf ("distface = %d char = %d\n",distface, ch2disp);
     // get();
 
     fill8(P1X, P1Y, P2X, P2Y, P3X, P3Y, distface, ch2disp);
@@ -145,10 +259,12 @@ void fill8(signed char   p1x,
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
         hfill8(A1X, A2X, A1Y, dist, char2disp);
         while (A1arrived == 0) {
             A1stepY();
             A2stepY();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
             hfill8(A1X, A2X, A1Y, dist, char2disp);
         }
 
@@ -166,6 +282,7 @@ void fill8(signed char   p1x,
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
             hfill8(A1X, A2X, A1Y, dist, char2disp);
         }
     } else {
@@ -200,11 +317,13 @@ void fill8(signed char   p1x,
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
         hfill8(A1X, A2X, A1Y, dist, char2disp);
 
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
             hfill8(A1X, A2X, A1Y, dist, char2disp);
         }
     }
@@ -243,133 +362,4 @@ void hfill8(signed char   p1x,
 #endif
 }
 
-/*
-void A1reachY(signed char  nxtY){
 
-	signed char  e2;
-
-	//printf ("nxtY = %d\n", nxtY);
-	e2 = (A1err < 0) ? (
-			((A1err & 0x40) == 0)?(
-				0x80
-			):(
-				A1err << 1
-			)
-		):(
-			((A1err & 0x40) != 0)?(
-				0x7F
-			):(
-				A1err << 1
-			)
-		);
-
-	//printf ("e2 = %d\n", e2);
-	while (A1arrived != 0){
-		if (e2 >= A1dY){
-			A1err += A1dY;
-			//printf ("A1err = %d\n", A1err);
-			A1X += A1sX;
-			//printf ("A1X = %d\n", A1X);
-		}
-		if (e2 <= A1dX){
-			A1err += A1dX;
-			//printf ("A1err = %d\n", A1err);
-			A1Y += A1sY;
-			//printf ("A1Y = %d\n", A1Y);
-		}
-		A1arrived=( A1Y == nxtY)?1:0;
-		e2 = (A1err < 0) ? (
-				((A1err & 0x40) == 0)?(
-					0x80
-				):(
-					A1err << 1
-				)
-			):(
-				((A1err & 0x40) != 0)?(
-					0x7F
-				):(
-					A1err << 1
-				)
-			);
-		//printf ("e2 = %d\n", e2);
-	}
-}
-
-void A2reachY(signed char  nxtY){
-
-	signed char  e2;
-
-	//printf ("nxtY = %d\n", nxtY);
-	e2 = (A2err < 0) ? (
-			((A2err & 0x40) == 0)?(
-				0x80
-			):(
-				A2err << 1
-			)
-		):(
-			((A2err & 0x40) != 0)?(
-				0x7F
-			):(
-				A2err << 1
-			)
-		);
-
-	//printf ("e2 = %d\n", e2);
-	while (A2arrived!=0){
-		if (e2 >= A2dY){
-			A2err += A2dY;
-			//printf ("A2err = %d\n", A2err);
-			A2X += A2sX;
-			//printf ("A2X = %d\n", A2X);
-		}
-		if (e2 <= A2dX){
-			A2err += A2dX;
-			//printf ("A2err = %d\n", A2err);
-			A2Y += A2sY;
-			//printf ("A2Y = %d\n", A2Y);
-		}
-		A2arrived=( A2Y == nxtY)?1:0;
-		e2 = (A2err < 0) ? (
-				((A2err & 0x40) == 0)?(
-					0x80
-				):(
-					A2err << 1
-				)
-			):(
-				((A2err & 0x40) != 0)?(
-					0x7F
-				):(
-					A2err << 1
-				)
-			);
-		//printf ("e2 = %d\n", e2);
-	}
-}
-*/
-
-/*
-void hfill8 (signed char p1x, signed char p2x, signed char py, unsigned char dist, char char2disp){
-
-    signed char dx, fx;
-    signed char ii;
-    int offset;
-    if ((py <= 0) || (py>=SCREEN_HEIGHT)) return;
-    if (p1x < p2x) {
-        dx = p1x;
-        fx = p2x;
-    } else {
-        dx = p2x;
-        fx = p1x;
-    }
-
-    for (ii=dx; ii<=fx; ii++ ) {
-        if ((ii >= 1) && (ii<SCREEN_WIDTH)) {
-            offset = py*SCREEN_WIDTH+ii;
-            if (dist < zbuffer[offset]){
-				zbuffer[offset] = dist;
-				fbuffer[offset] = char2disp;
-			}
-        }
-    }
-}
-*/
