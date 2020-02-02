@@ -46,8 +46,6 @@ void zplot(signed char X,
 }
 
 
-#endif //USE_C_ZBUFFER
-
 void zline(signed char   dx,
            signed char   py,
            signed char   nbpoints,
@@ -77,6 +75,8 @@ void zline(signed char   dx,
     }
 }
 
+
+#endif //USE_C_ZBUFFER
 
 
 

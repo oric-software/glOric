@@ -342,12 +342,12 @@ _zplot:
         sta (tmp1, x)
     //    *ptrFbuf = char2disp;
         ldx reg0    ; reload Y coordinate
-    	lda FBufferAdressLow,x	; Get the LOW part of the zbuffer adress
+    	lda FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
         clc						; Clear the carry (because we will do an addition after)
         ;;ldy #0
         adc reg1				; Add X coordinate
         sta tmp0 ; ptrFbuf
-        lda FBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
+        lda FBufferAdressHigh,x	; Get the HIGH part of the fbuffer adress
         adc #0					; Eventually add the carry to complete the 16 bits addition
         sta tmp0+1	 ; ptrFbuf+ 1			
 
@@ -371,8 +371,6 @@ zplot_done:
 
 
 
-#endif // USE_ASM_ZBUFFER
-
 
 
 
@@ -382,13 +380,13 @@ zplot_done:
 //           unsigned char dist,
 //           char          char2disp) {
 
-_zline2:
+_zline:
 .(
 ; sp+0 => dx
 ; sp+2 => py
 ; sp+4 => nbpoints
-; sp+4 => dist
-; sp+4 => char2disp
+; sp+6 => dist
+; sp+8 => char2disp
 
 	// save context
     pha
@@ -396,7 +394,9 @@ _zline2:
 	lda tmp1: pha: lda tmp1+1 : pha ;; ptrZbuf
 	lda reg0: pha ;; store py temporarily
     lda reg1: pha ;; nbpoints
-    lda reg2: pha ;; 
+    lda reg2: pha ;; dx
+    lda reg3: pha ;; dist
+    lda reg4: pha ;; char2disp
 
 
     // int            offset;   // offset os starting point
@@ -404,35 +404,79 @@ _zline2:
     // unsigned char* ptrZbuf;  // pointer to z-buffer
     // signed char    nbp;
 
+	ldy #0
+	lda (sp),y				; Access dx 
+    sta reg2
+
 	ldy #2
 	lda (sp),y				; Access py 
     sta reg0
- 
+    tax
 
 	ldy #4
 	lda (sp),y				; Access nbpoints 
+    beq zline_done
     sta reg1
 
+	ldy #6
+	lda (sp),y				; Access dist 
+    sta reg3
+
+	ldy #8
+	lda (sp),y				; Access char2disp 
+    sta reg4
 
     // nbp     = nbpoints;
-    // offset  = py * SCREEN_WIDTH + dx;  // multi40[py] + dx; //
-    // ptrZbuf = zbuffer + offset;
-    // ptrFbuf = fbuffer + offset;
+
+    // ptrZbuf = zbuffer + py * SCREEN_WIDTH + dx;
+ 	lda ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
+	clc						
+	adc reg2				; Add dx coordinate
+	sta tmp1                ; ptrZbuf
+	lda ZBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
+	adc #0					; 
+	sta tmp1+1	 ; ptrZbuf+ 1			
+
+    // ptrFbuf = fbuffer + py * SCREEN_WIDTH + dx;
+    lda FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
+    clc						; 
+    adc reg2				; Add dx coordinate
+    sta tmp0                ; ptrFbuf
+    lda FBufferAdressHigh,x	; Get the HIGH part of the fbuffer adress
+    adc #0					; 
+    sta tmp0+1	            ; ptrFbuf+ 1			
+
+   // ptrFbuf = fbuffer + offset;
 
     // while (nbp > 0) {
+    ldy reg1
+_zline2_loop:
+    
 
     //     if (dist < ptrZbuf[nbp]) {
+    lda (tmp1), y
+    cmp reg3
+    bcc zline_distOver
     //         // printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf
     //         // [nbpoints]);
     //         ptrFbuf[nbp] = char2disp;
+    lda reg4
+    sta (tmp0), y
     //         ptrZbuf[nbp] = dist;
-    //     }
+    lda reg3
+    sta (tmp1), y
+   //     }
+zline_distOver:
     //     nbp--;
+    dey
+    bne _zline2_loop
     // }
 
 
 zline_done:
 	// restore context
+	pla: sta reg4
+	pla: sta reg3
 	pla: sta reg2
 	pla: sta reg1
     pla: sta reg0
@@ -442,6 +486,8 @@ zline_done:
 
 .)
     rts
+
+#endif // USE_ASM_ZBUFFER
 
 
 // unsigned char zbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // z-depth buffer

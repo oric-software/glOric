@@ -353,7 +353,7 @@ void hfill8(signed char   p1x,
 
     if (nbpoints < 0) return;
 
-    //printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
+    // printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
 
 #ifdef USE_ZBUFFER
     zline(dx, py, nbpoints, dist, char2disp);
