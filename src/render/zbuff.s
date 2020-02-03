@@ -291,7 +291,7 @@ _zplot:
 ; sp+0 => X coordinate
 ; sp+2 => Y coordinate
 ; sp+4 => dist
-; sp+4 => char2disp
+; sp+6 => char2disp
 
 	// save context
     pha

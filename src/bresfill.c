@@ -37,7 +37,13 @@ void fill8(signed char   p1x,
            unsigned char dist,
            char          char2disp);
 
-void hfill8(signed char   p1x,
+/*extern void hfill8(signed char   p1x,
+            signed char   p2x,
+            signed char   py,
+            unsigned char dist,
+            char          char2disp);
+*/
+extern void hfill82(signed char   p1x,
             signed char   p2x,
             signed char   py,
             unsigned char dist,
@@ -328,7 +334,7 @@ void fill8(signed char   p1x,
         }
     }
 }
-
+#ifdef USE_C_BRESFILL
 void hfill8(signed char   p1x,
             signed char   p2x,
             signed char   py,
@@ -361,5 +367,7 @@ void hfill8(signed char   p1x,
     // TODO : draw a line whit no z-buffer
 #endif
 }
+#endif
+
 
 
