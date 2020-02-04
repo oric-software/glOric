@@ -39,24 +39,24 @@ void faceDemo() {
     //addCube3(0, 0, 0);
     //addPlan();
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
-    addPlan(0, 2, 8, 64, '.');
+    // addPlan(0, 2, 8, 64, '.');
     // addPlan(2, 0, 2, 0, ':');
     // addPlan(0, -2, 2, 64, ';');
     // addPlan(-2, 0, 2, 0, '\'');
 
     // addTePee(0, 0, 3);
-    // addHouse(0, 0, 12, 8);
+    addHouse(0, 0, 12, 8);
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 
     lores0();
 
-    //faceIntro();
-    CamPosX = 10;
-    CamPosY = -3;
-    CamPosZ = 2;
+    faceIntro();
+    // CamPosX = 10;
+    // CamPosY = -3;
+    // CamPosZ = 2;
 
-    CamRotZ = 93;
-    CamRotX = 0;
+    // CamRotZ = 93;
+    // CamRotX = 0;
    
     txtGameLoop2();
 }

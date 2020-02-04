@@ -17,6 +17,14 @@ signed char _brErr;
 signed char _brSx;
 signed char _brSy;
 
+
+extern unsigned char distface;
+extern unsigned char distseg;
+extern char          ch2disp;
+extern    signed char   P1X, P1Y, P2X, P2Y, P3X, P3Y;
+extern     signed char   P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
+
+
 void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08) {
     unsigned char* adr;
     adr      = (unsigned char*)(0xB400 + c * 8);
@@ -31,34 +39,34 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 }
 
 #define DOLLAR 36
-
-void lrDrawLine(signed char x0, signed char y0, signed char x1, signed char y1, unsigned char distseg, char ch2disp) {
+// P1X, P1Y, P2X, P2Y, distseg, ch2disp
+void lrDrawLine() {
     signed char e2;
-    char        char2disp;
+    char        ch2dsp;
 
-    _brX     = x0;
-    _brY     = y0;
-    _brDestX = x1;
-    _brDestY = y1;
-    _brDx    = abs(x1 - x0);
-    _brDy    = -abs(y1 - y0);
-    _brSx    = x0 < x1 ? 1 : -1;
-    _brSy    = y0 < y1 ? 1 : -1;
+    _brX     = P1X;
+    _brY     = P1Y;
+    _brDestX = P2X;
+    _brDestY = P2Y;
+    _brDx    = abs(P2X - P1X);
+    _brDy    = -abs(P2Y - P1Y);
+    _brSx    = P1X < P2X ? 1 : -1;
+    _brSy    = P1Y < P2Y ? 1 : -1;
     _brErr   = _brDx + _brDy;
     if ((_brErr > 64) || (_brErr < -63))
         return;
 
     if ((ch2disp == '/') && (_brSx == -1)) {
-        char2disp = DOLLAR;
+        ch2dsp = DOLLAR;
     } else {
-        char2disp = ch2disp;
+        ch2dsp = ch2disp;
     }
 
     while (1) {  // loop
                  // plot (brX, brY, distseg, ch2disp)
         //printf ("plot [%d, %d] %d %d\n", _brX, _brY, distseg, ch2disp);get ();          
 #ifdef USE_ZBUFFER
-        zplot(_brX, _brY, distseg, char2disp);
+        zplot(_brX, _brY, distseg, ch2dsp);
 #else
         // TODO : plot a point with no z-buffer
 #endif
@@ -120,16 +128,17 @@ def drawLine( x0,  y0,  x1,  y1):
             y0 += sy;
 */
 
+
 void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbSegments) {
     unsigned char ii = 0;
     unsigned char jj = 0;
     unsigned char idxPt1, idxPt2;
     unsigned char offPt1, offPt2;
     int           dmoy;
-    unsigned char distseg;
-    char          char2disp;
+    //unsigned char distseg;
+    //char          ch2d;
 
-    signed char P1X;
+/*    signed char P1X;
     signed char P1Y;
     signed char P2X;
     signed char P2Y;
@@ -137,13 +146,13 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
 #ifdef ANGLEONLY
     signed char P1AH, P1AV, P2AH, P2AV;
 #endif
-
+*/
     for (ii = 0; ii < nbSegments; ii++) {
         jj = ii << 2;  // ii*SIZEOF_SEGMENT
 
         idxPt1    = segments[jj++];  // ii*SIZEOF_SEGMENT +0
         idxPt2    = segments[jj++];  // ii*SIZEOF_SEGMENT +1
-        char2disp = segments[jj];    // ii*SIZEOF_SEGMENT +2
+        ch2disp = segments[jj];    // ii*SIZEOF_SEGMENT +2
 
         offPt1 = idxPt1 << 2;
         offPt2 = idxPt2 << 2;
@@ -189,7 +198,7 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
         P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
 
         // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
-        lrDrawLine(P1X, P1Y, P2X, P2Y, distseg, char2disp);
+        lrDrawLine();
 
 #endif
     }
@@ -203,12 +212,10 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
     unsigned char jj = 0;
     int           d1, d2, d3;
     int           dmoy;
-    unsigned char idxPt1, idxPt2, idxPt3, distface;
+    unsigned char idxPt1, idxPt2, idxPt3;//, distface;
     unsigned char offPt1, offPt2, offPt3;
-    signed char   P1X, P1Y, P2X, P2Y, P3X, P3Y;
 #ifdef ANGLEONLY
     signed char   tmpH, tmpV;
-    signed char   P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
     unsigned char m1, m2, m3;
     unsigned char v1, v2, v3;
 #endif
@@ -227,6 +234,8 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
         offPt1 = faces[jj++] << 2;
         offPt2 = faces[jj++] << 2;
         offPt3 = faces[jj++] << 2;
+        ch2disp = faces[jj];
+
         //printf ("face %d : %d %d %d\n",ii, offPt1, offPt2, offPt3);get();
         d1 = *((int*)(points2d + offPt1 + 2));
 
@@ -250,10 +259,7 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
         P3Y = points2d[offPt3 + 1];
 
         //printf ("[%d, %d], [%d, %d], [%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);get();
-        fill8(P1X, P1Y,
-              P2X, P2Y,
-              P3X, P3Y,
-              distface, faces[jj]);
+        fill8(distface, faces[jj]);
 
 #else
         P1AH = points2d[offPt1 + 0];
@@ -306,10 +312,10 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
                         (P1AH & 0x80) != (P2AH & 0x80)) ||
                     ((P1AH & 0x80) != (P3AH & 0x80))) {
                     if ((abs(P3AH) < 127 - abs(P1AH))) {
-                        fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                        fillFace();
                     }
                 } else {
-                    fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                    fillFace();
                 }
             } else {
                 // P1 FRONT
@@ -319,7 +325,7 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
                         // P3 FRONT
                         // _4_
                         if (((P1AH & 0x80) != (P2AH & 0x80)) || ((P1AH & 0x80) != (P3AH & 0x80))) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                            fillFace();
                         } else {
                             // nothing to do
                         }
@@ -328,19 +334,19 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
                         // _3_
                         if ((P1AH & 0x80) != (P2AH & 0x80)) {
                             if (abs(P2AH) < 127 - abs(P1AH)) {
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                                fillFace();
                             }
                         } else {
                             if ((P1AH & 0x80) != (P3AH & 0x80)) {
                                 if (abs(P3AH) < 127 - abs(P1AH)) {
-                                    fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                                    fillFace();
                                 }
                             }
                         }
 
                         if ((P1AH & 0x80) != (P3AH & 0x80)) {
                             if (abs(P3AH) < 127 - abs(P1AH)) {
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                                fillFace();
                             }
                         }
                     }
@@ -349,19 +355,19 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
                     // _2_ nothing to do
                     if ((P1AH & 0x80) != (P2AH & 0x80)) {
                         if (abs(P2AH) < 127 - abs(P1AH)) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                            fillFace();
                         }
                     } else {
                         if ((P1AH & 0x80) != (P3AH & 0x80)) {
                             if (abs(P3AH) < 127 - abs(P1AH)) {
-                                fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                                fillFace();
                             }
                         }
                     }
 
                     if ((P1AH & 0x80) != (P3AH & 0x80)) {
                         if (abs(P3AH) < 127 - abs(P1AH)) {
-                            fillFace(P1AH, P1AV, P2AH, P2AV, P3AH, P3AV, distface, faces[jj]);
+                            fillFace();
                         }
                     }
                 }

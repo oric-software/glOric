@@ -18,6 +18,10 @@ char                 faces[NB_MAX_FACES * SIZEOF_FACES];
 unsigned char        nbFaces = 0;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
+void hiresIntro();
+void hiresGameLoop();
+void hrDrawFaces();
+void addCube(char X, char Y, char Z);
 
 void hiresDemo() {
     GenerateTables();  // for line8

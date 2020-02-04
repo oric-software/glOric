@@ -28,14 +28,9 @@ extern signed char A2sY;
 extern char        A2arrived;
 
 
-void fill8(signed char   p1x,
-           signed char   p1y,
-           signed char   p2x,
-           signed char   p2y,
-           signed char   p3x,
-           signed char   p3y,
-           unsigned char dist,
-           char          char2disp);
+// fillFace
+
+void fill8();
 
 /*extern void hfill8(signed char   p1x,
             signed char   p2x,
@@ -146,15 +141,14 @@ void A2stepY(){
 }
 #endif
 
-void fillFace(signed char   P1AH,
-              signed char   P1AV,
-              signed char   P2AH,
-              signed char   P2AV,
-              signed char   P3AH,
-              signed char   P3AV,
-              unsigned char distface,
-              char          ch2disp) {
-    signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
+// fillface
+extern signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
+extern signed char   P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
+
+extern unsigned char distface;
+extern char          ch2disp;
+
+void fillFace() {
 
     P1X = (SCREEN_WIDTH - P1AH) >> 1;
     P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
@@ -168,69 +162,66 @@ void fillFace(signed char   P1AH,
     // printf ("distface = %d char = %d\n",distface, ch2disp);
     // get();
 
-    fill8(P1X, P1Y, P2X, P2Y, P3X, P3Y, distface, ch2disp);
+    fill8();
 }
 
-void fill8(signed char   p1x,
-           signed char   p1y,
-           signed char   p2x,
-           signed char   p2y,
-           signed char   p3x,
-           signed char   p3y,
-           unsigned char dist,
-           char          char2disp) {
-    signed char pDepX;
-    signed char pDepY;
-    signed char pArr1X;
-    signed char pArr1Y;
-    signed char pArr2X;
-    signed char pArr2Y;
+
+// fill8
+extern signed char pDepX;
+extern signed char pDepY;
+extern signed char pArr1X;
+extern signed char pArr1Y;
+extern signed char pArr2X;
+extern signed char pArr2Y;
+
+
+void fill8() {
 
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
-    if (p1y <= p2y) {
-        if (p2y <= p3y) {
-            pDepX  = p3x;
-            pDepY  = p3y;
-            pArr1X = p2x;
-            pArr1Y = p2y;
-            pArr2X = p1x;
-            pArr2Y = p1y;
+    if (P1Y <= P2Y) {
+        if (P2Y <= P3Y) {
+            pDepX  = P3X;
+            pDepY  = P3Y;
+            pArr1X = P2X;
+            pArr1Y = P2Y;
+            pArr2X = P1X;
+            pArr2Y = P1Y;
         } else {
-            pDepX = p2x;
-            pDepY = p2y;
-            if (p1y <= p3y) {
-                pArr1X = p3x;
-                pArr1Y = p3y;
-                pArr2X = p1x;
-                pArr2Y = p1y;
+            pDepX = P2X;
+            pDepY = P2Y;
+            if (P1Y <= P3Y) {
+                pArr1X = P3X;
+                pArr1Y = P3Y;
+                pArr2X = P1X;
+                pArr2Y = P1Y;
             } else {
-                pArr1X = p1x;
-                pArr1Y = p1y;
-                pArr2X = p3x;
-                pArr2Y = p3y;
+                pArr1X = P1X;
+                pArr1Y = P1Y;
+                pArr2X = P3X;
+                pArr2Y = P3Y;
             }
         }
     } else {
-        if (p1y <= p3y) {
-            pDepX  = p3x;
-            pDepY  = p3y;
-            pArr1X = p1x;
-            pArr1Y = p1y;
-            pArr2X = p2x;
-            pArr2Y = p2y;
+        if (P1Y <= P3Y) {
+            pDepX  = P3X;
+            pDepY  = P3Y;
+            pArr1X = P1X;
+            pArr1Y = P1Y;
+            pArr2X = P2X;
+            pArr2Y = P2Y;
         } else {
-            pDepX = p1x;
-            pDepY = p1y;
-            if (p2y <= p3y) {
-                pArr1X = p3x;
-                pArr1Y = p3y;
-                pArr2X = p2x;
-                pArr2Y = p2y;
+            pDepX = P1X;
+            pDepY = P1Y;
+            if (P2Y <= P3Y) {
+                pArr1X = P3X;
+                pArr1Y = P3Y;
+                pArr2X = P2X;
+                pArr2Y = P2Y;
             } else {
-                pArr1X = p2x;
-                pArr1Y = p2y;
-                pArr2X = p3x;
-                pArr2Y = p3y;
+                pArr1X = P2X;
+                pArr1Y = P2Y;
+                pArr2X = P3X;
+                pArr2Y = P3Y;
             }
         }
     }
@@ -266,12 +257,12 @@ void fill8(signed char   p1x,
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-        hfill8(A1X, A2X, A1Y, dist, char2disp);
+        hfill8(A1X, A2X, A1Y, distface, ch2disp);
         while (A1arrived == 0) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-            hfill8(A1X, A2X, A1Y, dist, char2disp);
+            hfill8(A1X, A2X, A1Y, distface, ch2disp);
         }
 
         A1X       = pArr1X;
@@ -289,7 +280,7 @@ void fill8(signed char   p1x,
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-            hfill8(A1X, A2X, A1Y, dist, char2disp);
+            hfill8(A1X, A2X, A1Y, distface, ch2disp);
         }
     } else {
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
@@ -324,13 +315,13 @@ void fill8(signed char   p1x,
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-        hfill8(A1X, A2X, A1Y, dist, char2disp);
+        hfill8(A1X, A2X, A1Y, distface, ch2disp);
 
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-            hfill8(A1X, A2X, A1Y, dist, char2disp);
+            hfill8(A1X, A2X, A1Y, distface, ch2disp);
         }
     }
 }

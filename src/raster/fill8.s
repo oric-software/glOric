@@ -1,8 +1,7 @@
 
 
 
-_A1X
-	.byt 0
+_A1X .byt 0
 _A1Y
 	.byt 0
 _A1destX
@@ -27,21 +26,42 @@ _A2Y
 	.byt 0
 _A2destX
 	.byt 0
-_A2destY
-	.byt 0
-_A2dX
-	.byt 0
-_A2dY
-	.byt 0
-_A2err
-	.byt 0
-_A2sX
-	.byt 0
-_A2sY
-	.byt 0
-_A2arrived
-	.byt 0
-	
+_A2destY .byt 0
+_A2dX .byt 0
+_A2dY .byt 0
+_A2err .byt 0
+_A2sX .byt 0
+_A2sY .byt 0
+_A2arrived .byt 0
+
+
+
+_P1X .byt 0
+_P1Y .byt 0
+_P2X .byt 0
+_P2Y .byt 0
+_P3X .byt 0
+_P3Y .byt 0
+
+_P1AH .byt 0
+_P1AV .byt 0
+_P2AH .byt 0
+_P2AV .byt 0
+_P3AH .byt 0
+_P3AV .byt 0
+
+
+_pDepX  .byt 0
+_pDepY  .byt 0
+_pArr1X .byt 0
+_pArr1Y .byt 0
+_pArr2X .byt 0
+_pArr2Y .byt 0
+
+_distface .byt 0
+_distseg .byt 0
+_ch2disp .byt 0
+
 /*
 void A1stepY(){
 	signed char  nxtY, e2;
@@ -404,7 +424,7 @@ A2stepYdone:
 #endif 
 
 #ifdef USE_ASM_BRESFILL
-/*
+
 // void hfill8(signed char   p1x,
 //             signed char   p2x,
 //             signed char   py,
@@ -429,6 +449,7 @@ ldx #7 : lda #7 : jsr enter :
 	lda tmp0: pha ;; dx
 	lda tmp1: pha ;; fx
 	lda tmp2: pha ;; nbpoints
+	lda tmp3: pha: lda tmp3+1: pha  ;; save stack pointer
 
 //     if ((py <= 0) || (py >= SCREEN_HEIGHT)) return;
 	ldy #4
@@ -523,6 +544,8 @@ hfill8_computeNbPoints:
 
 hfill8_done:
 	// restore context
+	pla: sta tmp3+1
+	pla: sta tmp3
 	pla: sta tmp2
 	pla: sta tmp1
 	pla: sta tmp0
@@ -537,7 +560,7 @@ hfill8_done:
 .)
 	jmp leave :
 	;;    rts
-*/
+
 
 
 _hfill8
