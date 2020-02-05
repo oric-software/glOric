@@ -1,31 +1,21 @@
 
 
+.zero
 
 _A1X .byt 0
-_A1Y
-	.byt 0
-_A1destX
-	.byt 0
-_A1destY
-	.byt 0
-_A1dX
-	.byt 0
-_A1dY
-	.byt 0
-_A1err
-	.byt 0
-_A1sX
-	.byt 0
-_A1sY
-	.byt 0
-_A1arrived
-	.byt 0
-_A2X
-	.byt 0
-_A2Y
-	.byt 0
-_A2destX
-	.byt 0
+_A1Y .byt 0
+_A1destX .byt 0
+_A1destY .byt 0
+_A1dX .byt 0
+_A1dY .byt 0
+_A1err .byt 0
+_A1sX .byt 0
+_A1sY .byt 0
+_A1arrived .byt 0
+
+_A2X .byt 0
+_A2Y .byt 0
+_A2destX .byt 0
 _A2destY .byt 0
 _A2dX .byt 0
 _A2dY .byt 0
@@ -34,6 +24,7 @@ _A2sX .byt 0
 _A2sY .byt 0
 _A2arrived .byt 0
 
+.text
 
 
 _P1X .byt 0
@@ -556,5 +547,60 @@ hfill_done:
 	rts
 
 
+// void angle2screen() {
+_angle2screen:
+.(
+
+	// save context
+    pha
+
+//     P1X = (SCREEN_WIDTH - P1AH) >> 1;
+	sec
+	lda #SCREEN_WIDTH
+	sbc _P1AH
+	cmp #$80
+	ror
+	sta _P1X
+//     P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
+	sec
+	lda #SCREEN_HEIGHT
+	sbc _P1AV
+	cmp #$80
+	ror
+	sta _P1Y
+//     P2X = (SCREEN_WIDTH - P2AH) >> 1;
+	sec
+	lda #SCREEN_WIDTH
+	sbc _P2AH
+	cmp #$80
+	ror
+	sta _P2X
+//     P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
+	sec
+	lda #SCREEN_HEIGHT
+	sbc _P2AV
+	cmp #$80
+	ror
+	sta _P2Y
+//     P3X = (SCREEN_WIDTH - P3AH) >> 1;
+	sec
+	lda #SCREEN_WIDTH
+	sbc _P3AH
+	cmp #$80
+	ror
+	sta _P3X
+//     P3Y = (SCREEN_HEIGHT - P3AV) >> 1;
+	sec
+	lda #SCREEN_HEIGHT
+	sbc _P3AV
+	cmp #$80
+	ror
+	sta _P3Y
+
+	// restore context
+	pla
+// }
+.)
+	rts
 
 #endif
