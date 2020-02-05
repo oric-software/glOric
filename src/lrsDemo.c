@@ -1,8 +1,13 @@
 
+
 #include "config.h"
 #include "glOric.h"
 
 #ifdef LRSMODE
+
+#ifdef TARGET_ORIX
+#include <stdio.h>
+#endif
 
 #include "data\traj.h"
 #include "data\geom.h"
@@ -21,12 +26,17 @@ unsigned char        nbFaces = 0;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
 
+void faceIntro();
+void txtGameLoop2();
+void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l);
 
 char status_string[50];
 
 void dispInfo() {
     sprintf(status_string, "(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+#ifndef TARGET_ORIX
     AdvancedPrint(2, 1, status_string);
+#endif
 }
 
 

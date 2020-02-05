@@ -32,12 +32,14 @@ extern char        A2arrived;
 
 void fill8();
 
-/*extern void hfill8(signed char   p1x,
+#ifdef USE_C_BRESFILL
+extern void hfill8(signed char   p1x,
             signed char   p2x,
             signed char   py,
             unsigned char dist,
             char          char2disp);
-*/
+void hfill();
+#endif
 extern void hfill82(signed char   p1x,
             signed char   p2x,
             signed char   py,
@@ -175,9 +177,8 @@ extern signed char pArr2X;
 extern signed char pArr2Y;
 
 
-void fill8() {
+void prepare_bresrun() {
 
-    //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
     if (P1Y <= P2Y) {
         if (P2Y <= P3Y) {
             pDepX  = P3X;
@@ -226,6 +227,12 @@ void fill8() {
         }
     }
 
+}
+void fill8() {
+
+    //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
+    prepare_bresrun();
+
     //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
     if (pDepY != pArr1Y) {
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
@@ -257,12 +264,14 @@ void fill8() {
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-        hfill8(A1X, A2X, A1Y, distface, ch2disp);
+        //hfill8(A1X, A2X, A1Y, distface, ch2disp);
+        hfill();
         while (A1arrived == 0) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-            hfill8(A1X, A2X, A1Y, distface, ch2disp);
+            //hfill8(A1X, A2X, A1Y, distface, ch2disp);
+            hfill();
         }
 
         A1X       = pArr1X;
@@ -280,7 +289,8 @@ void fill8() {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-            hfill8(A1X, A2X, A1Y, distface, ch2disp);
+            //hfill8(A1X, A2X, A1Y, distface, ch2disp);
+            hfill();
         }
     } else {
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
@@ -315,17 +325,50 @@ void fill8() {
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-        hfill8(A1X, A2X, A1Y, distface, ch2disp);
+        //hfill8(A1X, A2X, A1Y, distface, ch2disp);
+        hfill();
 
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
-            hfill8(A1X, A2X, A1Y, distface, ch2disp);
+            //hfill8(A1X, A2X, A1Y, distface, ch2disp);
+            hfill();
         }
     }
 }
 #ifdef USE_C_BRESFILL
+
+void hfill() {
+    signed char dx, fx;
+    signed char nbpoints;
+
+    //printf ("p1x=%d p2x=%d py=%d dist= %d, char2disp= %d\n", p1x, p2x, dist,  dist, char2disp);get();
+
+    if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT)) return;
+
+    if (A1X > A2X) {
+        dx = max(0, A2X);
+        fx = min(A1X, SCREEN_WIDTH - 1);
+    } else {
+        dx = max(0, A1X);
+        fx = min(A2X, SCREEN_WIDTH - 1);
+    }
+
+    nbpoints = fx - dx;
+
+    if (nbpoints < 0) return;
+
+    // printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
+
+#ifdef USE_ZBUFFER
+    zline(dx, A1Y, nbpoints, distface, ch2disp);
+#else
+    // TODO : draw a line whit no z-buffer
+#endif
+}
+
+
 void hfill8(signed char   p1x,
             signed char   p2x,
             signed char   py,

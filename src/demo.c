@@ -1,17 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
-#include <tgi.h>
+// #include <tgi.h>
 
-#include "glOric.h"
 #include "config.h"
+#include "glOric.h"
 
-#include "data/alphabet.c"
-#include "traj.c"
-#include "fill8.c"
+#include "data/alphabet.h"
+//#include "traj.h"
+//#include "fill8.h"
 
 extern unsigned char une_fonction();
-extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
+extern void faceDemo();
+
+/*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
+
 extern int CamPosX, CamPosY, CamPosZ;
 extern char CamRotZ, CamRotX;
 
@@ -22,7 +25,10 @@ char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
 char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 unsigned char nbSegments=0;
+*/
 
+    
+#ifdef HRSMODE
 void addCube(char X, char Y, char Z){
 	unsigned char ii, jj;
 	for (jj=0; jj < NB_POINTS_CUBE; jj++){
@@ -38,7 +44,6 @@ void addCube(char X, char Y, char Z){
 	nbPts += NB_POINTS_CUBE;
 	nbSegments += NB_SEGMENTS_CUBE;
 }
-
 
 void hrDrawSegments(){
 
@@ -66,6 +71,7 @@ void hrDrawSegments(){
 	}
 }
 
+
 void hiresIntro (){
     int i;
 
@@ -91,17 +97,16 @@ void hiresIntro (){
 	//leaveSC();
 
 }
-
+#endif
 int main ()
 {
 
 	//unsigned char val;
 	signed char i;
-	fill8(7,3,3,1,1,5);
 	printf ("----------\n");
-	fill8(1,5,6,5,5,1);
+	faceDemo();
 	printf ("----------\n");
-	fill8(-1,3,2,-1,5,5);
+	
 	/*
 	tgi_install (tgi_static_stddrv);
 

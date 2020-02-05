@@ -1,1 +1,7 @@
 src/BUILD/*
+bresfill.asm
+lrsDrawing.asm
+*.lst
+*.o
+demo.asm
+*.lib
