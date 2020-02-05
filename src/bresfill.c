@@ -263,13 +263,13 @@ void fill8() {
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
-        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
         //hfill8(A1X, A2X, A1Y, distface, ch2disp);
         hfill();
         while (A1arrived == 0) {
             A1stepY();
             A2stepY();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
             //hfill8(A1X, A2X, A1Y, distface, ch2disp);
             hfill();
         }
@@ -288,7 +288,7 @@ void fill8() {
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
             //hfill8(A1X, A2X, A1Y, distface, ch2disp);
             hfill();
         }
@@ -324,20 +324,22 @@ void fill8() {
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
-        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
         //hfill8(A1X, A2X, A1Y, distface, ch2disp);
         hfill();
 
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, dist, char2disp); get();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
             //hfill8(A1X, A2X, A1Y, distface, ch2disp);
             hfill();
         }
     }
 }
 #ifdef USE_C_BRESFILL
+
+
 
 void hfill() {
     signed char dx, fx;

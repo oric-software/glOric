@@ -56,8 +56,8 @@
 #define USE_C_ZBUFFER
 #undef USE_ASM_ZBUFFER
 #else
-#define USE_C_BRESFILL
-#undef USE_ASM_BRESFILL
+#undef USE_C_BRESFILL
+#define USE_ASM_BRESFILL
 #undef USE_C_ZBUFFER
 #define USE_ASM_ZBUFFER
 
