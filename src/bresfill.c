@@ -184,6 +184,7 @@ extern signed char pArr1Y;
 extern signed char pArr2X;
 extern signed char pArr2Y;
 
+#ifdef USE_C_BRESFILL
 
 void prepare_bresrun() {
 
@@ -236,6 +237,9 @@ void prepare_bresrun() {
     }
 
 }
+#endif
+
+
 void fill8() {
 
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
