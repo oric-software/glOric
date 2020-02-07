@@ -55,7 +55,10 @@ void faceDemo() {
     // addPlan(-2, 0, 2, 0, '\'');
 
     // addTePee(0, 0, 3);
-    addHouse(0, 0, 12, 8);
+    //addHouse(0, 0, 12, 8);
+    addTower(0, 0, 12, 12);
+    //addPyramid(8, 8, 2, 4);
+    //addPyramid(0, 0, 2, 4);
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 
     lores0();
@@ -177,6 +180,297 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
 }
 #endif
 
+
+void addPyramid(signed char X, signed char Y, unsigned char L, unsigned char H) {
+    unsigned char ii;
+    ii = L;
+
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X ;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y ;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = H;
+    nbPts++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 5;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 4;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'u';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 4;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 3;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = ',';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 3;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 2;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'u';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 5;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 2;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = ',';         // Index Point 3
+    nbFaces++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+
+}
+
+void addTower(signed char X, signed char Y, unsigned char L, unsigned char H) {
+    unsigned char ii;
+    ii = L;
+
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
+    nbPts++;
+
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = H;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = H;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = H;
+    nbPts++;
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + ii;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = H;
+    nbPts++;
+
+    points3d[nbPts * SIZEOF_3DPOINT + 0] = X ;
+    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y ;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = H + L;
+    nbPts++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 9;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 8;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 4;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'b';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 9;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 4;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 5;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'c';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 8;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 7;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 3;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'd';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 8;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 3;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 4;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'e';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 6;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 7;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 3;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'g';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 6;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 3;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 2;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'h';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 9;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 6;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 2;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'i';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 9;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 2;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 5;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'j';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 5;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 4;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'k';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 4;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 3;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'l';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 3;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 2;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'm';         // Index Point 3
+    nbFaces++;
+
+    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 2;  // Index Point 1
+    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 5;   // Index Point 2
+    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;   // Index Point 3
+    faces[nbFaces * SIZEOF_FACES + 3] = 'n';         // Index Point 3
+    nbFaces++;
+
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 9;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 8;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 7;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 6;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 9;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 8;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 8;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 7;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 7;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 6;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 6;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 9;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 5;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 3;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 2;
+    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
+    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
+    nbSegments++;
+}
+
+
+
+/*
 void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l) {
     unsigned char ii, jj;
     ii = L;
@@ -364,5 +658,5 @@ void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l) {
 
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 }
-
+*/
 #endif
