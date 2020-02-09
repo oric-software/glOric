@@ -27,7 +27,7 @@ Or, if you don't have GIT client installed, you can download an [archive of the 
 
 ### Building glOric demos
 
-A good starting point in using glOric consist in building and testing the demo which are provided with the project.
+A good starting point in using glOric consists in building and testing demos that are provided with the project.
 
 3 demos are provided :
 - a text base demo 
@@ -41,7 +41,7 @@ A good starting point in using glOric consist in building and testing the demo w
 ![LoresModeDemo](docs/imgs/LoresModeDemo.gif)
 
 #### Selecting a demo to build
-To choose between demos, open the config.h file located in the src directory of glOric and find the following section at the beginning of the file:
+To choose between demos, open the `config.h` file located in the src directory of glOric and find the following section at the beginning of the file:
 
 ```C 
 // Choose amongst TEXTMODE, LRSMODE, HRSMODE
@@ -67,22 +67,22 @@ It should start an Oricutron with the selected demos running in it.
 
 #### Running the demo
 
-These sample demo consists in:
+These sample demos consists in:
 - an intro in which the camera position and orientation is animated
 - followed by an interactive phase where you can manually move the camera in order to test real time interactive mode.
 
 In text mode and LORES mode sample demo , the camera is moved with the following keyboard commands:
 
-    Arrow (up / down) to go ( forward / backward )
-    W / X to shift (left / right)
-    Arrow (left / right ) to rotate the camera
-    Q / A to pitch (up / down)
-    P / ; to go (up / down)
+- Arrow (up / down) to go ( forward / backward )
+- W / X to shift (left / right)
+- Arrow (left / right ) to rotate the camera
+- Q / A to pitch (up / down)
+- P / ; to go (up / down)
 
 As in HIRES mode sample demo, the camera is moved with the following keyboard commands:
 
-    Arrow (left / right ) to rotate around the object
-    Q / A to go (up / down)
+- Arrow (left / right ) to rotate around the object
+- Q / A to go (up / down)
 
 
 __Programing Interface__ is [described

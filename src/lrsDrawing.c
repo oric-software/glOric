@@ -212,7 +212,7 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
     unsigned char jj = 0;
     int           d1, d2, d3;
     int           dmoy;
-    unsigned char idxPt1, idxPt2, idxPt3;//, distface;
+    // unsigned char idxPt1, idxPt2, idxPt3;//, distface;
     unsigned char offPt1, offPt2, offPt3;
 #ifdef ANGLEONLY
     signed char   tmpH, tmpV;

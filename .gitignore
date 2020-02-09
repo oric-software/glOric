@@ -1,7 +1,13 @@
 src/BUILD/*
 bresfill.asm
+logic.asm
+lrsDemo.asm
+zbuffer.asm
 lrsDrawing.asm
 *.lst
 *.o
 demo.asm
 *.lib
+*.map
+*.vice
+*.tap

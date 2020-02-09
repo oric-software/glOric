@@ -3,6 +3,10 @@
 #include "config.h"
 #include "glOric.h"
 
+#ifdef TARGET_ORIX
+#include <conio.h>
+#endif 
+
 #ifdef LRSMODE
 
 #ifdef TARGET_ORIX
@@ -32,11 +36,20 @@ void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l);
 
 char status_string[50];
 
+#ifdef TARGET_ORIX
+extern void backward();
+extern void forward();
+extern void shiftLeft();
+extern void shiftRight();
+#endif
+
+
 void dispInfo() {
     sprintf(status_string, "(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
-#ifndef TARGET_ORIX
+#ifdef TARGET_ORIX
+#else
     AdvancedPrint(2, 1, status_string);
-#endif
+#endif // TARGET_ORIX
 }
 
 
@@ -58,8 +71,10 @@ void faceDemo() {
     addHouse(0, 0, 12, 8);
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 
+#ifdef TARGET_ORIX
+#else
     lores0();
-
+#endif // TARGET_ORIX
     faceIntro();
     // CamPosX = 10;
     // CamPosY = -3;
@@ -75,7 +90,10 @@ void faceIntro() {
     int i;
     int j;
     // get();
+#ifdef TARGET_ORIX
+#else
     enterSC();
+#endif // TARGET_ORIX
 
     CamPosX = 0;
     CamPosY = 0;
@@ -98,13 +116,21 @@ void faceIntro() {
 
         buffer2screen((void*)ADR_BASE_SCREEN);
     }
+#ifdef TARGET_ORIX
+#else
     leaveSC();
+#endif // TARGET_ORIX
+    
 }
 
 void txtGameLoop2() {
     char          key;
     unsigned char ii;
+#ifdef TARGET_ORIX
+    cgetc();
+#else
     key=get();
+#endif
     glProject(points2d, points3d, nbPts, 0);
 
     // printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
@@ -122,7 +148,11 @@ void txtGameLoop2() {
     while (1 == 1) {
         buffer2screen((void*)ADR_BASE_SCREEN);
         dispInfo();
+#ifdef TARGET_ORIX
+        cgetc();
+#else
         key = get();
+#endif // TARGET_ORIX
         switch (key) {
         case 8:  // gauche => tourne gauche
             CamRotZ += 4;
