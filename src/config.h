@@ -35,7 +35,7 @@
 #define NB_MAX_POINTS 64
 #define NB_MAX_SEGMENTS 64
 #define NB_MAX_FACES 64
-
+#define NB_MAX_PARTICULES 64
 /*
  *  SCREEN BUFFER
  */
@@ -47,6 +47,7 @@
 
 #define SIZEOF_3DPOINT 4
 #define SIZEOF_SEGMENT 4
+#define SIZEOF_PARTICULE 2
 #define SIZEOF_2DPOINT 4
 #define SIZEOF_FACES 4
 

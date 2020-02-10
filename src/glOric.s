@@ -35,6 +35,11 @@ _segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
 //.dsb 256-(*&255)
 //_points2d       .dsb NB_MAX_POINTS*SIZEOF_2DPOINT
 
+//char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
+//unsigned char nbParticules=0;
+_nbParticules .dsb 1;
+_particules       .dsb NB_MAX_PARTICULES*SIZEOF_PARTICULE
+
 .zero
 
 ptrpt3:

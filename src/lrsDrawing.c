@@ -39,8 +39,9 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 }
 
 #define DOLLAR 36
-// P1X, P1Y, P2X, P2Y, distseg, ch2disp
+
 void lrDrawLine() {
+
     signed char e2;
     char        ch2dsp;
 
@@ -53,6 +54,7 @@ void lrDrawLine() {
     _brSx    = P1X < P2X ? 1 : -1;
     _brSy    = P1Y < P2Y ? 1 : -1;
     _brErr   = _brDx + _brDy;
+
     if ((_brErr > 64) || (_brErr < -63))
         return;
 
@@ -63,7 +65,6 @@ void lrDrawLine() {
     }
 
     while (1) {  // loop
-                 // plot (brX, brY, distseg, ch2disp)
         //printf ("plot [%d, %d] %d %d\n", _brX, _brY, distseg, ch2disp);get ();          
 #ifdef USE_ZBUFFER
         zplot(_brX, _brY, distseg, ch2dsp);
@@ -74,15 +75,15 @@ void lrDrawLine() {
             break;
         //e2 = 2*err;
         e2 = (_brErr < 0) ? (
-                                ((_brErr & 0x40) == 0) ? (
-                                                             0x80)
-                                                       : (
-                                                             _brErr << 1))
-                          : (
-                                ((_brErr & 0x40) != 0) ? (
-                                                             0x7F)
-                                                       : (
-                                                             _brErr << 1));
+                ((_brErr & 0x40) == 0) ? (
+                                                0x80)
+                                        : (
+                                                _brErr << 1))
+            : (
+                ((_brErr & 0x40) != 0) ? (
+                                                0x7F)
+                                        : (
+                                                _brErr << 1));
         if (e2 >= _brDy) {
             _brErr += _brDy;  // e_xy+e_x > 0
             _brX += _brSx;
@@ -127,7 +128,31 @@ def drawLine( x0,  y0,  x1,  y1):
             err += dx;
             y0 += sy;
 */
+void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char nbParticules){
+    unsigned char ii = 0;
+    unsigned char jj = 0;
+    // unsigned char kk = 0;
+    unsigned char idxPt, offPt, dchar;
+    unsigned int  dist;
+    for (ii = 0; ii < nbParticules; ii++) {
+        jj = ii << 1;  // ii*SIZEOF_PARTICULES
+        // kk = ii << 2;  // ii*SIZEOF_2DPOINT
+        idxPt    = particules[jj++];  // ii*SIZEOF_SEGMENT +0
+        ch2disp = particules[jj];    // ii*SIZEOF_SEGMENT +2
+        offPt = idxPt << 2;
+        
+        dist = *((int*)(points2d + (offPt | 0x02)));   // points2d[offPt+2]
+        dchar = (unsigned char)((dist)&0x00FF);
+        P1X = (SCREEN_WIDTH -points2d[offPt++]) >> 1;
+        P1Y = (SCREEN_HEIGHT - points2d[offPt++]) >> 1;
+#ifdef USE_ZBUFFER
+        zplot(P1X, P1Y, dchar, ch2disp);
+#else
+        // TODO : plot a point with no z-buffer
+#endif
 
+    }
+}
 
 void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbSegments) {
     unsigned char ii = 0;
@@ -135,18 +160,7 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
     unsigned char idxPt1, idxPt2;
     unsigned char offPt1, offPt2;
     int           dmoy;
-    //unsigned char distseg;
-    //char          ch2d;
 
-/*    signed char P1X;
-    signed char P1Y;
-    signed char P2X;
-    signed char P2Y;
-
-#ifdef ANGLEONLY
-    signed char P1AH, P1AV, P2AH, P2AV;
-#endif
-*/
     for (ii = 0; ii < nbSegments; ii++) {
         jj = ii << 2;  // ii*SIZEOF_SEGMENT
 
@@ -176,14 +190,8 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
         P2X = points2d[jj++];
         P2Y = points2d[jj];
 
-        //printf ("dl ([%d, %d] %d, [%d, %d] %d =>  %d\n", P1X, P1Y, d1, P2X, P2Y, d2, distseg);
-        //get();
+        //printf ("dl ([%d, %d] %d, [%d, %d] %d =>  %d\n", P1X, P1Y, d1, P2X, P2Y, d2, distseg);get();
 #else
-
-        // P1AH = points2d[idxPt1*SIZEOF_2DPOINT + 0];
-        // P1AV = points2d[idxPt1*SIZEOF_2DPOINT + 1];
-        // P2AH = points2d[idxPt2*SIZEOF_2DPOINT + 0];
-        // P2AV = points2d[idxPt2*SIZEOF_2DPOINT + 1];
 
         jj   = idxPt1 << 2;  // idxPt1*SIZEOF_2DPOINT
         P1AH = points2d[jj++];
@@ -207,12 +215,12 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
 #define ANGLE_MAX 0xC0
 #define ANGLE_VIEW 0xE0
 
-void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
+void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
     unsigned char ii = 0;
     unsigned char jj = 0;
     int           d1, d2, d3;
     int           dmoy;
-    // unsigned char idxPt1, idxPt2, idxPt3;//, distface;
+ 
     unsigned char offPt1, offPt2, offPt3;
 #ifdef ANGLEONLY
     signed char   tmpH, tmpV;
@@ -223,13 +231,6 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
     for (ii = 0; ii < nbFaces; ii++) {
         jj = ii << 2;
-        // idxPt1 = faces[ii*SIZEOF_FACES+0];
-        // idxPt2 = faces[ii*SIZEOF_FACES+1];
-        // idxPt3 = faces[ii*SIZEOF_FACES+2];
-
-        // idxPt1 = faces[jj++];
-        // idxPt2 = faces[jj++];
-        // idxPt3 = faces[jj++];
 
         offPt1 = faces[jj++] << 2;
         offPt2 = faces[jj++] << 2;
@@ -243,7 +244,6 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
 
         d3 = *((int*)(points2d + offPt3 + 2));
 
-        //dmoy = (d1+d2+d3)/3;
         dmoy = (d1 + d2 + d3) / 3;
         if (dmoy >= 256) {
             dmoy = 256;
@@ -302,8 +302,8 @@ void fillFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
         v1 = P1AH & ANGLE_VIEW;
         v2 = P2AH & ANGLE_VIEW;
         v3 = P3AH & ANGLE_VIEW;
-        //printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);
-        //get();
+
+        //printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);get();
 
         if ((m1 == 0x00) || (m1 == ANGLE_MAX)) {
             if ((v1 == 0x00) || (v1 == ANGLE_VIEW)) {
