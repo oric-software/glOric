@@ -2,8 +2,6 @@
 
 Project __glOric__ aims at providing Oric's developpers with an hyper fast 3D library to use in real time applications.
 
-
-
 ## Starting with glOric
 
 ### Installing Pre-requisites
@@ -30,31 +28,31 @@ Or, if you don't have GIT client installed, you can download an [archive of the 
 A good starting point in using glOric consists in building and testing demos that are provided with the project.
 
 3 demos are provided :
-- a text base demo 
+- a text based demo 
 
-![TextModeDemo](docs/imgs/TextModeDemo.gif)
+![TextDemo](docs/imgs/TextModeDemo.gif)
 - a hires demo
 
-![HiresModeDemo](docs/imgs/HiresModeDemo.gif)
+![HiresDemo](docs/imgs/HiresModeDemo.gif)
 - a lores demo 
 
-![LoresModeDemo](docs/imgs/LoresModeDemo.gif)
+![LoresDemo](docs/imgs/LoresModeDemo.gif)
 
 #### Selecting a demo to build
-To choose between demos, open the `config.h` file located in the src directory of glOric and find the following section at the beginning of the file:
+To choose between demos, open the `config.h` file located in the `src` directory of glOric and find the following section at the beginning of the file:
 
 ```C 
-// Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define LRSMODE
+// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO
+#define LRSDEMO
 ```
 
-Change the line to `#define HRSMODE` if you want ot build the HIRES mode demo. 
+Change the line to `#define HRSDEMO` if you want ot build the HIRES mode demo. 
 
-Change the line to `#define LRSMODE` if you want ot build the LORES mode demo. 
+Change the line to `#define LRSDEMO` if you want ot build the LORES mode demo. 
 
-Change the line to `#define TEXTMODE` if you want ot build the text mode demo. 
+Change the line to `#define TEXTDEMO` if you want ot build the text mode demo. 
 
-#### Building a demo to build
+#### Building the demo
 
 Once you have selected the demo you want to build, just open a shell command in the directory where you placed the source code and run following commands:
 

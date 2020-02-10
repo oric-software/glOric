@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO
-#define HRSDEMO
+#define LRSDEMO
 
 /*
  *  SCREEN DIMENSION
