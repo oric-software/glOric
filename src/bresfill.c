@@ -27,133 +27,102 @@ extern signed char A2sX;
 extern signed char A2sY;
 extern char        A2arrived;
 
-
-// fillFace
-
 void fill8();
 
 #ifdef USE_C_BRESFILL
-extern void hfill8(signed char   p1x,
-            signed char   p2x,
-            signed char   py,
-            unsigned char dist,
-            char          char2disp);
 void hfill();
-#endif
-extern void hfill82(signed char   p1x,
-            signed char   p2x,
-            signed char   py,
-            unsigned char dist,
-            char          char2disp);
-
-
+#endif  // USE_C_BRESFILL
 
 #ifdef USE_C_BRESFILL
 
-void A1stepY(){
-	signed char  nxtY, e2;
-	nxtY = A1Y+A1sY;
-	//printf ("nxtY = %d\n", nxtY);
-	e2 = (A1err < 0) ? (
-			((A1err & 0x40) == 0)?(
-				0x80
-			):(
-				A1err << 1
-			)
-		):(
-			((A1err & 0x40) != 0)?(
-				0x7F
-			):(
-				A1err << 1
-			)
-		);
-	//printf ("e2 = %d\n", e2);
-	while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
-		if (e2 >= A1dY){
-			A1err += A1dY;
-			//printf ("A1err = %d\n", A1err);
-			A1X += A1sX;
-			//printf ("A1X = %d\n", A1X);
-		}
-		if (e2 <= A1dX){
-			A1err += A1dX;
-			//printf ("A1err = %d\n", A1err);
-			A1Y += A1sY;
-			//printf ("A1Y = %d\n", A1Y);
-		}
-		A1arrived=((A1X == A1destX) && ( A1Y == A1destY))?1:0;
-		e2 = (A1err < 0) ? (
-				((A1err & 0x40) == 0)?(
-					0x80
-				):(
-					A1err << 1
-				)
-			):(
-				((A1err & 0x40) != 0)?(
-					0x7F
-				):(
-					A1err << 1
-				)
-			);
-		//printf ("e2 = %d\n", e2);
-
-	}
+void A1stepY() {
+    signed char nxtY, e2;
+    nxtY = A1Y + A1sY;
+    //printf ("nxtY = %d\n", nxtY);
+    e2 = (A1err < 0) ? (
+                           ((A1err & 0x40) == 0) ? (
+                                                       0x80)
+                                                 : (
+                                                       A1err << 1))
+                     : (
+                           ((A1err & 0x40) != 0) ? (
+                                                       0x7F)
+                                                 : (
+                                                       A1err << 1));
+    //printf ("e2 = %d\n", e2);
+    while ((A1arrived == 0) && ((e2 > A1dX) || (A1Y != nxtY))) {
+        if (e2 >= A1dY) {
+            A1err += A1dY;
+            //printf ("A1err = %d\n", A1err);
+            A1X += A1sX;
+            //printf ("A1X = %d\n", A1X);
+        }
+        if (e2 <= A1dX) {
+            A1err += A1dX;
+            //printf ("A1err = %d\n", A1err);
+            A1Y += A1sY;
+            //printf ("A1Y = %d\n", A1Y);
+        }
+        A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+        e2        = (A1err < 0) ? (
+                               ((A1err & 0x40) == 0) ? (
+                                                           0x80)
+                                                     : (
+                                                           A1err << 1))
+                         : (
+                               ((A1err & 0x40) != 0) ? (
+                                                           0x7F)
+                                                     : (
+                                                           A1err << 1));
+        //printf ("e2 = %d\n", e2);
+    }
 }
 
-void A2stepY(){
-	signed char  nxtY, e2;
-	nxtY = A2Y+A2sY	;
-	e2 = (A2err < 0) ? (
-			((A2err & 0x40) == 0)?(
-				0x80
-			):(
-				A2err << 1
-			)
-		):(
-			((A2err & 0x40) != 0)?(
-				0x7F
-			):(
-				A2err << 1
-			)
-		);
-	while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
-		if (e2 >= A2dY){
-			A2err += A2dY;
-			A2X += A2sX;
-		}
-		if (e2 <= A2dX){
-			A2err += A2dX;
-			A2Y += A2sY;
-		}
-		A2arrived=((A2X == A2destX) && ( A2Y == A2destY))?1:0;
-		e2 = (A2err < 0) ? (
-				((A2err & 0x40) == 0)?(
-					0x80
-				):(
-					A2err << 1
-				)
-			):(
-				((A2err & 0x40) != 0)?(
-					0x7F
-				):(
-					A2err << 1
-				)
-			);
-	}
+void A2stepY() {
+    signed char nxtY, e2;
+    nxtY = A2Y + A2sY;
+    e2   = (A2err < 0) ? (
+                           ((A2err & 0x40) == 0) ? (
+                                                       0x80)
+                                                 : (
+                                                       A2err << 1))
+                     : (
+                           ((A2err & 0x40) != 0) ? (
+                                                       0x7F)
+                                                 : (
+                                                       A2err << 1));
+    while ((A2arrived == 0) && ((e2 > A2dX) || (A2Y != nxtY))) {
+        if (e2 >= A2dY) {
+            A2err += A2dY;
+            A2X += A2sX;
+        }
+        if (e2 <= A2dX) {
+            A2err += A2dX;
+            A2Y += A2sY;
+        }
+        A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+        e2        = (A2err < 0) ? (
+                               ((A2err & 0x40) == 0) ? (
+                                                           0x80)
+                                                     : (
+                                                           A2err << 1))
+                         : (
+                               ((A2err & 0x40) != 0) ? (
+                                                           0x7F)
+                                                     : (
+                                                           A2err << 1));
+    }
 }
-#endif
+#endif  // USE_C_BRESFILL
 
 // fillface
-extern signed char P1X, P1Y, P2X, P2Y, P3X, P3Y;
+extern signed char   P1X, P1Y, P2X, P2Y, P3X, P3Y;
 extern signed char   P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
-
 extern unsigned char distface;
 extern char          ch2disp;
 
 #ifdef USE_C_BRESFILL
-
 void angle2screen() {
-
     P1X = (SCREEN_WIDTH - P1AH) >> 1;
     P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
     P2X = (SCREEN_WIDTH - P2AH) >> 1;
@@ -161,10 +130,9 @@ void angle2screen() {
     P3X = (SCREEN_WIDTH - P3AH) >> 1;
     P3Y = (SCREEN_HEIGHT - P3AV) >> 1;
 }
-#endif
+#endif  // USE_C_BRESFILL
 
 void fillFace() {
-
     angle2screen();
 
     // printf ("P1A: [%d, %d], P2A: [%d, %d], P3A [%d, %d]\n", P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
@@ -175,7 +143,6 @@ void fillFace() {
     fill8();
 }
 
-
 // fill8
 extern signed char pDepX;
 extern signed char pDepY;
@@ -185,9 +152,7 @@ extern signed char pArr2X;
 extern signed char pArr2Y;
 
 #ifdef USE_C_BRESFILL
-
 void prepare_bresrun() {
-
     if (P1Y <= P2Y) {
         if (P2Y <= P3Y) {
             pDepX  = P3X;
@@ -235,13 +200,10 @@ void prepare_bresrun() {
             }
         }
     }
-
 }
-#endif
-
+#endif  // USE_C_BRESFILL
 
 void fill8() {
-
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
     prepare_bresrun();
 
@@ -269,20 +231,19 @@ void fill8() {
         A2dX    = abs(A2destX - A2X);
         A2dY    = -abs(A2destY - A2Y);
         A2err   = A2dX + A2dY;
-        if ((A2err > 64) || (A2err < -63)) return;
+        if ((A2err > 64) || (A2err < -63))
+            return;
 
         A2sX      = (A2X < A2destX) ? 1 : -1;
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-        //hfill8(A1X, A2X, A1Y, distface, ch2disp);
         hfill();
         while (A1arrived == 0) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            //hfill8(A1X, A2X, A1Y, distface, ch2disp);
             hfill();
         }
 
@@ -301,7 +262,6 @@ void fill8() {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            //hfill8(A1X, A2X, A1Y, distface, ch2disp);
             hfill();
         }
     } else {
@@ -314,7 +274,8 @@ void fill8() {
         A1dY    = -abs(A1destY - A1Y);
         A1err   = A1dX + A1dY;
 
-        if ((A1err > 64) || (A1err < -63)) return;
+        if ((A1err > 64) || (A1err < -63))
+            return;
 
         A1sX = (A1X < A1destX) ? 1 : -1;
         A1sY = (A1Y < A1destY) ? 1 : -1;
@@ -330,28 +291,26 @@ void fill8() {
         A2dY    = -abs(A2destY - A2Y);
         A2err   = A2dX + A2dY;
 
-        if ((A2err > 64) || (A2err < -63)) return;
+        if ((A2err > 64) || (A2err < -63))
+            return;
 
         A2sX      = (A2X < A2destX) ? 1 : -1;
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-        //hfill8(A1X, A2X, A1Y, distface, ch2disp);
         hfill();
 
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            //hfill8(A1X, A2X, A1Y, distface, ch2disp);
             hfill();
         }
     }
 }
+
 #ifdef USE_C_BRESFILL
-
-
 
 void hfill() {
     signed char dx, fx;
@@ -359,7 +318,8 @@ void hfill() {
 
     //printf ("p1x=%d p2x=%d py=%d dist= %d, char2disp= %d\n", p1x, p2x, dist,  dist, char2disp);get();
 
-    if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT)) return;
+    if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT))
+        return;
 
     if (A1X > A2X) {
         dx = max(0, A2X);
@@ -371,51 +331,16 @@ void hfill() {
 
     nbpoints = fx - dx;
 
-    if (nbpoints < 0) return;
+    if (nbpoints < 0)
+        return;
 
-    // printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
+        // printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
 
 #ifdef USE_ZBUFFER
     zline(dx, A1Y, nbpoints, distface, ch2disp);
 #else
-    // TODO : draw a line whit no z-buffer
+        // TODO : draw a line whit no z-buffer
 #endif
 }
 
-
-void hfill8(signed char   p1x,
-            signed char   p2x,
-            signed char   py,
-            unsigned char dist,
-            char          char2disp) {
-    signed char dx, fx;
-    signed char nbpoints;
-
-    //printf ("p1x=%d p2x=%d py=%d dist= %d, char2disp= %d\n", p1x, p2x, dist,  dist, char2disp);get();
-
-    if ((py <= 0) || (py >= SCREEN_HEIGHT)) return;
-
-    if (p1x > p2x) {
-        dx = max(0, p2x);
-        fx = min(p1x, SCREEN_WIDTH - 1);
-    } else {
-        dx = max(0, p1x);
-        fx = min(p2x, SCREEN_WIDTH - 1);
-    }
-
-    nbpoints = fx - dx;
-
-    if (nbpoints < 0) return;
-
-    // printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
-
-#ifdef USE_ZBUFFER
-    zline(dx, py, nbpoints, dist, char2disp);
-#else
-    // TODO : draw a line whit no z-buffer
-#endif
-}
-#endif
-
-
-
+#endif  // USE_C_BRESFILL

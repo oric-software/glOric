@@ -100,7 +100,7 @@ dofastprojloop:
         txa
         tay
 
-#ifndef HRSMODE
+#ifndef HRSDEMO
  //  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
 
         lda _Norm+1
@@ -257,7 +257,7 @@ project_noHAngleOverflow:
 
 project_noVAngleOverflow:
 #ifndef ANGLEONLY
-#ifdef TEXTMODE
+#ifdef TEXTDEMO
 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
 	lda AnglePH
 	cmp #$80

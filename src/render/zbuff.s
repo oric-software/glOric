@@ -1,6 +1,6 @@
 #include "config.h"
 
-/*
+#ifdef USE_MULTI40
 _multi40
 	.word 0
 	.word 40
@@ -29,7 +29,7 @@ _multi40
 	.word 960
 	.word 1000
 	.word 1040
-*/
+#endif // USE_MULTI40
 
 
 ; This table contains lower 8 bits of the adress

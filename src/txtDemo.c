@@ -1,7 +1,7 @@
 #include "config.h"
 #include "glOric.h"
 
-#ifdef TEXTMODE
+#ifdef TEXTDEMO
 
 #include "data/alphabet.h"
 

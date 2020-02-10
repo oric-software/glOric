@@ -4,13 +4,13 @@
 #include "glOric.h"
 
 void main() {
-#ifdef TEXTMODE
+#ifdef TEXTDEMO
     textDemo();
 #endif
-#ifdef HRSMODE
+#ifdef HRSDEMO
     hiresDemo();
 #endif
-#ifdef LRSMODE
+#ifdef LRSDEMO
     lrsDemo();
 #endif
 }

@@ -31,7 +31,7 @@ unsigned char nbParticules=0;
 
 
     
-#ifdef HRSMODE
+#ifdef HRSDEMO
 void addCube(char X, char Y, char Z){
 	unsigned char ii, jj;
 	for (jj=0; jj < NB_POINTS_CUBE; jj++){

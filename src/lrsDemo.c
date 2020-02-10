@@ -8,7 +8,7 @@
 #include <stdio.h>
 #endif
 
-#ifdef LRSMODE
+#ifdef LRSDEMO
 
 #include "data\geom.h"
 #include "data\traj.h"

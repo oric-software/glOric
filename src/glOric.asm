@@ -118,8 +118,8 @@ dofastprojloop:
         pha
         txa
         tay
-;; #ifdef TEXTMODE  
-.IFDEF TEXTMODE    
+;; #ifdef TEXTDEMO  
+.IFDEF TEXTDEMO    
 ;;  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
         
         lda _Norm+1
@@ -258,7 +258,7 @@ project_noHAngleOverflow:
 
 project_noVAngleOverflow:   
 	
-.IFDEF TEXTMODE
+.IFDEF TEXTDEMO
  	;; Quick Disgusting Hack  X = (-AnglePH //2 ) + LE / 2
  	lda AnglePH
 	cmp #$80

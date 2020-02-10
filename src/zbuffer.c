@@ -4,6 +4,7 @@
 #ifdef TARGET_ORIX
 #include <string.h>
 #endif
+
 #ifdef USE_ZBUFFER
 
 #ifdef TARGET_ORIX
@@ -42,7 +43,12 @@ void zplot(signed char X,
     if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
         return;
 
-    offset  = Y*SCREEN_WIDTH+X; // multi40[Y] + X;  // 
+#ifdef USE_MULTI40
+    offset = multi40[Y] + X;  // 
+#else
+    offset = Y*SCREEN_WIDTH+X; 
+#endif
+
     ptrZbuf = zbuffer + offset;
     ptrFbuf = fbuffer + offset;
 
@@ -65,17 +71,20 @@ void zline(signed char   dx,
     signed char    nbp;
 
     nbp     = nbpoints;
-    offset  = py * SCREEN_WIDTH + dx;  // multi40[py] + dx; //
+#ifdef USE_MULTI40
+    offset  = multi40[py] + dx; 
+#else
+    offset  = py * SCREEN_WIDTH + dx;
+#endif // USE_MULTI40
+
     ptrZbuf = zbuffer + offset;
     ptrFbuf = fbuffer + offset;
 
-    // printf ("zline from [%d %d] . %d points at dist %d \n", dx, py, nbpoints,
-    // dist);
+    // printf ("zline from [%d %d] . %d points at dist %d \n", dx, py, nbpoints,dist);
 
     while (nbp > 0) {
         if (dist < ptrZbuf[nbp]) {
-            // printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf
-            // [nbpoints]);
+            // printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf[nbpoints]);
             ptrFbuf[nbp] = char2disp;
             ptrZbuf[nbp] = dist;
         }
@@ -83,10 +92,5 @@ void zline(signed char   dx,
     }
 }
 
-
 #endif //USE_C_ZBUFFER
-
-
-
-
 #endif // USE_ZBUFFER

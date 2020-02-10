@@ -16,7 +16,7 @@ _Point2Y .dsb 1
 _char2Display .dsb 1
 
 
-#ifdef  TEXTMODE
+#ifdef  TEXTDEMO
 
 //  void drawSegments(){
 _drawSegments:

@@ -12,7 +12,7 @@ extern unsigned char nbFaces;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
 
-#ifdef LRSMODE
+#ifdef LRSDEMO
 /*
 void addTePee(signed char X, signed char Y, unsigned char L) {
     unsigned char ii, jj;
@@ -85,9 +85,9 @@ void addTePee(signed char X, signed char Y, unsigned char L) {
     nbFaces++;
 }
 */
-#endif  // LRSMODE
+#endif  // LRSDEMO
 
-#ifdef LRSMODE
+#ifdef LRSDEMO
 
 void addPlan(signed char X, signed char Y, unsigned char L, signed char orientation, char char2disp) {
     unsigned char ii, jj;
@@ -178,9 +178,9 @@ void addCube3(char X, char Y, char Z) {
     nbFaces += NB_FACES_CUBE;
 }
 */
-#endif  // LRSMODE
+#endif  // LRSDEMO
 
-#ifdef HRSMODE
+#ifdef HRSDEMO
 
 const char ptsCube[] = {
     -CUBE_SIZE, -CUBE_SIZE, +CUBE_SIZE, 0,  // P0

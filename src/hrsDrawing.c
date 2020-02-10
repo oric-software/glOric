@@ -16,7 +16,7 @@ extern unsigned char Y1;
 extern unsigned char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
 #endif
 
-#ifdef HRSMODE
+#ifdef HRSDEMO
 
 void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char nbSegments) {
     unsigned char ii = 0;

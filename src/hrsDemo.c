@@ -2,7 +2,7 @@
 #include "config.h"
 #include "glOric.h"
 
-#ifdef HRSMODE
+#ifdef HRSDEMO
 
 #include "data\geom.h"
 #include "data\traj.h"

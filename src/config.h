@@ -2,19 +2,19 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// Choose amongst TEXTMODE, LRSMODE, HRSMODE
-#define LRSMODE
+// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO
+#define HRSDEMO
 
 /*
  *  SCREEN DIMENSION
  */
 
-#ifdef TEXTMODE
+#ifdef TEXTDEMO
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif
 
-#ifdef LRSMODE
+#ifdef LRSDEMO
 #define ANGLEONLY
 #define USE_ZBUFFER
 #define USE_COLLISION_DETECTION
@@ -22,7 +22,7 @@
 #define SCREEN_HEIGHT 26
 #endif
 
-#ifdef HRSMODE
+#ifdef HRSDEMO
 #define USE_HIRES_RASTER
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 200
@@ -37,7 +37,7 @@
 #define NB_MAX_FACES 64
 #define NB_MAX_PARTICULES 64
 /*
- *  SCREEN BUFFER
+ *  SCREEN MEMORY
  */
 #define ADR_BASE_SCREEN 48040  //BB80
 
@@ -51,6 +51,8 @@
 #define SIZEOF_2DPOINT 4
 #define SIZEOF_FACES 4
 
+
+
 #ifdef TARGET_ORIX
 #define USE_C_BRESFILL
 #undef USE_ASM_BRESFILL
@@ -61,7 +63,9 @@
 #define USE_ASM_BRESFILL
 #undef USE_C_ZBUFFER
 #define USE_ASM_ZBUFFER
-
 #endif
+
+
+#undef USE_MULTI40
 
 #endif
