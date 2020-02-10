@@ -11,7 +11,7 @@
 //#include "fill8.h"
 
 extern unsigned char une_fonction();
-extern void faceDemo();
+extern void lrsDemo();
 
 /*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
 
@@ -107,7 +107,7 @@ int main ()
 	//unsigned char val;
 	signed char i;
 	printf ("----------\n");
-	faceDemo();
+	lrsDemo();
 	printf ("----------\n");
 	
 	/*

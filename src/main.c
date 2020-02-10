@@ -11,6 +11,6 @@ void main() {
     hiresDemo();
 #endif
 #ifdef LRSMODE
-    faceDemo();
+    lrsDemo();
 #endif
 }

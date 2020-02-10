@@ -50,7 +50,7 @@ void dispInfo() {
 #endif  // TARGET_ORIX
 }
 
-void faceDemo() {
+void lrsDemo() {
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
