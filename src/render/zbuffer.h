@@ -9,7 +9,6 @@ extern int multi40[];
 // z-depth buffer
 //unsigned char zbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
 // frame buffer
-//char fbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
 
 extern void initScreenBuffers();
 

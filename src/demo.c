@@ -23,9 +23,10 @@ unsigned char nbPts=0;
 char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
+*/
 char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 unsigned char nbSegments=0;
-*/
+
 
     
 #ifdef HRSMODE
