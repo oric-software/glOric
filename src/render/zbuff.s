@@ -157,6 +157,56 @@ FBufferAdressHigh
 	.byt >(_fbuffer+40*26)
 	.byt >(_fbuffer+40*27)
 
+
+
+
+
+#ifdef USE_ASM_BUFFER2SCREEN
+// void buffer2screen(char destAdr[])
+; http://www.6502.org/source/general/memory_move.html
+; Bruce Clark
+; Move memory down
+; FROM = source start address
+;   TO = destination start address
+; SIZE = number of bytes to move
+
+.zero
+FROM .dsb 2
+TO .dsb 2
+
+.text
+
+_buffer2screen:
+.(
+
+; lda #<(48040) : sta TO : lda #>(48040) : sta TO+1 :
+	ldy #0: lda (sp),y: sta TO: iny: lda (sp),y: sta TO+1
+    lda #<(_fbuffer) : sta FROM : lda #>(_fbuffer) : sta FROM+1 
+
+MOVEDOWN LDY #0
+         LDX #<(SCREEN_WIDTH*SCREEN_HEIGHT); SIZEH
+         BEQ MD2
+MD1      LDA (FROM),Y ; move a page at a time
+         STA (TO),Y
+         INY
+         BNE MD1
+         INC FROM+1
+         INC TO+1
+         DEX
+         BNE MD1
+MD2      LDX #>(SCREEN_WIDTH*SCREEN_HEIGHT); SIZEL
+         BEQ MD4
+MD3      LDA (FROM),Y ; move the remaining bytes
+         STA (TO),Y
+         INY
+         DEX
+         BNE MD3
+MD4      
+.)
+    RTS
+#endif // USE_ASM_BUFFER2SCREEN
+
+
 #ifdef USE_ASM_ZBUFFER
 
 /*
@@ -235,50 +285,6 @@ initScreenBuffersLoop_02:
 .)
     rts
 */
-
-
-// void buffer2screen(char destAdr[])
-; http://www.6502.org/source/general/memory_move.html
-; Bruce Clark
-; Move memory down
-; FROM = source start address
-;   TO = destination start address
-; SIZE = number of bytes to move
-
-.zero
-FROM .dsb 2
-TO .dsb 2
-
-.text
-
-_buffer2screen:
-.(
-
-; lda #<(48040) : sta TO : lda #>(48040) : sta TO+1 :
-	ldy #0: lda (sp),y: sta TO: iny: lda (sp),y: sta TO+1
-    lda #<(_fbuffer) : sta FROM : lda #>(_fbuffer) : sta FROM+1 
-
-MOVEDOWN LDY #0
-         LDX #<(SCREEN_WIDTH*SCREEN_HEIGHT); SIZEH
-         BEQ MD2
-MD1      LDA (FROM),Y ; move a page at a time
-         STA (TO),Y
-         INY
-         BNE MD1
-         INC FROM+1
-         INC TO+1
-         DEX
-         BNE MD1
-MD2      LDX #>(SCREEN_WIDTH*SCREEN_HEIGHT); SIZEL
-         BEQ MD4
-MD3      LDA (FROM),Y ; move the remaining bytes
-         STA (TO),Y
-         INY
-         DEX
-         BNE MD3
-MD4      
-.)
-    RTS
 
 
 // void zplot(unsigned char X,

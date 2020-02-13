@@ -58,14 +58,18 @@
 #undef USE_ASM_BRESFILL
 #define USE_C_ZBUFFER
 #undef USE_ASM_ZBUFFER
+#undef USE_ASM_BUFFER2SCREEN
 #else
 #undef USE_C_BRESFILL
 #define USE_ASM_BRESFILL
 #undef USE_C_ZBUFFER
 #define USE_ASM_ZBUFFER
+#undef USE_ASM_BUFFER2SCREEN
+#define USE_C_BUFFER2SCREEN
 #endif
 
 
 #undef USE_MULTI40
+#define USE_COLOR
 
 #endif

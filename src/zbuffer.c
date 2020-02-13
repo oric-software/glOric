@@ -25,12 +25,17 @@ void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents 
 }
 
 
-#ifdef USE_C_ZBUFFER
-
+#ifdef USE_C_BUFFER2SCREEN
 void buffer2screen(char destAdr[]) {
     memcpy(destAdr, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
+#ifdef USE_COLOR
+    // prepare_colors();
+#endif
 }
+#endif
 
+
+#ifdef USE_C_ZBUFFER
 
 void zplot(signed char X,
            signed char Y,
