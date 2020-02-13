@@ -87,7 +87,7 @@ void addTePee(signed char X, signed char Y, unsigned char L) {
 */
 #endif  // LRSDEMO
 
-#ifdef LRSDEMO
+#ifdef COLORDEMO
 
 void addPlan(signed char X, signed char Y, unsigned char L, signed char orientation, char char2disp) {
     unsigned char ii, jj;
@@ -178,7 +178,7 @@ void addCube3(char X, char Y, char Z) {
     nbFaces += NB_FACES_CUBE;
 }
 */
-#endif  // LRSDEMO
+#endif  // COLORDEMO
 
 #ifdef HRSDEMO
 

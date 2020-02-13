@@ -1,6 +1,6 @@
 #ifndef ALPHABET_H
 #define ALPHABET_H
-
+#ifdef TEXTDEMO
 #define NB_POINTS_M 5
 #define NB_SEGMENTS_M 4
 
@@ -110,4 +110,7 @@ const char segN[] = {
     1, 2, 78, 0,  //92 , 0
     2, 3, 78, 0   //124, 0
 };
+
+#endif //TEXTDEMO
+
 #endif

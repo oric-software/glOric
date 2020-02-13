@@ -2,8 +2,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO
-#define LRSDEMO
+// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO
+#define COLORDEMO
 
 /*
  *  SCREEN DIMENSION
@@ -21,6 +21,16 @@
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif
+
+#ifdef COLORDEMO
+#define ANGLEONLY
+#define USE_ZBUFFER
+#define USE_COLOR
+#define USE_COLLISION_DETECTION
+#define SCREEN_WIDTH 40
+#define SCREEN_HEIGHT 26
+#endif
+
 
 #ifdef HRSDEMO
 #define USE_HIRES_RASTER
@@ -70,6 +80,5 @@
 
 
 #undef USE_MULTI40
-#define USE_COLOR
 
 #endif

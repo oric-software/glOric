@@ -65,12 +65,7 @@ void lrsDemo() {
 
 #ifdef TARGET_ORIX
 #else
-#ifdef USE_COLOR
-    text();
-    initColors();
-#else
     lores0();
-#endif  // USE_COLOR
 #endif  // TARGET_ORIX
     lrsIntro();
 
@@ -207,7 +202,7 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
 }
 #endif
 
-/*
+
 void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l) {
     unsigned char ii, jj;
     ii = L;
@@ -395,5 +390,5 @@ void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l) {
 
     //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
 }
-*/
+
 #endif

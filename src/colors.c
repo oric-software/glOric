@@ -55,7 +55,7 @@ void prepare_colors() {
 		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
 	}
 
-	for (ii = 0; ii<100 ; ii++){
+	for (ii = 0; ii<HIRES_SCREEN_HEIGHT ; ii++){
 
 		poke (HIRES_SCREEN_ADDRESS+(ii*40)+1, tab_color[ii & 0x07]);
 		poke (HIRES_SCREEN_ADDRESS+(ii*40)+2, TEXT_50Hz);

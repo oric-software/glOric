@@ -13,4 +13,7 @@ void main() {
 #ifdef LRSDEMO
     lrsDemo();
 #endif
+#ifdef COLORDEMO
+    colorDemo();
+#endif
 }
