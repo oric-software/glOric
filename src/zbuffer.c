@@ -29,7 +29,12 @@ void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents 
 
 #ifdef USE_C_BUFFER2SCREEN
 void buffer2screen(char destAdr[]) {
+#ifdef USE_COLOR
+	memcpy(destAdr, fbuffer, (SCREEN_HEIGHT-4) * SCREEN_WIDTH);
+#else
     memcpy(destAdr, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
+#endif
+    
 }
 #endif
 

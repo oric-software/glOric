@@ -12,29 +12,29 @@
 unsigned char tab_color [] = {INK_CYAN, INK_YELLOW, INK_MAGENTA, INK_BLUE, INK_GREEN, INK_RED, INK_CYAN, INK_YELLOW} ;
 
 void spreadHiresAttributes(){
-	int ii;
-	for (ii = 2; ii<LORES_SCREEN_HEIGHT-3 ; ii++){
+	int ii, jj;
+	for (ii = 1; ii<LORES_SCREEN_HEIGHT-4 ; ii++){
 #ifdef USE_ZBUFFER
 		fbuffer[ii*LORES_SCREEN_WIDTH]=HIRES_50Hz;
 #else
 		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
 #endif // USE_ZBUFFER
+		// for (jj = 0; jj < 8; jj++) {
+		// 	poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+1, tab_color[jj]);
+		// 	poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+		// }
 	}
 }
 void prepare_colors() {
-    int ii;
-	
-	spreadHiresAttributes();
-	// for (ii = 0; ii<HIRES_SCREEN_HEIGHT ; ii++){
-	for (ii = 0; ii<HIRES_SCREEN_HEIGHT-1 ; ii++){
+    int ii, jj;
 
-		poke (HIRES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+1, tab_color[ii & 0x07]);
-		poke (HIRES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
-
-		// fbuffer[ii*LORES_SCREEN_WIDTH]=HIRES_50Hz;
-		// fbuffer[ii*LORES_SCREEN_WIDTH]=HIRES_50Hz;
-
-	}   
+	for (ii = 1; ii<LORES_SCREEN_HEIGHT-4 ; ii++){
+		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
+		for (jj = 0; jj < 8; jj++) {
+			poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+1, tab_color[jj]);
+			poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+		}
+	}
 }
 void initColors(){
 
