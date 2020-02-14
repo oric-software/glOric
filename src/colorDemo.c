@@ -59,7 +59,9 @@ void colorDemo() {
     nbParticules = 0;
 
     // addHouse(0, 0, 12, 8);
-    addPlan(0, 0, 12, 64, 'r');
+    addPlan(3, 3, 6, 64, 'r');
+    addPlan(-3, -3, 6, 0, 'b');
+
     //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
 #ifdef TARGET_ORIX

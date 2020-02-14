@@ -8,6 +8,15 @@ extern int multi40[];
 
 #ifdef USE_ZBUFFER
 
+
+#ifdef TARGET_ORIX
+char fbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
+unsigned char zbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
+#else
+extern unsigned char zbuffer[];  // z-depth buffer SCREEN_WIDTH * SCREEN_HEIGHT
+extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
+#endif
+
 extern void initScreenBuffers();
 
 extern void buffer2screen(char destAdr[]); 

@@ -5,32 +5,31 @@
 #include <string.h>
 #endif
 
-#ifdef USE_ZBUFFER
-
-#ifdef TARGET_ORIX
-char fbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
-unsigned char zbuffer [SCREEN_WIDTH*SCREEN_HEIGHT];
-#else
-extern unsigned char zbuffer[];  // z-depth buffer SCREEN_WIDTH * SCREEN_HEIGHT
-extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
+#ifdef USE_COLOR
+#include "render/colors.h"
 #endif
+
+#ifdef USE_ZBUFFER
+#include "render\zbuffer.h"
+
 
 //const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
 //                       360, 400, 440, 480, 520, 560, 600, 640, 680,
 //                       720, 760, 800, 840, 880, 920, 960, 1000, 1040};
 
 void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents dispinfo from working
+    int ii;
     memset(zbuffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT);
     memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT);  // Space
+#ifdef USE_COLOR
+	spreadHiresAttributes();
+#endif
 }
 
 
 #ifdef USE_C_BUFFER2SCREEN
 void buffer2screen(char destAdr[]) {
     memcpy(destAdr, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
-#ifdef USE_COLOR
-    prepare_colors();
-#endif
 }
 #endif
 

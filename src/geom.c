@@ -96,7 +96,7 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
     //printf ("plane [%d %d], l= %d, ori = %d, t = %c\n", X	, Y, L, orientation, char2disp); get();
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 3;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
     //printf ("p3d [%d %d %d]\n", points3d[nbPts* SIZEOF_3DPOINT + 0]	, points3d[nbPts* SIZEOF_3DPOINT + 1], points3d[nbPts* SIZEOF_3DPOINT + 2]); get();
     nbPts++;
     ii                                   = (orientation == 0) ? 0 : -L;
@@ -117,7 +117,7 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
     jj                                   = (orientation == 0) ? (L) : 0;
     points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
     points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 3;
+    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
     //printf ("p3d [%d %d %d]\n", points3d[nbPts* SIZEOF_3DPOINT + 0]	, points3d[nbPts* SIZEOF_3DPOINT + 1], points3d[nbPts* SIZEOF_3DPOINT + 2]); get();
     nbPts++;
     faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 4;  // Index Point 1
