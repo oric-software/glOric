@@ -322,10 +322,18 @@ void hfill() {
         return;
 
     if (A1X > A2X) {
+#ifdef USE_COLOR
+        dx = max(2, A2X);
+#else
         dx = max(0, A2X);
+#endif
         fx = min(A1X, SCREEN_WIDTH - 1);
     } else {
+#ifdef USE_COLOR
+        dx = max(2, A1X);
+#else
         dx = max(0, A1X);
+#endif
         fx = min(A2X, SCREEN_WIDTH - 1);
     }
 

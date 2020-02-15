@@ -20,10 +20,11 @@ extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
 extern void initScreenBuffers();
 
 extern void buffer2screen(char destAdr[]); 
-
-
 extern void zplot(signed char X, signed char Y, unsigned char dist, char char2disp);
+
+#ifdef USE_ASM_ZLINE
 extern void zline(signed char dx, signed char py, unsigned char nbpoints, unsigned char dist, char char2disp);
+#endif 
 
 #endif // USE_ZBUFFER
 #endif // ZBUFFER_H

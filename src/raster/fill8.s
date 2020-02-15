@@ -455,10 +455,15 @@ _hfill:
 	bvc *+4
 	eor #$80
 	bmi hfill_A2xOverOrEqualA1x
-//         dx = max(0, A2X);
+#ifdef USE_COLOR
+// TODO 
+//		dx = max(2, A2X);
+#else
+//      dx = max(0, A2X);
 		lda _A2X
 		bpl hfill_A2xPositiv
 		lda #0
+#endif
 hfill_A2xPositiv:
 		sta tmp0 ; dx
 //         fx = min(A1X, SCREEN_WIDTH - 1);
@@ -475,10 +480,15 @@ hfill_A1xOverScreenWidth:
 		jmp hfill_computeNbPoints
 hfill_A2xOverOrEqualA1x:
 //     } else {
-//         dx = max(0, A1X);
+#ifdef USE_COLOR
+// TODO 
+//		dx = max(2, A1X);
+#else
+//      dx = max(0, A1X);
 		lda _A1X
 		bpl hfill_A1xPositiv
 		lda #0
+#endif
 hfill_A1xPositiv:
 		sta tmp0
 //         fx = min(A2X, SCREEN_WIDTH - 1);

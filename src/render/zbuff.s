@@ -207,8 +207,8 @@ MD4
 #endif // USE_ASM_BUFFER2SCREEN
 
 
-#ifdef USE_ASM_ZBUFFER
-
+#ifdef USE_ASM_INITFRAMEBUFFER
+// TODO prevent from writing on columns 0, 1 and 3 of fbuffer
 /*
 // void initScreenBuffers()
 _initScreenBuffers:
@@ -286,6 +286,10 @@ initScreenBuffersLoop_02:
     rts
 */
 
+#endif // USE_ASM_INITFRAMEBUFFER
+
+
+#ifdef USE_ASM_ZPLOT
 
 // void zplot(unsigned char X,
 //           unsigned char Y,
@@ -376,9 +380,10 @@ zplot_done:
     rts
 
 
+#endif // USE_ASM_ZPLOT
 
 
-
+#ifdef USE_ASM_ZLINE
 
 // void zline(signed char   dx,
 //           signed char   py,
@@ -493,7 +498,7 @@ zline_done:
 .)
     rts
 
-#endif // USE_ASM_ZBUFFER
+#endif // USE_ASM_ZLINE
 
 
 // unsigned char zbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // z-depth buffer

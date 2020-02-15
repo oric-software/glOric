@@ -16,30 +16,36 @@
 //const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
 //                       360, 400, 440, 480, 520, 560, 600, 640, 680,
 //                       720, 760, 800, 840, 880, 920, 960, 1000, 1040};
-
+#ifdef USE_C_INITFRAMEBUFFER
 void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents dispinfo from working
-    int ii;
-    memset(zbuffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT);
-    memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT);  // Space
 #ifdef USE_COLOR
-	spreadHiresAttributes();
+    int ii, jj;
+#endif
+    memset(zbuffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT);
+    
+#ifdef USE_COLOR
+    for (ii=0; ii< SCREEN_HEIGHT; ii++){
+        for (jj=3; jj< SCREEN_WIDTH; jj++){
+            fbuffer[ii*SCREEN_WIDTH+jj] = 0x20;
+        }
+    }
+    // spreadHiresAttributes();
+    // memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT); 
+#else
+    memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT);  // Space
 #endif
 }
+#endif // USE_C_INITFRAMEBUFFER
 
 
 #ifdef USE_C_BUFFER2SCREEN
 void buffer2screen(char destAdr[]) {
-#ifdef USE_COLOR
-	memcpy(destAdr, fbuffer, (SCREEN_HEIGHT-4) * SCREEN_WIDTH);
-#else
-    memcpy(destAdr, fbuffer, SCREEN_HEIGHT * SCREEN_WIDTH);
-#endif
-    
+	memcpy(destAdr, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
 }
 #endif
 
 
-#ifdef USE_C_ZBUFFER
+#ifdef USE_C_ZPLOT
 
 void zplot(signed char X,
            signed char Y,
@@ -49,8 +55,13 @@ void zplot(signed char X,
     char*          ptrFbuf;
     unsigned char* ptrZbuf;
 
+#ifdef USE_COLOR
+    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 2) || (X >= SCREEN_WIDTH))
+        return;
+#else
     if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
         return;
+#endif
 
 #ifdef USE_MULTI40
     offset = multi40[Y] + X;  // 
@@ -68,6 +79,10 @@ void zplot(signed char X,
     }
 }
 
+#endif
+
+
+#ifdef USE_C_ZLINE
 
 void zline(signed char   dx,
            signed char   py,
@@ -101,5 +116,6 @@ void zline(signed char   dx,
     }
 }
 
-#endif //USE_C_ZBUFFER
+#endif //USE_C_ZLINE
+
 #endif // USE_ZBUFFER

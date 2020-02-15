@@ -71,12 +71,12 @@ void colorDemo() {
     initColors();
 
     colorIntro();
-
-    // CamPosX = 10;
-    // CamPosY = -3;
-    // CamPosZ = 2;
-    // CamRotZ = 93;
-    // CamRotX = 0;
+    // TODO : Remove this
+    CamPosX = 14;
+    CamPosY = -4;
+    CamPosZ = 6;
+    CamRotZ = 97;
+    CamRotX = 0;
 
     colorGameLoop();
 }
