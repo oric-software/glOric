@@ -59,8 +59,10 @@ void colorDemo() {
     nbParticules = 0;
 
     // addHouse(0, 0, 12, 8);
-    addPlan(3, 3, 6, 64, 'r');
-    addPlan(-3, -3, 6, 0, 'b');
+    addPlan(0, 6, 6, 64, 'r');
+    addPlan(0, -6, 6, 64, 'b');
+    addPlan(6, 0, 6, 0, 'y');
+    addPlan(-6, 0, 6, 0, 'g');
 
     //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
@@ -93,7 +95,7 @@ void colorIntro() {
 
     CamPosX = 0;
     CamPosY = 0;
-    CamPosZ = 6;
+    CamPosZ = 3;
 
     CamRotZ = 0;
     CamRotX = 0;
