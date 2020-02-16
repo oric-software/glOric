@@ -414,7 +414,7 @@ A2stepYdone:
 	rts
 #endif 
 
-#ifdef USE_ASM_BRESFILL
+#ifdef USE_ASM_HFILL
 
 
 // void hfill() {
@@ -456,8 +456,17 @@ _hfill:
 	eor #$80
 	bmi hfill_A2xOverOrEqualA1x
 #ifdef USE_COLOR
-// TODO 
 //		dx = max(2, A2X);
+		lda _A2X
+		sec
+		sbc #3
+		bvc *+4
+		eor #$80
+		bmi hfill_A2xLowerThan3
+		lda _A2X
+		jmp hfill_A2xPositiv
+hfill_A2xLowerThan3:
+		lda #3
 #else
 //      dx = max(0, A2X);
 		lda _A2X
@@ -481,8 +490,17 @@ hfill_A1xOverScreenWidth:
 hfill_A2xOverOrEqualA1x:
 //     } else {
 #ifdef USE_COLOR
-// TODO 
 //		dx = max(2, A1X);
+		lda _A1X
+		sec
+		sbc #3
+		bvc *+4
+		eor #$80
+		bmi hfill_A1xLowerThan3
+		lda _A1X
+		jmp hfill_A1xPositiv
+hfill_A1xLowerThan3:
+		lda #3
 #else
 //      dx = max(0, A1X);
 		lda _A1X
@@ -555,6 +573,10 @@ hfill_done:
 
 .)
 	rts
+
+#endif // USE_ASM_HFILL
+
+#ifdef USE_ASM_BRESFILL
 
 
 // void angle2screen() {
