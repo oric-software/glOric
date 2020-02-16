@@ -208,14 +208,13 @@ MD4
 
 
 #ifdef USE_ASM_INITFRAMEBUFFER
-// TODO prevent from writing on columns 0, 1 and 3 of fbuffer
-/*
+
 // void initScreenBuffers()
 _initScreenBuffers:
 .(
   
     lda #$FF
-    ldx #40
+    ldx #SCREEN_WIDTH-1
 
 initScreenBuffersLoop_01:
     sta _zbuffer+SCREEN_WIDTH*0 , x
@@ -243,17 +242,17 @@ initScreenBuffersLoop_01:
     sta _zbuffer+SCREEN_WIDTH*22 , x
     sta _zbuffer+SCREEN_WIDTH*23 , x
     sta _zbuffer+SCREEN_WIDTH*24 , x
-    ;sta _zbuffer+SCREEN_WIDTH*25 , x
+    ;sta _zbuffer+SCREEN_WIDTH*25 , x // FIXME
     ;sta _zbuffer+SCREEN_WIDTH*26 , x
     dex
     bne initScreenBuffersLoop_01
 
     lda #$20
-    ldx #40
+    ldx #SCREEN_WIDTH-1
 
 initScreenBuffersLoop_02:
-    sta _fbuffer+SCREEN_WIDTH*0 , x
-    sta _fbuffer+SCREEN_WIDTH*1 , x
+    ;; sta _fbuffer+SCREEN_WIDTH*0 , x // FIXME
+    ;; sta _fbuffer+SCREEN_WIDTH*1 , x
     sta _fbuffer+SCREEN_WIDTH*2 , x
     sta _fbuffer+SCREEN_WIDTH*3 , x
     sta _fbuffer+SCREEN_WIDTH*4 , x
@@ -274,23 +273,29 @@ initScreenBuffersLoop_02:
     sta _fbuffer+SCREEN_WIDTH*19 , x
     sta _fbuffer+SCREEN_WIDTH*20 , x
     sta _fbuffer+SCREEN_WIDTH*21 , x
+#ifndef USE_COLOR
     sta _fbuffer+SCREEN_WIDTH*22 , x
     sta _fbuffer+SCREEN_WIDTH*23 , x
     sta _fbuffer+SCREEN_WIDTH*24 , x
-    ;sta _fbuffer+SCREEN_WIDTH*25 , x
+    ;sta _fbuffer+SCREEN_WIDTH*25 , x // FIXME
     ;sta _fbuffer+SCREEN_WIDTH*26 , x
+#endif
     dex
+#ifdef USE_COLOR
+ 	cpx #2
+ 	beq initScreenBuffersDone
+#endif // USE_COLOR
     bne initScreenBuffersLoop_02
-
+initScreenBuffersDone:
 .)
     rts
-*/
+
 
 #endif // USE_ASM_INITFRAMEBUFFER
 
 
 #ifdef USE_ASM_ZPLOT
-#define COLUMN_OF_COLOR_ATTRIBUTE 2
+
 // void zplot(unsigned char X,
 //           unsigned char Y,
 //           unsigned char dist,
@@ -331,7 +336,15 @@ _zplot:
 	ldy #0
 	lda (sp),y				; Access X coordinate
 #ifdef USE_COLOR
-	// TODO : 
+	sec
+	sbc #COLUMN_OF_COLOR_ATTRIBUTE
+	bvc *+4
+	eor #$80
+	bmi zplot_done
+
+	ldy #0
+	lda (sp),y				; Reload X coordinate
+
 #else
     beq zplot_done
     bmi zplot_done

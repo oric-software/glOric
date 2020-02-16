@@ -310,7 +310,7 @@ void fill8() {
     }
 }
 
-#ifdef USE_C_BRESFILL
+#ifdef USE_C_HFILL
 
 void hfill() {
     signed char dx, fx;
@@ -351,4 +351,4 @@ void hfill() {
 #endif
 }
 
-#endif  // USE_C_BRESFILL
+#endif  // USE_C_HFILL

@@ -1,4 +1,4 @@
-
+#include "config.h"
 
 .zero
 
@@ -415,7 +415,7 @@ A2stepYdone:
 #endif 
 
 #ifdef USE_ASM_HFILL
-#define COLUMN_OF_COLOR_ATTRIBUTE 2
+
 
 // void hfill() {
 _hfill:
