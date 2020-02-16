@@ -290,7 +290,7 @@ initScreenBuffersLoop_02:
 
 
 #ifdef USE_ASM_ZPLOT
-
+#define COLUMN_OF_COLOR_ATTRIBUTE 2
 // void zplot(unsigned char X,
 //           unsigned char Y,
 //           unsigned char dist,
@@ -312,7 +312,13 @@ _zplot:
 
 
 
-//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))        return;
+// #ifdef USE_COLOR
+//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 2) || (X >= SCREEN_WIDTH))
+//        return;
+// #else
+//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
+//        return;
+// #endif
 	ldy #2
 	lda (sp),y				; Access Y coordinate
     beq zplot_done
@@ -324,10 +330,14 @@ _zplot:
 
 	ldy #0
 	lda (sp),y				; Access X coordinate
+#ifdef USE_COLOR
+	// TODO : 
+#else
     beq zplot_done
     bmi zplot_done
     cmp #SCREEN_WIDTH
     bcs zplot_done
+#endif
     sta reg1
 
     // ptrZbuf = zbuffer + Y*SCREEN_WIDTH+X;;

@@ -189,7 +189,7 @@ A1stepY_A1Xdone:
 			lda _A1err
 			adc _A1dX
 			sta _A1err
-		;; 	A1Y += A1sY; // TODO : can be optimized by dec _A1Y
+		;; 	A1Y += A1sY; // Optim:  substraction by dec _A1Y
 			dec _A1Y
 			;clc
 			;lda _A1Y
@@ -364,7 +364,7 @@ A2stepY_A2Xdone:
 			lda _A2err
 			adc _A2dX
 			sta _A2err
-		;; 	A2Y += A2sY; // TODO : can be optimized by dec _A2Y
+		;; 	A2Y += A2sY; // // Optim:  substraction dec _A2Y
 			dec _A2Y
 			;clc
 			;lda _A2Y
@@ -415,7 +415,7 @@ A2stepYdone:
 #endif 
 
 #ifdef USE_ASM_HFILL
-
+#define COLUMN_OF_COLOR_ATTRIBUTE 2
 
 // void hfill() {
 _hfill:
@@ -459,14 +459,14 @@ _hfill:
 //		dx = max(2, A2X);
 		lda _A2X
 		sec
-		sbc #3
+		sbc #COLUMN_OF_COLOR_ATTRIBUTE
 		bvc *+4
 		eor #$80
 		bmi hfill_A2xLowerThan3
 		lda _A2X
 		jmp hfill_A2xPositiv
 hfill_A2xLowerThan3:
-		lda #3
+		lda #COLUMN_OF_COLOR_ATTRIBUTE
 #else
 //      dx = max(0, A2X);
 		lda _A2X
@@ -493,14 +493,14 @@ hfill_A2xOverOrEqualA1x:
 //		dx = max(2, A1X);
 		lda _A1X
 		sec
-		sbc #3
+		sbc #COLUMN_OF_COLOR_ATTRIBUTE
 		bvc *+4
 		eor #$80
 		bmi hfill_A1xLowerThan3
 		lda _A1X
 		jmp hfill_A1xPositiv
 hfill_A1xLowerThan3:
-		lda #3
+		lda #COLUMN_OF_COLOR_ATTRIBUTE
 #else
 //      dx = max(0, A1X);
 		lda _A1X
