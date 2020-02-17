@@ -19,7 +19,7 @@ const char sentence[] = "MERCI RENE";
 char status_string[50];
 
 void dispInfo() {
-    sprintf(status_string, "(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
     AdvancedPrint(2, 1, status_string);
 }
 
