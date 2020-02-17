@@ -16,8 +16,9 @@
 //const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
 //                       360, 400, 440, 480, 520, 560, 600, 640, 680,
 //                       720, 760, 800, 840, 880, 920, 960, 1000, 1040};
+
 #ifdef USE_C_INITFRAMEBUFFER
-void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents dispinfo from working
+void initScreenBuffers() {
 #ifdef USE_COLOR
     int ii, jj;
 #endif
@@ -29,8 +30,6 @@ void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents 
             fbuffer[ii*SCREEN_WIDTH+jj] = 0x20;
         }
     }
-    // spreadHiresAttributes();
-    // memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT); 
 #else
     memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT);  // Space
 #endif
@@ -38,9 +37,10 @@ void initScreenBuffers() { // FIXME : ASM version of initScreenBuffers prevents 
 #endif // USE_C_INITFRAMEBUFFER
 
 
+
 #ifdef USE_C_BUFFER2SCREEN
 void buffer2screen(char destAdr[]) {
-	memcpy(destAdr, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
+    memcpy(destAdr, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
 }
 #endif
 
@@ -56,7 +56,7 @@ void zplot(signed char X,
     unsigned char* ptrZbuf;
 
 #ifdef USE_COLOR
-    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 2) || (X >= SCREEN_WIDTH))
+    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
         return;
 #else
     if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))

@@ -20,7 +20,7 @@ char status_string[50];
 
 void dispInfo() {
     sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
-    AdvancedPrint(2, 1, status_string);
+    AdvancedPrint(3, 0, status_string);
 }
 
 #ifdef USE_COLLISION_DETECTION

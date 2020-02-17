@@ -46,7 +46,7 @@ void dispInfo() {
     sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
 #ifdef TARGET_ORIX
 #else
-    AdvancedPrint(2, 1, status_string);
+    AdvancedPrint(3, 0, status_string);
 #endif  // TARGET_ORIX
 }
 
@@ -59,8 +59,8 @@ void lrsDemo() {
     nbFaces      = 0;
     nbParticules = 0;
 
-    // addHouse(0, 0, 12, 8);
-    addPlan(0, 0, 12, 64, 'r');
+    addHouse(0, 0, 12, 8);
+    // addPlan(0, 0, 12, 64, 'r');
     //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
 #ifdef TARGET_ORIX
@@ -108,7 +108,7 @@ void lrsIntro() {
         lrDrawSegments(points2d, segments, nbSegments);
         lrDrawParticules(points2d, particules, nbParticules);
 
-        buffer2screen((void*)ADR_BASE_SCREEN);
+        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
     }
 #ifdef TARGET_ORIX
 #else
@@ -140,7 +140,7 @@ void lrsGameLoop() {
     lrDrawSegments(points2d, segments, nbSegments);
     lrDrawParticules(points2d, particules, nbParticules);
     while (1 == 1) {
-        buffer2screen((void*)ADR_BASE_SCREEN);
+        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
         dispInfo();
 #ifdef TARGET_ORIX
         cgetc();

@@ -318,9 +318,13 @@ void hfill() {
 
     //printf ("p1x=%d p2x=%d py=%d dist= %d, char2disp= %d\n", p1x, p2x, dist,  dist, char2disp);get();
 
+#ifdef USE_COLOR
+    if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR))
+        return;
+#else
     if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT))
         return;
-
+#endif
     if (A1X > A2X) {
 #ifdef USE_COLOR
         dx = max(2, A2X);

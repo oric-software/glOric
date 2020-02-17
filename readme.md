@@ -38,12 +38,16 @@ A good starting point in using glOric consists in building and testing demos tha
 
 ![LoresDemo](docs/imgs/LoresModeDemo.gif)
 
+- a color demo 
+
+![LoresDemo](docs/imgs/ColorModeDemo.gif)
+
 #### Selecting a demo to build
 To choose between demos, open the `config.h` file located in the `src` directory of glOric and find the following section at the beginning of the file:
 
 ```C 
-// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO
-#define LRSDEMO
+// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO
+#define COLORDEMO
 ```
 
 Change the line to `#define HRSDEMO` if you want ot build the HIRES mode demo. 
@@ -51,6 +55,8 @@ Change the line to `#define HRSDEMO` if you want ot build the HIRES mode demo.
 Change the line to `#define LRSDEMO` if you want ot build the LORES mode demo. 
 
 Change the line to `#define TEXTDEMO` if you want ot build the text mode demo. 
+
+Change the line to `#define COLORDEMO` if you want ot build the color mode demo. 
 
 #### Building the demo
 
@@ -61,7 +67,7 @@ cd src
 osdk_build.bat && osdk_execute.bat
 ```
 
-It should start an Oricutron with the selected demos running in it.
+It should start an Oricutron with the selected demo running in it.
 
 #### Running the demo
 
@@ -69,7 +75,7 @@ These sample demos consists in:
 - an intro in which the camera position and orientation is animated
 - followed by an interactive phase where you can manually move the camera in order to test real time interactive mode.
 
-In text mode and LORES mode sample demo , the camera is moved with the following keyboard commands:
+In TEXT, LORES or COLOR mode sample demo , the camera is moved with the following keyboard commands:
 
 - Arrow (up / down) to go ( forward / backward )
 - W / X to shift (left / right)

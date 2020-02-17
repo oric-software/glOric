@@ -42,10 +42,10 @@ extern void shiftRight();
 #endif
 
 void dispInfo() {
-    sprintf(status_string, "(x=%d y=%d z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
 #ifdef TARGET_ORIX
 #else
-    AdvancedPrint(2, 1, status_string);
+    AdvancedPrint(3, 0, status_string);
 #endif  // TARGET_ORIX
 }
 
@@ -70,16 +70,11 @@ void colorDemo() {
 #else
     text();
 #endif  // TARGET_ORIX
+#ifdef USE_COLOR
     initColors();
-
+    // memcpy(fbuffer, (void*)ADR_BASE_LORES_SCREEN , SCREEN_HEIGHT* SCREEN_WIDTH);
+#endif
     colorIntro();
-    // TODO : Remove this
-    CamPosX = 14;
-    CamPosY = -4;
-    CamPosZ = 6;
-    CamRotZ = 97;
-    CamRotX = 0;
-
     colorGameLoop();
 }
 
@@ -101,7 +96,7 @@ void colorIntro() {
     CamRotX = 0;
     i       = 0;
 
-    for (j = 0; j < 64; j++) {
+    for (j = 0; j < 32; j++) {
         CamPosX = traj[i++];
         CamPosY = traj[i++];
         CamRotZ = traj[i++];
@@ -113,7 +108,7 @@ void colorIntro() {
         lrDrawSegments(points2d, segments, nbSegments);
         lrDrawParticules(points2d, particules, nbParticules);
 
-        buffer2screen((void*)ADR_BASE_SCREEN);
+        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
     }
 #ifdef TARGET_ORIX
 #else
@@ -145,7 +140,7 @@ void colorGameLoop() {
     lrDrawSegments(points2d, segments, nbSegments);
     lrDrawParticules(points2d, particules, nbParticules);
     while (1 == 1) {
-        buffer2screen((void*)ADR_BASE_SCREEN);
+        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
         dispInfo();
 #ifdef TARGET_ORIX
         cgetc();

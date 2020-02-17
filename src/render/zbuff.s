@@ -242,8 +242,8 @@ initScreenBuffersLoop_01:
     sta _zbuffer+SCREEN_WIDTH*22 , x
     sta _zbuffer+SCREEN_WIDTH*23 , x
     sta _zbuffer+SCREEN_WIDTH*24 , x
-    ;sta _zbuffer+SCREEN_WIDTH*25 , x // FIXME
-    ;sta _zbuffer+SCREEN_WIDTH*26 , x
+    sta _zbuffer+SCREEN_WIDTH*25 , x 
+    sta _zbuffer+SCREEN_WIDTH*26 , x
     dex
     bne initScreenBuffersLoop_01
 
@@ -251,8 +251,8 @@ initScreenBuffersLoop_01:
     ldx #SCREEN_WIDTH-1
 
 initScreenBuffersLoop_02:
-    ;; sta _fbuffer+SCREEN_WIDTH*0 , x // FIXME
-    ;; sta _fbuffer+SCREEN_WIDTH*1 , x
+    sta _fbuffer+SCREEN_WIDTH*0 , x
+    sta _fbuffer+SCREEN_WIDTH*1 , x
     sta _fbuffer+SCREEN_WIDTH*2 , x
     sta _fbuffer+SCREEN_WIDTH*3 , x
     sta _fbuffer+SCREEN_WIDTH*4 , x
@@ -277,15 +277,15 @@ initScreenBuffersLoop_02:
     sta _fbuffer+SCREEN_WIDTH*22 , x
     sta _fbuffer+SCREEN_WIDTH*23 , x
     sta _fbuffer+SCREEN_WIDTH*24 , x
-    ;sta _fbuffer+SCREEN_WIDTH*25 , x // FIXME
-    ;sta _fbuffer+SCREEN_WIDTH*26 , x
+    sta _fbuffer+SCREEN_WIDTH*25 , x
+    sta _fbuffer+SCREEN_WIDTH*26 , x
 #endif
     dex
 #ifdef USE_COLOR
  	cpx #2
  	beq initScreenBuffersDone
 #endif // USE_COLOR
-    bne initScreenBuffersLoop_02
+    bpl initScreenBuffersLoop_02
 initScreenBuffersDone:
 .)
     rts
@@ -318,7 +318,7 @@ _zplot:
 
 
 // #ifdef USE_COLOR
-//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 2) || (X >= SCREEN_WIDTH))
+//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
 //        return;
 // #else
 //    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
@@ -328,7 +328,11 @@ _zplot:
 	lda (sp),y				; Access Y coordinate
     beq zplot_done
     bmi zplot_done
-    cmp #SCREEN_HEIGHT
+#ifdef USE_COLOR
+    cmp #SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
+#else
+	cmp #SCREEN_HEIGHT
+#endif
     bcs zplot_done
     sta reg0
     tax
@@ -344,6 +348,8 @@ _zplot:
 
 	ldy #0
 	lda (sp),y				; Reload X coordinate
+    cmp #SCREEN_WIDTH
+    bcs zplot_done
 
 #else
     beq zplot_done

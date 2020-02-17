@@ -87,7 +87,7 @@ void addTePee(signed char X, signed char Y, unsigned char L) {
 */
 #endif  // LRSDEMO
 
-#ifdef COLORDEMO
+#if defined(COLORDEMO) || defined(LRSDEMO)
 
 void addPlan(signed char X, signed char Y, unsigned char L, signed char orientation, char char2disp) {
     unsigned char ii, jj;

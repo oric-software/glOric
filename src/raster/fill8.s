@@ -442,7 +442,11 @@ _hfill:
 	lda _A1Y				; Access Y coordinate
     bpl *+5
     jmp hfill_done
+#ifdef USE_COLOR
+    cmp #SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
+#else
     cmp #SCREEN_HEIGHT
+#endif
     bcc *+5
 	jmp hfill_done
     sta reg2 ; A1Y

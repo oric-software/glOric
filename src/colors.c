@@ -15,7 +15,7 @@ unsigned char tab_color [] = {INK_CYAN, INK_YELLOW, INK_MAGENTA, INK_BLUE, INK_G
 void prepare_colors() {
     int ii, jj;
 
-	for (ii = 0; ii<LORES_SCREEN_HEIGHT-4 ; ii++){
+	for (ii = 0; ii<=LORES_SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR ; ii++){
 		poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
 #ifdef USE_ZBUFFER
 		fbuffer[ii*LORES_SCREEN_WIDTH]=HIRES_50Hz;
@@ -26,6 +26,17 @@ void prepare_colors() {
 		}
 	}
 }
+
+// void spreadHiresAttributes() {
+// 	int ii, jj;
+// 	for (ii = 0; ii<LORES_SCREEN_HEIGHT-4 ; ii++){
+// 		//poke (LORES_SCREEN_ADDRESS+(ii*LORES_SCREEN_WIDTH)+0,HIRES_50Hz);
+// 		for (jj = 0; jj < 8; jj++) {
+// 			//poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+1, tab_color[jj]);
+// 			poke (HIRES_SCREEN_ADDRESS+((ii*8+jj)*LORES_SCREEN_WIDTH)+2, TEXT_50Hz);
+// 		}
+// 	}
+// }
 
 void initColors(){
 
