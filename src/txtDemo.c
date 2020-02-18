@@ -6,9 +6,7 @@
 #include "data/alphabet.h"
 
 // GEOMETRY BUFFERS
-//extern char points3d[];
-char points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
-//extern unsigned char nbPts;
+char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
 unsigned char        nbPts = 0;
 char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
 extern unsigned char segments[];
@@ -29,21 +27,6 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
 }
 #endif
 
-void addData(const char* tPoint, unsigned char nPoint, const char* tSeg, unsigned char nSeg, char offsetPos) {
-    unsigned char jj;
-    for (jj = 0; jj < nPoint; jj++) {
-        points3d[(nbPts + jj) * SIZEOF_3DPOINT + 0] = tPoint[jj * SIZEOF_3DPOINT + 0] + offsetPos * 8;  // X coord
-        points3d[(nbPts + jj) * SIZEOF_3DPOINT + 1] = tPoint[jj * SIZEOF_3DPOINT + 1];                  // Y coord
-        points3d[(nbPts + jj) * SIZEOF_3DPOINT + 2] = tPoint[jj * SIZEOF_3DPOINT + 2];                  // Z coord
-    }
-    for (jj = 0; jj < nSeg; jj++) {
-        segments[(nbSegments + jj) * SIZEOF_SEGMENT + 0] = tSeg[jj * SIZEOF_SEGMENT + 0] + nbPts;  // Index Point 1
-        segments[(nbSegments + jj) * SIZEOF_SEGMENT + 1] = tSeg[jj * SIZEOF_SEGMENT + 1] + nbPts;  // Index Point 2
-        segments[(nbSegments + jj) * SIZEOF_SEGMENT + 2] = tSeg[jj * SIZEOF_SEGMENT + 2];          // Character
-    }
-    nbPts += nPoint;
-    nbSegments += nSeg;
-}
 void initBuffers() {
     unsigned char ii;
     char          c;
@@ -52,22 +35,22 @@ void initBuffers() {
     while ((c = sentence[ii]) != 0) {
         switch (c) {
         case 'M':
-            addData(ptsM, NB_POINTS_M, segM, NB_SEGMENTS_M, ii);
+            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterM);
             break;
         case 'C':
-            addData(ptsC, NB_POINTS_C, segC, NB_SEGMENTS_C, ii);
+            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterC);
             break;
         case 'I':
-            addData(ptsI, NB_POINTS_I, segI, NB_SEGMENTS_I, ii);
+            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterI);
             break;
         case 'R':
-            addData(ptsR, NB_POINTS_R, segR, NB_SEGMENTS_R, ii);
+            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterR);
             break;
         case 'E':
-            addData(ptsE, NB_POINTS_E, segE, NB_SEGMENTS_E, ii);
+            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterE);
             break;
         case 'N':
-            addData(ptsN, NB_POINTS_N, segN, NB_SEGMENTS_N, ii);
+            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterN);
             break;
         default:
             break;
@@ -194,7 +177,6 @@ void txtGameLoop() {
 void textDemo() {
     lores0();
 
-    //kernelInit();
     initBuffers();
 
     // Camera Position
