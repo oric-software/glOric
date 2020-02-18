@@ -141,7 +141,7 @@ void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char
         ch2disp = particules[jj];    // ii*SIZEOF_SEGMENT +2
         offPt = idxPt << 2;
         
-        dist = *((int*)(points2d + (offPt | 0x02)));   // points2d[offPt+2]
+        dist = *((int*)(points2d + (offPt | 0x02))) - 2;   // points2d[offPt+2] FIXME : -2 to helps particule to be displayed
         dchar = (unsigned char)((dist)&0x00FF);
         P1X = (SCREEN_WIDTH -points2d[offPt++]) >> 1;
         P1Y = (SCREEN_HEIGHT - points2d[offPt++]) >> 1;

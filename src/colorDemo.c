@@ -22,8 +22,8 @@
 char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
 unsigned char        nbPts = 0;
 char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
-unsigned char        faces[NB_MAX_FACES * SIZEOF_FACES];
-unsigned char        nbFaces = 0;
+extern unsigned char faces[];
+extern unsigned char nbFaces ;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
 extern unsigned char particules[];
@@ -59,12 +59,13 @@ void colorDemo() {
     nbParticules = 0;
 
     // addHouse(0, 0, 12, 8);
-    addPlan(0, 6, 6, 64, 'r');
-    addPlan(0, -6, 6, 64, 'b');
-    addPlan(6, 0, 6, 0, 'y');
-    addPlan(-6, 0, 6, 0, 'g');
-
-    //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
+    // addPlan(0, 6, 6, 64, 'r');
+    // addPlan(0, -6, 6, 64, 'b');
+    // addPlan(6, 0, 6, 0, 'y');
+    // addPlan(-6, 0, 6, 0, 'g');
+    addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
+    addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
+    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
 #ifdef TARGET_ORIX
 #else

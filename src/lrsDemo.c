@@ -22,8 +22,8 @@
 char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
 unsigned char        nbPts = 0;
 char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
-unsigned char        faces[NB_MAX_FACES * SIZEOF_FACES];
-unsigned char        nbFaces = 0;
+extern unsigned char faces[];
+extern unsigned char nbFaces;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
 extern unsigned char particules[];
@@ -31,7 +31,6 @@ extern unsigned char nbParticules;
 
 void lrsIntro();
 void lrsGameLoop();
-void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l);
 
 char status_string[50];
 
@@ -41,6 +40,9 @@ extern void forward();
 extern void shiftLeft();
 extern void shiftRight();
 #endif
+
+
+
 
 void dispInfo() {
     sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
@@ -59,8 +61,8 @@ void lrsDemo() {
     nbFaces      = 0;
     nbParticules = 0;
 
-    addHouse(0, 0, 12, 8);
     // addPlan(0, 0, 12, 64, 'r');
+    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
 #ifdef TARGET_ORIX
@@ -68,12 +70,6 @@ void lrsDemo() {
     lores0();
 #endif  // TARGET_ORIX
     lrsIntro();
-
-    // CamPosX = 10;
-    // CamPosY = -3;
-    // CamPosZ = 2;
-    // CamRotZ = 93;
-    // CamRotX = 0;
 
     lrsGameLoop();
 }
@@ -200,195 +196,7 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
     }
     return 1;
 }
-#endif
+#endif // USE_COLLISION_DETECTION
 
-
-void addHouse(signed char X, signed char Y, unsigned char L, unsigned char l) {
-    unsigned char ii, jj;
-    ii = L;
-    jj = l;
-
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 0;
-    nbPts++;
-
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y - jj;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 8;
-    nbPts++;
-
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 12;
-    nbPts++;
-    points3d[nbPts * SIZEOF_3DPOINT + 0] = X - ii;
-    points3d[nbPts * SIZEOF_3DPOINT + 1] = Y;
-    points3d[nbPts * SIZEOF_3DPOINT + 2] = 12;
-    nbPts++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 10;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 9;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 9;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 8;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 8;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 7;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 6;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 5;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 3;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 10;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 6;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 9;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 5;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 8;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 4;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 7;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 3;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';
-    nbSegments++;
-
-    // ROOF
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 6;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 2;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 3;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 2;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 5;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 4;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 1;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '/';
-    nbSegments++;
-
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPts - 1;
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPts - 2;
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';
-    nbSegments++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 10; 
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 9;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 5;  
-    faces[nbFaces * SIZEOF_FACES + 3] = ',';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 10; 
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 6;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 5;  
-    faces[nbFaces * SIZEOF_FACES + 3] = ',';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 7;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 8;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 4;  
-    faces[nbFaces * SIZEOF_FACES + 3] = ',';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 4;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 7;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 3;  
-    faces[nbFaces * SIZEOF_FACES + 3] = ',';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 9;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 8;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 4;  
-    faces[nbFaces * SIZEOF_FACES + 3] = '.';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 9;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 4;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 5;  
-    faces[nbFaces * SIZEOF_FACES + 3] = '.';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 5;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 4;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;  
-    faces[nbFaces * SIZEOF_FACES + 3] = '.';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 6;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 5;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;  
-    faces[nbFaces * SIZEOF_FACES + 3] = 'u';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 6;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 1;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 2;  
-    faces[nbFaces * SIZEOF_FACES + 3] = 'u';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 3;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 4;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 1;  
-    faces[nbFaces * SIZEOF_FACES + 3] = 'u';        
-    nbFaces++;
-
-    faces[nbFaces * SIZEOF_FACES + 0] = nbPts - 3;  
-    faces[nbFaces * SIZEOF_FACES + 1] = nbPts - 1;  
-    faces[nbFaces * SIZEOF_FACES + 2] = nbPts - 2;  
-    faces[nbFaces * SIZEOF_FACES + 3] = 'u';        
-    nbFaces++;
-
-    //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
-}
 
 #endif
