@@ -16,4 +16,7 @@ void main() {
 #ifdef COLORDEMO
     colorDemo();
 #endif
+#ifdef RTDEMO
+    rtDemo();
+#endif
 }

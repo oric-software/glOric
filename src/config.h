@@ -2,8 +2,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO
-#define LRSDEMO
+// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO, RTDEMO
+#define RTDEMO
 
 /*
  *  SCREEN DIMENSION
@@ -36,6 +36,13 @@
 #define USE_HIRES_RASTER
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 200
+#endif
+
+#ifdef RTDEMO
+#define ANGLEONLY
+#define USE_ZBUFFER
+#define SCREEN_WIDTH 40
+#define SCREEN_HEIGHT 26
 #endif
 
 /*
@@ -131,6 +138,23 @@
 #endif // ALL_C
 #endif
 
+#define KEY_UP			1
+#define KEY_LEFT		2
+#define KEY_DOWN		3
+#define KEY_RIGHT		4
+
+#define KEY_LCTRL		5
+#define KET_RCTRL		6
+#define KEY_LSHIFT		7
+#define KEY_RSHIFT		8
+#define KEY_FUNCT		9
+
+
+// This keys do have ASCII values, let s use them 
+
+#define KEY_RETURN		$0d
+#define KEY_ESC			$1b
+#define KEY_DEL			$7f
 
 #undef USE_MULTI40
 

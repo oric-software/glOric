@@ -233,7 +233,8 @@ char geomCube []= {
 
 #endif // HRSDEMO
 
-#ifdef LRSDEMO
+#if defined(COLORDEMO) || defined(LRSDEMO)
+
 char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
