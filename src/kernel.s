@@ -230,7 +230,8 @@ skip2   ;Proceed to next row
         dex 
         bpl loop2 
 
-		jsr _dump_matrix
+		;jsr _keyEvent
         rts 
 .)  
 
+#endif // RTDEMO
