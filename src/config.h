@@ -41,6 +41,8 @@
 #ifdef RTDEMO
 #define ANGLEONLY
 #define USE_ZBUFFER
+#define USE_COLLISION_DETECTION
+#define USE_COLOR
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif

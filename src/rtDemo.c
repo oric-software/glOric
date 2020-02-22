@@ -68,9 +68,9 @@ void rtDemo() {
     // addPlan(0, -6, 6, 64, 'b');
     // addPlan(6, 0, 6, 0, 'y');
     // addPlan(-6, 0, 6, 0, 'g');
-    addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
-    addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
-    // addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    // addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
+    // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
+    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
     memset (oldKeyBank,0,8);
