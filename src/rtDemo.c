@@ -19,9 +19,24 @@
 /*
   * GEOMETRY BUFFERS
   */
+
+#ifdef USE_REWORKED_BUFFERS
+extern unsigned char nbPoints;
+extern signed char points3dX[];
+extern signed char points3dY[];
+extern signed char points3dZ[];
+
+extern signed char points2aH[];
+extern signed char points2aV[];
+extern signed char points2dH[];
+extern signed char points2dL[];
+#else
 char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
 unsigned char        nbPts = 0;
 char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
+
+#endif // USE_REWORKED_BUFFERS
+
 extern unsigned char faces[];
 extern unsigned char nbFaces ;
 extern unsigned char segments[];
@@ -54,11 +69,40 @@ void dispInfo() {
 #endif  // TARGET_ORIX
 }
 
+
+#ifdef USE_REWORKED_BUFFERS
+void glProjectArrays(){
+    unsigned char ii;
+    signed char x, y, z;
+    signed char ah, av;
+    unsigned int dist ;
+    unsigned char options=0;
+
+    for (ii = 0; ii < nbPoints; ii++){
+        x = points3dX[ii];
+        y = points3dY[ii];
+        z = points3dZ[ii];
+
+        projectPoint(x, y, z, options, &ah, &av, &dist);
+
+        points2aH[ii] = ah;
+        points2aV[ii] = av;
+        points2dH[ii] = (signed char)((dist & 0xFF00)>>8) && 0x00FF;
+        points2dL[ii] = (signed char) (dist & 0x00FF);
+
+    }
+}
+#endif // USE_REWORKED_BUFFERS
+
 void rtDemo() {
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
+#ifdef USE_REWORKED_BUFFERS
+    nbPoints     = 0;
+#else
     nbPts        = 0;
+#endif
     nbSegments   = 0;
     nbFaces      = 0;
     nbParticules = 0;
@@ -102,7 +146,7 @@ void rtIntro() {
     // cgetc();
 #else
     //get();
-    enterSC();
+    // enterSC();
 #endif  // TARGET_ORIX
 
     CamPosX = 0;
@@ -119,7 +163,11 @@ void rtIntro() {
         CamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
         // dur = deek(0x276);
+#ifdef USE_REWORKED_PROJECTION
+        glProjectArrays();
+#else
         glProject(points2d, points3d, nbPts, 0);
+#endif
         // dur = dur - deek(0x276);
         // printf ("dur glProject = %d \n", dur);
 
@@ -129,17 +177,29 @@ void rtIntro() {
         // printf ("dur initScreenBuffers = %d \n", dur);
 
         // dur = deek(0x276);
+#ifdef USE_REWORKED_BUFFERS
+        glDrawFaces();
+#else
         lrDrawFaces(points2d, faces, nbFaces);
+#endif //USE_REWORKED_BUFFERS
         // dur = dur - deek(0x276);
         // printf ("dur lrDrawFaces = %d \n", dur);
 
         // dur = deek(0x276);
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         lrDrawSegments(points2d, segments, nbSegments);
+#endif //USE_REWORKED_BUFFERS
         // dur = dur - deek(0x276);
         // printf ("dur lrDrawSegments = %d \n", dur);
 
         // dur = deek(0x276);
+#ifdef USE_REWORKED_BUFFERS
+        glDrawParticules();
+#else
         lrDrawParticules(points2d, particules, nbParticules);
+#endif //USE_REWORKED_BUFFERS
 
         // dur = dur - deek(0x276);
         // printf ("dur lrDrawParticules = %d \n", dur);
@@ -152,7 +212,7 @@ void rtIntro() {
     }
 #ifdef TARGET_ORIX
 #else
-    leaveSC();
+    // leaveSC();
 #endif  // TARGET_ORIX
 }
 
@@ -165,7 +225,11 @@ void rtGameLoop() {
     kernelInit();
 
     // dur = deek(0x276);
-    glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_PROJECTION
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPts, 0);
+#endif
     // dur = dur - deek(0x276);printf ("dur glProject = %d \n", dur);dur = deek(0x276);
 
     // printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
@@ -179,11 +243,23 @@ void rtGameLoop() {
 
     initScreenBuffers();
     // dur = dur - deek(0x276);printf ("dur initScreenBuffers = %d \n", dur);dur = deek(0x276);
-    lrDrawFaces(points2d, faces, nbFaces);
+#ifdef USE_REWORKED_BUFFERS
+        glDrawFaces();
+#else
+        lrDrawFaces(points2d, faces, nbFaces);
+#endif //USE_REWORKED_BUFFERS
     // dur = dur - deek(0x276);printf ("dur lrDrawFaces = %d \n", dur);dur = deek(0x276);
-    lrDrawSegments(points2d, segments, nbSegments);
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
+        lrDrawSegments(points2d, segments, nbSegments);
+#endif //USE_REWORKED_BUFFERS
     // dur = dur - deek(0x276);printf ("dur lrDrawSegments = %d \n", dur);dur = deek(0x276);
-    lrDrawParticules(points2d, particules, nbParticules);
+#ifdef USE_REWORKED_BUFFERS
+        glDrawParticules();
+#else
+        lrDrawParticules(points2d, particules, nbParticules);
+#endif //USE_REWORKED_BUFFERS
     // dur = dur - deek(0x276);printf ("dur lrDrawParticules = %d \n", dur);dur = deek(0x276);
     // get();
     while (1 == 1) {
@@ -192,12 +268,22 @@ void rtGameLoop() {
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
         // dur = dur - deek(0x276);printf ("dur buffer2screen = %d \n", dur);dur = deek(0x276);
         dispInfo();
+#ifdef USE_REWORKED_PROJECTION
+        glProjectArrays();
+#else
         glProject(points2d, points3d, nbPts, 0);
+#endif
         initScreenBuffers();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawFaces();
+        glDrawSegments();
+        glDrawParticules();
+#else
         lrDrawFaces(points2d, faces, nbFaces);
         lrDrawSegments(points2d, segments, nbSegments);
         lrDrawParticules(points2d, particules, nbParticules);
-        
+ #endif //USE_REWORKED_BUFFERS
+       
     }
 }
 

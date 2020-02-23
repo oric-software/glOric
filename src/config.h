@@ -39,13 +39,18 @@
 #endif
 
 #ifdef RTDEMO
+
+// #define ALL_C
+
 #define ANGLEONLY
 #define USE_ZBUFFER
 #define USE_COLLISION_DETECTION
-#define USE_COLOR
+#undef USE_COLOR
+#define USE_REWORKED_PROJECTION
+#define USE_REWORKED_BUFFERS
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
-#endif
+#endif // RTDEMO
 
 /*
  *  BUFFERS DIMENSION

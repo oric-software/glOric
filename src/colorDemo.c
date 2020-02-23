@@ -19,7 +19,11 @@
 /*
   * GEOMETRY BUFFERS
   */
+ #ifdef USE_REWORKED_BUFFERS
+ extern char         points3d[];
+ #else
 char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
+#endif
 unsigned char        nbPts = 0;
 char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
 extern unsigned char faces[];

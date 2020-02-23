@@ -380,3 +380,241 @@ void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) 
 #endif
     }
 }
+
+#ifdef USE_REWORKED_BUFFERS
+extern unsigned char nbPoints;
+extern unsigned char nbSegments;
+extern unsigned char nbParticules;
+extern unsigned char nbFaces;
+extern unsigned char facesPt1[];
+extern unsigned char facesPt2[];
+extern unsigned char facesPt3[];
+extern unsigned char facesChar[];
+extern signed char points2aH[];
+extern signed char points2aV[];
+extern signed char points2dH[];
+extern signed char points2dL[];
+extern unsigned char segmentsPt1[];
+extern unsigned char segmentsPt2[];
+extern unsigned char segmentsChar[];
+extern unsigned char particulesPt[];
+extern unsigned char particulesChar[];
+#endif
+
+#ifdef USE_REWORKED_BUFFERS
+void glDrawFaces() {
+    unsigned char ii = 0;
+    unsigned char jj = 0;
+    int           d1, d2, d3;
+    int           dmoy;
+ 
+    unsigned char offPt1, offPt2, offPt3;
+
+    signed char   tmpH, tmpV;
+    unsigned char m1, m2, m3;
+    unsigned char v1, v2, v3;
+
+
+    // printf ("%d Points, %d Segments, %d Faces\n", nbPoints, nbSegments, nbFaces); get();
+    for (ii = 0; ii < nbFaces; ii++) {
+
+        offPt1 = facesPt1[ii] ;
+        offPt2 = facesPt2[ii] ;
+        offPt3 = facesPt3[ii] ;
+        ch2disp = facesChar[ii];
+
+        // printf ("face %d : %d %d %d\n",ii, offPt1, offPt2, offPt3);get();
+        d1 = points2dL[offPt1]; //*((int*)(points2d + offPt1 + 2));
+
+        d2 = points2dL[offPt2]; //*((int*)(points2d + offPt2 + 2));
+
+        d3 = points2dL[offPt3]; //*((int*)(points2d + offPt3 + 2));
+        // printf ("dis %d %d %d\n",d1, d2, d3);get();
+        dmoy = (d1 + d2 + d3) / 3;
+        if (dmoy >= 256) {
+            dmoy = 256;
+        }
+        distface = (unsigned char)(dmoy & 0x00FF);
+
+        // printf ("disface %d %d\n",dmoy, distface);get();
+        P1AH = points2aH[offPt1];
+        P1AV = points2aV[offPt1];
+        P2AH = points2aH[offPt2];
+        P2AV = points2aV[offPt2];
+        P3AH = points2aH[offPt3];
+        P3AV = points2aV[offPt3];
+
+        // printf ("P1 [%d, %d], P2 [%d, %d], P3 [%d %d]\n", P1AH, P1AV, P2AH, P2AV,  P3AH, P3AV); get();
+
+        if (abs(P2AH) < abs(P1AH)) {
+            tmpH = P1AH;
+            tmpV = P1AV;
+            P1AH = P2AH;
+            P1AV = P2AV;
+            P2AH = tmpH;
+            P2AV = tmpV;
+        }
+        if (abs(P3AH) < abs(P1AH)) {
+            tmpH = P1AH;
+            tmpV = P1AV;
+            P1AH = P3AH;
+            P1AV = P3AV;
+            P3AH = tmpH;
+            P3AV = tmpV;
+        }
+        if (abs(P3AH) < abs(P2AH)) {
+            tmpH = P2AH;
+            tmpV = P2AV;
+            P2AH = P3AH;
+            P2AV = P3AV;
+            P3AH = tmpH;
+            P3AV = tmpV;
+        }
+
+        m1 = P1AH & ANGLE_MAX;
+        m2 = P2AH & ANGLE_MAX;
+        m3 = P3AH & ANGLE_MAX;
+        v1 = P1AH & ANGLE_VIEW;
+        v2 = P2AH & ANGLE_VIEW;
+        v3 = P3AH & ANGLE_VIEW;
+
+        // printf ("AHs [%d, %d, %d] [%x, %x], %x], %x, %x, %x]\n", P1AH, P2AH, P3AH, m1, m2, m3, v1,v2,v3);get();
+
+        if ((m1 == 0x00) || (m1 == ANGLE_MAX)) {
+            if ((v1 == 0x00) || (v1 == ANGLE_VIEW)) {
+                if (
+                    (
+                        (P1AH & 0x80) != (P2AH & 0x80)) ||
+                    ((P1AH & 0x80) != (P3AH & 0x80))) {
+                    if ((abs(P3AH) < 127 - abs(P1AH))) {
+                        fillFace();
+                    }
+                } else {
+                    fillFace();
+                }
+            } else {
+                // P1 FRONT
+                if ((m2 == 0x00) || (m2 == ANGLE_MAX)) {
+                    // P2 FRONT
+                    if ((m3 == 0x00) || (m3 == ANGLE_MAX)) {
+                        // P3 FRONT
+                        // _4_
+                        if (((P1AH & 0x80) != (P2AH & 0x80)) || ((P1AH & 0x80) != (P3AH & 0x80))) {
+                            fillFace();
+                        } else {
+                            // nothing to do
+                        }
+                    } else {
+                        // P3 BACK
+                        // _3_
+                        if ((P1AH & 0x80) != (P2AH & 0x80)) {
+                            if (abs(P2AH) < 127 - abs(P1AH)) {
+                                fillFace();
+                            }
+                        } else {
+                            if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                                if (abs(P3AH) < 127 - abs(P1AH)) {
+                                    fillFace();
+                                }
+                            }
+                        }
+
+                        if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                            if (abs(P3AH) < 127 - abs(P1AH)) {
+                                fillFace();
+                            }
+                        }
+                    }
+                } else {
+                    // P2 BACK
+                    // _2_ nothing to do
+                    if ((P1AH & 0x80) != (P2AH & 0x80)) {
+                        if (abs(P2AH) < 127 - abs(P1AH)) {
+                            fillFace();
+                        }
+                    } else {
+                        if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                            if (abs(P3AH) < 127 - abs(P1AH)) {
+                                fillFace();
+                            }
+                        }
+                    }
+
+                    if ((P1AH & 0x80) != (P3AH & 0x80)) {
+                        if (abs(P3AH) < 127 - abs(P1AH)) {
+                            fillFace();
+                        }
+                    }
+                }
+            }
+        } else {
+            // P1 BACK
+            // _1_ nothing to do
+        }
+    }
+}
+void glDrawSegments() {
+    unsigned char ii = 0;
+    unsigned char jj = 0;
+    unsigned char idxPt1, idxPt2;
+    unsigned char offPt1, offPt2;
+    int           dmoy;
+
+
+    for (ii = 0; ii < nbSegments; ii++) {
+
+        idxPt1    = segmentsPt1[ii];
+        idxPt2    = segmentsPt2[ii];
+        ch2disp = segmentsChar[ii];
+
+        // dmoy = (d1+d2)/2;
+
+        dmoy = points2dL[idxPt1];
+        dmoy += points2dL[idxPt2];
+        dmoy = dmoy >> 1;
+        
+
+        //if (dmoy >= 256) {
+        if ((dmoy & 0xFF00) != 0)
+            continue;
+        distseg = (unsigned char)((dmoy)&0x00FF);
+        distseg--;  // FIXME
+
+        P1AH = points2aH[idxPt1];
+        P1AV = points2aV[idxPt1];
+
+        P2AH = points2aH[idxPt2];
+        P2AV = points2aV[idxPt2];
+
+        P1X = (SCREEN_WIDTH - P1AH) >> 1;
+        P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
+        P2X = (SCREEN_WIDTH - P2AH) >> 1;
+        P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
+
+        // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
+        lrDrawLine();
+
+    }
+}
+void glDrawParticules(){
+    unsigned char ii = 0;
+
+    unsigned char idxPt, offPt, dchar;
+    unsigned int  dist;
+    for (ii = 0; ii < nbParticules; ii++) {
+        idxPt    = particulesPt[ii];  // ii*SIZEOF_SEGMENT +0
+        ch2disp = particulesChar[ii];    // ii*SIZEOF_SEGMENT +2
+        printf ("particules : %d %d\n ", idxPt, ch2disp);
+        dchar = points2dL[idxPt]-2 ; //FIXME : -2 to helps particule to be displayed
+        P1X = (SCREEN_WIDTH -points2aH[idxPt]) >> 1;
+        P1Y = (SCREEN_HEIGHT - points2aV[idxPt]) >> 1;
+#ifdef USE_ZBUFFER
+        zplot(P1X, P1Y, dchar, ch2disp);
+#else
+        // TODO : plot a point with no z-buffer
+#endif
+
+    }
+}
+
+#endif

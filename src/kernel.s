@@ -38,11 +38,11 @@ tab_ascii
     .asc "8","L","0","/",KEY_RSHIFT,KEY_RETURN,0,"="
 
 #ifdef RTDEMO
-
 ; The virtual Key Matrix
 _KeyBank .dsb 8
 _oldKeyBank .dsb 8
-#endif
+
+#endif // RTDEMO
 
 irq_handler:
 
@@ -53,15 +53,15 @@ irq_handler:
 	pha
 
 	; This handler runs at 100hz 
-
-	jsr _task_100Hz
-
 #ifdef RTDEMO
+
+	; jsr _task_100Hz ;; FIXME !! Why does this line prevent COLORDEMO from compiling ?
+
 	;Clear IRQ event  FIXME !!!
 	; lda via_t1cl 
 
 	jsr ReadKeyboard 
-#endif
+#endif // RTDEMO
 
 	pla
 	tay

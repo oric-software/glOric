@@ -15,7 +15,63 @@ extern unsigned char particules[];
 extern unsigned char nbParticules;
 
 
+#ifdef USE_REWORKED_BUFFERS
+extern unsigned char nbPoints;
+extern signed char points3dX[];
+extern signed char points3dY[];
+extern signed char points3dZ[];
 
+extern unsigned char segmentsPt1[];
+extern unsigned char segmentsPt2[];
+extern unsigned char segmentsChar[];
+
+extern unsigned char particulesPt[];
+extern unsigned char particulesChar[];
+
+extern unsigned char facesPt1[];
+extern unsigned char facesPt2[];
+extern unsigned char facesPt3[];
+extern unsigned char facesChar[];
+
+void addGeom(
+    signed char   X,
+    signed char   Y,
+    signed char   Z,
+    unsigned char sizeX,
+    unsigned char sizeY,
+    unsigned char sizeZ,
+    unsigned char orientation,
+    char          geom[]) {
+
+    int kk;
+
+    for (kk=0; kk< geom[0]; kk++){
+        points3dX[nbPoints] = X + ((orientation == 0) ? sizeX * geom[4+kk*SIZEOF_3DPOINT+0]: sizeY * geom[4+kk*SIZEOF_3DPOINT+1]);// X + ii;
+        points3dY[nbPoints] = Y + ((orientation == 0) ? sizeY * geom[4+kk*SIZEOF_3DPOINT+1]: sizeX * geom[4+kk*SIZEOF_3DPOINT+0]);// Y + jj;
+        points3dZ[nbPoints] = Z + geom[4+kk*SIZEOF_3DPOINT+2]*sizeZ;// ;
+        nbPoints++;
+    }
+    for (kk=0; kk< geom[1]; kk++){
+        facesPt1[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+0]);  // Index Point 1
+        facesPt2[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+1]);  // Index Point 2
+        facesPt3[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+2]);  // Index Point 3
+        facesChar[nbFaces] = geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+3];  // Character
+        nbFaces++;
+    }
+    for (kk=0; kk< geom[2]; kk++){
+        segmentsPt1[nbSegments] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 0]);  // Index Point 1
+        segmentsPt2[nbSegments] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 1]);  // Index Point 2
+        segmentsChar[nbSegments] = geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 2]; // Character
+        nbSegments++;
+    }
+    for (kk=0; kk< geom[3]; kk++){
+        particulesPt[nbParticules] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
+        particulesChar[nbParticules] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
+        nbParticules++;
+    }
+}
+
+#else
 void addGeom(
     signed char   X,
     signed char   Y,
@@ -57,7 +113,7 @@ void addGeom(
         nbParticules++;
     }
 }
-
+#endif
 // char geomXXXX []= {
 // /* Nb Coords = */ 3,
 // /* Nb Faces = */ 

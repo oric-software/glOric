@@ -18,5 +18,5 @@ void main() {
 #endif
 #ifdef RTDEMO
     rtDemo();
-#endif
+#endif // RTDEMO
 }

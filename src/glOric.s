@@ -16,31 +16,72 @@ _CamRotX:		.dsb 1
 //unsigned char projOptions=0;
 _projOptions            .dsb 1
 
+; #ifdef USE_REWORKED_BUFFERS
+; //unsigned char nbCoords=0;
+; _nbCoords           .dsb 1
+; #else
 //unsigned char nbPoints=0;
 _nbPoints               .dsb 1
+; #endif
 
+//unsigned char nbSegments=0;
+_nbSegments     .dsb 1
+//unsigned char nbParticules=0;
+_nbParticules .dsb 1;
+//unsigned char nbFaces=0;
+_nbFaces .dsb 1;
+
+
+#ifdef USE_REWORKED_BUFFERS
 
 //char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 //.dsb 256-(*&255)
 //_points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
-
-//unsigned char nbSegments=0;
-_nbSegments     .dsb 1
+_points3d:
+_points3dX          .dsb NB_MAX_POINTS
+_points3dY          .dsb NB_MAX_POINTS
+_points3dZ          .dsb NB_MAX_POINTS
+_points3unused      .dsb NB_MAX_POINTS
+#endif // USE_REWORKED_BUFFERS
 
 //char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
-.dsb 256-(*&255)
-_segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
+; .dsb 256-(*&255)
+; _segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
+_segments:
+_segmentsPt1        .dsb NB_MAX_SEGMENTS
+_segmentsPt2        .dsb NB_MAX_SEGMENTS
+_segmentsChar       .dsb NB_MAX_SEGMENTS
+_segmentsUnused     .dsb NB_MAX_SEGMENTS
 
 //char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 //.dsb 256-(*&255)
 //_points2d       .dsb NB_MAX_POINTS*SIZEOF_2DPOINT
 
+#ifdef USE_REWORKED_BUFFERS
+//char points2d [NB_MAX_COORDS*SIZEOF_2DPOINT];
+//.dsb 256-(*&255)
+//_points2d       .dsb NB_MAX_COORDS*SIZEOF_2DPOINT
+_points2d:
+_points2aH          .dsb NB_MAX_POINTS
+_points2aV          .dsb NB_MAX_POINTS
+_points2dH          .dsb NB_MAX_POINTS
+_points2dL          .dsb NB_MAX_POINTS
+#endif //USE_REWORKED_BUFFERS
+
 //char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
-//unsigned char nbParticules=0;
-_nbParticules .dsb 1;
-_particules       .dsb NB_MAX_PARTICULES*SIZEOF_PARTICULE
-_nbFaces .dsb 1;
-_faces       .dsb NB_MAX_FACES*SIZEOF_FACE
+; _particules       .dsb NB_MAX_PARTICULES*SIZEOF_PARTICULE
+_particules:
+_particulesPt       .dsb NB_MAX_PARTICULES
+_particulesChar     .dsb NB_MAX_PARTICULES
+
+
+
+; _faces       .dsb NB_MAX_FACES*SIZEOF_FACE
+_faces:
+_facesPt1           .dsb NB_MAX_FACES
+_facesPt2           .dsb NB_MAX_FACES
+_facesPt3           .dsb NB_MAX_FACES
+_facesChar          .dsb NB_MAX_FACES
 
 .zero
 
