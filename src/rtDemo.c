@@ -71,6 +71,7 @@ void dispInfo() {
 
 
 #ifdef USE_REWORKED_BUFFERS
+#ifdef USE_C_ARRAYSPROJECT
 void glProjectArrays(){
     unsigned char ii;
     signed char x, y, z;
@@ -92,6 +93,7 @@ void glProjectArrays(){
 
     }
 }
+#endif // USE_C_ARRAYSPROJECT
 #endif // USE_REWORKED_BUFFERS
 
 void rtDemo() {
@@ -162,14 +164,14 @@ void rtIntro() {
         CamPosY = traj[i++];
         CamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
+
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
         glProject(points2d, points3d, nbPts, 0);
 #endif
-        // dur = dur - deek(0x276);
-        // printf ("dur glProject = %d \n", dur);
+        // dur = dur - deek(0x276); printf ("dur glProject = %d \n", dur); get();
 
         // dur = deek(0x276);
         initScreenBuffers();
