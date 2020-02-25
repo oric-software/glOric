@@ -217,7 +217,7 @@ dofastprojdone:
     sta _AngleH
 
     ;; Norm = norm (DeltaX, DeltaY)
-    jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ; 
+    jsr _norm_8
 
    	;; DeltaZ = CamPosZ - PointZ
 	sec
@@ -386,7 +386,7 @@ absY: .byt 0
 tmpufnX: .byt 0
 tmpufnY: .byt 0
 
-.proc _hyperfastnorm
+.proc _norm_8
 
 
 ;;  IF DX == 0 THEN

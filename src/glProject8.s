@@ -453,6 +453,7 @@ tmpufnX         .dsb 1
 tmpufnY         .dsb 1
 */
 .text
+/*
 _norm_8:
 .(
 
@@ -562,7 +563,7 @@ norm_8_tyLowerOrEqualTxDiv2
 norm_8_done:
 .)
   rts
-
+*/
 ;;void projectPoint(
 ;;	signed char x, 
 ;;	signed char y , 

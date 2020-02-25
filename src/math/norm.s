@@ -214,7 +214,116 @@ absX .dsb 1
 absY .dsb 1
 
 .text
-_hyperfastnorm:
+_norm_8:
+.(
+
+//  IF DX == 0 THEN
+    lda _DeltaX
+	bne norm_8_dxNotNull
+//    IF DY > 0 THEN
+		lda _DeltaY
+		bmi norm_8_dyNegativ_01
+//      RETURN DY
+		sta _Norm
+		jmp norm_8_done
+norm_8_dyNegativ_01
+//    ELSE
+//      RETURN -DY
+		eor #$FF
+		sec
+		adc #$00
+		sta _Norm
+		jmp norm_8_done
+norm_8_dxNotNull
+//  ELSE IF DX > 0 THEN
+	bmi norm_8_dxNegativ_01
+//    AX = DX
+		sta absX
+		jmp norm_8_computeAbsY
+norm_8_dxNegativ_01
+//  ELSE (DX < 0)
+//    AX = -DX
+		eor #$FF
+		sec
+		adc #$00
+		sta absX
+//  ENDIF
+norm_8_computeAbsY
+//  IF DY == 0 THEN
+	lda _DeltaY
+	bne norm_8_dyNotNull
+//    RETURN AX
+		lda absX
+		sta _Norm
+		jmp norm_8_done
+norm_8_dyNotNull
+//  ELSE IF DY > 0 THEN
+	bmi norm_8_dyNegativ_02
+//    AY = DY
+		sta absY
+		jmp norm_8_sortAbsVal
+norm_8_dyNegativ_02
+//  ELSE (DY < 0)
+		eor #$FF
+		sec
+		adc #$00
+		sta absY
+//    AY = -DY
+//  ENDIF
+norm_8_sortAbsVal
+//  IF AX > AY THEN
+	cmp absX
+	bcs norm_8_ayOverOrEqualAx
+//    TY = AY
+		tay
+		sta tmpufnY
+//    TX = AX
+		lda absX
+		tax
+		sta tmpufnX
+		jmp norm_8_approxim
+norm_8_ayOverOrEqualAx
+//  ELSE
+//    TX = AY
+		tax
+		sta tmpufnX
+//    TY = AX
+		lda absX
+		tay
+		sta tmpufnY
+//  END
+norm_8_approxim
+//  IF TY > TX/2 THEN
+	lda tmpufnX
+	lsr
+	cmp tmpufnY
+	bcc norm_8_tyLowerOrEqualTxDiv2
+	beq norm_8_tyLowerOrEqualTxDiv2
+//    RETURN TAB_A[TX] + TAB_B[TY]
+		lda tabmult_A,X
+		clc
+		adc tabmult_B,Y
+		sta _Norm
+		lda #$00
+		adc #$00 ; propagate carry
+		sta _Norm+1
+		jmp norm_8_done
+norm_8_tyLowerOrEqualTxDiv2
+//  ELSE (TX/2 <= TY)
+//    RETURN TAB_C[TX] + TAB_D[TY]
+		lda tabmult_C,X
+		clc
+		adc tabmult_D,Y
+		sta _Norm
+		lda #$00
+		adc #$00 ; propagate carry
+		sta _Norm+1
+//  END IF
+
+norm_8_done:
+.)
+  rts
+/*_hyperfastnorm:
 .(
 
 //  IF DX == 0 THEN
@@ -323,7 +432,7 @@ tyLowerOrEqualTxDiv2
 hfndone
 .)
   rts
-
+*/
 tabmult_A
 	.byt 0, 1, 2, 3, 4, 5, 6, 7,
 	.byt 8, 9, 10, 11, 12, 13, 14, 15,

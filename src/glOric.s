@@ -259,7 +259,7 @@ _project:
 	sta _AngleH
 
 	// Norm = norm (DeltaX, DeltaY)
-	jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
+	jsr _norm_8
 
 	// DeltaZ = CamPosZ - PointZ
 	sec
