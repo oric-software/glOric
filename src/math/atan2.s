@@ -866,7 +866,7 @@ atan_table:
 .text
 
 ;https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
-_fastatan2:
+_atan2_8:
 .(
 
     lda _tx

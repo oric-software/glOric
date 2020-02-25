@@ -405,6 +405,7 @@ _ty				.dsb 1
 _res			.dsb 1
 */
 ;https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
+/*
 _atan2_8:
 .(
 
@@ -443,7 +444,7 @@ Ypositiv:
     sta _res
 .)
     rts
-
+*/
 /*
 .zero
 

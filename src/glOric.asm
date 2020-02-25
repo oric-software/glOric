@@ -212,7 +212,7 @@ dofastprojdone:
     sta _ty
     lda _DeltaX
     sta _tx
-    jsr _fastatan2 ; _atan2_8
+    jsr _atan2_8
     lda _res
     sta _AngleH
 
@@ -233,7 +233,7 @@ dofastprojdone:
     sta _ty
     lda _Norm
     sta _tx
-    jsr _fastatan2 ; _atan2_8
+    jsr _atan2_8
     lda _res
     sta _AngleV
 
@@ -503,7 +503,7 @@ octant: .res 1
 ;_atan2 https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
 ;---------------------------------------------------------------------------------
 
-.proc _fastatan2
+.proc _atan2_8
     lda _tx
     clc
     bpl Xpositiv
