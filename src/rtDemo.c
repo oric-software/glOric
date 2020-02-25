@@ -175,8 +175,7 @@ void rtIntro() {
 
         // dur = deek(0x276);
         initScreenBuffers();
-        // dur = dur - deek(0x276);
-        // printf ("dur initScreenBuffers = %d \n", dur);
+        // dur = dur - deek(0x276); printf ("dur initScreenBuffers = %d \n", dur); get ();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
@@ -184,8 +183,7 @@ void rtIntro() {
 #else
         lrDrawFaces(points2d, faces, nbFaces);
 #endif //USE_REWORKED_BUFFERS
-        // dur = dur - deek(0x276);
-        // printf ("dur lrDrawFaces = %d \n", dur);
+        // dur = dur - deek(0x276); printf ("dur lrDrawFaces = %d \n", dur); get ();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
@@ -193,8 +191,7 @@ void rtIntro() {
 #else
         lrDrawSegments(points2d, segments, nbSegments);
 #endif //USE_REWORKED_BUFFERS
-        // dur = dur - deek(0x276);
-        // printf ("dur lrDrawSegments = %d \n", dur);
+        // dur = dur - deek(0x276); printf ("dur lrDrawSegments = %d \n", dur); get();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
@@ -202,15 +199,11 @@ void rtIntro() {
 #else
         lrDrawParticules(points2d, particules, nbParticules);
 #endif //USE_REWORKED_BUFFERS
+        // dur = dur - deek(0x276); printf ("dur lrDrawParticules = %d \n", dur); get();
 
-        // dur = dur - deek(0x276);
-        // printf ("dur lrDrawParticules = %d \n", dur);
-        // get();
         // dur = deek(0x276);
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
-        // dur = dur - deek(0x276);
-        // printf ("dur buffer2screen = %d \n", dur);
-        // get();
+        // dur = dur - deek(0x276); printf ("dur buffer2screen = %d \n", dur); get();
     }
 #ifdef TARGET_ORIX
 #else
