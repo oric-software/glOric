@@ -1,6 +1,34 @@
 #include "config.h"
 
-; #ifdef USE_REWORKED_PROJECTION
+ // Point 3D Coordinates
+_PointX:		.dsb 2
+_PointY:		.dsb 2
+_PointZ:		.dsb 2
+
+ // Point 2D Projected Coordinates
+_ResX:			.dsb 2			// -128 -> 127
+_ResY:			.dsb 2			// -128 -> 127
+
+ // Intermediary Computation
+_DeltaX:		.dsb 2
+_DeltaY:		.dsb 2
+_DeltaZ:		.dsb 2
+
+_Norm:          .dsb 2
+_AngleH:        .dsb 1
+_AngleV:        .dsb 1
+
+
+AnglePH .dsb 1 ; horizontal angle of point from player pov
+AnglePV .dsb 1 ; vertical angle of point from player pov
+
+HAngleOverflow .dsb 1
+VAngleOverflow .dsb 1
+
+
+
+
+#ifdef USE_8BITS_PROJECTION
 _project_i8o8:
 .(
 	// save context
@@ -188,13 +216,15 @@ project_i8o8_done:
 	pla:tay:pla:tax:pla
 .)
 	rts
+#endif // USE_8BITS_PROJECTION
 
 
-/*
-_project16:
+
+#ifdef USE_16BITS_PROJECTION
+_project_i16:
 .(
 	// save context
-	pha
+	pha:txa:pha:tya:pha
 
 	lda #0
 	sta HAngleOverflow
@@ -224,12 +254,12 @@ _project16:
 	sta _ty
 	lda _DeltaX
 	sta _tx
-	jsr _fastatan2 ; _atan2_8
+	jsr _atan2_8
 	lda _res
 	sta _AngleH
 
 	// Norm = norm (DeltaX, DeltaY)
-	jsr _hyperfastnorm; fastnorm ; ultrafastnorm ; ;
+	jsr _norm_8
 
 	// DeltaZ = CamPosZ - PointZ
 	sec
@@ -245,7 +275,7 @@ _project16:
 	sta _ty
 	lda _Norm
 	sta _tx
-	jsr _fastatan2 ; _atan2_8
+	jsr _atan2_8
 	lda _res
 	sta _AngleV
 
@@ -254,21 +284,21 @@ _project16:
 	lda _AngleH
 	sbc _CamRotZ
 	sta AnglePH
-	bvc project_noHAngleOverflow
+	bvc project_i16_noHAngleOverflow
 	lda #$80
 	sta HAngleOverflow
 
-project_noHAngleOverflow:
+project_i16_noHAngleOverflow:
 	// AnglePV = AngleV - CamRotX
 	sec
 	lda _AngleV
 	sbc _CamRotX
 	sta AnglePV
-	bvc project_noVAngleOverflow
+	bvc project_i16_noVAngleOverflow
 	lda #$80
 	sta VAngleOverflow
 
-project_noVAngleOverflow:
+project_i16_noVAngleOverflow:
 #ifndef ANGLEONLY
 #ifdef TEXTDEMO
 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
@@ -305,7 +335,6 @@ project_noVAngleOverflow:
 	;; clc
     ;; adc #120 ; 240/2 = WIDTH/2
 	;; sta _ResX
-debugici:
 	// Extend AnglePH on 16 bits
 	lda #$00
 	sta _ResX+1
@@ -387,192 +416,12 @@ angVpositiv:
 
 prodone:
 	// restore context
-	pla
+	pla:tay:pla:tax:pla
 .)
 	rts
-*/
 
+#endif // USE_16BITS_PROJECTION
 
-/*
-.zero
-octant			.dsb 1          ;
-
-.text
-
-_tx				.dsb 1
-_ty				.dsb 1
-_res			.dsb 1
-*/
-;https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
-/*
-_atan2_8:
-.(
-
-    lda _tx
-    clc
-    bpl Xpositiv
-    eor #$ff
-    sec
-Xpositiv:
-    tax
-    rol octant
-
-    lda _ty
-    clc
-    bpl Ypositiv
-    eor #$ff
-    sec
-Ypositiv:
-    tay
-    rol octant
-
-    sec
-    lda log2_tab,x
-    sbc log2_tab,y
-    bcc *+4
-    eor #$ff
-    tax
-
-    lda octant
-    rol
-    and #$07
-    tay
-
-    lda atan_tab, x
-    eor octant_adjust,y
-    sta _res
-.)
-    rts
-*/
-/*
-.zero
-
-absX            .dsb 1
-absY            .dsb 1
-tmpufnX         .dsb 1
-tmpufnY         .dsb 1
-*/
-.text
-/*
-_norm_8:
-.(
-
-//  IF DX == 0 THEN
-    lda _DeltaX
-	bne norm_8_dxNotNull
-//    IF DY > 0 THEN
-		lda _DeltaY
-		bmi norm_8_dyNegativ_01
-//      RETURN DY
-		sta _Norm
-		jmp norm_8_done
-norm_8_dyNegativ_01
-//    ELSE
-//      RETURN -DY
-		eor #$FF
-		sec
-		adc #$00
-		sta _Norm
-		jmp norm_8_done
-norm_8_dxNotNull
-//  ELSE IF DX > 0 THEN
-	bmi norm_8_dxNegativ_01
-//    AX = DX
-		sta absX
-		jmp norm_8_computeAbsY
-norm_8_dxNegativ_01
-//  ELSE (DX < 0)
-//    AX = -DX
-		eor #$FF
-		sec
-		adc #$00
-		sta absX
-//  ENDIF
-norm_8_computeAbsY
-//  IF DY == 0 THEN
-	lda _DeltaY
-	bne norm_8_dyNotNull
-//    RETURN AX
-		lda absX
-		sta _Norm
-		jmp norm_8_done
-norm_8_dyNotNull
-//  ELSE IF DY > 0 THEN
-	bmi norm_8_dyNegativ_02
-//    AY = DY
-		sta absY
-		jmp norm_8_sortAbsVal
-norm_8_dyNegativ_02
-//  ELSE (DY < 0)
-		eor #$FF
-		sec
-		adc #$00
-		sta absY
-//    AY = -DY
-//  ENDIF
-norm_8_sortAbsVal
-//  IF AX > AY THEN
-	cmp absX
-	bcs norm_8_ayOverOrEqualAx
-//    TY = AY
-		tay
-		sta tmpufnY
-//    TX = AX
-		lda absX
-		tax
-		sta tmpufnX
-		jmp norm_8_approxim
-norm_8_ayOverOrEqualAx
-//  ELSE
-//    TX = AY
-		tax
-		sta tmpufnX
-//    TY = AX
-		lda absX
-		tay
-		sta tmpufnY
-//  END
-norm_8_approxim
-//  IF TY > TX/2 THEN
-	lda tmpufnX
-	lsr
-	cmp tmpufnY
-	bcc norm_8_tyLowerOrEqualTxDiv2
-	beq norm_8_tyLowerOrEqualTxDiv2
-//    RETURN TAB_A[TX] + TAB_B[TY]
-		lda tabmult_A,X
-		clc
-		adc tabmult_B,Y
-		sta _Norm
-		lda #$00
-		adc #$00 ; propagate carry
-		sta _Norm+1
-		jmp norm_8_done
-norm_8_tyLowerOrEqualTxDiv2
-//  ELSE (TX/2 <= TY)
-//    RETURN TAB_C[TX] + TAB_D[TY]
-		lda tabmult_C,X
-		clc
-		adc tabmult_D,Y
-		sta _Norm
-		lda #$00
-		adc #$00 ; propagate carry
-		sta _Norm+1
-//  END IF
-
-norm_8_done:
-.)
-  rts
-*/
-;;void projectPoint(
-;;	signed char x, 
-;;	signed char y , 
-;;	signed char z, 
-;;	unsigned char options, 
-;;	signed char *ah, 
-;;	signed char *av,
-;;	unsigned int *dist,
-;;)
 
 _projectPoint
 	ldx #6 : lda #0 : jsr enter :
@@ -595,4 +444,3 @@ _projectPoint
 
 
 
-; #endif // USE_REWORKED_PROJECTION

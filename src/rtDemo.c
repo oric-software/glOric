@@ -163,7 +163,7 @@ void rtIntro() {
         CamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
         // dur = deek(0x276);
-#ifdef USE_REWORKED_PROJECTION
+#ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
         glProject(points2d, points3d, nbPts, 0);
@@ -225,7 +225,7 @@ void rtGameLoop() {
     kernelInit();
 
     // dur = deek(0x276);
-#ifdef USE_REWORKED_PROJECTION
+#ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
         glProject(points2d, points3d, nbPts, 0);
@@ -268,7 +268,7 @@ void rtGameLoop() {
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
         // dur = dur - deek(0x276);printf ("dur buffer2screen = %d \n", dur);dur = deek(0x276);
         dispInfo();
-#ifdef USE_REWORKED_PROJECTION
+#ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
         glProject(points2d, points3d, nbPts, 0);

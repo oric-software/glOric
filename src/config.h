@@ -46,7 +46,6 @@
 #define USE_ZBUFFER
 #define USE_COLLISION_DETECTION
 #undef USE_COLOR
-#define USE_REWORKED_PROJECTION
 #define USE_REWORKED_BUFFERS
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
@@ -144,6 +143,11 @@
 #endif // ALL_ASM
 #endif // ALL_C
 #endif
+
+
+#undef USE_16BITS_PROJECTION
+#define USE_8BITS_PROJECTION
+
 
 #define KEY_UP			1
 #define KEY_LEFT		2
