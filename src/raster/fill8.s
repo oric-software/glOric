@@ -51,6 +51,7 @@ _pArr2Y .byt 0
 
 _distface .byt 0
 _distseg .byt 0
+_distpoint .byt 0
 _ch2disp .byt 0
 
 /*
@@ -412,7 +413,7 @@ A2stepYdone:
 
 .)
 	rts
-#endif 
+#endif //  USE_ASM_BRESFILL
 
 #ifdef USE_ASM_HFILL
 

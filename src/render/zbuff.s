@@ -295,6 +295,143 @@ initScreenBuffersDone:
 
 
 #ifdef USE_ASM_ZPLOT
+_plotX		.dsb 1
+_plotY		.dsb 1
+
+_fastzplot:
+.(
+	// save context
+    pha:txa:pha:tya:pha
+	lda tmp0: pha: lda tmp0+1 : pha ;; ptrFbuf
+	lda tmp1: pha: lda tmp1+1 : pha ;; ptrZbuf
+
+
+// #ifdef USE_COLOR
+//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
+//        return;
+// #else
+//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
+//        return;
+// #endif
+
+	lda		_plotY
+    beq		fastzplot_done
+    bmi		fastzplot_done
+#ifdef USE_COLOR
+    cmp		#SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
+#else
+	cmp		#SCREEN_HEIGHT
+#endif
+    bcs		fastzplot_done
+    tax
+
+	lda		_plotX
+#ifdef USE_COLOR
+	sec
+	sbc		#COLUMN_OF_COLOR_ATTRIBUTE
+	bvc		*+4
+	eor		#$80
+	bmi		fastzplot_done
+
+	lda		_plotX				; Reload X coordinate
+    cmp		#SCREEN_WIDTH
+    bcs		fastzplot_done
+
+#else
+    beq		fastzplot_done
+    bmi		fastzplot_done
+    cmp		#SCREEN_WIDTH
+    bcs		fastzplot_done
+#endif
+
+    // ptrZbuf = zbuffer + Y*SCREEN_WIDTH+X;;
+	lda		ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
+	clc						; Clear the carry (because we will do an addition after)
+	adc		_plotX				; Add X coordinate
+	sta		tmp1 ; ptrZbuf
+	lda		ZBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
+	adc		#0					; Eventually add the carry to complete the 16 bits addition
+	sta		tmp1+1	 ; ptrZbuf+ 1			
+
+    // if (dist < *ptrZbuf) {
+    lda 	_distpoint		; Access dist
+    ldx		#0
+    cmp		(tmp1,x)
+    bcs		fastzplot_done
+
+    //    *ptrZbuf = dist;
+        ldx		#0
+        sta		(tmp1, x)
+    //    *ptrFbuf = char2disp;
+        ldx		_plotY    ; reload Y coordinate
+    	lda		FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
+        clc						; Clear the carry (because we will do an addition after)
+        ;;ldy #0
+        adc		_plotX				; Add X coordinate
+        sta		tmp0 ; ptrFbuf
+        lda		FBufferAdressHigh,x	; Get the HIGH part of the fbuffer adress
+        adc		#0					; Eventually add the carry to complete the 16 bits addition
+        sta		tmp0+1	 ; ptrFbuf+ 1			
+
+        lda		_ch2disp		; Access char2disp
+        ldx		#0
+        sta		(tmp0,x)
+
+    //}
+
+
+fastzplot_done:
+	// restore context
+	pla: sta tmp1+1: pla: sta tmp1
+	pla: sta tmp0+1: pla: sta tmp0
+	pla:tay:pla:tax:pla
+
+.)
+	rts
+
+// void zplot(unsigned char X,
+//           unsigned char Y,
+//           unsigned char dist,
+//           char          char2disp) {
+
+_zplot:
+.(
+; sp+0 => X coordinate
+; sp+2 => Y coordinate
+; sp+4 => dist
+; sp+6 => char2disp
+
+	// save context
+    pha:tya:pha
+
+	ldy		#2
+	lda		(sp),y				; Access Y coordinate
+	sta		_plotY
+
+	ldy		#0
+	lda		(sp),y				; Access X coordinate
+	sta		_plotX
+
+    ldy		#4
+    lda		(sp),y				; Access dist
+	sta		_distpoint
+
+	ldy		#6
+	lda		(sp),y				; Access char2disp
+	sta 	_ch2disp
+
+	jsr 	_fastzplot
+
+zplot_done:
+	// restore context
+	pla:tay:pla
+
+.)
+    rts
+
+#endif // USE_ASM_ZPLOT
+/*
+#ifdef USE_ASM_ZPLOT
 
 // void zplot(unsigned char X,
 //           unsigned char Y,
@@ -410,7 +547,7 @@ zplot_done:
 
 
 #endif // USE_ASM_ZPLOT
-
+*/
 
 #ifdef USE_ASM_ZLINE
 

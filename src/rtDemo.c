@@ -148,12 +148,12 @@ void rtIntro() {
     // cgetc();
 #else
     //get();
-    // enterSC();
+    enterSC();
 #endif  // TARGET_ORIX
 
     CamPosX = 0;
     CamPosY = 0;
-    CamPosZ = 3;
+    CamPosZ = 6;
 
     CamRotZ = 0;
     CamRotX = 0;
@@ -185,13 +185,13 @@ void rtIntro() {
 #endif //USE_REWORKED_BUFFERS
         // dur = dur - deek(0x276); printf ("dur lrDrawFaces = %d \n", dur); get ();
 
-        dur = deek(0x276);
+        // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glDrawSegments();
 #else
         lrDrawSegments(points2d, segments, nbSegments);
 #endif //USE_REWORKED_BUFFERS
-        dur = dur - deek(0x276); printf ("dur lrDrawSegments = %d \n", dur); get();
+        // dur = dur - deek(0x276); printf ("dur lrDrawSegments = %d \n", dur); get();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
@@ -207,7 +207,7 @@ void rtIntro() {
     }
 #ifdef TARGET_ORIX
 #else
-    // leaveSC();
+    leaveSC();
 #endif  // TARGET_ORIX
 }
 

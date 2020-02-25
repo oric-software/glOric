@@ -50,61 +50,6 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 
 #define DOLLAR 36
 
-/*void lrDrawLine() {
-
-    signed char e2;
-    char        ch2dsp;
-
-    _brX     = P1X;
-    _brY     = P1Y;
-    _brDestX = P2X;
-    _brDestY = P2Y;
-    _brDx    = abs(P2X - P1X);
-    _brDy    = -abs(P2Y - P1Y);
-    _brSx    = P1X < P2X ? 1 : -1;
-    _brSy    = P1Y < P2Y ? 1 : -1;
-    _brErr   = _brDx + _brDy;
-
-    if ((_brErr > 64) || (_brErr < -63))
-        return;
-
-    if ((ch2disp == '/') && (_brSx == -1)) {
-        ch2dsp = DOLLAR;
-    } else {
-        ch2dsp = ch2disp;
-    }
-
-    while (1) {  // loop
-        //printf ("plot [%d, %d] %d %d\n", _brX, _brY, distseg, ch2disp);get ();          
-#ifdef USE_ZBUFFER
-        zplot(_brX, _brY, distseg, ch2dsp);
-#else
-        // TODO : plot a point with no z-buffer
-#endif
-        if ((_brX == _brDestX) && (_brY == _brDestY))
-            break;
-        //e2 = 2*err;
-        e2 = (_brErr < 0) ? (
-                ((_brErr & 0x40) == 0) ? (
-                                                0x80)
-                                        : (
-                                                _brErr << 1))
-            : (
-                ((_brErr & 0x40) != 0) ? (
-                                                0x7F)
-                                        : (
-                                                _brErr << 1));
-        if (e2 >= _brDy) {
-            _brErr += _brDy;  // e_xy+e_x > 0
-            _brX += _brSx;
-        }
-        if (e2 <= _brDx) {  // e_xy+e_y < 0
-            _brErr += _brDx;
-            _brY += _brSy;
-        }
-    }
-}
-*/
 
 #ifdef USE_C_DRAWLINE
 void lrDrawLine() {

@@ -78,8 +78,6 @@
 #define NB_LESS_LINES_4_COLOR 4
 
 
-#define USE_C_DRAWLINE
-#undef USE_ASM_DRAWLINE
 
 #ifdef TARGET_ORIX
 #undef USE_ASM_HFILL
