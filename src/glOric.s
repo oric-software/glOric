@@ -251,3 +251,217 @@ glProjectArrays_done:
 	rts
 #endif // USE_ASM_ARRAYSPROJECT
 #endif // USE_REWORKED_BUFFERS
+
+#ifdef USE_ASM_DRAWLINE
+_lrDrawLine:
+.(
+	ldx #6 : lda #6 : jsr enter :
+	lda _P1X : sta tmp0 :
+	lda tmp0 : sta _A1X :
+	lda _P1Y : sta tmp0 :
+	lda tmp0 : sta _A1Y :
+	lda _P2X : sta tmp0 :
+	lda tmp0 : sta _A1destX :
+	lda _P2Y : sta tmp0 :
+	lda tmp0 : sta _A1destY :
+	lda _P2X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P1X : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp lrDrawLine_LlrsDrawing130 : :
+	lda _P2X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P1X : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
+	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta reg2 : lda tmp0+1 : sta reg2+1 :
+	jmp lrDrawLine_LlrsDrawing131 :
+lrDrawLine_LlrsDrawing130
+	lda _P2X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P1X : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta reg2 : lda tmp0+1 : sta reg2+1 :
+lrDrawLine_LlrsDrawing131
+	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1dX :
+	lda _P2Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P1Y : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp lrDrawLine_LlrsDrawing132 : :
+	lda _P2Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P1Y : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
+	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta reg2 : lda tmp0+1 : sta reg2+1 :
+	jmp lrDrawLine_LlrsDrawing133 :
+lrDrawLine_LlrsDrawing132
+	lda _P2Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P1Y : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta reg2 : lda tmp0+1 : sta reg2+1 :
+lrDrawLine_LlrsDrawing133
+	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
+	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1dY :
+	lda _P1X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P2X : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp lrDrawLine_LlrsDrawing134 : :
+	lda #<(1) : sta reg2 : lda #>(1) : sta reg2+1 :
+	jmp lrDrawLine_LlrsDrawing135 :
+lrDrawLine_LlrsDrawing134
+	lda #<(-1) : sta reg2 : lda #>(-1) : sta reg2+1 :
+lrDrawLine_LlrsDrawing135
+	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1sX :
+	lda _P1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _P2Y : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp lrDrawLine_LlrsDrawing136 : :
+	lda #<(1) : sta reg2 : lda #>(1) : sta reg2+1 :
+	jmp lrDrawLine_LlrsDrawing137 :
+lrDrawLine_LlrsDrawing136
+	lda #<(-1) : sta reg2 : lda #>(-1) : sta reg2+1 :
+lrDrawLine_LlrsDrawing137
+	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1sY :
+	lda _A1dX : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1dY : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1err :
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(64) : cmp tmp0 : lda #>(64) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp lrDrawLine_LlrsDrawing140 :skip : .) : : :
+	lda tmp0 : cmp #<(-63) : lda tmp0+1 : sbc #>(-63) : bvc *+4 : eor #$80 : bmi *+5 : jmp lrDrawLine_LlrsDrawing138 : :
+lrDrawLine_LlrsDrawing140
+	jmp leave :
+lrDrawLine_LlrsDrawing138
+	lda _ch2disp : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(47) : eor tmp0 : sta tmp : lda #>(47) : eor tmp0+1 : ora tmp : beq *+5 : jmp lrDrawLine_LlrsDrawing141 :
+	lda _A1sX : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(-1) : eor tmp0 : sta tmp : lda #>(-1) : eor tmp0+1 : ora tmp : beq *+5 : jmp lrDrawLine_LlrsDrawing141 :
+	lda #<(36) : sta reg1 :
+	jmp lrDrawLine_LlrsDrawing142 :
+lrDrawLine_LlrsDrawing141
+	lda _ch2disp : sta tmp0 :
+	lda tmp0 : sta reg1 :
+lrDrawLine_LlrsDrawing142
+lrDrawLine_LlrsDrawing143
+lrDrawLine_LlrsDrawing144
+	lda _A1X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ldy #0 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ldy #2 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
+	lda _distseg : sta tmp0 :
+	lda tmp0 : sta tmp0 : lda #0 : sta tmp0+1 :
+	lda tmp0 : ldy #4 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
+	lda reg1 : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ldy #6 : sta (sp),y : iny : lda tmp0+1 : sta (sp),y :
+	ldy #8 : jsr _zplot :
+	lda _A1X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1destX : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp lrDrawLine_LlrsDrawing146 :
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1destY : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp lrDrawLine_LlrsDrawing146 :
+	jmp lrDrawLine_LlrsDrawing145 :
+lrDrawLine_LlrsDrawing146
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp lrDrawLine_LlrsDrawing151 : :
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(64) : and tmp0 : sta tmp0 : lda #>(64) : and tmp0+1 : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : beq *+5 : jmp lrDrawLine_LlrsDrawing153 :
+	lda #<(128) : sta reg4 : lda #>(128) : sta reg4+1 :
+	jmp lrDrawLine_LlrsDrawing154 :
+lrDrawLine_LlrsDrawing153
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : asl : sta tmp0 : lda tmp0+1 : rol : sta tmp0+1 :
+	lda tmp0 : sta reg4 : lda tmp0+1 : sta reg4+1 :
+lrDrawLine_LlrsDrawing154
+	lda reg4 : sta tmp0 : lda reg4+1 : sta tmp0+1 :
+	lda tmp0 : sta reg3 : lda tmp0+1 : sta reg3+1 :
+	jmp lrDrawLine_LlrsDrawing152 :
+lrDrawLine_LlrsDrawing151
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(64) : and tmp0 : sta tmp0 : lda #>(64) : and tmp0+1 : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : bne *+5 : jmp lrDrawLine_LlrsDrawing155 :
+	lda #<(127) : sta reg5 : lda #>(127) : sta reg5+1 :
+	jmp lrDrawLine_LlrsDrawing156 :
+lrDrawLine_LlrsDrawing155
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : asl : sta tmp0 : lda tmp0+1 : rol : sta tmp0+1 :
+	lda tmp0 : sta reg5 : lda tmp0+1 : sta reg5+1 :
+lrDrawLine_LlrsDrawing156
+	lda reg5 : sta tmp0 : lda reg5+1 : sta tmp0+1 :
+	lda tmp0 : sta reg3 : lda tmp0+1 : sta reg3+1 :
+lrDrawLine_LlrsDrawing152
+	lda reg3 : sta tmp0 : lda reg3+1 : sta tmp0+1 :
+	lda tmp0 : sta reg0 :
+	lda reg0 : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1dY : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp lrDrawLine_LlrsDrawing157 :skip : .) : :
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1dY : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1err :
+	lda _A1X : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1sX : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1X :
+lrDrawLine_LlrsDrawing157
+	lda reg0 : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1dX : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp lrDrawLine_LlrsDrawing143 :skip : .) : : :
+	lda _A1err : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1dX : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1err :
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda _A1sY : sta tmp1 :
+	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
+	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
+	lda tmp0 : sta _A1Y :
+	jmp lrDrawLine_LlrsDrawing143 :
+lrDrawLine_LlrsDrawing145
+	jmp leave :
+.)
+#endif // USE_ASM_DRAWLINE

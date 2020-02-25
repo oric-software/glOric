@@ -185,13 +185,13 @@ void rtIntro() {
 #endif //USE_REWORKED_BUFFERS
         // dur = dur - deek(0x276); printf ("dur lrDrawFaces = %d \n", dur); get ();
 
-        // dur = deek(0x276);
+        dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glDrawSegments();
 #else
         lrDrawSegments(points2d, segments, nbSegments);
 #endif //USE_REWORKED_BUFFERS
-        // dur = dur - deek(0x276); printf ("dur lrDrawSegments = %d \n", dur); get();
+        dur = dur - deek(0x276); printf ("dur lrDrawSegments = %d \n", dur); get();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
