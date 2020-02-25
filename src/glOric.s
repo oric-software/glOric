@@ -136,7 +136,8 @@ dofastprojloop:
         dey
 
 //  		project_i16();
-        jsr _project_i16
+        ; jsr _project_i16
+		jsr _project_i8o8
 
         tya
         pha

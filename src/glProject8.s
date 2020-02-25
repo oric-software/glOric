@@ -1,10 +1,10 @@
 #include "config.h"
 
-#ifdef USE_REWORKED_PROJECTION
+; #ifdef USE_REWORKED_PROJECTION
 _project_i8o8:
 .(
 	// save context
-	pha
+	pha:txa:pha:tya:pha ; FIXME : txa and tya should be useless but it fails when they are not done
 
 	lda #0
 	sta HAngleOverflow
@@ -104,7 +104,6 @@ project_i8o8_noVAngleOverflow:
 	;; clc
     ;; adc #120 ; 240/2 = WIDTH/2
 	;; sta _ResX
-debugici:
 	// Extend AnglePH on 16 bits
 	lda #$00
 	sta _ResX+1
@@ -186,7 +185,7 @@ project_i8o8_angVpositiv:
 
 project_i8o8_done:
 	// restore context
-	pla
+	pla:tay:pla:tax:pla
 .)
 	rts
 
@@ -596,4 +595,4 @@ _projectPoint
 
 
 
-#endif // USE_REWORKED_PROJECTION
+; #endif // USE_REWORKED_PROJECTION
