@@ -166,6 +166,14 @@
 #undef USE_16BITS_PROJECTION
 #define USE_8BITS_PROJECTION
 
+/*
+ * ASCII TABLE
+ */
+#define DOLLAR 36
+
+/*
+ * KEYBOARD TABLE
+ */
 
 #define KEY_UP			1
 #define KEY_LEFT		2

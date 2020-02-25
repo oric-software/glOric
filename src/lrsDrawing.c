@@ -48,7 +48,7 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
     *(adr++) = patt08;
 }
 
-#define DOLLAR 36
+
 
 
 #ifdef USE_C_DRAWLINE
