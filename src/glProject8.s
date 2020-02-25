@@ -68,121 +68,121 @@ project_i8o8_noHAngleOverflow:
 	sta     VAngleOverflow
 
 project_i8o8_noVAngleOverflow:
-; #ifndef ANGLEONLY
-; #ifdef TEXTDEMO
-; 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
-; 	lda AnglePH
-; 	cmp #$80
-; 	ror
-;     ora HAngleOverflow
+#ifndef ANGLEONLY
+#ifdef TEXTDEMO
+	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
+	lda AnglePH
+	cmp #$80
+	ror
+    ora HAngleOverflow
 
-; 	eor #$FF
-; 	sec
-; 	adc #$00
-; 	clc
-;     adc #SCREEN_WIDTH/2
-; 	sta _ResX
+	eor #$FF
+	sec
+	adc #$00
+	clc
+    adc #SCREEN_WIDTH/2
+	sta _ResX
 
-; 	lda AnglePV
-; 	cmp #$80
-; 	ror
-;     ora VAngleOverflow
+	lda AnglePV
+	cmp #$80
+	ror
+    ora VAngleOverflow
 
-; 	eor #$FF
-; 	sec
-; 	adc #$00
-; 	clc
-;     adc #SCREEN_HEIGHT/2
-; 	sta _ResY
-; #else
-; 	;; lda AnglePH
-; 	;; eor #$FF
-; 	;; sec
-; 	;; adc #$00
-; 	;; asl
-; 	;; asl
-; 	;; clc
-;     ;; adc #120 ; 240/2 = WIDTH/2
-; 	;; sta _ResX
-; debugici:
-; 	// Extend AnglePH on 16 bits
-; 	lda #$00
-; 	sta _ResX+1
-; 	lda AnglePH
-; 	sta _ResX
-; 	bpl project_i8o8_angHpositiv
-; 	lda #$FF
-; 	sta _ResX+1
-; project_i8o8_angHpositiv:
-; 	// Invert AnglePH on 16 bits
-; 	sec
-; 	lda #$00
-; 	sbc _ResX
-; 	sta _ResX
-; 	lda #$00
-; 	sbc _ResX+1
-; 	sta _ResX+1
-; 	// Multiply by 4
-; 	asl _ResX
-; 	rol _ResX+1
-; 	asl _ResX
-; 	rol _ResX+1
-; 	// Add offset of screen center
-; 	clc
-; 	lda _ResX
-; 	adc #120
-; 	sta _ResX
-; 	lda _ResX+1
-; 	adc #$00
-; 	sta _ResX+1
+	eor #$FF
+	sec
+	adc #$00
+	clc
+    adc #SCREEN_HEIGHT/2
+	sta _ResY
+#else // not TEXTDEMO
+	;; lda AnglePH
+	;; eor #$FF
+	;; sec
+	;; adc #$00
+	;; asl
+	;; asl
+	;; clc
+    ;; adc #120 ; 240/2 = WIDTH/2
+	;; sta _ResX
+debugici:
+	// Extend AnglePH on 16 bits
+	lda #$00
+	sta _ResX+1
+	lda AnglePH
+	sta _ResX
+	bpl project_i8o8_angHpositiv
+	lda #$FF
+	sta _ResX+1
+project_i8o8_angHpositiv:
+	// Invert AnglePH on 16 bits
+	sec
+	lda #$00
+	sbc _ResX
+	sta _ResX
+	lda #$00
+	sbc _ResX+1
+	sta _ResX+1
+	// Multiply by 4
+	asl _ResX
+	rol _ResX+1
+	asl _ResX
+	rol _ResX+1
+	// Add offset of screen center
+	clc
+	lda _ResX
+	adc #120
+	sta _ResX
+	lda _ResX+1
+	adc #$00
+	sta _ResX+1
 
-; 	;; lda AnglePV
-; 	;; eor #$FF
-; 	;; sec
-; 	;; adc #$00
-; 	;; asl
-; 	;; asl
-; 	;; adc #100 ; = 200 /2 SCREEN_HEIGHT/2
-; 	;; sta _ResY
+	;; lda AnglePV
+	;; eor #$FF
+	;; sec
+	;; adc #$00
+	;; asl
+	;; asl
+	;; adc #100 ; = 200 /2 SCREEN_HEIGHT/2
+	;; sta _ResY
 
-; 	// Extend AnglePV on 16 bits
-; 	lda #$00
-; 	sta _ResY+1
-; 	lda AnglePV
-; 	sta _ResY
-; 	bpl project_i8o8_angVpositiv
-; 	lda #$FF
-; 	sta _ResY+1
-; project_i8o8_angVpositiv:
-; 	// Invert AnglePV on 16 bits
-; 	sec
-; 	lda #$00
-; 	sbc _ResY
-; 	sta _ResY
-; 	lda #$00
-; 	sbc _ResY+1
-; 	sta _ResY+1
-; 	// Multiply by 4
-; 	asl _ResY
-; 	rol _ResY+1
-; 	asl _ResY
-; 	rol _ResY+1
-; 	// Add offset of screen center
-; 	clc
-; 	lda _ResY
-; 	adc #100
-; 	sta _ResY
-; 	lda _ResY+1
-; 	adc #$00
-; 	sta _ResY+1
+	// Extend AnglePV on 16 bits
+	lda #$00
+	sta _ResY+1
+	lda AnglePV
+	sta _ResY
+	bpl project_i8o8_angVpositiv
+	lda #$FF
+	sta _ResY+1
+project_i8o8_angVpositiv:
+	// Invert AnglePV on 16 bits
+	sec
+	lda #$00
+	sbc _ResY
+	sta _ResY
+	lda #$00
+	sbc _ResY+1
+	sta _ResY+1
+	// Multiply by 4
+	asl _ResY
+	rol _ResY+1
+	asl _ResY
+	rol _ResY+1
+	// Add offset of screen center
+	clc
+	lda _ResY
+	adc #100
+	sta _ResY
+	lda _ResY+1
+	adc #$00
+	sta _ResY+1
 
-; #endif
-; #else
+#endif // TEXTDEMO
+#else
 	lda AnglePH
 	sta _ResX
 	lda AnglePV
 	sta _ResY
-; #endif
+#endif // ANGLEONLY
 
 project_i8o8_done:
 	// restore context

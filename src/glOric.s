@@ -135,8 +135,8 @@ dofastprojloop:
         sta _PointX
         dey
 
-//  		project();
-        jsr _project
+//  		project_i16();
+        jsr _project_i16
 
         tya
         pha
@@ -221,7 +221,7 @@ AnglePV .dsb 1 ; vertical angle of point from player pov
 HAngleOverflow .dsb 1
 VAngleOverflow .dsb 1
 
-_project:
+_project_i16:
 .(
 	// save context
 	pha:txa:pha:tya:pha
@@ -284,21 +284,21 @@ _project:
 	lda _AngleH
 	sbc _CamRotZ
 	sta AnglePH
-	bvc project_noHAngleOverflow
+	bvc project_i16_noHAngleOverflow
 	lda #$80
 	sta HAngleOverflow
 
-project_noHAngleOverflow:
+project_i16_noHAngleOverflow:
 	// AnglePV = AngleV - CamRotX
 	sec
 	lda _AngleV
 	sbc _CamRotX
 	sta AnglePV
-	bvc project_noVAngleOverflow
+	bvc project_i16_noVAngleOverflow
 	lda #$80
 	sta VAngleOverflow
 
-project_noVAngleOverflow:
+project_i16_noVAngleOverflow:
 #ifndef ANGLEONLY
 #ifdef TEXTDEMO
 	// Quick Disgusting Hack:  X = (-AnglePH //2 ) + LE / 2
@@ -335,7 +335,6 @@ project_noVAngleOverflow:
 	;; clc
     ;; adc #120 ; 240/2 = WIDTH/2
 	;; sta _ResX
-debugici:
 	// Extend AnglePH on 16 bits
 	lda #$00
 	sta _ResX+1
