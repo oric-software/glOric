@@ -295,8 +295,6 @@ initScreenBuffersDone:
 
 
 #ifdef USE_ASM_ZPLOT
-_plotX		.dsb 1
-_plotY		.dsb 1
 
 _fastzplot:
 .(

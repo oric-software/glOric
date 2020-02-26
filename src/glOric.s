@@ -83,6 +83,10 @@ _facesPt2           .dsb NB_MAX_FACES
 _facesPt3           .dsb NB_MAX_FACES
 _facesChar          .dsb NB_MAX_FACES
 
+
+_plotX		.dsb 1
+_plotY		.dsb 1
+
 .zero
 
 ptrpt3:
@@ -388,7 +392,9 @@ lrDrawLine_loop:
 		lda _distseg: sta _distpoint:
 		jsr _fastzplot
 #else
-			// TODO : plot a point with no z-buffer
+		lda _A1X : sta _plotX :
+		lda _A1Y : sta _plotY :
+		jsr _asmplot
 #endif
 
 //         if ((A1X == A1destX) && (A1Y == A1destY)) break;

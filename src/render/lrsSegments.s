@@ -17,6 +17,7 @@ _char2Display .dsb 1
 
 
 #ifdef  TEXTDEMO
+#ifndef USE_REWORKED_BUFFERS
 
 //  void drawSegments(){
 _drawSegments:
@@ -119,7 +120,9 @@ drwsgdone
 .)
     rts
 
-#endif
+#endif // undef USE_REWORKED_BUFFERS
+
+#endif // TEXTDEMO
 
 
 

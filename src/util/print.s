@@ -85,6 +85,91 @@ ScreenAdressHigh
 
 
 
+#ifdef USE_ASM_PLOT
+
+_asmplot:
+.(
+
+	lda		_plotY
+    beq		asmplot_done
+    bmi		asmplot_done
+#ifdef USE_COLOR
+    cmp		#SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
+#else
+	cmp		#SCREEN_HEIGHT
+#endif
+    bcs		asmplot_done
+    tax
+
+	lda		_plotX
+#ifdef USE_COLOR
+	sec
+	sbc		#COLUMN_OF_COLOR_ATTRIBUTE
+	bvc		*+4
+	eor		#$80
+	bmi		asmplot_done
+
+	lda		_plotX				; Reload X coordinate
+    cmp		#SCREEN_WIDTH
+    bcs		asmplot_done
+
+#else
+    beq		asmplot_done
+    bmi		asmplot_done
+    cmp		#SCREEN_WIDTH
+    bcs		asmplot_done
+#endif
+
+	lda tmp0: pha: lda tmp0+1 : pha 
+
+	ldx		_plotY    ; reload Y coordinate
+	lda		ScreenAdressLow,x	; Get the LOW part of the fbuffer adress
+	clc						; Clear the carry (because we will do an addition after)
+
+	adc		_plotX				; Add X coordinate
+	sta		tmp0 ; ptrFbuf
+	lda		ScreenAdressHigh,x	; Get the HIGH part of the fbuffer adress
+	adc		#0					; Eventually add the carry to complete the 16 bits addition
+	sta		tmp0+1	 ; ptrFbuf+ 1			
+
+	lda		_ch2disp		; Access char2disp
+	ldx		#0
+	sta		(tmp0,x)
+
+	pla: sta tmp0+1: pla: sta tmp0
+asmplot_done:
+.)
+	rts
+
+
+;; void plot(signed char X,
+;;           signed char Y,
+;;           char          char2disp) {
+
+_plot:
+.(
+	; ldx #10 : lda #2 : jsr enter :
+
+	ldy #0
+	lda (sp),y				; Access X coordinate
+	sta _plotX
+
+
+	ldy #2
+	lda (sp),y				; Access Y coordinate
+	sta _plotY
+	
+
+	ldy #4
+	lda (sp),y				; Access Y coordinate
+	sta _ch2disp 
+
+	jsr _asmplot
+
+.)
+	rts 
+#endif // USE_ASM_PLOT
+
 
 ;
 ; The message and display position will be read from the stack.

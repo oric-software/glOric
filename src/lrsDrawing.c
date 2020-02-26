@@ -49,6 +49,35 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 }
 
 
+#ifdef USE_C_PLOT
+
+void plot(signed char X,
+           signed char Y,
+           char          char2disp) {
+    int            offset;
+    char*          ptrScreen = (char*)ADR_BASE_LORES_SCREEN;
+
+
+#ifdef USE_COLOR
+    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
+        return;
+#else
+    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
+        return;
+#endif
+
+#ifdef USE_MULTI40
+    offset = multi40[Y] + X;  // 
+#else
+    offset = Y*SCREEN_WIDTH+X; 
+#endif
+
+    *(ptrScreen + offset) = char2disp;
+}
+
+#endif // USE_C_PLOT
+
+
 
 
 #ifdef USE_C_DRAWLINE
@@ -81,7 +110,7 @@ void lrDrawLine() {
 #ifdef USE_ZBUFFER
         zplot(A1X, A1Y, distseg, ch2dsp);
 #else
-        // TODO : plot a point with no z-buffer
+        plot(A1X, A1Y, ch2dsp);
 #endif
         if ((A1X == A1destX) && (A1Y == A1destY))
             break;
@@ -161,7 +190,7 @@ void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char
 #ifdef USE_ZBUFFER
         zplot(P1X, P1Y, dchar, ch2disp);
 #else
-        // TODO : plot a point with no z-buffer
+        plot(P1X, P1Y, ch2disp);
 #endif
 
     }
@@ -593,6 +622,7 @@ void glDrawSegments() {
         distseg = (unsigned char)((dmoy)&0x00FF);
         distseg--;  // FIXME
 
+#ifdef ANGLEONLY
         P1AH = points2aH[idxPt1];
         P1AV = points2aV[idxPt1];
 
@@ -603,7 +633,13 @@ void glDrawSegments() {
         P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
         P2X = (SCREEN_WIDTH - P2AH) >> 1;
         P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
+#else 
+        P1X = points2aH[idxPt1];
+        P1Y = points2aV[idxPt1];
+        P2X = points2aH[idxPt2];
+        P2Y = points2aV[idxPt2];
 
+#endif
         // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
         lrDrawLine();
 
@@ -625,6 +661,7 @@ void glDrawParticules(){
         zplot(P1X, P1Y, dchar, ch2disp);
 #else
         // TODO : plot a point with no z-buffer
+        plot(A1X, A1Y, ch2disp);
 #endif
 
     }

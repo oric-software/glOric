@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO, RTDEMO
-#define RTDEMO
+#define TEXTDEMO
 
 /*
  *  SCREEN DIMENSION
@@ -12,6 +12,7 @@
 #ifdef TEXTDEMO
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
+#define USE_REWORKED_BUFFERS
 #endif
 
 #ifdef LRSDEMO
@@ -97,6 +98,8 @@
 #undef  USE_ASM_ARRAYSPROJECT
 #define USE_C_DRAWLINE
 #undef USE_ASM_DRAWLINE
+#define USE_C_PLOT
+#undef USE_ASM_PLOT
 #else
 #ifdef ALL_C
 #define USE_C_HFILL
@@ -117,6 +120,8 @@
 #undef  USE_ASM_ARRAYSPROJECT
 #define USE_C_DRAWLINE
 #undef USE_ASM_DRAWLINE
+#define USE_C_PLOT
+#undef USE_ASM_PLOT
 #else 
 #ifdef ALL_ASM
 #undef USE_C_HFILL
@@ -137,6 +142,8 @@
 #define  USE_ASM_ARRAYSPROJECT
 #undef USE_C_DRAWLINE
 #define USE_ASM_DRAWLINE
+#undef USE_C_PLOT
+#define USE_ASM_PLOT
 #else
 
 #undef USE_C_HFILL
@@ -157,6 +164,9 @@
 #define  USE_ASM_ARRAYSPROJECT
 #undef USE_C_DRAWLINE
 #define USE_ASM_DRAWLINE
+#undef USE_C_PLOT
+#define USE_ASM_PLOT
+
 
 #endif // ALL_ASM
 #endif // ALL_C

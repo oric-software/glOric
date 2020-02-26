@@ -4,13 +4,31 @@
 #ifdef TEXTDEMO
 
 #include "data/alphabet.h"
+#include "data/geom.h"
 
 // GEOMETRY BUFFERS
+#ifdef USE_REWORKED_BUFFERS
+extern char points3d[];
+extern char points3d[];
+
+extern unsigned char nbPoints;
+extern signed char points3dX[];
+extern signed char points3dY[];
+extern signed char points3dZ[];
+
+extern unsigned char segmentsPt1[];
+extern unsigned char segmentsPt2[];
+extern unsigned char segmentsChar[];
+
+
+#else
 char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
-unsigned char        nbPts = 0;
 char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
+extern unsigned char        nbPoints;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
+#endif USE_REWORKED_BUFFER
+
 
 const char sentence[] = "MERCI RENE";
 
@@ -31,7 +49,7 @@ void initBuffers() {
     unsigned char ii;
     char          c;
     ii    = 0;
-    nbPts = 0;
+    nbPoints = 0;
     while ((c = sentence[ii]) != 0) {
         switch (c) {
         case 'M':
@@ -71,19 +89,38 @@ void txtIntro() {
     CamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
     CamRotX = -4;
 
-    glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
+
     clearScreen();
 
+#ifdef USE_REWORKED_BUFFERS
+    glDrawSegments();
+#else
     drawSegments();
+#endif // USE_REWORKED_BUFFERS
 
     for (i      = 0; i < 40; i++,
         CamPosX = (i % 4 == 0) ? CamPosX + 1 : CamPosX,
         CamPosY += 2,
         CamRotZ -= 1,
         CamRotX = (i % 2 == 0) ? CamRotX + 1 : CamRotX) {
-        glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
+
         clearScreen();
+
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         drawSegments();
+#endif // USE_REWORKED_BUFFERS
     }
 
     CamPosX = -5;
@@ -93,36 +130,84 @@ void txtIntro() {
     CamRotX = 16;
 
     for (i = 0; i < 72; i++, CamPosX++) {
-        glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
         clearScreen();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         drawSegments();
+#endif // USE_REWORKED_BUFFERS
     }
 
     for (i = 0; i < 40; i++, CamPosX = (i % 4 == 0) ? CamPosX - 1 : CamPosX, CamRotX = (i % 4 == 0) ? CamRotX - 1 : CamRotX, CamPosY = (i % 4 == 0) ? CamPosY - 1 : CamPosY, CamRotZ++) {
-        glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
         clearScreen();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         drawSegments();
+#endif // USE_REWORKED_BUFFERS
     }
     forward();
-    glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+    glProjectArrays();
+#else
+    glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
     clearScreen();
-    drawSegments();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
+        drawSegments();
+#endif // USE_REWORKED_BUFFERS
 
     for (i = 0; i < 25; i++, CamPosX -= 2) {
-        glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
         clearScreen();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         drawSegments();
+#endif // USE_REWORKED_BUFFERS
     }
     CamRotZ -= 1;
     for (i = 0; i < 11; i++, CamPosY -= 2, CamRotZ -= 3) {
-        glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
         clearScreen();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         drawSegments();
+#endif // USE_REWORKED_BUFFERS
     }
     CamRotZ -= 3;
-    glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
     clearScreen();
-    drawSegments();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
+        drawSegments();
+#endif // USE_REWORKED_BUFFERS
 
     leaveSC();
 }
@@ -130,11 +215,19 @@ void txtIntro() {
 void txtGameLoop() {
     char key;
     //key=get();
-    glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
 
     while (1 == 1) {
         clearScreen();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawSegments();
+#else
         drawSegments();
+#endif // USE_REWORKED_BUFFERS
         dispInfo();
         key = get();
         switch (key)  // key
@@ -170,7 +263,11 @@ void txtGameLoop() {
             shiftRight();
             break;
         }
-        glProject(points2d, points3d, nbPts, 0);
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif // USE_REWORKED_BUFFERS
     }
 }
 
