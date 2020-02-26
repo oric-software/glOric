@@ -139,6 +139,7 @@ void addGeom(
 
 #if defined(COLORDEMO) || defined(LRSDEMO)
 
+#ifndef USE_REWORKED_BUFFERS
 void addPlan(signed char X, signed char Y, unsigned char L, signed char orientation, char char2disp) {
     unsigned char ii, jj;
     ii = (orientation == 0) ? 0 : -L;
@@ -202,7 +203,7 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
     nbSegments++;
     //printf ("%d Points, %d Segments, %d Faces\n", nbPoints, nbSegments, nbFaces); get();
 }
-
+#endif // USE_REWORKED_BUFFERS
 #endif  // COLORDEMO
 
 
