@@ -32,7 +32,6 @@ _nbParticules .dsb 1;
 _nbFaces .dsb 1;
 
 
-#ifdef USE_REWORKED_BUFFERS
 
 //char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 //.dsb 256-(*&255)
@@ -41,6 +40,7 @@ _points3d:
 _points3dX          .dsb NB_MAX_POINTS
 _points3dY          .dsb NB_MAX_POINTS
 _points3dZ          .dsb NB_MAX_POINTS
+#ifndef USE_REWORKED_BUFFERS
 _points3unused      .dsb NB_MAX_POINTS
 #endif // USE_REWORKED_BUFFERS
 
@@ -51,13 +51,14 @@ _segments:
 _segmentsPt1        .dsb NB_MAX_SEGMENTS
 _segmentsPt2        .dsb NB_MAX_SEGMENTS
 _segmentsChar       .dsb NB_MAX_SEGMENTS
+#ifndef USE_REWORKED_BUFFERS
 _segmentsUnused     .dsb NB_MAX_SEGMENTS
+#endif // USE_REWORKED_BUFFERS
 
 //char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 //.dsb 256-(*&255)
 //_points2d       .dsb NB_MAX_POINTS*SIZEOF_2DPOINT
 
-#ifdef USE_REWORKED_BUFFERS
 //char points2d [NB_MAX_COORDS*SIZEOF_2DPOINT];
 //.dsb 256-(*&255)
 //_points2d       .dsb NB_MAX_COORDS*SIZEOF_2DPOINT
@@ -66,7 +67,6 @@ _points2aH          .dsb NB_MAX_POINTS
 _points2aV          .dsb NB_MAX_POINTS
 _points2dH          .dsb NB_MAX_POINTS
 _points2dL          .dsb NB_MAX_POINTS
-#endif //USE_REWORKED_BUFFERS
 
 //char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
 ; _particules       .dsb NB_MAX_PARTICULES*SIZEOF_PARTICULE
@@ -97,6 +97,9 @@ ptrpt2L .dsb 1
 ptrpt2H .dsb 1
 
 .text
+
+#ifndef USE_REWORKED_BUFFERS
+
 
 //  void doFastProjection(){
 _doFastProjection:
@@ -212,6 +215,7 @@ _glProject
 	jsr _doFastProjection
 	jmp leave :
 .)
+#endif  // USE_REWORKED_BUFFERS
 
 #ifdef USE_REWORKED_BUFFERS
 #ifdef USE_ASM_ARRAYSPROJECT

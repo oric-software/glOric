@@ -21,7 +21,7 @@
   */
 
 #ifdef USE_REWORKED_BUFFERS
-extern unsigned char nbPoints;
+
 extern signed char points3dX[];
 extern signed char points3dY[];
 extern signed char points3dZ[];
@@ -31,12 +31,11 @@ extern signed char points2aV[];
 extern signed char points2dH[];
 extern signed char points2dL[];
 #else
-char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
-unsigned char        nbPts = 0;
-char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
-
+extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
+extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
 #endif // USE_REWORKED_BUFFERS
 
+extern unsigned char nbPoints;
 extern unsigned char faces[];
 extern unsigned char nbFaces ;
 extern unsigned char segments[];
@@ -70,41 +69,13 @@ void dispInfo() {
 }
 
 
-#ifdef USE_REWORKED_BUFFERS
-#ifdef USE_C_ARRAYSPROJECT
-void glProjectArrays(){
-    unsigned char ii;
-    signed char x, y, z;
-    signed char ah, av;
-    unsigned int dist ;
-    unsigned char options=0;
 
-    for (ii = 0; ii < nbPoints; ii++){
-        x = points3dX[ii];
-        y = points3dY[ii];
-        z = points3dZ[ii];
-
-        projectPoint(x, y, z, options, &ah, &av, &dist);
-
-        points2aH[ii] = ah;
-        points2aV[ii] = av;
-        points2dH[ii] = (signed char)((dist & 0xFF00)>>8) && 0x00FF;
-        points2dL[ii] = (signed char) (dist & 0x00FF);
-
-    }
-}
-#endif // USE_C_ARRAYSPROJECT
-#endif // USE_REWORKED_BUFFERS
 
 void rtDemo() {
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
-#ifdef USE_REWORKED_BUFFERS
     nbPoints     = 0;
-#else
-    nbPts        = 0;
-#endif
     nbSegments   = 0;
     nbFaces      = 0;
     nbParticules = 0;
@@ -169,7 +140,7 @@ void rtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPts, 0);
+        glProject(points2d, points3d, nbPoints, 0);
 #endif
         // dur = dur - deek(0x276); printf ("dur glProject = %d \n", dur); get();
 
@@ -223,7 +194,7 @@ void rtGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPts, 0);
+        glProject(points2d, points3d, nbPoints, 0);
 #endif
     // dur = dur - deek(0x276);printf ("dur glProject = %d \n", dur);dur = deek(0x276);
 
@@ -266,7 +237,7 @@ void rtGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPts, 0);
+        glProject(points2d, points3d, nbPoints, 0);
 #endif
         initScreenBuffers();
 #ifdef USE_REWORKED_BUFFERS

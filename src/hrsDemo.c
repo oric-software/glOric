@@ -11,9 +11,9 @@
  *  GEOMETRY BUFFERS
  */
 
-char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
+extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
 unsigned char        nbPts = 0;
-char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
+extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
 extern char          faces[];
 extern unsigned char nbFaces;
 extern unsigned char segments[];

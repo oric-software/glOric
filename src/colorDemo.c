@@ -21,9 +21,6 @@
   */
  #ifdef USE_REWORKED_BUFFERS
 
-extern char points3d[];
-extern char points3d[];
-
 extern signed char points3dX[];
 extern signed char points3dY[];
 extern signed char points3dZ[];
@@ -39,8 +36,10 @@ extern unsigned char nbSegments;
 extern unsigned char nbParticules;
 
 #else
-char                 points3d[NB_MAX_POINTS * SIZEOF_3DPOINT];
-char                 points2d[NB_MAX_POINTS * SIZEOF_2DPOINT];
+
+extern char points3d[];
+extern char points2d[];
+
 
 extern unsigned char segments[];
 extern unsigned char particules[];

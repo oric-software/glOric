@@ -15,6 +15,12 @@
 #define USE_REWORKED_BUFFERS
 #endif
 
+#ifdef HRSDEMO
+#define USE_HIRES_RASTER
+#define SCREEN_WIDTH 240
+#define SCREEN_HEIGHT 200
+#endif
+
 #ifdef LRSDEMO
 #define ANGLEONLY
 #define USE_ZBUFFER
@@ -24,22 +30,18 @@
 #define SCREEN_HEIGHT 26
 #endif
 
+
+
 #ifdef COLORDEMO
 #define ANGLEONLY
 #define USE_ZBUFFER
 #define USE_COLOR
 #define USE_COLLISION_DETECTION
-#define USE_REWORKED_BUFFERS
+#undef USE_REWORKED_BUFFERS
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif
 
-
-#ifdef HRSDEMO
-#define USE_HIRES_RASTER
-#define SCREEN_WIDTH 240
-#define SCREEN_HEIGHT 200
-#endif
 
 #ifdef RTDEMO
 #define ANGLEONLY

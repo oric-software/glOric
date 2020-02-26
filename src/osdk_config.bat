@@ -19,6 +19,7 @@ SET OSDKFILE=%OSDKFILE% rtDemo
 SET OSDKFILE=%OSDKFILE% colorDemo
 SET OSDKFILE=%OSDKFILE% colors
 SET OSDKFILE=%OSDKFILE% glProject8
+SET OSDKFILE=%OSDKFILE% glProject
 SET OSDKFILE=%OSDKFILE% zbuffer
 SET OSDKFILE=%OSDKFILE% render\zbuff
 
@@ -38,7 +39,7 @@ SET OSDKFILE=%OSDKFILE% raster\buffer raster\line8
 SET OSDKFILE=%OSDKFILE% raster\fill8 raster\line
 SET OSDKFILE=%OSDKFILE% raster\filler
 
-SET OSDKFILE=%OSDKFILE% util\print util\screen util\display
+SET OSDKFILE=%OSDKFILE% util\print util\screen util\display util\rand
 
 :: List of files to put in the DSK file.
 :: Implicitely includes BUILD/%OSDKNAME%.TAP
