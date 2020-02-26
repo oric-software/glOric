@@ -393,15 +393,15 @@ void keyEvent()
 
 #ifdef USE_COLLISION_DETECTION
 unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
-    // unsigned int aX = abs(X);
-    // unsigned int aY = abs(Y);
-    // if ((aX <=13) && (aY <= 9)) {
-    //     if ((aY <= 7) && (X > -7)) {
-    //         return 1;
-    //     } else {
-    //         return 0;
-    //     }
-    // }
+    unsigned int aX = abs(X);
+    unsigned int aY = abs(Y);
+    if ((aX <=13) && (aY <= 9)) {
+        if ((aY <= 7) && (X > -7)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     return 1;
 }
 #endif
