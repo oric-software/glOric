@@ -642,7 +642,6 @@ void glDrawSegments() {
 #endif
         // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
         lrDrawLine();
-
     }
 }
 void glDrawParticules(){

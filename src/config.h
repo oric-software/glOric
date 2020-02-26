@@ -45,7 +45,7 @@
 #define ANGLEONLY
 #define USE_ZBUFFER
 #define USE_COLLISION_DETECTION
-#undef USE_COLOR
+#define USE_COLOR
 #define USE_REWORKED_BUFFERS
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
@@ -203,5 +203,6 @@
 #define KEY_DEL			$7f
 
 #undef USE_MULTI40
+#define USE_RANDOM
 
 #endif
