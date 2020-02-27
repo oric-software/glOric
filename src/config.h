@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO, RTDEMO
-#define RTDEMO
+#define COLORDEMO
 
 /*
  *  SCREEN DIMENSION
@@ -37,7 +37,8 @@
 #define USE_ZBUFFER
 #define USE_COLOR
 #define USE_COLLISION_DETECTION
-#undef USE_REWORKED_BUFFERS
+#define USE_REWORKED_BUFFERS
+#define USE_HORIZON
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif

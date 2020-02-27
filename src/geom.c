@@ -4,6 +4,24 @@
 
 #include "data/geom.h"
 
+#ifdef USE_COLOR
+#define TEXTURE_1 'b'
+#define TEXTURE_2 'g'
+#define TEXTURE_3 'y'
+#define TEXTURE_4 'c'
+#define TEXTURE_5 'm'
+#define TEXTURE_6 'r'
+#define TEXTURE_7 'f'
+#else
+#define TEXTURE_1 ','
+#define TEXTURE_2 '.'
+#define TEXTURE_3 'u'
+#define TEXTURE_4 '*'
+#define TEXTURE_5 'o'
+#define TEXTURE_6 '+'
+#define TEXTURE_7 'x'
+
+#endif // USE_COLOR
 
 
 #ifdef USE_REWORKED_BUFFERS
@@ -237,8 +255,8 @@ char geomRectangle []= {
 -1, 0, 2, 0,
  1, 0, 2, 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
- 0, 1, 2, '.',
- 1, 2, 3, '.',
+ 0, 1, 2, TEXTURE_4,
+ 1, 2, 3, TEXTURE_4,
 // Segment List : idxPoint1, idxPoint2, idxPoint3, character 
 0, 2, '|', 0,
 2, 3, '-', 0,
@@ -246,30 +264,6 @@ char geomRectangle []= {
 1, 0, '-', 0,
 // Particule List : idxPoint1, character 
 };
-
-
-char geomRectangle []= {
-/* Nb Coords = */ 4,
-/* Nb Faces = */ 2,
-/* Nb Segments = */ 4,
-/* Nb Particules = */ 0,
-// Coord List : X, Y, Z, unused
--1, 0, 0, 0, 
- 1, 0, 0, 0,
--1, 0, 2, 0,
- 1, 0, 2, 0,
-
-// Face List : idxPoint1, idxPoint2, idxPoint3, character 
- 0, 1, 2, '.',
- 1, 2, 3, '.',
-// Segment List : idxPoint1, idxPoint2, idxPoint3, character 
-0, 2, '|', 0,
-2, 3, '-', 0,
-3, 1, '|', 0,
-1, 0, '-', 0,
-// Particule List : idxPoint1, character 
-};
-
 
 #ifdef HRSDEMO
 
@@ -323,17 +317,76 @@ char geomCube []= {
 
 #if defined(COLORDEMO) || defined(LRSDEMO) || defined(RTDEMO)
 
-#ifdef USE_COLOR
-#define TEXTURE_1 'b'
-#define TEXTURE_2 'g'
-#define TEXTURE_3 'y'
 
-#else
-#define TEXTURE_1 ','
-#define TEXTURE_2 '.'
-#define TEXTURE_3 'u'
+#define TRUNC_HEIGHT 1
+#define PINE_WIDTH 1
+#define PINE_HEIGHT 3
 
-#endif // USE_COLOR
+char geomPine []= {
+/* Nb Coords = */ 7,
+/* Nb Faces = */ 2,
+/* Nb Segments = */ 1,
+/* Nb Particules = */ 0,
+// Coord List : X, Y, Z, unused
+0, 0, 0, 0,
+0, 0, TRUNC_HEIGHT, 0,
+PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
+0, PINE_WIDTH, TRUNC_HEIGHT, 0,
+-PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
+0, -PINE_WIDTH, TRUNC_HEIGHT, 0,
+0, 0, PINE_HEIGHT, 0,
+
+// Face List : idxPoint1, idxPoint2, idxPoint3, character 
+3, 5, 6, TEXTURE_2,
+2, 4, 6, TEXTURE_2,
+// Segment List : idxPoint1, idxPoint2, character , unused
+0, 1, '|', 0,
+// Particule List : idxPoint1, character 
+
+};
+#define TOWER_HEIGHT 3
+char geomTower []= {
+/* Nb Coords = */ 9,
+/* Nb Faces = */ 12,
+/* Nb Segments = */ 8,
+/* Nb Particules = */ 0,
+// Coord List : X, Y, Z, unused
+-1, -1,             0, 0,
+-1,  1,             0, 0,
+ 1,  1,             0, 0,
+ 1, -1,             0, 0,
+-1, -1, TOWER_HEIGHT, 0,
+-1,  1, TOWER_HEIGHT, 0,
+ 1,  1, TOWER_HEIGHT, 0,
+ 1, -1, TOWER_HEIGHT, 0,
+  0, 0, TOWER_HEIGHT+2, 0,
+// Face List : idxPoint1, idxPoint2, idxPoint3, character 
+0, 3, 4, TEXTURE_1,
+3, 4, 7, TEXTURE_1,
+0, 1, 4, TEXTURE_4,
+1, 4, 5, TEXTURE_4,
+1, 2, 5, TEXTURE_1,
+2, 5, 6, TEXTURE_1, 
+3, 2, 7, TEXTURE_4,
+2, 7, 6, TEXTURE_4,
+4, 5, 8, TEXTURE_6, 
+5, 6, 8, TEXTURE_6, 
+6, 7, 8, TEXTURE_6, 
+7, 4, 8, TEXTURE_6, 
+// Segment List : idxPoint1, idxPoint2, character, unused 
+0, 4, '|', 0,
+3, 7, '|', 0,
+2, 6, '|', 0,
+1, 5, '|', 0,
+4, 8, '/', 0,
+5, 8, '/', 0,
+6, 8, '/', 0,
+7, 8, '/', 0,
+// Particule List : idxPoint1, character 
+
+};
+
+
 char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
@@ -351,13 +404,13 @@ char geomHouse []= {
  1, 0, 3, 0,
 -1, 0, 3, 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
- 0, 1, 5, TEXTURE_1,
- 0, 4, 5, TEXTURE_1,
- 3, 2, 6, TEXTURE_1,
- 6, 3, 7, TEXTURE_1,
- 1, 2, 6, TEXTURE_2,
- 1, 6, 5, TEXTURE_2,
- 5, 6, 9, TEXTURE_2,
+ 0, 1, 5, TEXTURE_6,
+ 0, 4, 5, TEXTURE_6,
+ 3, 2, 6, TEXTURE_6,
+ 6, 3, 7, TEXTURE_6,
+ 1, 2, 6, TEXTURE_5,
+ 1, 6, 5, TEXTURE_5,
+ 5, 6, 9, TEXTURE_5,
  4, 5, 9, TEXTURE_3,
  4, 9, 8, TEXTURE_3,
  7, 6, 9, TEXTURE_3,

@@ -85,8 +85,11 @@ void colorDemo() {
     // addPlan(0, -6, 6, 64, 'b');
     // addPlan(6, 0, 6, 0, 'y');
     // addPlan(-6, 0, 6, 0, 'g');
-    addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
-    addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
+    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
+    addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
+    // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
+    
     // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
 #ifdef TARGET_ORIX
@@ -111,21 +114,18 @@ void colorIntro() {
     enterSC();
 #endif  // TARGET_ORIX
 
-    CamPosX = 0;
+    CamPosX = 74;
     CamPosY = 0;
-    CamPosZ = 3;
+    CamPosZ = 6;
 
-    CamRotZ = 0;
+    CamRotZ = -127;
     CamRotX = 0;
     i       = 0;
 
-    for (j = 0; j < 32; j++) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
-        i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
- #ifdef USE_REWORKED_BUFFERS
+    for (j = 0; j < 50; j++) {
+        forward();
+#ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
         glProject(points2d, points3d, nbPoints, 0);
@@ -144,6 +144,57 @@ void colorIntro() {
 
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
     }
+
+
+
+    for (j = 0; j < 64; j++) {
+        CamPosX = traj[i++];
+        CamPosY = traj[i++];
+        CamRotZ = traj[i++];
+        i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
+
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif
+
+        initScreenBuffers();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawFaces();
+        glDrawSegments();
+        glDrawParticules();
+#else
+        lrDrawFaces(points2d, faces, nbFaces);
+        lrDrawSegments(points2d, segments, nbSegments);
+        lrDrawParticules(points2d, particules, nbParticules);
+#endif //USE_REWORKED_BUFFERS
+
+        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+    }
+
+    for (j = 0; j < 64; j++) {
+        backward();
+#ifdef USE_REWORKED_BUFFERS
+        glProjectArrays();
+#else
+        glProject(points2d, points3d, nbPoints, 0);
+#endif
+
+        initScreenBuffers();
+#ifdef USE_REWORKED_BUFFERS
+        glDrawFaces();
+        glDrawSegments();
+        glDrawParticules();
+#else
+        lrDrawFaces(points2d, faces, nbFaces);
+        lrDrawSegments(points2d, segments, nbSegments);
+        lrDrawParticules(points2d, particules, nbParticules);
+#endif //USE_REWORKED_BUFFERS
+
+        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+    }
+
 #ifdef TARGET_ORIX
 #else
     leaveSC();
@@ -248,15 +299,15 @@ void colorGameLoop() {
 
 #ifdef USE_COLLISION_DETECTION
 unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
-    // unsigned int aX = abs(X);
-    // unsigned int aY = abs(Y);
-    // if ((aX <=13) && (aY <= 9)) {
-    //     if ((aY <= 7) && (X > -7)) {
-    //         return 1;
-    //     } else {
-    //         return 0;
-    //     }
-    // }
+    unsigned int aX = abs(X);
+    unsigned int aY = abs(Y);
+    if ((aX <=13) && (aY <= 9)) {
+        if ((aY <= 7) && (X > -7)) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
     return 1;
 }
 #endif

@@ -247,10 +247,16 @@ initScreenBuffersLoop_01:
     dex
     bne initScreenBuffersLoop_01
 
+#ifndef USE_HORIZON
     lda #$20
+#endif // USE_HORIZON
+
     ldx #SCREEN_WIDTH-1
 
 initScreenBuffersLoop_02:
+#ifdef USE_HORIZON
+    lda #$20
+#endif // USE_HORIZON
     sta _fbuffer+SCREEN_WIDTH*0 , x
     sta _fbuffer+SCREEN_WIDTH*1 , x
     sta _fbuffer+SCREEN_WIDTH*2 , x
@@ -265,6 +271,9 @@ initScreenBuffersLoop_02:
     sta _fbuffer+SCREEN_WIDTH*11 , x
     sta _fbuffer+SCREEN_WIDTH*12 , x
     sta _fbuffer+SCREEN_WIDTH*13 , x
+#ifdef USE_HORIZON
+    lda #102 ;; light green
+#endif // USE_HORIZON
     sta _fbuffer+SCREEN_WIDTH*14 , x
     sta _fbuffer+SCREEN_WIDTH*15 , x
     sta _fbuffer+SCREEN_WIDTH*16 , x
