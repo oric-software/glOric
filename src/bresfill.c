@@ -203,6 +203,7 @@ void prepare_bresrun() {
 }
 #endif  // USE_C_BRESFILL
 
+#ifdef USE_C_FILL8
 void fill8() {
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
     prepare_bresrun();
@@ -210,8 +211,12 @@ void fill8() {
     //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
     if (pDepY != pArr1Y) {
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
+        //a2 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
         A1X     = pDepX;
+        A2X     = pDepX;
         A1Y     = pDepY;
+        A2Y     = pDepY;
+
         A1destX = pArr1X;
         A1destY = pArr1Y;
         A1dX    = abs(A1destX - A1X);
@@ -223,9 +228,6 @@ void fill8() {
         A1sY      = (A1Y < A1destY) ? 1 : -1;
         A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
 
-        //a2 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
-        A2X     = pDepX;
-        A2Y     = pDepY;
         A2destX = pArr2X;
         A2destY = pArr2Y;
         A2dX    = abs(A2destX - A2X);
@@ -309,6 +311,7 @@ void fill8() {
         }
     }
 }
+#endif // USE_C_FILL8
 
 #ifdef USE_C_HFILL
 
