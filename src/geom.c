@@ -248,6 +248,29 @@ char geomRectangle []= {
 };
 
 
+char geomRectangle []= {
+/* Nb Coords = */ 4,
+/* Nb Faces = */ 2,
+/* Nb Segments = */ 4,
+/* Nb Particules = */ 0,
+// Coord List : X, Y, Z, unused
+-1, 0, 0, 0, 
+ 1, 0, 0, 0,
+-1, 0, 2, 0,
+ 1, 0, 2, 0,
+
+// Face List : idxPoint1, idxPoint2, idxPoint3, character 
+ 0, 1, 2, '.',
+ 1, 2, 3, '.',
+// Segment List : idxPoint1, idxPoint2, idxPoint3, character 
+0, 2, '|', 0,
+2, 3, '-', 0,
+3, 1, '|', 0,
+1, 0, '-', 0,
+// Particule List : idxPoint1, character 
+};
+
+
 #ifdef HRSDEMO
 
 char geomCube []= {
@@ -300,6 +323,17 @@ char geomCube []= {
 
 #if defined(COLORDEMO) || defined(LRSDEMO) || defined(RTDEMO)
 
+#ifdef USE_COLOR
+#define TEXTURE_1 'b'
+#define TEXTURE_2 'g'
+#define TEXTURE_3 'y'
+
+#else
+#define TEXTURE_1 ','
+#define TEXTURE_2 '.'
+#define TEXTURE_3 'u'
+
+#endif // USE_COLOR
 char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
@@ -317,17 +351,17 @@ char geomHouse []= {
  1, 0, 3, 0,
 -1, 0, 3, 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
- 0, 1, 5, ',',
- 0, 4, 5, ',',
- 3, 2, 6, ',',
- 6, 3, 7, ',',
- 1, 2, 6, '.',
- 1, 6, 5, '.',
- 5, 6, 9, '.',
- 4, 5, 9, 'u',
- 4, 9, 8, 'u',
- 7, 6, 9, 'u',
- 7, 9, 8, 'u',
+ 0, 1, 5, TEXTURE_1,
+ 0, 4, 5, TEXTURE_1,
+ 3, 2, 6, TEXTURE_1,
+ 6, 3, 7, TEXTURE_1,
+ 1, 2, 6, TEXTURE_2,
+ 1, 6, 5, TEXTURE_2,
+ 5, 6, 9, TEXTURE_2,
+ 4, 5, 9, TEXTURE_3,
+ 4, 9, 8, TEXTURE_3,
+ 7, 6, 9, TEXTURE_3,
+ 7, 9, 8, TEXTURE_3,
 // Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '-', 0,
 1, 2, '-', 0,
