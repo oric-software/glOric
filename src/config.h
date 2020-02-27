@@ -2,8 +2,8 @@
 #ifndef CONFIG_H
 #define CONFIG_H
 
-// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO, RTDEMO
-#define COLORDEMO
+// Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO, RTDEMO, PROFBENCH
+#define PROFBENCH
 
 /*
  *  SCREEN DIMENSION
@@ -47,12 +47,26 @@
 #ifdef RTDEMO
 #define ANGLEONLY
 #define USE_ZBUFFER
+#define USE_RT_KEYBOARD
 #define USE_COLLISION_DETECTION
 #define USE_COLOR
 #define USE_REWORKED_BUFFERS
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #endif // RTDEMO
+
+#ifdef PROFBENCH
+#define ANGLEONLY
+#define USE_ZBUFFER
+#define USE_RT_KEYBOARD
+#undef USE_COLLISION_DETECTION
+#define USE_COLOR
+#define USE_REWORKED_BUFFERS
+#define USE_PROFILER
+#define SCREEN_WIDTH 40
+#define SCREEN_HEIGHT 26
+#endif // PROFBENCH
+
 
 /*
  *  BUFFERS DIMENSION
@@ -206,6 +220,6 @@
 #define KEY_DEL			$7f
 
 #undef USE_MULTI40
-#define USE_RANDOM
+#undef USE_RANDOM
 
 #endif

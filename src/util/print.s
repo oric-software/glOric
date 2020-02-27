@@ -236,6 +236,8 @@ end_loop_char
 .)
 	rts
 
+
+/*
 ;
 ; The message and display position will be read from the stack.
 ; sp+0 => X coordinate
@@ -279,4 +281,4 @@ write
 	sta $0123
 .)
 	rts
-
+*/

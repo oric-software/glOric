@@ -14,5 +14,10 @@ extern int CamPosZ;
 extern char CamRotZ;			// -128 -> 127 unit : 2PI/(2^8 - 1)
 extern char CamRotX;
 
+// Geometry buffers ;
+extern unsigned char nbPoints;
+extern unsigned char nbFaces;
+extern unsigned char nbSegments;
+extern unsigned char nbParticules;
 
 #endif

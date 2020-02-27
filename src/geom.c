@@ -315,7 +315,7 @@ char geomCube []= {
 
 #endif // HRSDEMO
 
-#if defined(COLORDEMO) || defined(LRSDEMO) || defined(RTDEMO)
+#if defined(COLORDEMO) || defined(LRSDEMO) || defined(RTDEMO) || defined(PROFBENCH)
 
 
 #define TRUNC_HEIGHT 1

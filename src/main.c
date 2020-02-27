@@ -19,4 +19,7 @@ void main() {
 #ifdef RTDEMO
     rtDemo();
 #endif // RTDEMO
+#ifdef PROFBENCH
+    profbench();
+#endif // PROFBENCH
 }

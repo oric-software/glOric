@@ -25,7 +25,7 @@ zpTemp02			.byt 0
 #define IRQ_ADDRLO $0245
 #define IRQ_ADDRHI $0246
 
-
+#undef TRANSPARENT_KEYBOARD
 
 tab_ascii
     .asc "7","N","5","V",KET_RCTRL,"1","X","3"
@@ -37,12 +37,12 @@ tab_ascii
     .asc "Y","H","G","E",0,"A","S","W"
     .asc "8","L","0","/",KEY_RSHIFT,KEY_RETURN,0,"="
 
-#ifdef RTDEMO
+#ifdef USE_RT_KEYBOARD
 ; The virtual Key Matrix
 _KeyBank .dsb 8
 _oldKeyBank .dsb 8
+#endif // USE_RT_KEYBOARD
 
-#endif // RTDEMO
 
 irq_handler:
 
@@ -53,15 +53,18 @@ irq_handler:
 	pha
 
 	; This handler runs at 100hz 
-#ifdef RTDEMO
+#ifdef USE_RT_KEYBOARD
 
 	; jsr _task_100Hz ;; FIXME !! Why does this line prevent COLORDEMO from compiling ?
 
-	;Clear IRQ event  FIXME !!!
-	; lda via_t1cl 
+	
+#ifndef TRANSPARENT_KEYBOARD
+    ;Clear IRQ event
+	lda via_t1cl 
+#endif TRANSPARENT_KEYBOARD
 
 	jsr ReadKeyboard 
-#endif // RTDEMO
+#endif // USE_RT_KEYBOARD
 
 	pla
 	tay
@@ -69,8 +72,12 @@ irq_handler:
 	tax
 	pla
 
+#ifdef TRANSPARENT_KEYBOARD
 jmp_old_handler
-	jmp 0000
+ 	jmp 0000
+#else
+    rti
+#endif TRANSPARENT_KEYBOARD
 
 
 
@@ -93,15 +100,17 @@ _leaveSC:
     rts
     
     
-#ifdef RTDEMO
+#ifdef USE_RT_KEYBOARD
 
 _kernelInit:
 .(
+#ifdef TRANSPARENT_KEYBOARD
 	; Save the old handler value
 	lda IRQ_ADDRLO
 	sta jmp_old_handler+1
 	lda IRQ_ADDRHI
 	sta jmp_old_handler+2
+#endif TRANSPARENT_KEYBOARD
 
 	;Since we are starting from when the standard irq has already been 
 	;setup, we need not worry about ensuring one irq event and/or right 
@@ -234,4 +243,4 @@ skip2   ;Proceed to next row
         rts 
 .)  
 
-#endif // RTDEMO
+#endif // USE_RT_KEYBOARD
