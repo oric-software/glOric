@@ -6,6 +6,9 @@
 #include "raster\bresfill.h"
 #include "render\zbuffer.h"
 #include "util\util.h"
+#ifdef USE_PROFILER
+#include "profile.h"
+#endif // USE_PROFILER
 
 // signed char _brX;
 // signed char _brY;
@@ -456,7 +459,9 @@ void glDrawFaces() {
     unsigned char m1, m2, m3;
     unsigned char v1, v2, v3;
 
-
+#ifdef USE_PROFILER
+PROFILE_ENTER(ROUTINE_GLDRAWFACES);
+#endif // USE_PROFILER
     // printf ("%d Points, %d Segments, %d Faces\n", nbPoints, nbSegments, nbFaces); get();
     for (ii = 0; ii < nbFaces; ii++) {
 
@@ -594,6 +599,10 @@ void glDrawFaces() {
             // _1_ nothing to do
         }
     }
+#ifdef USE_PROFILER
+PROFILE_LEAVE(ROUTINE_GLDRAWFACES);
+#endif // USE_PROFILER
+
 }
 void glDrawSegments() {
     unsigned char ii = 0;
@@ -602,6 +611,9 @@ void glDrawSegments() {
     unsigned char offPt1, offPt2;
     int           dmoy;
 
+#ifdef USE_PROFILER
+PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
+#endif // USE_PROFILER
 
     for (ii = 0; ii < nbSegments; ii++) {
 
@@ -643,12 +655,22 @@ void glDrawSegments() {
         // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
         lrDrawLine();
     }
+#ifdef USE_PROFILER
+PROFILE_LEAVE(ROUTINE_GLDRAWSEGMENTS);
+#endif // USE_PROFILER
+
+
 }
 void glDrawParticules(){
     unsigned char ii = 0;
 
     unsigned char idxPt, offPt, dchar;
     unsigned int  dist;
+
+#ifdef USE_PROFILER
+PROFILE_ENTER(ROUTINE_GLDRAWPARTICULES);
+#endif // USE_PROFILER
+
     for (ii = 0; ii < nbParticules; ii++) {
         idxPt    = particulesPt[ii];  // ii*SIZEOF_SEGMENT +0
         ch2disp = particulesChar[ii];    // ii*SIZEOF_SEGMENT +2
@@ -664,6 +686,10 @@ void glDrawParticules(){
 #endif
 
     }
+#ifdef USE_PROFILER
+PROFILE_LEAVE(ROUTINE_GLDRAWPARTICULES);
+#endif // USE_PROFILER
+
 }
 
 #endif

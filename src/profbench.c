@@ -40,19 +40,39 @@ void profbench() {
 
     kernelInit();
 
-    
-    while (1 == 1) {
+    ProfilerInitialize();
+
+    while (1) {
+
+        ProfilerNextFrame();
+
+        PROFILE_ENTER(ROUTINE_GLOBAL);
+
         keyEvent();
+
+        PROFILE_ENTER(ROUTINE_GLPROJECTARRAYS);
         glProjectArrays();
+        PROFILE_LEAVE(ROUTINE_GLPROJECTARRAYS);
+
+
+        PROFILE_ENTER(ROUTINE_INITSCREENBUFFERS);
         initScreenBuffers();
+        PROFILE_LEAVE(ROUTINE_INITSCREENBUFFERS);
+
         glDrawFaces();
         glDrawSegments();
         glDrawParticules();
-        // printf ("coucou\n");
+
+        PROFILE_ENTER(ROUTINE_BUFFER2SCREEN);
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        PROFILE_LEAVE(ROUTINE_BUFFER2SCREEN);
+
+        PROFILE_LEAVE(ROUTINE_GLOBAL);
+
+        ProfilerDisplay();
 
     }
-    
+    ProfilerTerminate();
 }
 void move(char key) {
     switch (key) {
