@@ -1,3 +1,5 @@
+;; found at http://osdk.org/index.php?page=articles&ref=ART11
+
 #include "config.h"
 
 #ifdef USE_PROFILER
