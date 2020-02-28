@@ -581,7 +581,7 @@ hfill_done:
 
 #endif // USE_ASM_HFILL
 
-#ifdef USE_ASM_BRESFILL
+#ifdef USE_ASM_ANGLE2SCREEN
 
 
 // void angle2screen() {
@@ -640,7 +640,7 @@ _angle2screen:
 .)
 	rts
 
-#endif
+#endif // USE_ASM_ANGLE2SCREEN
 
 #ifdef USE_ASM_BRESFILL
 
@@ -777,601 +777,476 @@ prepare_bresrun_Lbresfill130
 #ifdef USE_ASM_FILL8
 _fill8:
 .(
-	ldx #6 : lda #7 : jsr enter :
+
+	// save context
+    pha
+	lda reg0: pha: lda reg1 : pha 
+
+    // prepare_bresrun();
 	ldy #0 : jsr _prepare_bresrun :
-	lda _pDepY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _pArr1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : bne *+5 : jmp fill8_Lbresfill129 :
-	lda _pDepX : sta tmp0 :
-	lda tmp0 : sta _A1X :
-	lda tmp0 : sta _A2X :
-	lda _pDepY : sta tmp0 :
-	lda tmp0 : sta _A1Y :
-	lda tmp0 : sta _A2Y :
-	lda _pArr1X : sta tmp0 :
-	lda tmp0 : sta _A1destX :
-	lda _pArr1Y : sta tmp0 :
-	lda tmp0 : sta _A1destY :
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill132 : :
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg0 : lda tmp0+1 : sta reg0+1 :
-	jmp fill8_Lbresfill133 :
-fill8_Lbresfill132
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg0 : lda tmp0+1 : sta reg0+1 :
-fill8_Lbresfill133
-	lda reg0 : sta tmp0 : lda reg0+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dX :
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill134 : :
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg0 : lda tmp0+1 : sta reg0+1 :
-	jmp fill8_Lbresfill135 :
-fill8_Lbresfill134
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg0 : lda tmp0+1 : sta reg0+1 :
-fill8_Lbresfill135
-	lda reg0 : sta tmp0 : lda reg0+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dY :
-	lda _A1dX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1dY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1err :
-	lda _A1err : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #<(64) : cmp tmp0 : lda #>(64) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp fill8_Lbresfill138 :skip : .) : : :
-	lda tmp0 : cmp #<(-63) : lda tmp0+1 : sbc #>(-63) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill136 : :
-fill8_Lbresfill138
-	jmp leave :
-fill8_Lbresfill136
-	lda _A1X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill140 : :
-	lda #<(1) : sta reg1 : lda #>(1) : sta reg1+1 :
-	jmp fill8_Lbresfill141 :
-fill8_Lbresfill140
-	lda #<(-1) : sta reg1 : lda #>(-1) : sta reg1+1 :
-fill8_Lbresfill141
-	lda reg1 : sta tmp0 : lda reg1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1sX :
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill142 : :
-	lda #<(1) : sta reg1 : lda #>(1) : sta reg1+1 :
-	jmp fill8_Lbresfill143 :
-fill8_Lbresfill142
-	lda #<(-1) : sta reg1 : lda #>(-1) : sta reg1+1 :
-fill8_Lbresfill143
-	lda reg1 : sta tmp0 : lda reg1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1sY :
-	lda _A1X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill144 :
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill144 :
-	lda #<(1) : sta reg1 : lda #>(1) : sta reg1+1 :
-	jmp fill8_Lbresfill145 :
-fill8_Lbresfill144
-	lda #<(0) : sta reg1 : lda #>(0) : sta reg1+1 :
-fill8_Lbresfill145
-	lda reg1 : sta tmp0 : lda reg1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1arrived :
-	lda _pArr2X : sta tmp0 :
-	lda tmp0 : sta _A2destX :
-	lda _pArr2Y : sta tmp0 :
-	lda tmp0 : sta _A2destY :
-	lda _A2destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill146 : :
-	lda _A2destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg1 : lda tmp0+1 : sta reg1+1 :
-	jmp fill8_Lbresfill147 :
-fill8_Lbresfill146
-	lda _A2destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg1 : lda tmp0+1 : sta reg1+1 :
-fill8_Lbresfill147
-	lda reg1 : sta tmp0 : lda reg1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2dX :
-	lda _A2destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill148 : :
-	lda _A2destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg1 : lda tmp0+1 : sta reg1+1 :
-	jmp fill8_Lbresfill149 :
-fill8_Lbresfill148
-	lda _A2destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg1 : lda tmp0+1 : sta reg1+1 :
-fill8_Lbresfill149
-	lda reg1 : sta tmp0 : lda reg1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2dY :
-	lda _A2dX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2dY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2err :
-	lda _A2err : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #<(64) : cmp tmp0 : lda #>(64) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp fill8_Lbresfill152 :skip : .) : : :
-	lda tmp0 : cmp #<(-63) : lda tmp0+1 : sbc #>(-63) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill150 : :
-fill8_Lbresfill152
-	jmp leave :
-fill8_Lbresfill150
-	lda _A2X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill154 : :
-	lda #<(1) : sta reg2 : lda #>(1) : sta reg2+1 :
-	jmp fill8_Lbresfill155 :
-fill8_Lbresfill154
-	lda #<(-1) : sta reg2 : lda #>(-1) : sta reg2+1 :
-fill8_Lbresfill155
-	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2sX :
-	lda _A2Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill156 : :
-	lda #<(1) : sta reg2 : lda #>(1) : sta reg2+1 :
-	jmp fill8_Lbresfill157 :
-fill8_Lbresfill156
-	lda #<(-1) : sta reg2 : lda #>(-1) : sta reg2+1 :
-fill8_Lbresfill157
-	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2sY :
-	lda _A2X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill158 :
-	lda _A2Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill158 :
-	lda #<(1) : sta reg2 : lda #>(1) : sta reg2+1 :
-	jmp fill8_Lbresfill159 :
-fill8_Lbresfill158
-	lda #<(0) : sta reg2 : lda #>(0) : sta reg2+1 :
-fill8_Lbresfill159
-	lda reg2 : sta tmp0 : lda reg2+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2arrived :
-	ldy #0 : jsr _hfill :
-	jmp fill8_Lbresfill161 :
-fill8_Lbresfill160
-	ldy #0 : jsr _A1stepY :
-	ldy #0 : jsr _A2stepY :
-	ldy #0 : jsr _hfill :
-fill8_Lbresfill161
-	lda _A1arrived : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : bne *+5 : jmp fill8_Lbresfill160 :
-	lda _pArr1X : sta tmp0 :
-	lda tmp0 : sta _A1X :
-	lda _pArr1Y : sta tmp0 :
-	lda tmp0 : sta _A1Y :
-	lda _pArr2X : sta tmp0 :
-	lda tmp0 : sta _A1destX :
-	lda _pArr2Y : sta tmp0 :
-	lda tmp0 : sta _A1destY :
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill164 : :
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg3 : lda tmp0+1 : sta reg3+1 :
-	jmp fill8_Lbresfill165 :
-fill8_Lbresfill164
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg3 : lda tmp0+1 : sta reg3+1 :
-fill8_Lbresfill165
-	lda reg3 : sta tmp0 : lda reg3+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dX :
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill166 : :
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg3 : lda tmp0+1 : sta reg3+1 :
-	jmp fill8_Lbresfill167 :
-fill8_Lbresfill166
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg3 : lda tmp0+1 : sta reg3+1 :
-fill8_Lbresfill167
-	lda reg3 : sta tmp0 : lda reg3+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dY :
-	lda _A1dX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1dY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1err :
-	lda _A1X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill168 : :
-	lda #<(1) : sta reg3 : lda #>(1) : sta reg3+1 :
-	jmp fill8_Lbresfill169 :
-fill8_Lbresfill168
-	lda #<(-1) : sta reg3 : lda #>(-1) : sta reg3+1 :
-fill8_Lbresfill169
-	lda reg3 : sta tmp0 : lda reg3+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1sX :
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill170 : :
-	lda #<(1) : sta reg3 : lda #>(1) : sta reg3+1 :
-	jmp fill8_Lbresfill171 :
-fill8_Lbresfill170
-	lda #<(-1) : sta reg3 : lda #>(-1) : sta reg3+1 :
-fill8_Lbresfill171
-	lda reg3 : sta tmp0 : lda reg3+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1sY :
-	lda _A1X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill172 :
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill172 :
-	lda #<(1) : sta reg3 : lda #>(1) : sta reg3+1 :
-	jmp fill8_Lbresfill173 :
-fill8_Lbresfill172
-	lda #<(0) : sta reg3 : lda #>(0) : sta reg3+1 :
-fill8_Lbresfill173
-	lda reg3 : sta tmp0 : lda reg3+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1arrived :
-	jmp fill8_Lbresfill175 :
-fill8_Lbresfill174
-	ldy #0 : jsr _A1stepY :
-	ldy #0 : jsr _A2stepY :
-	ldy #0 : jsr _hfill :
-fill8_Lbresfill175
-	lda _A1arrived : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : beq *+5 : jmp fill8_Lbresfill177 :
-	lda _A2arrived : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : bne *+5 : jmp fill8_Lbresfill174 :
-fill8_Lbresfill177
-	jmp fill8_Lbresfill130 :
-fill8_Lbresfill129
-	lda _pDepX : sta tmp0 :
-	lda tmp0 : sta _A1X :
-	lda _pDepY : sta tmp0 :
-	lda tmp0 : sta _A1Y :
-	lda _pArr2X : sta tmp0 :
-	lda tmp0 : sta _A1destX :
-	lda _pArr2Y : sta tmp0 :
-	lda tmp0 : sta _A1destY :
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill179 : :
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg4 : lda tmp0+1 : sta reg4+1 :
-	jmp fill8_Lbresfill180 :
-fill8_Lbresfill179
-	lda _A1destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg4 : lda tmp0+1 : sta reg4+1 :
-fill8_Lbresfill180
-	lda reg4 : sta tmp0 : lda reg4+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dX :
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill181 : :
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg4 : lda tmp0+1 : sta reg4+1 :
-	jmp fill8_Lbresfill182 :
-fill8_Lbresfill181
-	lda _A1destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg4 : lda tmp0+1 : sta reg4+1 :
-fill8_Lbresfill182
-	lda reg4 : sta tmp0 : lda reg4+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1dY :
-	lda _A1dX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1dY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1err :
-	lda _A1err : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #<(64) : cmp tmp0 : lda #>(64) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp fill8_Lbresfill185 :skip : .) : : :
-	lda tmp0 : cmp #<(-63) : lda tmp0+1 : sbc #>(-63) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill183 : :
-fill8_Lbresfill185
-	jmp leave :
-fill8_Lbresfill183
-	lda _A1X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill187 : :
-	lda #<(1) : sta reg5 : lda #>(1) : sta reg5+1 :
-	jmp fill8_Lbresfill188 :
-fill8_Lbresfill187
-	lda #<(-1) : sta reg5 : lda #>(-1) : sta reg5+1 :
-fill8_Lbresfill188
-	lda reg5 : sta tmp0 : lda reg5+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1sX :
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill189 : :
-	lda #<(1) : sta reg5 : lda #>(1) : sta reg5+1 :
-	jmp fill8_Lbresfill190 :
-fill8_Lbresfill189
-	lda #<(-1) : sta reg5 : lda #>(-1) : sta reg5+1 :
-fill8_Lbresfill190
-	lda reg5 : sta tmp0 : lda reg5+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1sY :
-	lda _A1X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill191 :
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A1destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill191 :
-	lda #<(1) : sta reg5 : lda #>(1) : sta reg5+1 :
-	jmp fill8_Lbresfill192 :
-fill8_Lbresfill191
-	lda #<(0) : sta reg5 : lda #>(0) : sta reg5+1 :
-fill8_Lbresfill192
-	lda reg5 : sta tmp0 : lda reg5+1 : sta tmp0+1 :
-	lda tmp0 : sta _A1arrived :
-	lda _pArr1X : sta tmp0 :
-	lda tmp0 : sta _A2X :
-	lda _pArr1Y : sta tmp0 :
-	lda tmp0 : sta _A2Y :
-	lda _pArr2X : sta tmp0 :
-	lda tmp0 : sta _A2destX :
-	lda _pArr2Y : sta tmp0 :
-	lda tmp0 : sta _A2destY :
-	lda _A2destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill193 : :
-	lda _A2destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg5 : lda tmp0+1 : sta reg5+1 :
-	jmp fill8_Lbresfill194 :
-fill8_Lbresfill193
-	lda _A2destX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2X : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg5 : lda tmp0+1 : sta reg5+1 :
-fill8_Lbresfill194
-	lda reg5 : sta tmp0 : lda reg5+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2dX :
-	lda _A2destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : cmp #<(0) : lda tmp0+1 : sbc #>(0) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill195 : :
-	lda _A2destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta reg5 : lda tmp0+1 : sta reg5+1 :
-	jmp fill8_Lbresfill196 :
-fill8_Lbresfill195
-	lda _A2destY : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2Y : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	sec : lda tmp0 : sbc tmp1 : sta tmp0 : lda tmp0+1 : sbc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta reg5 : lda tmp0+1 : sta reg5+1 :
-fill8_Lbresfill196
-	lda reg5 : sta tmp0 : lda reg5+1 : sta tmp0+1 :
-	lda #0 : sec : sbc tmp0 : sta tmp0 : lda #0 : sbc tmp0+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2dY :
-	lda _A2dX : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2dY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	clc : lda tmp0 : adc tmp1 : sta tmp0 : lda tmp0+1 : adc tmp1+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2err :
-	lda _A2err : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda #<(64) : cmp tmp0 : lda #>(64) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp fill8_Lbresfill199 :skip : .) : : :
-	lda tmp0 : cmp #<(-63) : lda tmp0+1 : sbc #>(-63) : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill197 : :
-fill8_Lbresfill199
-	jmp leave :
-fill8_Lbresfill197
-	lda _A2X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill201 : :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp fill8_Lbresfill202 :
-fill8_Lbresfill201
-	lda #<(-1) : sta reg6 : lda #>(-1) : sta reg6+1 :
-fill8_Lbresfill202
-	lda reg6 : sta tmp0 : lda reg6+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2sX :
-	lda _A2Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : cmp tmp1 : lda tmp0+1 : sbc tmp1+1 : bvc *+4 : eor #$80 : bmi *+5 : jmp fill8_Lbresfill203 : :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp fill8_Lbresfill204 :
-fill8_Lbresfill203
-	lda #<(-1) : sta reg6 : lda #>(-1) : sta reg6+1 :
-fill8_Lbresfill204
-	lda reg6 : sta tmp0 : lda reg6+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2sY :
-	lda _A2X : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destX : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill205 :
-	lda _A2Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda _A2destY : sta tmp1 :
-	lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
-	lda tmp0 : eor tmp1 : sta tmp : lda tmp0+1 : eor tmp1+1 : ora tmp : beq *+5 : jmp fill8_Lbresfill205 :
-	lda #<(1) : sta reg6 : lda #>(1) : sta reg6+1 :
-	jmp fill8_Lbresfill206 :
-fill8_Lbresfill205
-	lda #<(0) : sta reg6 : lda #>(0) : sta reg6+1 :
-fill8_Lbresfill206
-	lda reg6 : sta tmp0 : lda reg6+1 : sta tmp0+1 :
-	lda tmp0 : sta _A2arrived :
-	ldy #0 : jsr _hfill :
-	jmp fill8_Lbresfill208 :
-fill8_Lbresfill207
-	ldy #0 : jsr _A1stepY :
-	ldy #0 : jsr _A2stepY :
-	ldy #0 : jsr _hfill :
-fill8_Lbresfill208
-	lda _A1arrived : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : beq *+5 : jmp fill8_Lbresfill210 :
-	lda _A2arrived : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : ora tmp0+1 : bne *+5 : jmp fill8_Lbresfill207 :
-fill8_Lbresfill210
-fill8_Lbresfill130
-	jmp leave :
+
+    // if (pDepY != pArr1Y) {
+	lda _pDepY
+	cmp _pArr1Y
+	bne fill8_DepYDiffArr1Y
+	jmp fill8_DepYEqualsArr1Y
+fill8_DepYDiffArr1Y:
+    //     A1X     = pDepX;
+    //     A2X     = pDepX;
+    //     A1Y     = pDepY;
+    //     A2Y     = pDepY;
+		lda _pDepX: sta _A1X: sta _A2X
+		lda _pDepY: sta _A1Y: sta _A2Y
+
+    //     A1destX = pArr1X;
+    //     A1destY = pArr1Y;
+		lda _pArr1X : sta _A1destX
+		lda _pArr1Y : sta _A1destY
+
+    //     A1dX    = abs(A1destX - A1X);
+    //     A1sX      = (A1X < A1destX) ? 1 : -1;
+		sec
+		lda _A1destX
+		sbc _A1X
+.(
+		bpl positiv_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A1dX
+		lda #$FF
+		sta _A1sX
+		jmp fill8_computeDy_01
+	positiv_02:
+		sta _A1dX
+		lda #$01
+		sta _A1sX
+.)
+
+fill8_computeDy_01:		
+    //     A1dY    = -abs(A1destY - A1Y);
+    //     A1sY      = (A1Y < A1destY) ? 1 : -1;
+		sec
+		lda _A1destY
+		sbc _A1Y
+.(
+		bmi negativ_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A1dY
+		lda #$01 
+		sta _A1sY
+		jmp fill8_computeErr_01
+	negativ_02:
+		sta _A1dY
+    	lda #$FF
+    	sta _A1sY
+.)
+
+fill8_computeErr_01:
+    //     A1err   = A1dX + A1dY;
+		clc
+		lda _A1dX
+		adc _A1dY
+		sta _A1err
+
+    //     if ((A1err > 64) || (A1err < -63))
+    //         return;
+
+	    sec
+		sbc #$40
+		bvc *+4
+		eor #$80
+		bmi fill8_goon_01
+		jmp fill8_done
+fill8_goon_01:
+		lda _A1err
+		sec
+		sbc #$C0
+		bvc *+4
+		eor #$80
+		bpl fill8_goon_02
+		jmp fill8_done
+fill8_goon_02:
+    //     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+		lda #0
+		sta _A1arrived
+		
+		lda _A1X
+		cmp _A1destX
+		bne fill8_computeA2
+		
+		lda _A1Y
+		cmp _A1destY
+		bne fill8_computeA2
+	
+		lda #1
+		sta _A1arrived
+
+fill8_computeA2:
+    //     A2destX = pArr2X;
+	lda _pArr2X : sta _A2destX
+    //     A2destY = pArr2Y;
+	lda _pArr2Y : sta _A2destY
+    //     A2dX    = abs(A2destX - A2X);
+    //     A2sX      = (A2X < A2destX) ? 1 : -1;
+		sec
+		lda _A2destX
+		sbc _A2X
+.(
+		bmi negativ_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A2dX
+		lda #$01 
+		sta _A2sX
+		jmp fill8_computeDy_02
+	negativ_02:
+		sta _A2dX
+    	lda #$FF
+    	sta _A2sX
+.)
+fill8_computeDy_02:
+    //     A2dY    = -abs(A2destY - A2Y);
+    //     A2sY      = (A2Y < A2destY) ? 1 : -1;
+		sec
+		lda _A2destY
+		sbc _A2Y
+.(
+		bmi negativ_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A2dY
+		lda #$01
+		sta _A2sY
+		jmp fill8_computeErr_02
+	negativ_02:
+		sta _A2dY
+    	lda #$FF
+    	sta _A2sY
+.)
+
+fill8_computeErr_02:
+
+    //     A2err   = A2dX + A2dY;
+		clc
+		lda _A2dX
+		adc _A2dY
+		sta _A2err
+
+    //     if ((A2err > 64) || (A2err < -63))
+    //         return;
+.(
+	    sec
+		sbc #$40
+		bvc *+4
+		eor #$80
+		bmi fill8_tmp02
+		jmp fill8_done
+fill8_tmp02:
+		lda _A2err
+		sec
+		sbc #$C0
+		bvc *+4
+		eor #$80
+		bpl fill8_tmp03
+		jmp fill8_done
+fill8_tmp03:
+.)
+    //     A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+		lda #0
+		sta _A2arrived
+		
+		lda _A2X
+		cmp _A2destX
+		bne fill8_brestep1
+		
+		lda _A2Y
+		cmp _A2destY
+		bne fill8_brestep1
+	
+		lda #1
+		sta _A2arrived
+
+fill8_brestep1:
+    //     bresStepType1();
+		ldy #0 : jsr _bresStepType1
+
+    //     A1X       = pArr1X;
+	lda _pArr1X: sta _A1X
+    //     A1Y       = pArr1Y;
+	lda _pArr1Y: sta _A1Y
+    //     A1destX   = pArr2X;
+	lda _pArr2X : sta _A1destX
+    //     A1destY   = pArr2Y;
+	lda _pArr2Y : sta _A1destY
+
+    //     A1dX    = abs(A1destX - A1X);
+    //     A1sX      = (A1X < A1destX) ? 1 : -1;
+		lda _A1destX
+		sec
+		sbc _A1X
+.(
+		bpl positiv_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A1dX
+		lda #$FF
+		sta _A1sX
+		jmp fill8_computeDy_03
+	positiv_02:
+		sta _A1dX
+		lda #$01
+		sta _A1sX
+.)
+
+fill8_computeDy_03:		
+
+    //     A1dY      = -abs(A1destY - A1Y);
+    //     A1sY      = (A1Y < A1destY) ? 1 : -1;
+		lda _A1destY
+		sec
+		sbc _A1Y
+.(
+		bmi negativ_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A1dY
+		lda #$01 
+		sta _A1sY
+		jmp fill8_computeErr_03
+	negativ_02:
+		sta _A1dY
+    	lda #$FF
+    	sta _A1sY
+.)
+
+fill8_computeErr_03:
+
+    //     A1err     = A1dX + A1dY;
+		clc
+		lda _A1dX
+		adc _A1dY
+		sta _A1err
+
+    //     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+		lda #0
+		sta _A1arrived
+		
+		lda _A1X
+		cmp _A1destX
+		bne fill8_brestep2
+		
+		lda _A1Y
+		cmp _A1destY
+		bne fill8_brestep2
+	
+		lda #1
+		sta _A1arrived
+
+fill8_brestep2:
+    //     bresStepType2();
+		ldy #0 : jsr _bresStepType2
+
+		jmp fill8_done
+
+fill8_DepYEqualsArr1Y:
+    // } else {
+    //     // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
+    //     A1X     = pDepX;
+		lda _pDepX: sta _A1X
+    //     A1Y     = pDepY;
+		lda _pDepY: sta _A1Y
+    //     A1destX = pArr2X;
+		lda _pArr2X : sta _A1destX
+    //     A1destY = pArr2Y;
+		lda _pArr2Y : sta _A1destY
+
+    //     A1dX    = abs(A1destX - A1X);
+    //     A1sX = (A1X < A1destX) ? 1 : -1;
+		sec
+		lda _A1destX
+		sbc _A1X
+.(
+		bpl positiv_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A1dX
+		lda #$FF
+		sta _A1sX
+		jmp fill8_computeDy_04
+	positiv_02:
+		sta _A1dX
+		lda #$01
+		sta _A1sX
+.)
+fill8_computeDy_04:
+    //     A1dY    = -abs(A1destY - A1Y);
+    //     A1sY = (A1Y < A1destY) ? 1 : -1;
+		lda _A1destY
+		sec
+		sbc _A1Y
+.(
+		bmi negativ_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A1dY
+		lda #$01 
+		sta _A1sY
+		jmp fill8_computeErr_05
+	negativ_02:
+		sta _A1dY
+    	lda #$FF
+    	sta _A1sY
+.)
+
+fill8_computeErr_05:
+
+    //     A1err   = A1dX + A1dY;
+		clc
+		lda _A1dX
+		adc _A1dY
+		sta _A1err
+
+    //     if ((A1err > 64) || (A1err < -63))
+    //         return;
+	    sec
+		sbc #$40
+		bvc *+4
+		eor #$80
+		bmi fill8_goon_05
+		jmp fill8_done
+fill8_goon_05:
+		lda _A1err
+		sec
+		sbc #$C0
+		bvc *+4
+		eor #$80
+		bpl fill8_goon_06
+		jmp fill8_done
+fill8_goon_06
+
+    //     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+		lda #0
+		sta _A1arrived
+		
+		lda _A1X
+		cmp _A1destX
+		bne fill8_computeA2_ter
+		
+		lda _A1Y
+		cmp _A1destY
+		bne fill8_computeA2_ter
+	
+		lda #1
+		sta _A1arrived
+
+fill8_computeA2_ter:
+    //     A2X     = pArr1X;
+		lda _pArr1X : sta _A2X
+    //     A2Y     = pArr1Y;
+		lda _pArr1Y : sta _A2Y
+    //     A2destX = pArr2X;
+		lda _pArr2X : sta _A2destX
+    //     A2destY = pArr2Y;
+		lda _pArr2Y : sta _A2destY
+
+    //     A2dX    = abs(A2destX - A2X);
+    //     A2sX      = (A2X < A2destX) ? 1 : -1;
+		sec
+		lda _A2destX
+		sbc _A2X
+.(
+		bpl positiv_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A2dX
+		lda #$FF 
+		sta _A2sX
+		jmp fill8_computeDy_08
+	positiv_02:
+		sta _A2dX
+    	lda #$01
+    	sta _A2sX
+.)
+fill8_computeDy_08:
+    //     A2dY    = -abs(A2destY - A2Y);
+    //     A2sY      = (A2Y < A2destY) ? 1 : -1;
+		sec
+		lda _A2destY
+		sbc _A2Y
+.(
+		bmi negativ_02
+		eor #$FF
+		clc
+		adc #1
+		sta _A2dY
+		lda #$01
+		sta _A2sY
+		jmp fill8_computeErr_09
+	negativ_02:
+		sta _A2dY
+    	lda #$FF
+    	sta _A2sY
+.)
+fill8_computeErr_09:
+    //     A2err   = A2dX + A2dY;
+		clc
+		lda _A2dX
+		adc _A2dY
+		sta _A2err
+
+    //     if ((A2err > 64) || (A2err < -63))
+    //         return;
+	    sec
+		sbc #$40
+		bvc *+4
+		eor #$80
+		bmi fill8_tmp07
+		jmp fill8_done
+fill8_tmp07:
+		lda _A2err
+		sec
+		sbc #$C0
+		bvc *+4
+		eor #$80
+		bpl fill8_tmp08
+		jmp fill8_done
+fill8_tmp08:
+
+    //     A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+		lda #0
+		sta _A2arrived
+		
+		lda _A2X
+		cmp _A2destX
+		bne fill8_brestep3
+		
+		lda _A2Y
+		cmp _A2destY
+		bne fill8_brestep3
+	
+		lda #1
+		sta _A2arrived
+
+fill8_brestep3:
+    //     bresStepType3() ;
+		ldy #0 : jsr _bresStepType3
+    // }
+
+fill8_done:
+	// restore context
+	pla: sta reg1: pla: sta reg0
+	pla
 
 .)
-	; rts
+	rts
 #endif USE_ASM_FILL8

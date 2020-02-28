@@ -203,7 +203,43 @@ void prepare_bresrun() {
 }
 #endif  // USE_C_BRESFILL
 
+
+
+void bresStepType1() {
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+        hfill();
+        while (A1arrived == 0) {
+            A1stepY();
+            A2stepY();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            hfill();
+        }
+
+}
+void bresStepType2() {
+       while ((A1arrived == 0) && (A2arrived == 0)) {
+            A1stepY();
+            A2stepY();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            hfill();
+        }
+
+
+}
+
+void bresStepType3() {
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+        hfill();
+
+        while ((A1arrived == 0) && (A2arrived == 0)) {
+            A1stepY();
+            A2stepY();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            hfill();
+        }
+}
 #ifdef USE_C_FILL8
+
 void fill8() {
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
     prepare_bresrun();
@@ -240,14 +276,7 @@ void fill8() {
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
-        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-        hfill();
-        while (A1arrived == 0) {
-            A1stepY();
-            A2stepY();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            hfill();
-        }
+        bresStepType1();
 
         A1X       = pArr1X;
         A1Y       = pArr1Y;
@@ -260,12 +289,7 @@ void fill8() {
         A1sY      = (A1Y < A1destY) ? 1 : -1;
         A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
 
-        while ((A1arrived == 0) && (A2arrived == 0)) {
-            A1stepY();
-            A2stepY();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            hfill();
-        }
+        bresStepType2();
     } else {
         // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
         A1X     = pDepX;
@@ -300,15 +324,7 @@ void fill8() {
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
-        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-        hfill();
-
-        while ((A1arrived == 0) && (A2arrived == 0)) {
-            A1stepY();
-            A2stepY();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            hfill();
-        }
+        bresStepType3() ;
     }
 }
 #endif // USE_C_FILL8
