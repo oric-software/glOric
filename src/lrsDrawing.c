@@ -257,8 +257,6 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
     }
 }
 
-#define ANGLE_MAX 0xC0
-#define ANGLE_VIEW 0xE0
 
 void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
     unsigned char ii = 0;
@@ -460,6 +458,7 @@ extern    unsigned char isFace2BeDrawn;
 
 #ifdef USE_REWORKED_BUFFERS
 
+#ifdef USE_C_SORTPOINTS
 void sortPoints(){
 
     if (abs(P2AH) < abs(P1AH)) {
@@ -487,6 +486,7 @@ void sortPoints(){
         P3AV = tmpV;
     }
 }
+#endif // USE_C_SORTPOINTS
 
 #ifdef USE_C_GUESSIFFACE2BEDRAWN
 void guessIfFace2BeDrawn () {
@@ -572,6 +572,12 @@ void guessIfFace2BeDrawn () {
     }
 }
 #endif // USE_C_GUESSIFFACE2BEDRAWN
+
+
+
+
+
+
 
 void glDrawFaces() {
     unsigned char ii = 0;
