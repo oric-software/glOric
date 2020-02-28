@@ -779,8 +779,8 @@ _fill8:
 .(
 
 	// save context
-    pha
-	lda reg0: pha: lda reg1 : pha 
+    ;pha
+	;lda reg0: pha: lda reg1 : pha 
 
     // prepare_bresrun();
 	ldy #0 : jsr _prepare_bresrun :
@@ -806,18 +806,18 @@ fill8_DepYDiffArr1Y:
     //     A1dX    = abs(A1destX - A1X);
     //     A1sX      = (A1X < A1destX) ? 1 : -1;
 		sec
-		lda _A1destX
-		sbc _A1X
+		lda _A1X
+		sbc _A1destX
 .(
-		bpl positiv_02
-		eor #$FF
-		clc
-		adc #1
+		bmi negativ_02
 		sta _A1dX
 		lda #$FF
 		sta _A1sX
 		jmp fill8_computeDy_01
-	positiv_02:
+	negativ_02:
+		eor #$FF
+		sec
+		adc #0
 		sta _A1dX
 		lda #$01
 		sta _A1sX
@@ -827,20 +827,20 @@ fill8_computeDy_01:
     //     A1dY    = -abs(A1destY - A1Y);
     //     A1sY      = (A1Y < A1destY) ? 1 : -1;
 		sec
-		lda _A1destY
-		sbc _A1Y
+		lda _A1Y
+		sbc _A1destY
 .(
 		bmi negativ_02
 		eor #$FF
-		clc
-		adc #1
+		sec
+		adc #0
 		sta _A1dY
-		lda #$01 
+		lda #$FF 
 		sta _A1sY
 		jmp fill8_computeErr_01
 	negativ_02:
 		sta _A1dY
-    	lda #$FF
+    	lda #$01
     	sta _A1sY
 .)
 
@@ -892,40 +892,40 @@ fill8_computeA2:
     //     A2dX    = abs(A2destX - A2X);
     //     A2sX      = (A2X < A2destX) ? 1 : -1;
 		sec
-		lda _A2destX
-		sbc _A2X
+		lda _A2X
+		sbc _A2destX
 .(
 		bmi negativ_02
-		eor #$FF
-		clc
-		adc #1
 		sta _A2dX
-		lda #$01 
+		lda #$FF
 		sta _A2sX
 		jmp fill8_computeDy_02
 	negativ_02:
+		eor #$FF
+		sec
+		adc #0
 		sta _A2dX
-    	lda #$FF
-    	sta _A2sX
+		lda #$01
+		sta _A2sX
 .)
 fill8_computeDy_02:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
 		sec
-		lda _A2destY
-		sbc _A2Y
+		lda _A2Y
+		sbc _A2destY
 .(
 		bmi negativ_02
 		eor #$FF
-		clc
-		adc #1
+		sec
+		adc #0
 		sta _A2dY
-		lda #$01
+		lda #$FF 
 		sta _A2sY
 		jmp fill8_computeErr_02
 	negativ_02:
 		sta _A2dY
-    	lda #$FF
+    	lda #$01
     	sta _A2sY
 .)
 
@@ -986,19 +986,19 @@ fill8_brestep1:
 
     //     A1dX    = abs(A1destX - A1X);
     //     A1sX      = (A1X < A1destX) ? 1 : -1;
-		lda _A1destX
 		sec
-		sbc _A1X
+		lda _A1X
+		sbc _A1destX
 .(
-		bpl positiv_02
-		eor #$FF
-		clc
-		adc #1
+		bmi negativ_02
 		sta _A1dX
 		lda #$FF
 		sta _A1sX
 		jmp fill8_computeDy_03
-	positiv_02:
+	negativ_02:
+		eor #$FF
+		sec
+		adc #0
 		sta _A1dX
 		lda #$01
 		sta _A1sX
@@ -1008,21 +1008,21 @@ fill8_computeDy_03:
 
     //     A1dY      = -abs(A1destY - A1Y);
     //     A1sY      = (A1Y < A1destY) ? 1 : -1;
-		lda _A1destY
 		sec
-		sbc _A1Y
+		lda _A1Y
+		sbc _A1destY
 .(
 		bmi negativ_02
 		eor #$FF
-		clc
-		adc #1
+		sec
+		adc #0
 		sta _A1dY
-		lda #$01 
+		lda #$FF 
 		sta _A1sY
 		jmp fill8_computeErr_03
 	negativ_02:
 		sta _A1dY
-    	lda #$FF
+    	lda #$01
     	sta _A1sY
 .)
 
@@ -1070,18 +1070,18 @@ fill8_DepYEqualsArr1Y:
     //     A1dX    = abs(A1destX - A1X);
     //     A1sX = (A1X < A1destX) ? 1 : -1;
 		sec
-		lda _A1destX
-		sbc _A1X
+		lda _A1X
+		sbc _A1destX
 .(
-		bpl positiv_02
-		eor #$FF
-		clc
-		adc #1
+		bmi negativ_02
 		sta _A1dX
 		lda #$FF
 		sta _A1sX
 		jmp fill8_computeDy_04
-	positiv_02:
+	negativ_02:
+		eor #$FF
+		sec
+		adc #0
 		sta _A1dX
 		lda #$01
 		sta _A1sX
@@ -1089,21 +1089,21 @@ fill8_DepYEqualsArr1Y:
 fill8_computeDy_04:
     //     A1dY    = -abs(A1destY - A1Y);
     //     A1sY = (A1Y < A1destY) ? 1 : -1;
-		lda _A1destY
 		sec
-		sbc _A1Y
+		lda _A1Y
+		sbc _A1destY
 .(
 		bmi negativ_02
 		eor #$FF
-		clc
-		adc #1
+		sec
+		adc #0
 		sta _A1dY
-		lda #$01 
+		lda #$FF 
 		sta _A1sY
 		jmp fill8_computeErr_05
 	negativ_02:
 		sta _A1dY
-    	lda #$FF
+    	lda #$01
     	sta _A1sY
 .)
 
@@ -1161,42 +1161,43 @@ fill8_computeA2_ter:
     //     A2dX    = abs(A2destX - A2X);
     //     A2sX      = (A2X < A2destX) ? 1 : -1;
 		sec
-		lda _A2destX
-		sbc _A2X
+		lda _A2X
+		sbc _A2destX
 .(
-		bpl positiv_02
-		eor #$FF
-		clc
-		adc #1
+		bmi negativ_02
 		sta _A2dX
-		lda #$FF 
+		lda #$FF
 		sta _A2sX
-		jmp fill8_computeDy_08
-	positiv_02:
+		jmp fill8_computeDy_02
+	negativ_02:
+		eor #$FF
+		sec
+		adc #0
 		sta _A2dX
-    	lda #$01
-    	sta _A2sX
+		lda #$01
+		sta _A2sX
 .)
 fill8_computeDy_08:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
 		sec
-		lda _A2destY
-		sbc _A2Y
+		lda _A2Y
+		sbc _A2destY
 .(
 		bmi negativ_02
 		eor #$FF
-		clc
-		adc #1
+		sec
+		adc #0
 		sta _A2dY
-		lda #$01
+		lda #$FF 
 		sta _A2sY
 		jmp fill8_computeErr_09
 	negativ_02:
 		sta _A2dY
-    	lda #$FF
+    	lda #$01
     	sta _A2sY
 .)
+
 fill8_computeErr_09:
     //     A2err   = A2dX + A2dY;
 		clc
@@ -1244,8 +1245,8 @@ fill8_brestep3:
 
 fill8_done:
 	// restore context
-	pla: sta reg1: pla: sta reg0
-	pla
+	;pla: sta reg1: pla: sta reg0
+	;pla
 
 .)
 	rts
