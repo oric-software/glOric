@@ -121,7 +121,7 @@ extern signed char   P1AH, P1AV, P2AH, P2AV, P3AH, P3AV;
 extern unsigned char distface;
 extern char          ch2disp;
 
-#ifdef USE_C_BRESFILL
+#ifdef USE_C_ANGLE2SCREEN
 void angle2screen() {
     P1X = (SCREEN_WIDTH - P1AH) >> 1;
     P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
@@ -130,7 +130,7 @@ void angle2screen() {
     P3X = (SCREEN_WIDTH - P3AH) >> 1;
     P3Y = (SCREEN_HEIGHT - P3AV) >> 1;
 }
-#endif  // USE_C_BRESFILL
+#endif  // USE_C_ANGLE2SCREEN
 
 void fillFace() {
     angle2screen();
