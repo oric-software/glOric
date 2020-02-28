@@ -122,6 +122,8 @@
 #undef USE_ASM_SORTPOINTS
 #define USE_C_ANGLE2SCREEN
 #undef USE_C_ANGLE2SCREEN
+#define USE_C_FILL8
+#undef USE_ASM_FILL8
 #else
 #ifdef ALL_C
 #define USE_C_HFILL
@@ -150,6 +152,8 @@
 #undef USE_ASM_SORTPOINTS
 #define USE_C_ANGLE2SCREEN
 #undef USE_C_ANGLE2SCREEN
+#define USE_C_FILL8
+#undef USE_ASM_FILL8
 #else 
 #ifdef ALL_ASM
 #undef USE_C_HFILL
@@ -178,6 +182,8 @@
 #define USE_ASM_SORTPOINTS
 #undef USE_C_ANGLE2SCREEN
 #define USE_C_ANGLE2SCREEN
+#undef USE_C_FILL8
+#define USE_ASM_FILL8
 #else
 
 #undef USE_C_HFILL
@@ -206,6 +212,8 @@
 #define USE_ASM_SORTPOINTS
 #undef USE_C_ANGLE2SCREEN
 #define USE_C_ANGLE2SCREEN
+#undef USE_C_FILL8
+#define USE_ASM_FILL8
 
 #endif // ALL_ASM
 #endif // ALL_C
