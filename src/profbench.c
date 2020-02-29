@@ -48,7 +48,9 @@ void profbench() {
 
         PROFILE_ENTER(ROUTINE_GLOBAL);
 
+        PROFILE_ENTER(ROUTINE_KEYEVENT);
         keyEvent();
+        PROFILE_LEAVE(ROUTINE_KEYEVENT);
 
         PROFILE_ENTER(ROUTINE_GLPROJECTARRAYS);
         glProjectArrays();

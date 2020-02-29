@@ -1,5 +1,7 @@
 #include "config.h"
-
+#ifdef USE_PROFILER
+#include "profile.h"
+#endif 
 .zero
 
 _A1X .byt 0
@@ -421,7 +423,7 @@ A2stepYdone:
 // void hfill() {
 _hfill:
 .(
-
+PROFILE_ENTER(ROUTINE_HFILL)
 	// save context
     pha:txa:pha:tya:pha
 	lda reg0: pha ;; p1x 
@@ -575,7 +577,7 @@ hfill_done:
     pla: sta reg0
 	pla:tay:pla:tax:pla
 // }
-
+PROFILE_LEAVE(ROUTINE_HFILL)
 .)
 	rts
 
@@ -698,6 +700,9 @@ _angle2screen:
 
 _prepare_bresrun:
 .(
+#ifdef USE_PROFILER
+PROFILE_ENTER(ROUTINE_PREPAREBRESRUN)
+#endif
 	lda _P1Y : sta tmp0 :
 	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
 	lda _P2Y : sta tmp1 :
@@ -768,6 +773,9 @@ prepare_bresrun_Lbresfill137
 prepare_bresrun_Lbresfill138
 prepare_bresrun_Lbresfill136
 prepare_bresrun_Lbresfill130
+#ifdef USE_PROFILER
+PROFILE_LEAVE(ROUTINE_PREPAREBRESRUN)
+#endif
 .)
 	rts :
 #endif
