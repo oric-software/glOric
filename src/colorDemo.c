@@ -124,7 +124,7 @@ void colorIntro() {
 
 
     for (j = 0; j < 50; j++) {
-        forward();
+        CamPosX -- ; // forward();
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -174,7 +174,7 @@ void colorIntro() {
     }
 
     for (j = 0; j < 64; j++) {
-        backward();
+        CamPosX ++ ; // backward();
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else

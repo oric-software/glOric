@@ -222,12 +222,12 @@ void bresStepType1() {
             PROFILE_ENTER(ROUTINE_BRESRUNTYPE1);
 #endif
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-        hfill();
+        hzfill();
         while (A1arrived == 0) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            hfill();
+            hzfill();
         }
 #ifdef USE_PROFILER
             PROFILE_LEAVE(ROUTINE_BRESRUNTYPE1);
@@ -242,7 +242,7 @@ void bresStepType2() {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            hfill();
+            hzfill();
         }
 #ifdef USE_PROFILER
             PROFILE_LEAVE(ROUTINE_BRESRUNTYPE2);
@@ -255,13 +255,13 @@ void bresStepType3() {
             PROFILE_ENTER(ROUTINE_BRESRUNTYPE3);
 #endif
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-        hfill();
+        hzfill();
 
         while ((A1arrived == 0) && (A2arrived == 0)) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
-            hfill();
+            hzfill();
         }
 #ifdef USE_PROFILER
             PROFILE_LEAVE(ROUTINE_BRESRUNTYPE3);

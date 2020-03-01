@@ -593,7 +593,7 @@ PROFILE_ENTER(ROUTINE_GLDRAWFACES);
         idxPt3 = facesPt3[ii] ;
         ch2disp = facesChar[ii];
 
-        // printf ("face %d : %d %d %d\n",ii, offPt1, offPt2, offPt3);get();
+        // printf ("face %d : %d %d %d\n",ii, idxPt1, idxPt2, idxPt3);get();
         d1 = points2dL[idxPt1]; //*((int*)(points2d + offPt1 + 2));
 
         d2 = points2dL[idxPt2]; //*((int*)(points2d + offPt2 + 2));

@@ -423,7 +423,9 @@ A2stepYdone:
 // void hfill() {
 _hfill:
 .(
+#ifdef USE_PROFILER
 PROFILE_ENTER(ROUTINE_HFILL)
+#endif
 	// save context
     pha:txa:pha:tya:pha
 	lda reg0: pha ;; p1x 
@@ -577,7 +579,9 @@ hfill_done:
     pla: sta reg0
 	pla:tay:pla:tax:pla
 // }
+#ifdef USE_PROFILER
 PROFILE_LEAVE(ROUTINE_HFILL)
+#endif
 .)
 	rts
 

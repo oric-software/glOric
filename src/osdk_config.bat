@@ -41,6 +41,7 @@ SET OSDKFILE=%OSDKFILE% render\face
 SET OSDKFILE=%OSDKFILE% raster\buffer raster\line8
 SET OSDKFILE=%OSDKFILE% raster\fill8 raster\line
 SET OSDKFILE=%OSDKFILE% raster\filler
+SET OSDKFILE=%OSDKFILE% raster\hzfill
 
 SET OSDKFILE=%OSDKFILE% util\print util\screen util\display util\rand
 
