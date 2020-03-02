@@ -575,9 +575,35 @@ void guessIfFace2BeDrawn () {
 
 
 
+#ifdef USE_C_RETRIEVEFACEDATA
+void retrieveFaceData(){
 
+        // printf ("face %d : %d %d %d\n",ii, idxPt1, idxPt2, idxPt3);get();
+        dmoy = points2dL[idxPt1]; //*((int*)(points2d + offPt1 + 2));
+        P1AH = points2aH[idxPt1];
+        P1AV = points2aV[idxPt1];
 
+        dmoy += points2dL[idxPt2]; //*((int*)(points2d + offPt2 + 2));
+        P2AH = points2aH[idxPt2];
+        P2AV = points2aV[idxPt2];
 
+        dmoy +=  points2dL[idxPt3]; //*((int*)(points2d + offPt3 + 2));
+        P3AH = points2aH[idxPt3];
+        P3AV = points2aV[idxPt3];
+
+        // printf ("dis %d %d %d\n",d1, d2, d3);get();
+        dmoy = dmoy / 3;
+        if (dmoy >= 256) {
+            dmoy = 256;
+        }
+        distface = (unsigned char)(dmoy & 0x00FF);
+
+        // printf ("disface %d %d\n",dmoy, distface);get();
+
+}
+#endif // USE_C_RETRIEVEFACEDATA
+
+#ifdef USE_C_GLDRAWFACES 
 
 void glDrawFaces() {
     unsigned char ii = 0;
@@ -593,26 +619,13 @@ PROFILE_ENTER(ROUTINE_GLDRAWFACES);
         idxPt3 = facesPt3[ii] ;
         ch2disp = facesChar[ii];
 
-        // printf ("face %d : %d %d %d\n",ii, idxPt1, idxPt2, idxPt3);get();
-        d1 = points2dL[idxPt1]; //*((int*)(points2d + offPt1 + 2));
-
-        d2 = points2dL[idxPt2]; //*((int*)(points2d + offPt2 + 2));
-
-        d3 = points2dL[idxPt3]; //*((int*)(points2d + offPt3 + 2));
-        // printf ("dis %d %d %d\n",d1, d2, d3);get();
-        dmoy = (d1 + d2 + d3) / 3;
-        if (dmoy >= 256) {
-            dmoy = 256;
-        }
-        distface = (unsigned char)(dmoy & 0x00FF);
-
-        // printf ("disface %d %d\n",dmoy, distface);get();
-        P1AH = points2aH[idxPt1];
-        P1AV = points2aV[idxPt1];
-        P2AH = points2aH[idxPt2];
-        P2AV = points2aV[idxPt2];
-        P3AH = points2aH[idxPt3];
-        P3AV = points2aV[idxPt3];
+#ifdef USE_PROFILER
+            PROFILE_ENTER(ROUTINE_RETRIEVEFACEDATA);
+#endif
+        retrieveFaceData();
+#ifdef USE_PROFILER
+            PROFILE_LEAVE(ROUTINE_RETRIEVEFACEDATA);
+#endif
 
         // printf ("P1 [%d, %d], P2 [%d, %d], P3 [%d %d]\n", P1AH, P1AV, P2AH, P2AV,  P3AH, P3AV); get();
 
@@ -647,13 +660,13 @@ PROFILE_LEAVE(ROUTINE_GLDRAWFACES);
 #endif // USE_PROFILER
 
 }
+
+#endif // USE_C_GLDRAWFACES 
+
+#ifdef USE_C_GLDRAWSEGMENTS
 void glDrawSegments() {
     unsigned char ii = 0;
-    unsigned char jj = 0;
-    unsigned char idxPt1, idxPt2;
-    unsigned char offPt1, offPt2;
-    int           dmoy;
-
+ 
 #ifdef USE_PROFILER
 PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 #endif // USE_PROFILER
@@ -666,8 +679,25 @@ PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 
         // dmoy = (d1+d2)/2;
 
+#ifdef ANGLEONLY
+        P1AH = points2aH[idxPt1];
+        P1AV = points2aV[idxPt1];
+#else 
+        P1X = points2aH[idxPt1];
+        P1Y = points2aV[idxPt1];
+#endif
         dmoy = points2dL[idxPt1];
+
+
+#ifdef ANGLEONLY
+        P2AH = points2aH[idxPt2];
+        P2AV = points2aV[idxPt2];
+#else 
+        P2X = points2aH[idxPt2];
+        P2Y = points2aV[idxPt2];
+#endif        
         dmoy += points2dL[idxPt2];
+
         dmoy = dmoy >> 1;
         
 
@@ -678,22 +708,10 @@ PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
         distseg--;  // FIXME
 
 #ifdef ANGLEONLY
-        P1AH = points2aH[idxPt1];
-        P1AV = points2aV[idxPt1];
-
-        P2AH = points2aH[idxPt2];
-        P2AV = points2aV[idxPt2];
-
         P1X = (SCREEN_WIDTH - P1AH) >> 1;
         P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
         P2X = (SCREEN_WIDTH - P2AH) >> 1;
         P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
-#else 
-        P1X = points2aH[idxPt1];
-        P1Y = points2aV[idxPt1];
-        P2X = points2aH[idxPt2];
-        P2Y = points2aV[idxPt2];
-
 #endif
         // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
         lrDrawLine();
@@ -701,9 +719,11 @@ PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 #ifdef USE_PROFILER
 PROFILE_LEAVE(ROUTINE_GLDRAWSEGMENTS);
 #endif // USE_PROFILER
-
-
 }
+
+#endif // USE_C_GLDRAWSEGMENTS
+
+#ifdef USE_C_GLDRAWPARTICULES
 void glDrawParticules(){
     unsigned char ii = 0;
 
@@ -734,5 +754,6 @@ PROFILE_LEAVE(ROUTINE_GLDRAWPARTICULES);
 #endif // USE_PROFILER
 
 }
+#endif // USE_C_GLDRAWPARTICULES
 
 #endif

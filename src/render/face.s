@@ -1,5 +1,155 @@
 #include "config.h"
 
+#ifdef USE_ASM_GLDRAWFACES
+_glDrawFaces:
+.(
+
+#ifdef USE_PROFILER
+PROFILE_ENTER(ROUTINE_GLDRAWFACES);
+#endif // USE_PROFILER
+
+	// Save context
+	lda reg0 : pha 
+
+	ldy _nbFaces
+	jmp glDrawFaces_nextFace
+    // for (ii = 0; ii < nbFaces; ii++) {
+glDrawFaces_loop:
+
+    //     idxPt1 = facesPt1[ii] ;
+	lda _facesPt1, y
+	sta _idxPt1
+    //     idxPt2 = facesPt2[ii] ;
+	lda _facesPt2, y
+	sta _idxPt2
+    //     idxPt3 = facesPt3[ii] ;
+	lda _facesPt3, y
+	sta _idxPt3
+    //     ch2disp = facesChar[ii];
+	lda _facesChar, y
+	sta _ch2disp
+
+	sty reg0 
+
+    //     retrieveFaceData();
+	jsr _retrieveFaceData
+    //     sortPoints();
+	jsr _sortPoints
+    //     guessIfFace2BeDrawn();
+	jsr _guessIfFace2BeDrawn
+    //     if (isFace2BeDrawn) {
+	lda _isFace2BeDrawn
+	beq glDrawFaces_afterFill
+    //         fillFace();
+		jsr _fillFace
+    //     }
+glDrawFaces_afterFill:
+	ldy reg0
+
+glDrawFaces_nextFace:
+	dey 
+	bpl glDrawFaces_loop
+    // }
+
+glDrawFaces_done:
+	// Restore context
+	pla : sta reg0
+
+#ifdef USE_PROFILER
+PROFILE_LEAVE(ROUTINE_GLDRAWFACES);
+#endif // USE_PROFILER
+
+.)
+	rts
+#endif //USE_ASM_GLDRAWFACES
+
+#ifdef USE_ASM_RETRIEVEFACEDATA
+_retrieveFaceData:
+.(
+
+	// save context
+    ; pha
+	; lda reg0:pha
+	; lda tmp0:pha ; tmpH
+	; lda tmp1:pha ; tmpV
+
+	; lda _idxPt1 : sta tmp0 :
+
+	; clc : lda #<(_points2dL) : adc tmp0 : sta tmp0 : lda #>(_points2dL) : adc tmp0+1 : sta tmp0+1 :
+	; lda tmp0 : sta _d1 : lda tmp0+1 : sta _d1+1 :
+
+	ldy _idxPt1
+        // P1AH = points2aH[idxPt1];
+	lda _points2aH,y : sta _P1AH 
+        // P1AV = points2aV[idxPt1];
+	lda _points2aV,y : sta _P1AV 
+        // dmoy = points2dL[idxPt1]; //*((int*)(points2d + offPt1 + 2));
+	lda _points2dL,y : sta _dmoy: lda _points2dH,y : sta _dmoy+1
+
+	ldy _idxPt2
+        // P2AH = points2aH[idxPt2];
+	lda _points2aH,y : sta _P2AH 		
+        // P2AV = points2aV[idxPt2];
+	lda _points2aV,y : sta _P2AV 		
+        // dmoy += points2dL[idxPt2]; //*((int*)(points2d + offPt2 + 2));
+	clc: lda _points2dL,y : adc _dmoy: sta _dmoy : lda _points2dH,y : adc _dmoy+1 :sta _dmoy+1
+
+
+    ldy _idxPt3
+	    // P3AH = points2aH[idxPt3];
+	lda _points2aH,y : sta _P3AH	
+        // P3AV = points2aV[idxPt3];
+	lda _points2aV,y : sta _P3AV 		
+        // dmoy +=  points2dL[idxPt3]; //*((int*)(points2d + offPt3 + 2));
+	clc: lda _points2dL,y : adc _dmoy: sta _dmoy : lda _points2dH,y : adc _dmoy+1 :sta _dmoy+1
+
+	lda _dmoy+1
+	
+	beq moynottoobig		// FIXME :: it should be possible to deal with case *(dmoy+1) = 1
+	lda #$FF
+	sta _distface
+	jmp retreiveFaceData_done
+
+moynottoobig:
+        // dmoy = dmoy / 3;
+	lda _dmoy
+
+	;Divide by 3 found on http://forums.nesdev.com/viewtopic.php?f=2&t=11336
+	;18 bytes, 30 cycles
+	sta  tmp0
+	lsr
+	adc  #21
+	lsr
+	adc  tmp0
+	ror
+	lsr
+	adc  tmp0
+	ror
+	lsr
+	adc  tmp0
+	ror
+	lsr
+
+        // if (dmoy >= 256) {
+        //     dmoy = 256;
+        // }
+        // distface = (unsigned char)(dmoy & 0x00FF);
+	sta _distface
+
+
+retreiveFaceData_done:	
+	// restore context
+	; pla: sta tmp1
+	; pla: sta tmp0
+	; pla: sta reg0
+	;pla
+
+	; jmp leave :
+.)
+	rts
+#endif // USE_ASM_RETRIEVEFACEDATA
+
+
     ;; if (abs(P2AH) < abs(P1AH)) {
     ;;     tmpH = P1AH;
     ;;     tmpV = P1AV;
