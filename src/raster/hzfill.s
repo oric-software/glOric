@@ -18,9 +18,9 @@ hLineLength .dsb 1
 // void hzfill() {
 _hzfill:
 .(
-#ifdef USE_PROFILER
-PROFILE_ENTER(ROUTINE_HZFILL)
-#endif
+; #ifdef USE_PROFILER
+; PROFILE_ENTER(ROUTINE_HZFILL)
+; #endif
 	// save context
     pha:txa:pha:tya:pha
 
@@ -210,8 +210,8 @@ hzfill_done:
  
 	pla:tay:pla:tax:pla
 // }
-#ifdef USE_PROFILER
-PROFILE_LEAVE(ROUTINE_HZFILL)
-#endif
+; #ifdef USE_PROFILER
+; PROFILE_LEAVE(ROUTINE_HZFILL)
+; #endif
 .)
 	rts

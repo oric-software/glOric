@@ -173,7 +173,7 @@ void colorIntro() {
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
     }
 
-    for (j = 0; j < 64; j++) {
+    for (j = 0; j < 32; j++) {
         CamPosX ++ ; // backward();
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();

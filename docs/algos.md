@@ -2,6 +2,13 @@
 
 
 
+récupérer 16Ko
+```
+sei
+lda #%11111101 ; choisi si la ROM est active ou pas, ainsi que l'eprom du microdisc
+sta $314 ;registre de status du Microdisc
+```
+
 http://6502.org/source/
 
 https://codebase64.org/doku.php?id=base:6502_6510_maths
