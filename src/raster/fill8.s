@@ -3,6 +3,11 @@
 #include "profile.h"
 #endif 
 
+
+#define OPCODE_DEC_ZERO $C6
+#define OPCODE_INC_ZERO $E6
+
+
 .zero
 
 _A1X .dsb 1
@@ -110,7 +115,7 @@ void A1stepY(){
 
 #ifdef USE_ASM_BRESFILL
 _A1stepY
-.(
+
 	// save context
     pha
 	lda reg0: pha: lda reg1 : pha 
@@ -168,16 +173,17 @@ A1stepY_doloop:
 			clc
 			lda _A1err
 			adc _A1dY
-			bvc debug_moi_la
-erroverflow:
+			bvc A1stepY_debug_moi_la
 			jmp A1stepYdone
-debug_moi_la:
+A1stepY_debug_moi_la:			
 			sta _A1err
 		;; 	A1X += A1sX;
-			clc
-			lda _A1X
-			adc _A1sX
-			sta _A1X
+_patch_A1stepY_incdec_A1X
+			inc _A1X 
+			; clc
+			; lda _A1X
+			; adc _A1sX
+			; sta _A1X
 		;; }
 A1stepY_A1Xdone:
 		;; if (e2 <= A1dX){
@@ -238,7 +244,7 @@ A1stepYdone:
 	pla: sta reg1: pla: sta reg0
 	pla
 
-.)
+
 	rts
 #endif
 
@@ -289,7 +295,7 @@ void A2stepY(){
 	
 #ifdef USE_ASM_BRESFILL
 _A2stepY
-.(
+
 	// save context
     pha
 	lda reg0: pha: lda reg1 : pha 
@@ -349,10 +355,12 @@ A2stepY_doloop:
 			adc _A2dY
 			sta _A2err
 		;; 	A2X += A2sX;
-			clc
-			lda _A2X
-			adc _A2sX
-			sta _A2X
+patch_A2stepY_incdec_A2X:
+			inc _A2X
+			; clc
+			; lda _A2X
+			; adc _A2sX
+			; sta _A2X
 		;; }
 A2stepY_A2Xdone:
 		;; if (e2 <= A2dX){
@@ -413,7 +421,7 @@ A2stepYdone:
 	pla: sta reg1: pla: sta reg0
 	pla
 
-.)
+
 	rts
 #endif //  USE_ASM_BRESFILL
 
@@ -788,7 +796,7 @@ prepare_bresrun_Lbresfill130
 
 #ifdef USE_ASM_FILL8
 _fill8:
-.(
+
 
 	// save context
     ;pha
@@ -820,20 +828,24 @@ fill8_DepYDiffArr1Y:
 		sec
 		lda _A1X
 		sbc _A1destX
-.(
-		bmi negativ_02
+
+		bmi fill8_01_negativ_02
 		sta _A1dX
 		lda #$FF
 		sta _A1sX
+    	lda #OPCODE_DEC_ZERO
+    	sta _patch_A1stepY_incdec_A1X
 		jmp fill8_computeDy_01
-	negativ_02:
+	fill8_01_negativ_02:
 		eor #$FF
 		sec
 		adc #0
 		sta _A1dX
 		lda #$01
 		sta _A1sX
-.)
+    	lda #OPCODE_INC_ZERO
+    	sta _patch_A1stepY_incdec_A1X
+
 
 fill8_computeDy_01:		
     //     A1dY    = -abs(A1destY - A1Y);
@@ -842,18 +854,22 @@ fill8_computeDy_01:
 		lda _A1Y
 		sbc _A1destY
 .(
-		bmi negativ_02
+		bmi fill8_02_negativ_02
 		eor #$FF
 		sec
 		adc #0
 		sta _A1dY
 		lda #$FF 
 		sta _A1sY
+    	; lda #OPCODE_DEC_ZERO
+    	; sta patch_A1StepY_incdec_A1Y
 		jmp fill8_computeErr_01
-	negativ_02:
+	fill8_02_negativ_02:
 		sta _A1dY
     	lda #$01
     	sta _A1sY
+    	; lda #OPCODE_INC_ZERO
+    	; sta patch_A1StepY_incdec_A1Y
 .)
 
 fill8_computeErr_01:
@@ -906,20 +922,24 @@ fill8_computeA2:
 		sec
 		lda _A2X
 		sbc _A2destX
-.(
-		bmi negativ_02
+
+		bmi fill8_03_negativ_02
 		sta _A2dX
 		lda #$FF
 		sta _A2sX
+		lda #OPCODE_DEC_ZERO
+		sta patch_A2stepY_incdec_A2X
 		jmp fill8_computeDy_02
-	negativ_02:
+	fill8_03_negativ_02:
 		eor #$FF
 		sec
 		adc #0
 		sta _A2dX
 		lda #$01
 		sta _A2sX
-.)
+		lda #OPCODE_INC_ZERO
+		sta patch_A2stepY_incdec_A2X
+
 fill8_computeDy_02:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
@@ -927,7 +947,7 @@ fill8_computeDy_02:
 		lda _A2Y
 		sbc _A2destY
 .(
-		bmi negativ_02
+		bmi fill8_04_negativ_02
 		eor #$FF
 		sec
 		adc #0
@@ -935,7 +955,7 @@ fill8_computeDy_02:
 		lda #$FF 
 		sta _A2sY
 		jmp fill8_computeErr_02
-	negativ_02:
+	fill8_04_negativ_02:
 		sta _A2dY
     	lda #$01
     	sta _A2sY
@@ -1002,18 +1022,22 @@ fill8_brestep1:
 		lda _A1X
 		sbc _A1destX
 .(
-		bmi negativ_02
+		bmi fill8_05_negativ_02
 		sta _A1dX
 		lda #$FF
 		sta _A1sX
+    	lda #OPCODE_DEC_ZERO
+    	sta _patch_A1stepY_incdec_A1X
 		jmp fill8_computeDy_03
-	negativ_02:
+	fill8_05_negativ_02:
 		eor #$FF
 		sec
 		adc #0
 		sta _A1dX
 		lda #$01
 		sta _A1sX
+    	lda #OPCODE_INC_ZERO
+    	sta _patch_A1stepY_incdec_A1X
 .)
 
 fill8_computeDy_03:		
@@ -1024,18 +1048,22 @@ fill8_computeDy_03:
 		lda _A1Y
 		sbc _A1destY
 .(
-		bmi negativ_02
+		bmi fill8_06_negativ_02
 		eor #$FF
 		sec
 		adc #0
 		sta _A1dY
 		lda #$FF 
 		sta _A1sY
+    	; lda #OPCODE_DEC_ZERO
+    	; sta patch_A1StepY_incdec_A1Y
 		jmp fill8_computeErr_03
-	negativ_02:
+	fill8_06_negativ_02:
 		sta _A1dY
     	lda #$01
     	sta _A1sY
+    	; lda #OPCODE_INC_ZERO
+    	; sta patch_A1StepY_incdec_A1Y
 .)
 
 fill8_computeErr_03:
@@ -1085,18 +1113,22 @@ fill8_DepYEqualsArr1Y:
 		lda _A1X
 		sbc _A1destX
 .(
-		bmi negativ_02
+		bmi fill8_07_negativ_02
 		sta _A1dX
 		lda #$FF
 		sta _A1sX
+    	lda #OPCODE_DEC_ZERO
+    	sta _patch_A1stepY_incdec_A1X
 		jmp fill8_computeDy_04
-	negativ_02:
+	fill8_07_negativ_02:
 		eor #$FF
 		sec
 		adc #0
 		sta _A1dX
 		lda #$01
 		sta _A1sX
+    	lda #OPCODE_INC_ZERO
+    	sta _patch_A1stepY_incdec_A1X
 .)
 fill8_computeDy_04:
     //     A1dY    = -abs(A1destY - A1Y);
@@ -1105,18 +1137,22 @@ fill8_computeDy_04:
 		lda _A1Y
 		sbc _A1destY
 .(
-		bmi negativ_02
+		bmi fill8_08_negativ_02
 		eor #$FF
 		sec
 		adc #0
 		sta _A1dY
 		lda #$FF 
 		sta _A1sY
+    	; lda #OPCODE_DEC_ZERO
+    	; sta patch_A1StepY_incdec_A1Y
 		jmp fill8_computeErr_05
-	negativ_02:
+	fill8_08_negativ_02:
 		sta _A1dY
     	lda #$01
     	sta _A1sY
+    	; lda #OPCODE_INC_ZERO
+    	; sta patch_A1StepY_incdec_A1Y
 .)
 
 fill8_computeErr_05:
@@ -1175,20 +1211,24 @@ fill8_computeA2_ter:
 		sec
 		lda _A2X
 		sbc _A2destX
-.(
-		bmi negativ_02
+
+		bmi fill8_09_negativ_02
 		sta _A2dX
 		lda #$FF
 		sta _A2sX
+		lda #OPCODE_DEC_ZERO
+		sta patch_A2stepY_incdec_A2X
 		jmp fill8_computeDy_02
-	negativ_02:
+	fill8_09_negativ_02:
 		eor #$FF
 		sec
 		adc #0
 		sta _A2dX
 		lda #$01
 		sta _A2sX
-.)
+		lda #OPCODE_INC_ZERO
+		sta patch_A2stepY_incdec_A2X
+
 fill8_computeDy_08:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
@@ -1196,7 +1236,7 @@ fill8_computeDy_08:
 		lda _A2Y
 		sbc _A2destY
 .(
-		bmi negativ_02
+		bmi fill8_10_negativ_02
 		eor #$FF
 		sec
 		adc #0
@@ -1204,7 +1244,7 @@ fill8_computeDy_08:
 		lda #$FF 
 		sta _A2sY
 		jmp fill8_computeErr_09
-	negativ_02:
+	fill8_10_negativ_02:
 		sta _A2dY
     	lda #$01
     	sta _A2sY
@@ -1260,6 +1300,6 @@ fill8_done:
 	;pla: sta reg1: pla: sta reg0
 	;pla
 
-.)
+
 	rts
 #endif USE_ASM_FILL8

@@ -291,9 +291,8 @@ glProjectArrays_done:
 #endif // USE_REWORKED_BUFFERS
 
 // FIXME : why do we use Opcode of non zero page instruction ??
-#define OPCODE_DEC $CE
-#define OPCODE_INC $EE
-
+#define OPCODE_DEC_NONZERO $CE
+#define OPCODE_INC_NONZERO $EE
 
 #ifdef USE_ASM_DRAWLINE
 _lrDrawLine:
@@ -330,7 +329,7 @@ _lrDrawLine:
 ;   sx = -1
     lda #$FF
     sta _A1sX
-    lda #OPCODE_DEC
+    lda #OPCODE_DEC_NONZERO
     sta patch_lrDrawLine_incdec_A1X
     jmp lrDrawLine_computeDy
 ; else
@@ -343,7 +342,7 @@ lrDrawLine_p2xoverp1x:
 ;   sx =1
     lda #$01
     sta _A1sX
-    lda #OPCODE_INC
+    lda #OPCODE_INC_NONZERO
     sta patch_lrDrawLine_incdec_A1X
 ; endif
 
@@ -365,7 +364,7 @@ lrDrawLine_computeDy:
 ;   sy = -1
     lda #$FF
     sta _A1sY
-    lda #OPCODE_DEC
+    lda #OPCODE_DEC_NONZERO
     sta patch_lrDrawLine_incdec_A1Y
     jmp lrDrawLine_computeErr
 ; else
@@ -375,7 +374,7 @@ lrDrawLine_p2yoverp1y:
 ;   sy = 1
     lda #$01
     sta _A1sY
-    lda #OPCODE_INC
+    lda #OPCODE_INC_NONZERO
     sta patch_lrDrawLine_incdec_A1Y
 ; endif
 
