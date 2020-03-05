@@ -119,8 +119,8 @@ void rtIntro() {
 #ifdef TARGET_ORIX
     // cgetc();
 #else
-    //get();
-    enterSC();
+    get();
+    // enterSC();
 #endif  // TARGET_ORIX
 
     CamPosX = 0;
@@ -179,7 +179,7 @@ void rtIntro() {
     }
 #ifdef TARGET_ORIX
 #else
-    leaveSC();
+    // leaveSC();
 #endif  // TARGET_ORIX
 }
 

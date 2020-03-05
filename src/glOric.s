@@ -290,6 +290,11 @@ glProjectArrays_done:
 #endif // USE_ASM_ARRAYSPROJECT
 #endif // USE_REWORKED_BUFFERS
 
+// FIXME : why do we use Opcode of non zero page instruction ??
+#define OPCODE_DEC $CE
+#define OPCODE_INC $EE
+
+
 #ifdef USE_ASM_DRAWLINE
 _lrDrawLine:
 .(
@@ -325,6 +330,8 @@ _lrDrawLine:
 ;   sx = -1
     lda #$FF
     sta _A1sX
+    lda #OPCODE_DEC
+    sta patch_lrDrawLine_incdec_A1X
     jmp lrDrawLine_computeDy
 ; else
 lrDrawLine_p2xoverp1x:
@@ -336,6 +343,8 @@ lrDrawLine_p2xoverp1x:
 ;   sx =1
     lda #$01
     sta _A1sX
+    lda #OPCODE_INC
+    sta patch_lrDrawLine_incdec_A1X
 ; endif
 
 
@@ -356,6 +365,8 @@ lrDrawLine_computeDy:
 ;   sy = -1
     lda #$FF
     sta _A1sY
+    lda #OPCODE_DEC
+    sta patch_lrDrawLine_incdec_A1Y
     jmp lrDrawLine_computeErr
 ; else
 lrDrawLine_p2yoverp1y:
@@ -364,6 +375,8 @@ lrDrawLine_p2yoverp1y:
 ;   sy = 1
     lda #$01
     sta _A1sY
+    lda #OPCODE_INC
+    sta patch_lrDrawLine_incdec_A1Y
 ; endif
 
 
@@ -485,10 +498,12 @@ lrDrawLine_errdone_01:
 			adc _A1dY
 			sta _A1err
 //             A1X += A1sX;
-			lda _A1X
-			clc
-			adc _A1sX
-			sta _A1X
+patch_lrDrawLine_incdec_A1X:
+            inc _A1X
+			; lda _A1X
+			; clc
+			; adc _A1sX
+			; sta _A1X
 lrDrawLine_dyovera:
 //         }
 //         if (e2 <= A1dX) {  // e_xy+e_y < 0
@@ -504,10 +519,12 @@ lrDrawLine_dyovera:
 			adc _A1dX
 			sta _A1err
 //             A1Y += A1sY;
-			lda _A1Y
-			clc
-			adc _A1sY
-			sta _A1Y
+patch_lrDrawLine_incdec_A1Y:
+            inc _A1Y
+			; lda _A1Y
+			; clc
+			; adc _A1sY
+			; sta _A1Y
 lrDrawLine_e2overdx
 //         }
 	jmp lrDrawLine_loop

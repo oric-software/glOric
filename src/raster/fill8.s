@@ -2,29 +2,29 @@
 #ifdef USE_PROFILER
 #include "profile.h"
 #endif 
+
 .zero
 
-_A1X .byt 0
-_A1Y .byt 0
-_A1destX .byt 0
-_A1destY .byt 0
-_A1dX .byt 0
-_A1dY .byt 0
-_A1err .byt 0
-_A1sX .byt 0
-_A1sY .byt 0
-_A1arrived .byt 0
-
-_A2X .byt 0
-_A2Y .byt 0
-_A2destX .byt 0
-_A2destY .byt 0
-_A2dX .byt 0
-_A2dY .byt 0
-_A2err .byt 0
-_A2sX .byt 0
-_A2sY .byt 0
-_A2arrived .byt 0
+_A1X .dsb 1
+_A1Y .dsb 1
+_A1destX .dsb 1
+_A1destY .dsb 1
+_A1dX .dsb 1
+_A1dY .dsb 1
+_A1err .dsb 1
+_A1sX .dsb 1
+_A1sY .dsb 1
+_A1arrived .dsb 1
+_A2X .dsb 1
+_A2Y .dsb 1
+_A2destX .dsb 1
+_A2destY .dsb 1
+_A2dX .dsb 1
+_A2dY .dsb 1
+_A2err .dsb 1
+_A2sX .dsb 1
+_A2sY .dsb 1
+_A2arrived .dsb 1
 
 .text
 
