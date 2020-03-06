@@ -72,12 +72,13 @@ irq_handler:
 	tax
 	pla
 
-#ifdef TRANSPARENT_KEYBOARD
+#ifndef TRANSPARENT_KEYBOARD
+    jmp leave_interrupt
+#endif TRANSPARENT_KEYBOARD
 jmp_old_handler
  	jmp 0000
-#else
+leave_interrupt:
     rti
-#endif TRANSPARENT_KEYBOARD
 
 
 
@@ -102,6 +103,30 @@ _leaveSC:
     
 #ifdef USE_RT_KEYBOARD
 
+old_via_ddra .dsb 1
+old_via_ddrb .dsb 1 
+old_via_acr  .dsb 1   
+old_via_t1ll .dsb 1
+old_via_t1lh .dsb 1 
+    
+_kernelExit:
+.(
+    ; Restore VIA config
+    lda old_via_ddra : sta via_ddra
+    lda old_via_ddrb : sta via_ddrb
+    lda old_via_acr  : sta via_acr 
+    lda old_via_t1ll : sta via_t1ll
+    lda old_via_t1lh : sta via_t1lh
+
+	; Restore old handler value
+	lda jmp_old_handler+1
+	sta IRQ_ADDRLO
+	lda jmp_old_handler+2
+	sta IRQ_ADDRHI
+
+.)
+    rts
+
 _kernelInit:
 .(
 #ifdef TRANSPARENT_KEYBOARD
@@ -116,6 +141,15 @@ _kernelInit:
 	;setup, we need not worry about ensuring one irq event and/or right 
 	;timer period, only redirecting irq vector to our own irq handler. 
 	sei
+
+
+    lda via_ddra: sta old_via_ddra
+    lda via_ddrb: sta old_via_ddrb
+    lda via_acr: sta old_via_acr 
+    lda via_t1ll: sta old_via_t1ll
+    lda via_t1lh: sta old_via_t1lh
+
+
 	; Setup DDRA, DDRB and ACR
 	lda #%11111111
 	sta via_ddra
