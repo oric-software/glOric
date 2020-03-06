@@ -222,8 +222,16 @@ void bresStepType1() {
 //             PROFILE_ENTER(ROUTINE_BRESRUNTYPE1);
 // #endif
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+#ifdef USE_COLOR
+        while (A1Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) {
+#else
+        while (A1Y >= SCREEN_HEIGHT) {
+#endif
+            A1stepY();
+            A2stepY();
+        }
         hzfill();
-        while (A1arrived == 0) {
+        while ((A1arrived == 0) && (A1Y > 1)){
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
@@ -238,7 +246,7 @@ void bresStepType2() {
 // #ifdef USE_PROFILER
 //             PROFILE_ENTER(ROUTINE_BRESRUNTYPE2);
 // #endif
-       while ((A1arrived == 0) && (A2arrived == 0)) {
+       while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1)) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
@@ -255,9 +263,17 @@ void bresStepType3() {
 //             PROFILE_ENTER(ROUTINE_BRESRUNTYPE3);
 // #endif
         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+#ifdef USE_COLOR
+        while (A1Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) {
+#else
+         while (A1Y >= SCREEN_HEIGHT) {
+#endif
+            A1stepY();
+            A2stepY();
+        }
         hzfill();
 
-        while ((A1arrived == 0) && (A2arrived == 0)) {
+        while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();

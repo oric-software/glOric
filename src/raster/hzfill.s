@@ -31,15 +31,15 @@ _hzfill:
 
 //     if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT)) return;
 	lda _A1Y				; Access Y coordinate
-    bpl *+5
-    jmp hzfill_done
-#ifdef USE_COLOR
-    cmp #SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
-#else
-    cmp #SCREEN_HEIGHT
-#endif
-    bcc *+5
-	jmp hzfill_done
+;     bpl *+5
+;     jmp hzfill_done
+; #ifdef USE_COLOR
+;     cmp #SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
+; #else
+;     cmp #SCREEN_HEIGHT
+; #endif
+;     bcc *+5
+; 	jmp hzfill_done
     sta lineIndex ; A1Y
 
 //     if (A1X > A2X) {
