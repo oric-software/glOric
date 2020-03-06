@@ -63,7 +63,7 @@ void profbench() {
             break;
             case 1:
                 if (ii > 0) {
-                    CamRotZ -= 4 ; 
+                    CamRotZ += 4 ; 
                     ii--;
                 } else {
                     ii = 24; 
@@ -81,7 +81,7 @@ void profbench() {
             break;
             case 3:
                 if (ii > 0) {
-                    CamRotZ -= 4 ; 
+                    CamRotZ += 4 ; 
                     ii--;
                 } else {
                     ii = 64; 
