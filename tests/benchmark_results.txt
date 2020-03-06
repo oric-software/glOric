@@ -1,0 +1,2313 @@
+Profiling started
+
+Frame:0001 Time=031C44
+0x01 031CD9 Global
+1x01 01C7C9 glDrawFaces
+2x01 00AAC8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003556 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0002 Time=031F39
+0x01 031ECE Global
+1x01 01CAE9 glDrawFaces
+2x01 00AA9C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003557 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0003 Time=032282
+0x01 032217 Global
+1x01 01CE17 glDrawFaces
+2x01 00AAB8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003556 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0004 Time=03232F
+0x01 0322C4 Global
+1x01 01CEC4 glDrawFaces
+2x01 00AAB8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003556 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0005 Time=03297C
+0x01 032911 Global
+1x01 01D251 glDrawFaces
+2x01 00AD78 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003556 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0006 Time=0339E6
+0x01 03397B Global
+1x01 01E1FB glDrawFaces
+2x01 00AE38 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003556 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0007 Time=034915
+0x01 0348AA Global
+1x01 01EF3B glDrawFaces
+2x01 00B045 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003551 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0008 Time=034C28
+0x01 034BBD Global
+1x01 01F271 glDrawFaces
+2x01 00B022 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003551 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0009 Time=034CA6
+0x01 034C3B Global
+1x01 01F2F5 glDrawFaces
+2x01 00B022 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:000A Time=03611B
+0x01 0360B0 Global
+1x01 020266 glDrawFaces
+2x01 00B525 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:000B Time=036DBA
+0x01 036D4F Global
+1x01 020EC9 glDrawFaces
+2x01 00B560 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:000C Time=037925
+0x01 0378BA Global
+1x01 021A27 glDrawFaces
+2x01 00B56B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354F glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:000D Time=0377F8
+0x01 03778D Global
+1x01 02167F glDrawFaces
+2x01 00B7E6 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354F glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003A63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:000E Time=0382D0
+0x01 038265 Global
+1x01 022174 glDrawFaces
+2x01 00B7CC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:000F Time=038E9D
+0x01 038E32 Global
+1x01 022BFC glDrawFaces
+2x01 00B913 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0010 Time=03A0E5
+0x01 03A07A Global
+1x01 023770 glDrawFaces
+2x01 00BEE9 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003548 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0011 Time=03A2BA
+0x01 03A24F Global
+1x01 023981 glDrawFaces
+2x01 00BFAD glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003548 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0012 Time=039FBE
+0x01 039F53 Global
+1x01 02352F glDrawFaces
+2x01 00C104 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003547 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0013 Time=03A51D
+0x01 03A4B2 Global
+1x01 023A9B glDrawFaces
+2x01 00C0FB glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003543 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0014 Time=03B67A
+0x01 03B60F Global
+1x01 024898 glDrawFaces
+2x01 00C45B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003543 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0015 Time=03B8D3
+0x01 03B868 Global
+1x01 024E01 glDrawFaces
+2x01 00C150 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00353E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0016 Time=03BD16
+0x01 03BCAB Global
+1x01 025104 glDrawFaces
+2x01 00C290 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00353E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0017 Time=03E1C2
+0x01 03E157 Global
+1x01 0270D5 glDrawFaces
+2x01 00C76B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00353E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0018 Time=03F131
+0x01 03F0C6 Global
+1x01 027C3A glDrawFaces
+2x01 00CB73 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003540 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0019 Time=03FBB1
+0x01 03FB46 Global
+1x01 028348 glDrawFaces
+2x01 00CEEB glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00353A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:001A Time=03FBF2
+0x01 03FB87 Global
+1x01 0282C2 glDrawFaces
+2x01 00CEBC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003530 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:001B Time=04151F
+0x01 0414B4 Global
+1x01 029937 glDrawFaces
+2x01 00D263 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003528 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:001C Time=0415A2
+0x01 041537 Global
+1x01 0299BC glDrawFaces
+2x01 00D263 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003526 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:001D Time=0418F7
+0x01 04188C Global
+1x01 029BDC glDrawFaces
+2x01 00D39A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003524 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:001E Time=04171F
+0x01 0416B4 Global
+1x01 029BEE glDrawFaces
+2x01 00D1AC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003528 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:001F Time=0429CD
+0x01 042962 Global
+1x01 02A9DD glDrawFaces
+2x01 00D66B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003528 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0020 Time=0432C5
+0x01 04325A Global
+1x01 02AF26 glDrawFaces
+2x01 00DA1A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003528 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0021 Time=044C13
+0x01 044BA8 Global
+1x01 02C7FB glDrawFaces
+2x01 00DAAD glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003527 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0022 Time=04487D
+0x01 044812 Global
+1x01 02C475 glDrawFaces
+2x01 00DAA0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003524 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0023 Time=046666
+0x01 0465FB Global
+1x01 02DE0A glDrawFaces
+2x01 00DFF2 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003526 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0024 Time=046D43
+0x01 046DD8 Global
+1x01 02E302 glDrawFaces
+2x01 00E0D2 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00352B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0025 Time=048CE6
+0x01 048C7B Global
+1x01 02F482 glDrawFaces
+2x01 00EEF6 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00352A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0026 Time=048805
+0x01 04879A Global
+1x01 02EE5F glDrawFaces
+2x01 00F044 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00351E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0027 Time=049EF7
+0x01 049E8C Global
+1x01 030422 glDrawFaces
+2x01 00F173 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00351E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003A63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0028 Time=049151
+0x01 0490E6 Global
+1x01 02F661 glDrawFaces
+2x01 00F18E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00351E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0029 Time=04A251
+0x01 04A1E6 Global
+1x01 02FD9C glDrawFaces
+2x01 00FB97 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034DA glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:002A Time=04AADC
+0x01 04AA71 Global
+1x01 030835 glDrawFaces
+2x01 00F942 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003521 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:002B Time=04A91A
+0x01 04A8AF Global
+1x01 030694 glDrawFaces
+2x01 00F926 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00351C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:002C Time=043BDA
+0x01 043B6F Global
+1x01 029247 glDrawFaces
+2x01 01012F glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003407 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:002D Time=044354
+0x01 0442E9 Global
+1x01 029685 glDrawFaces
+2x01 010388 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003503 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:002E Time=045063
+0x01 044FF8 Global
+1x01 02986A glDrawFaces
+2x01 010EB1 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003504 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:002F Time=046115
+0x01 0460AA Global
+1x01 02A1EA glDrawFaces
+2x01 0115EF glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034F8 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0030 Time=046C26
+0x01 046BBB Global
+1x01 02A4D4 glDrawFaces
+2x01 011E14 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034FA glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0031 Time=047701
+0x01 047696 Global
+1x01 02A4CE glDrawFaces
+2x01 0128F1 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034FE glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0032 Time=04593F
+0x01 0458D4 Global
+1x01 028259 glDrawFaces
+2x01 012F5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0033 Time=0470BA
+0x01 04704F Global
+1x01 028F9E glDrawFaces
+2x01 013803 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034D5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0034 Time=04943D
+0x01 0493D2 Global
+1x01 02A80F glDrawFaces
+2x01 014317 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034D3 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0035 Time=04D683
+0x01 04D618 Global
+1x01 02E341 glDrawFaces
+2x01 014A29 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034D5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0036 Time=04F73E
+0x01 04F6D3 Global
+1x01 02F2B5 glDrawFaces
+2x01 015B78 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0035CD glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0037 Time=051339
+0x01 0512CE Global
+1x01 03078D glDrawFaces
+2x01 016285 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034CA glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0038 Time=041B79
+0x01 041B0E Global
+1x01 0211ED glDrawFaces
+2x01 016186 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0033A9 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0039 Time=044350
+0x01 0442E5 Global
+1x01 022C25 glDrawFaces
+2x01 016E42 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034A5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:003A Time=046848
+0x01 0467DD Global
+1x01 0243B9 glDrawFaces
+2x01 017B9E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034AD glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:003B Time=049B79
+0x01 049B0E Global
+1x01 0267E3 glDrawFaces
+2x01 018AEC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003466 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:003C Time=04C950
+0x01 04C8E5 Global
+1x01 0281B6 glDrawFaces
+2x01 019EB0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034A6 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:003D Time=04B376
+0x01 04B30B Global
+1x01 02661E glDrawFaces
+2x01 01A46E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034A6 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:003E Time=0519A1
+0x01 051936 Global
+1x01 029CAB glDrawFaces
+2x01 01D526 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003373 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:003F Time=0518FA
+0x01 05188F Global
+1x01 029CAB glDrawFaces
+2x01 01D364 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00348E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0040 Time=0496B6
+0x01 04964B Global
+1x01 02205D glDrawFaces
+2x01 01CD89 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00348C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0041 Time=04CF2F
+0x01 04CEC4 Global
+1x01 0258CA glDrawFaces
+2x01 01CD97 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00348A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0042 Time=04D4A5
+0x01 04D43A Global
+1x01 025F6E glDrawFaces
+2x01 01CC71 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003482 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0043 Time=04DE0A
+0x01 04DD9F Global
+1x01 02654D glDrawFaces
+2x01 01CFFB glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00347E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0044 Time=049FD7
+0x01 049F6C Global
+1x01 02616F glDrawFaces
+2x01 0195A6 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00347E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0045 Time=04AE57
+0x01 04ADEC Global
+1x01 026EAD glDrawFaces
+2x01 0196EE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003478 glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0046 Time=04B367
+0x01 04B2FC Global
+1x01 0275EE glDrawFaces
+2x01 0194BB glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00347A glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0047 Time=04B65A
+0x01 04B5EF Global
+1x01 027839 glDrawFaces
+2x01 019563 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00347A glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0048 Time=047ACD
+0x01 047A62 Global
+1x01 0280BA glDrawFaces
+2x01 015153 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00347C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0049 Time=044466
+0x01 0443FB Global
+1x01 0247D4 glDrawFaces
+2x01 0153CE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003480 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:004A Time=041C36
+0x01 041BCB Global
+1x01 0217B0 glDrawFaces
+2x01 015BA4 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:004B Time=041CFC
+0x01 041B91 Global
+1x01 0217B0 glDrawFaces
+2x01 015BA4 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:004C Time=041F2A
+0x01 041EBF Global
+1x01 021BA3 glDrawFaces
+2x01 015A9E glDrawSegments
+3x01 000186 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:004D Time=041EC5
+0x01 041E5A Global
+1x01 021C45 glDrawFaces
+2x01 015998 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:004E Time=041EA0
+0x01 041E35 Global
+1x01 021D26 glDrawFaces
+2x01 015892 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:004F Time=04141D
+0x01 0413B2 Global
+1x01 0217C7 glDrawFaces
+2x01 01536E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0050 Time=045A89
+0x01 045A1E Global
+1x01 021825 glDrawFaces
+2x01 019995 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003485 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0051 Time=03DEC1
+0x01 03DE56 Global
+1x01 019CCC glDrawFaces
+2x01 01993A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003471 glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0052 Time=03DFFD
+0x01 03DE92 Global
+1x01 019D82 glDrawFaces
+2x01 0199C0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003471 glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0053 Time=03DF5F
+0x01 03DEF4 Global
+1x01 019E77 glDrawFaces
+2x01 019846 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003458 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0054 Time=040769
+0x01 0406FE Global
+1x01 01C6E2 glDrawFaces
+2x01 0197CC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003458 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0055 Time=046CB4
+0x01 046C49 Global
+1x01 01EAB9 glDrawFaces
+2x01 01D959 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003458 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0056 Time=0464F9
+0x01 04648E Global
+1x01 01E390 glDrawFaces
+2x01 01D8D1 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0057 Time=046406
+0x01 04639B Global
+1x01 01E327 glDrawFaces
+2x01 01D847 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0058 Time=04632E
+0x01 0462C3 Global
+1x01 01E2D9 glDrawFaces
+2x01 01D7BD glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0059 Time=046217
+0x01 0461AC Global
+1x01 01E24C glDrawFaces
+2x01 01D733 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:005A Time=0460D0
+0x01 046065 Global
+1x01 01E18F glDrawFaces
+2x01 01D6A9 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:005B Time=0414B3
+0x01 041448 Global
+1x01 01DF16 glDrawFaces
+2x01 018CEC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:005C Time=0416FF
+0x01 041594 Global
+1x01 01DD7C glDrawFaces
+2x01 018FD2 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:005D Time=041B81
+0x01 041B16 Global
+1x01 01E0B2 glDrawFaces
+2x01 01921E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:005E Time=041BC4
+0x01 041B59 Global
+1x01 01E1C5 glDrawFaces
+2x01 01914E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:005F Time=0418A3
+0x01 041838 Global
+1x01 01DF74 glDrawFaces
+2x01 01907E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0060 Time=041B82
+0x01 041B17 Global
+1x01 01DB99 glDrawFaces
+2x01 019738 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0061 Time=04F952
+0x01 04F8E7 Global
+1x01 02BA52 glDrawFaces
+2x01 019668 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0062 Time=049190
+0x01 049125 Global
+1x01 02538D glDrawFaces
+2x01 01956B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0063 Time=04FD3E
+0x01 04FCD3 Global
+1x01 02C06A glDrawFaces
+2x01 01943C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0064 Time=04F6D0
+0x01 04F665 Global
+1x01 02BB12 glDrawFaces
+2x01 019326 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0065 Time=04F0C8
+0x01 04F05D Global
+1x01 02B620 glDrawFaces
+2x01 019210 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0066 Time=053A4E
+0x01 0539E3 Global
+1x01 0300AD glDrawFaces
+2x01 0190FA glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0067 Time=054640
+0x01 0545D5 Global
+1x01 030572 glDrawFaces
+2x01 019840 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0068 Time=055087
+0x01 05501C Global
+1x01 03116F glDrawFaces
+2x01 01958A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0069 Time=055B83
+0x01 055B18 Global
+1x01 03182C glDrawFaces
+2x01 019AC9 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:006A Time=055FAB
+0x01 055F40 Global
+1x01 031E0A glDrawFaces
+2x01 019913 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:006B Time=056227
+0x01 0561BC Global
+1x01 03223C glDrawFaces
+2x01 01975D glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:006C Time=0561E7
+0x01 05617C Global
+1x01 03223C glDrawFaces
+2x01 01975D glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003444 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:006D Time=05A35A
+0x01 05A2EF Global
+1x01 036449 glDrawFaces
+2x01 019692 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00343F glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:006E Time=05D25B
+0x01 05D1F0 Global
+1x01 0392A3 glDrawFaces
+2x01 01973D glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00343B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:006F Time=05D9A2
+0x01 05D937 Global
+1x01 039ABA glDrawFaces
+2x01 01966F glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003439 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0070 Time=05D9FC
+0x01 05D891 Global
+1x01 039A9B glDrawFaces
+2x01 0196E8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003439 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0071 Time=05D24D
+0x01 05D1E2 Global
+1x01 03950C glDrawFaces
+2x01 0193CA glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003437 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0072 Time=05D0C8
+0x01 05D05D Global
+1x01 039AD0 glDrawFaces
+2x01 018D7B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00343D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0073 Time=05DADF
+0x01 05DA74 Global
+1x01 03AA40 glDrawFaces
+2x01 018822 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00343D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0074 Time=05CF38
+0x01 05CECD Global
+1x01 03A4EB glDrawFaces
+2x01 0181CC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003441 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0075 Time=05D723
+0x01 05D6B8 Global
+1x01 03AC77 glDrawFaces
+2x01 018223 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003449 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0076 Time=05BD80
+0x01 05BD15 Global
+1x01 0395DA glDrawFaces
+2x01 017F1B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0077 Time=05BE2F
+0x01 05BDC4 Global
+1x01 03924D glDrawFaces
+2x01 018355 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00344D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0078 Time=05BEBE
+0x01 05BE53 Global
+1x01 0391DD glDrawFaces
+2x01 01856F glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003332 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0079 Time=047982
+0x01 047917 Global
+1x01 0246E4 glDrawFaces
+2x01 0189F9 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003465 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:007A Time=046B54
+0x01 046AE9 Global
+1x01 023F26 glDrawFaces
+2x01 018389 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003465 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:007B Time=040B09
+0x01 040A9E Global
+1x01 0238EB glDrawFaces
+2x01 0129A0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003425 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:007C Time=040091
+0x01 040026 Global
+1x01 023836 glDrawFaces
+2x01 011F96 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00346C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:007D Time=03EA76
+0x01 03EA0B Global
+1x01 0227CD glDrawFaces
+2x01 011A05 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003464 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:007E Time=04159A
+0x01 04152F Global
+1x01 022AA2 glDrawFaces
+2x01 014337 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003368 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:007F Time=038F72
+0x01 038F07 Global
+1x01 01AFF2 glDrawFaces
+2x01 0136B7 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003489 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0080 Time=038455
+0x01 0383EA Global
+1x01 01AABE glDrawFaces
+2x01 0130CB glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00348C glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0081 Time=036FF2
+0x01 036F87 Global
+1x01 01A594 glDrawFaces
+2x01 01218A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003494 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0082 Time=035862
+0x01 0357F7 Global
+1x01 01920E glDrawFaces
+2x01 011D82 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003492 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0083 Time=034E68
+0x01 034DFD Global
+1x01 0190AE glDrawFaces
+2x01 0114E6 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003494 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0084 Time=0345FA
+0x01 03458F Global
+1x01 019068 glDrawFaces
+2x01 010E4C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003306 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0085 Time=0345C4
+0x01 034559 Global
+1x01 019068 glDrawFaces
+2x01 010E4C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003306 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0086 Time=03467F
+0x01 034614 Global
+1x01 0190D9 glDrawFaces
+2x01 010E4C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003310 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0087 Time=03C4DF
+0x01 03C474 Global
+1x01 020F51 glDrawFaces
+2x01 010E33 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003310 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0088 Time=03CA83
+0x01 03CA18 Global
+1x01 020F4B glDrawFaces
+2x01 0113D3 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00331A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0089 Time=03AE51
+0x01 03ADE6 Global
+1x01 01F319 glDrawFaces
+2x01 0113D3 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00331A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:008A Time=039F8F
+0x01 039F24 Global
+1x01 01FD93 glDrawFaces
+2x01 00FA97 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00331A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:008B Time=03A59B
+0x01 03A530 Global
+1x01 02039F glDrawFaces
+2x01 00FA97 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00331A glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:008C Time=037E1F
+0x01 037DB4 Global
+1x01 01DC19 glDrawFaces
+2x01 00FA97 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003324 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:008D Time=038639
+0x01 0385CE Global
+1x01 01E203 glDrawFaces
+2x01 00FCC7 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003324 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:008E Time=039491
+0x01 039426 Global
+1x01 01EE71 glDrawFaces
+2x01 00FEB1 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003324 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:008F Time=039EE6
+0x01 039E7B Global
+1x01 01F221 glDrawFaces
+2x01 010451 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0090 Time=03FC62
+0x01 03FBF7 Global
+1x01 0253F7 glDrawFaces
+2x01 00FFF7 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0091 Time=04054B
+0x01 0404E0 Global
+1x01 0253F7 glDrawFaces
+2x01 0108C7 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0092 Time=03FF0C
+0x01 03FEA1 Global
+1x01 0253EA glDrawFaces
+2x01 0102AE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0093 Time=03FE54
+0x01 03FDE9 Global
+1x01 025332 glDrawFaces
+2x01 0102AE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0094 Time=042C7F
+0x01 042C14 Global
+1x01 028144 glDrawFaces
+2x01 0102AE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0095 Time=0429B5
+0x01 04294A Global
+1x01 027E7A glDrawFaces
+2x01 0102AE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003329 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0096 Time=047118
+0x01 0470AD Global
+1x01 02A424 glDrawFaces
+2x01 01256C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00333D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0097 Time=047786
+0x01 04771B Global
+1x01 02A939 glDrawFaces
+2x01 0126C5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00333D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0098 Time=04BB6D
+0x01 04BB02 Global
+1x01 02EB40 glDrawFaces
+2x01 0128A5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00333D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:0099 Time=04C0DD
+0x01 04C072 Global
+1x01 02EEF8 glDrawFaces
+2x01 012A58 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003342 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:009A Time=04C7C5
+0x01 04C75A Global
+1x01 02F338 glDrawFaces
+2x01 012D00 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003342 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:009B Time=04BF0D
+0x01 04BEA2 Global
+1x01 02EF2A glDrawFaces
+2x01 012856 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003342 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:009C Time=04B82F
+0x01 04B7C4 Global
+1x01 02E365 glDrawFaces
+2x01 012D38 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:009D Time=04B466
+0x01 04B3FB Global
+1x01 02E28D glDrawFaces
+2x01 012A47 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:009E Time=04B616
+0x01 04B5AB Global
+1x01 02E0B4 glDrawFaces
+2x01 012DD0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:009F Time=04E4A7
+0x01 04E43C Global
+1x01 030D92 glDrawFaces
+2x01 012F83 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A0 Time=04DF31
+0x01 04DEC6 Global
+1x01 0308EC glDrawFaces
+2x01 012EB3 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A1 Time=04D45A
+0x01 04D3EF Global
+1x01 02FBF2 glDrawFaces
+2x01 0130D6 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A2 Time=04D662
+0x01 04D5F7 Global
+1x01 02FF8E glDrawFaces
+2x01 012F42 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A3 Time=045973
+0x01 045908 Global
+1x01 028286 glDrawFaces
+2x01 012F5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A4 Time=0458E8
+0x01 04587D Global
+1x01 0281FB glDrawFaces
+2x01 012F5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A5 Time=045946
+0x01 0459DB Global
+1x01 028259 glDrawFaces
+2x01 012F5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A6 Time=04590A
+0x01 04589F Global
+1x01 028259 glDrawFaces
+2x01 012F5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A7 Time=045D8A
+0x01 045D1F Global
+1x01 028259 glDrawFaces
+2x01 012F5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003347 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A8 Time=044A36
+0x01 0449CB Global
+1x01 0275EB glDrawFaces
+2x01 0127FC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0033C0 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00A9 Time=04A4B3
+0x01 04A448 Global
+1x01 02D595 glDrawFaces
+2x01 0122C5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0033CA glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00AA Time=04BEB8
+0x01 04BE4D Global
+1x01 02E57A glDrawFaces
+2x01 012B5B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003554 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00AB Time=0482CD
+0x01 048262 Global
+1x01 02A7AF glDrawFaces
+2x01 012D44 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00354B glProjectArrays
+5x01 0027E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00AC Time=046DF4
+0x01 046D89 Global
+1x01 0293A7 glDrawFaces
+2x01 012C75 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003549 glProjectArrays
+5x01 0027E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00AD Time=04E4D7
+0x01 04E46C Global
+1x01 03043D glDrawFaces
+2x01 0132A0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00356B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00AE Time=04DD00
+0x01 04DC95 Global
+1x01 02F861 glDrawFaces
+2x01 0136BB glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003555 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00AF Time=0514CD
+0x01 051462 Global
+1x01 033034 glDrawFaces
+2x01 0136BE glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003533 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B0 Time=04FDE7
+0x01 04FD7C Global
+1x01 031B80 glDrawFaces
+2x01 0134E5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034F3 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B1 Time=05015C
+0x01 0500F1 Global
+1x01 031846 glDrawFaces
+2x01 013B41 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00352D glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B2 Time=04F083
+0x01 04F018 Global
+1x01 030AA2 glDrawFaces
+2x01 013889 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034C9 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B3 Time=04EEA6
+0x01 04EE3B Global
+1x01 030A1C glDrawFaces
+2x01 0136F8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003503 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B4 Time=04CE48
+0x01 04CDDD Global
+1x01 02EBF7 glDrawFaces
+2x01 0134C0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003502 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B5 Time=04B5AF
+0x01 04B544 Global
+1x01 02D5D6 glDrawFaces
+2x01 013249 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003501 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B6 Time=04A79D
+0x01 04A732 Global
+1x01 02C803 glDrawFaces
+2x01 013213 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034F8 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B7 Time=048462
+0x01 0483F7 Global
+1x01 02A4C9 glDrawFaces
+2x01 01320E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034FC glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B8 Time=0499E1
+0x01 049976 Global
+1x01 02BC3A glDrawFaces
+2x01 013014 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003503 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00B9 Time=048B55
+0x01 048AEA Global
+1x01 02B4D6 glDrawFaces
+2x01 0128EC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003503 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00BA Time=048794
+0x01 048729 Global
+1x01 02B4B8 glDrawFaces
+2x01 012548 glDrawSegments
+3x01 FFFF86 glDrawParticules
+4x01 003504 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003C63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00BB Time=049EEF
+0x01 049E84 Global
+1x01 02CA8C glDrawFaces
+2x01 0126D0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003503 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00BC Time=04BCD2
+0x01 04BC67 Global
+1x01 02E10F glDrawFaces
+2x01 012E6E glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034C5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00BD Time=04BEF5
+0x01 04BE8A Global
+1x01 02E6F0 glDrawFaces
+2x01 012A92 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034E3 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003A63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00BE Time=04B9B0
+0x01 04B945 Global
+1x01 02ECC3 glDrawFaces
+2x01 011F75 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034E8 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00BF Time=04B4F5
+0x01 04B48A Global
+1x01 02E9D1 glDrawFaces
+2x01 011DA9 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034EB glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003A63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C0 Time=04B0E0
+0x01 04B075 Global
+1x01 02EC21 glDrawFaces
+2x01 011739 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034F6 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C1 Time=04B68D
+0x01 04B622 Global
+1x01 02F634 glDrawFaces
+2x01 0112CF glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034FA glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C2 Time=04CD50
+0x01 04CCE5 Global
+1x01 030ACB glDrawFaces
+2x01 01151A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034DB glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C3 Time=04C2D4
+0x01 04C269 Global
+1x01 030836 glDrawFaces
+2x01 010D2C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034E2 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C4 Time=04BD1A
+0x01 04BCAF Global
+1x01 030690 glDrawFaces
+2x01 010928 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034D2 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C5 Time=04AD43
+0x01 04ADD8 Global
+1x01 02F6AC glDrawFaces
+2x01 010932 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034D5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C6 Time=04B13C
+0x01 04B0D1 Global
+1x01 02F5F4 glDrawFaces
+2x01 010DE3 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034D5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C7 Time=04BDA5
+0x01 04BD3A Global
+1x01 02FB8E glDrawFaces
+2x01 011535 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003452 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C8 Time=04B0DD
+0x01 04B072 Global
+1x01 02F55F glDrawFaces
+2x01 010E24 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034C9 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00C9 Time=04B4B2
+0x01 04B447 Global
+1x01 02FB43 glDrawFaces
+2x01 010C12 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034CC glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00CA Time=04E0B9
+0x01 04E04E Global
+1x01 031E08 glDrawFaces
+2x01 01155B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034C5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00CB Time=04E182
+0x01 04E117 Global
+1x01 031E4C glDrawFaces
+2x01 011600 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034A5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00CC Time=04EBF5
+0x01 04EB8A Global
+1x01 032304 glDrawFaces
+2x01 011BC5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00349B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003A63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00CD Time=04D9E8
+0x01 04D97D Global
+1x01 0312C2 glDrawFaces
+2x01 0119F5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034A0 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00CE Time=04E3EA
+0x01 04E37F Global
+1x01 0317C4 glDrawFaces
+2x01 011EFF glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003496 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00CF Time=04D9ED
+0x01 04D982 Global
+1x01 030976 glDrawFaces
+2x01 012352 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003494 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D0 Time=04D8D8
+0x01 04D86D Global
+1x01 030485 glDrawFaces
+2x01 01274F glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003473 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D1 Time=04D6CE
+0x01 04D663 Global
+1x01 02FA70 glDrawFaces
+2x01 012F60 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00346D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D2 Time=04D168
+0x01 04D0FD Global
+1x01 02F65B glDrawFaces
+2x01 012DEF glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00348D glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D3 Time=04D74C
+0x01 04D6E1 Global
+1x01 02FED0 glDrawFaces
+2x01 012B6B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003580 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D4 Time=04C5CB
+0x01 04C560 Global
+1x01 02ECD2 glDrawFaces
+2x01 012BE8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003580 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D5 Time=04D65C
+0x01 04D5F1 Global
+1x01 02F93B glDrawFaces
+2x01 013052 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00343E glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D6 Time=0505E8
+0x01 05057D Global
+1x01 031A0E glDrawFaces
+2x01 013EFA glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003436 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D7 Time=04F93E
+0x01 04F8D3 Global
+1x01 0309DE glDrawFaces
+2x01 01429B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003435 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D8 Time=052D79
+0x01 052D0E Global
+1x01 0334DF glDrawFaces
+2x01 014BBC glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003435 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00D9 Time=055B4A
+0x01 055ADF Global
+1x01 035F19 glDrawFaces
+2x01 014F73 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00342E glProjectArrays
+5x01 0025E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00DA Time=051FA3
+0x01 051F38 Global
+1x01 031CC1 glDrawFaces
+2x01 0155C5 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003474 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B7C buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00DB Time=053EF8
+0x01 053E8D Global
+1x01 033ECC glDrawFaces
+2x01 015308 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 00347B glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003A63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00DC Time=03ED11
+0x01 03ECA6 Global
+1x01 01DE97 glDrawFaces
+2x01 016175 glDrawSegments
+3x01 000186 glDrawParticules
+4x01 003475 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00DD Time=03E0D7
+0x01 03E06C Global
+1x01 01CE77 glDrawFaces
+2x01 01652B glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034A5 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00DE Time=03F4BE
+0x01 03F453 Global
+1x01 01CEF8 glDrawFaces
+2x01 0178D0 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003466 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00DF Time=03E777
+0x01 03E70C Global
+1x01 01BE40 glDrawFaces
+2x01 017BE9 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034BE glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E0 Time=03E393
+0x01 03E328 Global
+1x01 01B9E6 glDrawFaces
+2x01 017C2C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034F1 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003C63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E1 Time=03CB49
+0x01 03CADE Global
+1x01 01B597 glDrawFaces
+2x01 016828 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0034FA glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E2 Time=03BB35
+0x01 03BACA Global
+1x01 01B453 glDrawFaces
+2x01 01594C glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003506 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E3 Time=03AF58
+0x01 03AEED Global
+1x01 01B8F9 glDrawFaces
+2x01 0148C8 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 003507 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E4 Time=04FB10
+0x01 04FAA5 Global
+1x01 030C5D glDrawFaces
+2x01 0140EA glDrawSegments
+3x01 000186 glDrawParticules
+4x01 003539 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E5 Time=04AD45
+0x01 04ADDA Global
+1x01 02D0F0 glDrawFaces
+2x01 01301A glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0033AB glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E6 Time=04915B
+0x01 0490F0 Global
+1x01 02B8AD glDrawFaces
+2x01 012C60 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0033B9 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+Frame:00E7 Time=048CCD
+0x01 048C62 Global
+1x01 02B8AD glDrawFaces
+2x01 012C60 glDrawSegments
+3x01 000086 glDrawParticules
+4x01 0033B9 glProjectArrays
+5x01 0026E3 initScreenBuffers
+6x01 003B63 buffer2screen
+7x01 000B69 keyEvent
+
+

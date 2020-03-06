@@ -6,11 +6,12 @@
 #include "glOric.h"
 #include "data\geom.h"
 #include "util\keyboard.h"
-
+#include "data\traj.h"
 
 
 void profbench() {
-
+    int ii;
+    unsigned char state, kk;
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
     nbPoints        = 0;
@@ -33,7 +34,7 @@ void profbench() {
     CamPosY = 0;
     CamPosZ = 6;
 
-    CamRotZ = -127;
+    CamRotZ = -128;
     CamRotX = 0;
 
 
@@ -42,13 +43,66 @@ void profbench() {
 
     ProfilerInitialize();
 
-    while (1) {
+    ii = 74; 
+    state = 0;
+
+    while (state != 5) {
 
         ProfilerNextFrame();
 
         PROFILE_ENTER(ROUTINE_GLOBAL);
-
-        PROFILE_ENTER(ROUTINE_KEYEVENT);
+        switch (state) {
+            case 0:
+                if (ii > 0) {
+                    CamPosX -- ; 
+                    ii--;
+                } else {
+                    ii = 32; 
+                    state = 1;
+                }
+            break;
+            case 1:
+                if (ii > 0) {
+                    CamRotZ -= 4 ; 
+                    ii--;
+                } else {
+                    ii = 24; 
+                    state = 2;
+                }
+            break;
+            case 2:
+                if (ii > 0) {
+                    CamPosX ++ ; 
+                    ii--;
+                } else {
+                    ii = 32; 
+                    state = 3;
+                }
+            break;
+            case 3:
+                if (ii > 0) {
+                    CamRotZ -= 4 ; 
+                    ii--;
+                } else {
+                    ii = 64; 
+                    state = 4;
+                    kk=0;
+                }
+            break;
+            case 4:
+                if (ii > 0) {
+                    CamPosX = traj[kk++];
+                    CamPosY = traj[kk++];
+                    CamRotZ = traj[kk++];
+                    kk       = kk % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
+                    ii--;
+                } else {
+                    ii = 64; 
+                    state = 5;
+                }
+            break;
+        }
+         PROFILE_ENTER(ROUTINE_KEYEVENT);
         keyEvent();
         PROFILE_LEAVE(ROUTINE_KEYEVENT);
 
@@ -74,7 +128,10 @@ void profbench() {
         ProfilerDisplay();
 
     }
+    
     ProfilerTerminate();
+    cls();
+    kernelExit();
 }
 void move(char key) {
     switch (key) {
