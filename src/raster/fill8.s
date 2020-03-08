@@ -31,6 +31,13 @@ _A2sX .dsb 1
 _A2sY .dsb 1
 _A2arrived .dsb 1
 
+_A1Right .dsb 1
+
+_mDeltaY1 .dsb 1
+_mDeltaX1 .dsb 1
+_mDeltaY2 .dsb 1
+_mDeltaX2 .dsb 1
+
 .text
 
 
@@ -792,7 +799,125 @@ prepare_bresrun_Lbresfill130
 	rts :
 #endif
 
+#ifdef USE_ASM_ISA1RIGHT1
+// void isA1Right1 ()
+_isA1Right1:
+.(
+	// save context
+    pha
+	lda tmp0 : pha
+	lda tmp1 : pha
+	lda reg6 : pha
+	lda reg7 : pha
 
+    // if ((mDeltaX1 & 0x80) == 0){
+	lda #$00 : sta _A1Right
+	lda _mDeltaX1
+	bmi isA1Right1_mDeltaX1_negativ:
+        
+    // 	  if ((mDeltaX2 & 0x80) == 0){
+		lda _mDeltaX2
+		bmi isA1Right1_mDeltaX2_negativ_01
+    //         // printf ("%d*%d  %d*%d ", mDeltaY1, mDeltaX2, mDeltaY2,mDeltaX1);get ();
+    //         A1Right = (log2_tab[mDeltaX2] + log2_tab[mDeltaY1]) > (log2_tab[mDeltaX1] + log2_tab[mDeltaY2]);
+    //         // A1Right = mDeltaY1*mDeltaX2 > mDeltaY2*mDeltaX1;
+
+			ldx _mDeltaY1
+			ldy _mDeltaX2
+			clc
+			lda _log2_tab,x
+			adc _log2_tab,y
+			sta tmp0
+
+			ldx _mDeltaX1			; abs(mDeltaX1)
+			ldy _mDeltaY2
+			clc
+			lda _log2_tab,x
+			adc _log2_tab,y
+			sta tmp1			; (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2])
+
+			cmp tmp0
+
+			bcs isA1Right1_done
+
+			lda #$01 : sta _A1Right
+
+			jmp isA1Right1_done
+isA1Right1_mDeltaX2_negativ_01:
+    //     } else {
+			lda #$00 : sta _A1Right
+    //         A1Right = 0 ; // (mDeltaX1 < 0) 
+    //     }
+	jmp isA1Right1_done
+isA1Right1_mDeltaX1_negativ:
+    // } else {
+		eor #$ff: sec: adc #$00: sta reg6 ; reg6 = abs(mDeltaX1)
+ 
+    //     if ((mDeltaX2 & 0x80) == 0){
+		lda _mDeltaX2
+		bmi isA1Right1_mDeltaX2_negativ_02
+    //         A1Right = 1 ; // (mDeltaX1 < 0)
+			lda #$01 : sta _A1Right
+			jmp isA1Right1_done
+ isA1Right1_mDeltaX2_negativ_02;
+    //     } else {
+    //         // printf ("%d*%d  %d*%d ", mDeltaY1, -mDeltaX2, mDeltaY2,-mDeltaX1);get ();
+			eor #$ff: sec: adc #$00: sta reg7 ; reg7 = abs(mDeltaX2)
+    //         A1Right = (log2_tab[abs(mDeltaX2)] + log2_tab[mDeltaY1]) < (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2]);
+
+			ldx reg7			; abs(mDeltaX2)
+			ldy _mDeltaY1
+			clc
+			lda _log2_tab,x
+			adc _log2_tab,y
+			sta tmp0			; log2_tab[abs(mDeltaX2)] + log2_tab[mDeltaY1]
+
+			ldx reg6			; abs(mDeltaX1)
+			ldy _mDeltaY2
+			clc
+			lda _log2_tab,x
+			adc _log2_tab,y
+			sta tmp1			; (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2])
+
+			cmp tmp0 
+
+			bcc isA1Right1_done
+
+			lda #$01 : sta _A1Right
+
+    //     }
+    // }
+
+isA1Right1_done:
+	// restore context
+	pla : sta reg7 : 
+	pla : sta reg6 : 
+	pla : sta tmp1 : 
+	pla : sta tmp0 : 
+	pla
+.)
+	rts
+#endif // USE_ASM_ISA1RIGHT1
+
+#ifdef USE_ASM_ISA1RIGHT3
+// void isA1Right3 ()
+_isA1Right3:
+.(
+	lda #$00 : sta _A1Right
+
+	// A1Right = (A1X > A2X);
+	lda _A2X
+	sec
+	sbc _A1X
+	bvc *+4
+	eor #$80
+	bpl isA1Right3_done
+
+	lda #$01 : sta _A1Right
+isA1Right3_done:
+.)
+	rts
+#endif // USE_ASM_ISA1RIGHT3
 
 #ifdef USE_ASM_FILL8
 _fill8:
@@ -829,6 +954,8 @@ fill8_DepYDiffArr1Y:
 		lda _A1X
 		sbc _A1destX
 
+		sta _mDeltaX1
+
 		bmi fill8_01_negativ_02
 		sta _A1dX
 		lda #$FF
@@ -853,6 +980,7 @@ fill8_computeDy_01:
 		sec
 		lda _A1Y
 		sbc _A1destY
+		sta _mDeltaY1
 .(
 		bmi fill8_02_negativ_02
 		eor #$FF
@@ -923,6 +1051,8 @@ fill8_computeA2:
 		lda _A2X
 		sbc _A2destX
 
+		sta _mDeltaX2
+
 		bmi fill8_03_negativ_02
 		sta _A2dX
 		lda #$FF
@@ -946,6 +1076,7 @@ fill8_computeDy_02:
 		sec
 		lda _A2Y
 		sbc _A2destY
+		sta _mDeltaY2
 .(
 		bmi fill8_04_negativ_02
 		eor #$FF
@@ -1004,6 +1135,8 @@ fill8_tmp03:
 		sta _A2arrived
 
 fill8_brestep1:
+   //     isA1Right1();
+		ldy #0 : jsr _isA1Right1
     //     bresStepType1();
 		ldy #0 : jsr _bresStepType1
 
@@ -1291,6 +1424,8 @@ fill8_tmp08:
 		sta _A2arrived
 
 fill8_brestep3:
+   //     isA1Right3();
+		ldy #0 : jsr _isA1Right3
     //     bresStepType3() ;
 		ldy #0 : jsr _bresStepType3
     // }

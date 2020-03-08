@@ -32,7 +32,7 @@ extern signed char A2err;
 extern signed char A2sX;
 extern signed char A2sY;
 extern char        A2arrived;
-
+extern unsigned char A1Right;
 void fill8();
 
 #ifdef USE_C_BRESFILL
@@ -163,6 +163,10 @@ extern signed char pArr1Y;
 extern signed char pArr2X;
 extern signed char pArr2Y;
 
+extern unsigned char log2_tab[];
+extern signed char mDeltaY1, mDeltaX1, mDeltaY2, mDeltaX2;
+
+
 #ifdef USE_C_BRESFILL
 void prepare_bresrun() {
     if (P1Y <= P2Y) {
@@ -230,12 +234,15 @@ void bresStepType1() {
             A1stepY();
             A2stepY();
         }
+        // A1Right = (A1X > A2X); 
         hzfill();
         while ((A1arrived == 0) && (A1Y > 1)){
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
             hzfill();
+
         }
 // #ifdef USE_PROFILER
 //             PROFILE_LEAVE(ROUTINE_BRESRUNTYPE1);
@@ -250,6 +257,7 @@ void bresStepType2() {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
             hzfill();
         }
 // #ifdef USE_PROFILER
@@ -271,19 +279,77 @@ void bresStepType3() {
             A1stepY();
             A2stepY();
         }
+        // A1Right = (A1X > A2X); 
         hzfill();
 
         while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
             A1stepY();
             A2stepY();
             // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
             hzfill();
         }
 // #ifdef USE_PROFILER
 //             PROFILE_LEAVE(ROUTINE_BRESRUNTYPE3);
 // #endif
 }
+#ifdef USE_C_ISA1RIGHT1
+void isA1Right1 (){
+    
+    A1Right = 0;
+//  log2_tab[];
+    if ((mDeltaX1 & 0x80) == 0){
+        
+        if ((mDeltaX2 & 0x80) == 0){
+            // printf ("%d*%d  %d*%d ", mDeltaY1, mDeltaX2, mDeltaY2,mDeltaX1);get ();
+            A1Right = (log2_tab[mDeltaX2] + log2_tab[mDeltaY1]) > (log2_tab[mDeltaX1] + log2_tab[mDeltaY2]);
+            // A1Right = mDeltaY1*mDeltaX2 > mDeltaY2*mDeltaX1;
+        } else {
+            A1Right = 0 ; // (mDeltaX1 < 0) 
+        }
+    } else {
+        if ((mDeltaX2 & 0x80) == 0){
+            A1Right = 1 ; // (mDeltaX1 < 0)
+        } else {
+            // printf ("%d*%d  %d*%d ", mDeltaY1, -mDeltaX2, mDeltaY2,-mDeltaX1);get ();
+            A1Right = (log2_tab[abs(mDeltaX2)] + log2_tab[mDeltaY1]) < (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2]);
+        }
+    }
+    // if (((mDeltaX1 & 0x80) ^ (mDeltaX2 & 0x80)) == 0) {
+    //     A1Right = mDeltaY1*mDeltaX2 > mDeltaY2*mDeltaX1; // (DeltaY1/DeltaX1) > (DeltaY2/DeltaX2) ;
+    // }else {
+    //     A1Right = (mDeltaX1 < 0) ;
+    // }
+    
+    // A1Right = mDeltaY1*mDeltaX2 > mDeltaY2*mDeltaX1;
+
+
+//  if (DeltaX1 == 0) {
+//     A1Right = (DeltaX2 < 0);
+//  } else {
+//     if (DeltaX2 == 0){
+//         A1Right = (DeltaX1 > 0);
+//     } else {
+//         if (((DeltaX1 & 0x80) ^ (DeltaX2 & 0x80)) == 0) {
+//             A1Right = DeltaY1*DeltaX2 > DeltaY2*DeltaX1; // (DeltaY1/DeltaX1) > (DeltaY2/DeltaX2) ;
+//         }else {
+//             A1Right = (DeltaX1 > 0) ;
+//         }
+        
+//     }
+//  }
+}
+#endif // USE_C_ISA1RIGHT1
+
+#ifdef USE_C_ISA1RIGHT3
+
+void isA1Right3 (){
+ A1Right = (A1X > A2X);
+}
+#endif // USE_C_ISA1RIGHT3
+
 #ifdef USE_C_FILL8
+
 
 void fill8() {
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
@@ -320,6 +386,13 @@ void fill8() {
         A2sX      = (A2X < A2destX) ? 1 : -1;
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+
+        mDeltaY1 = (A1Y - A1destY);
+        mDeltaX1 = (A1X - A1destX );
+        mDeltaY2= (A2Y - A2destY);
+        mDeltaX2 = (A2X - A2destX);
+
+        isA1Right1 ();
 
         bresStepType1();
 
@@ -369,6 +442,7 @@ void fill8() {
         A2sY      = (A2Y < A2destY) ? 1 : -1;
         A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 
+        isA1Right3();
         bresStepType3() ;
     }
 }

@@ -43,12 +43,14 @@ _hzfill:
     sta lineIndex ; A1Y
 
 //     if (A1X > A2X) {
-	lda _A1X				
-	sec
-	sbc _A2X				; signed cmp to p2x
-	bvc *+4
-	eor #$80
-	bmi hzfill_A2xOverOrEqualA1x
+	; lda _A1X				
+	; sec
+	; sbc _A2X				; signed cmp to p2x
+	; bvc *+4
+	; eor #$80
+	; bmi hzfill_A2xOverOrEqualA1x
+	lda _A1Right ; (A1X > A2X)
+	beq hzfill_A2xOverOrEqualA1x
 #ifdef USE_COLOR
 //		dx = max(2, A2X);
 		lda _A2X
