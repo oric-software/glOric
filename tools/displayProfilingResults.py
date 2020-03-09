@@ -10,8 +10,8 @@
 #-------------------------------------------------------------------------------
 
 
-#PATH_TO_PRINTER_OUT = 'C:\\Users\\tbpk7658\\Applis\\osdk_1_15\\Oricutron\\printer_out.txt'
-PATH_TO_PRINTER_OUT = 'C:\\Users\\tbpk7658\\Documents\\Projets\\glOric\\tests\\benchmark_results.txt'
+PATH_TO_PRINTER_OUT = 'C:\\Users\\tbpk7658\\Applis\\osdk_1_15\\Oricutron\\printer_out.txt'
+#PATH_TO_PRINTER_OUT = 'C:\\Users\\tbpk7658\\Documents\\Projets\\glOric\\tests\\benchmark_results.txt'
 
 def main():
     ficin = open (PATH_TO_PRINTER_OUT, 'r')
