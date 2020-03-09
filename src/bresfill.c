@@ -142,7 +142,7 @@ void fillFace() {
     angle2screen();
 
     // printf ("P1A: [%d, %d], P2A: [%d, %d], P3A [%d, %d]\n", P1AH, P1AV, P2AH, P2AV, P3AH, P3AV);
-    // printf ("P1:[%d, %d], P2:[%d, %d], P3[%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);
+    // printf ("P1:[%d, %d], P2:[%d, %d], P3[%d, %d]\n", P1X, P1Y, P2X, P2Y, P3X, P3Y);get();
     // printf ("distface = %d char = %d\n",distface, ch2disp);
     // get();
 
@@ -302,7 +302,7 @@ void isA1Right1 (){
         
         if ((mDeltaX2 & 0x80) == 0){
             // printf ("%d*%d  %d*%d ", mDeltaY1, mDeltaX2, mDeltaY2,mDeltaX1);get ();
-            A1Right = (log2_tab[mDeltaX2] + log2_tab[mDeltaY1]) > (log2_tab[mDeltaX1] + log2_tab[mDeltaY2]);
+            A1Right = ((log2_tab[mDeltaX2] + log2_tab[mDeltaY1])/2) > ((log2_tab[mDeltaX1] + log2_tab[mDeltaY2])/2);
             // A1Right = mDeltaY1*mDeltaX2 > mDeltaY2*mDeltaX1;
         } else {
             A1Right = 0 ; // (mDeltaX1 < 0) 
@@ -312,7 +312,7 @@ void isA1Right1 (){
             A1Right = 1 ; // (mDeltaX1 < 0)
         } else {
             // printf ("%d*%d  %d*%d ", mDeltaY1, -mDeltaX2, mDeltaY2,-mDeltaX1);get ();
-            A1Right = (log2_tab[abs(mDeltaX2)] + log2_tab[mDeltaY1]) < (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2]);
+            A1Right = ((log2_tab[abs(mDeltaX2)] + log2_tab[mDeltaY1])/2) < ((log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2])/2);
         }
     }
     // if (((mDeltaX1 & 0x80) ^ (mDeltaX2 & 0x80)) == 0) {

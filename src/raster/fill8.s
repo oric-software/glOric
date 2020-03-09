@@ -827,6 +827,7 @@ _isA1Right1:
 			clc
 			lda _log2_tab,x
 			adc _log2_tab,y
+			ror						; to avoid modulo by overflow
 			sta tmp0
 
 			ldx _mDeltaX1			; abs(mDeltaX1)
@@ -834,6 +835,7 @@ _isA1Right1:
 			clc
 			lda _log2_tab,x
 			adc _log2_tab,y
+			ror						; to avoid modulo by overflow
 			sta tmp1			; (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2])
 
 			cmp tmp0
@@ -870,6 +872,7 @@ isA1Right1_mDeltaX1_negativ:
 			clc
 			lda _log2_tab,x
 			adc _log2_tab,y
+			ror					; to avoid modulo by overflow
 			sta tmp0			; log2_tab[abs(mDeltaX2)] + log2_tab[mDeltaY1]
 
 			ldx reg6			; abs(mDeltaX1)
@@ -877,6 +880,7 @@ isA1Right1_mDeltaX1_negativ:
 			clc
 			lda _log2_tab,x
 			adc _log2_tab,y
+			ror					; to avoid modulo by overflow
 			sta tmp1			; (log2_tab[abs(mDeltaX1)] + log2_tab[mDeltaY2])
 
 			cmp tmp0 
@@ -1351,7 +1355,7 @@ fill8_computeA2_ter:
 		sta _A2sX
 		lda #OPCODE_DEC_ZERO
 		sta patch_A2stepY_incdec_A2X
-		jmp fill8_computeDy_02
+		jmp fill8_computeDy_08
 	fill8_09_negativ_02:
 		eor #$FF
 		sec

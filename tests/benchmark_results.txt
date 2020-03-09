@@ -910,7 +910,7 @@ Frame:002E Time=0446B3
 
 2x01 01073D glDrawSegments
 
-3x01 FFFF86 glDrawParticules
+3x01 000086 glDrawParticules
 
 4x01 003506 glProjectArrays
 
@@ -3690,7 +3690,7 @@ Frame:00B9 Time=0482B2
 
 2x01 0121D4 glDrawSegments
 
-3x01 FFFF86 glDrawParticules
+3x01 000086 glDrawParticules
 
 4x01 003504 glProjectArrays
 
