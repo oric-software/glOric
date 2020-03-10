@@ -137,7 +137,7 @@ void angle2screen() {
     P3Y = (SCREEN_HEIGHT - P3AV) >> 1;
 }
 #endif  // USE_C_ANGLE2SCREEN
-
+#ifdef USE_C_FILLFACE
 void fillFace() {
     angle2screen();
 
@@ -154,6 +154,7 @@ void fillFace() {
 //             PROFILE_LEAVE(ROUTINE_FILL8);
 // #endif
 }
+#endif // USE_C_FILLFACE
 
 // fill8
 extern signed char pDepX;
