@@ -159,51 +159,40 @@ FBufferAdressHigh
 
 
 
-
-
 #ifdef USE_ASM_BUFFER2SCREEN
-// void buffer2screen(char destAdr[])
-; http://www.6502.org/source/general/memory_move.html
-; Bruce Clark
-; Move memory down
-; FROM = source start address
-;   TO = destination start address
-; SIZE = number of bytes to move
-
-.zero
-FROM .dsb 2
-TO .dsb 2
 
 .text
 
 _buffer2screen:
 .(
+	ldy #$00
 
-; lda #<(48040) : sta TO : lda #>(48040) : sta TO+1 :
-	ldy #0: lda (sp),y: sta TO: iny: lda (sp),y: sta TO+1
-    lda #<(_fbuffer) : sta FROM : lda #>(_fbuffer) : sta FROM+1 
+buffer2screen_loop_01:
 
-MOVEDOWN LDY #0
-         LDX #<(SCREEN_WIDTH*SCREEN_HEIGHT); SIZEH
-         BEQ MD2
-MD1      LDA (FROM),Y ; move a page at a time
-         STA (TO),Y
-         INY
-         BNE MD1
-         INC FROM+1
-         INC TO+1
-         DEX
-         BNE MD1
-MD2      LDX #>(SCREEN_WIDTH*SCREEN_HEIGHT); SIZEL
-         BEQ MD4
-MD3      LDA (FROM),Y ; move the remaining bytes
-         STA (TO),Y
-         INY
-         DEX
-         BNE MD3
-MD4      
+	lda _fbuffer, y 
+	sta ADR_BASE_LORES_SCREEN,y
+	lda _fbuffer+256, y 
+	sta ADR_BASE_LORES_SCREEN+256,y
+	lda _fbuffer+512, y 
+	sta ADR_BASE_LORES_SCREEN+512,y
+	lda _fbuffer+768, y 
+	sta ADR_BASE_LORES_SCREEN+768,y
+	iny
+	bne buffer2screen_loop_01
+
+	ldy #$10
+
+buffer2screen_loop_02:
+
+	lda _fbuffer+1024, y 
+	sta ADR_BASE_LORES_SCREEN+1024,y
+	dey
+	bpl buffer2screen_loop_02
+
 .)
-    RTS
+    rts
+
+
 #endif // USE_ASM_BUFFER2SCREEN
 
 
