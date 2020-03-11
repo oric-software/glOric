@@ -75,6 +75,19 @@ void dispInfo() {
     AdvancedPrint(3, 0, status_string);
 #endif  // TARGET_ORIX
 }
+void quickTest(){
+    CamPosX = 17;
+    CamPosY = -2;
+    CamPosZ = 6;
+
+    CamRotZ = 125;
+    CamRotX = 0;
+    glProjectArrays();
+    initScreenBuffers();
+    glDrawFaces();
+    buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+    get();
+}
 
 void lrsDemo() {
 
@@ -93,6 +106,9 @@ void lrsDemo() {
 #else
     lores0();
 #endif  // TARGET_ORIX
+
+    // quickTest();
+
     lrsIntro();
 
     lrsGameLoop();

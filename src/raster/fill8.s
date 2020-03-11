@@ -38,6 +38,12 @@ _mDeltaX1 .dsb 1
 _mDeltaY2 .dsb 1
 _mDeltaX2 .dsb 1
 
+#ifdef USE_SATURATION
+_A1XSatur .dsb 1
+_A2XSatur .dsb 1
+#endif
+
+
 .text
 
 
@@ -966,6 +972,10 @@ fill8_DepYDiffArr1Y:
 		sta _A1sX
     	lda #OPCODE_DEC_ZERO
     	sta _patch_A1stepY_incdec_A1X
+#ifdef USE_SATURATION		
+		; sta _patch_A1stepY_A1Right_incdec_A1X
+		; sta _patch_A1stepY_A1Left_incdec_A1X
+#endif
 		jmp fill8_computeDy_01
 	fill8_01_negativ_02:
 		eor #$FF
@@ -976,7 +986,10 @@ fill8_DepYDiffArr1Y:
 		sta _A1sX
     	lda #OPCODE_INC_ZERO
     	sta _patch_A1stepY_incdec_A1X
-
+#ifdef USE_SATURATION		
+		; sta _patch_A1stepY_A1Right_incdec_A1X
+		; sta _patch_A1stepY_A1Left_incdec_A1X
+#endif
 
 fill8_computeDy_01:		
     //     A1dY    = -abs(A1destY - A1Y);
@@ -1063,6 +1076,10 @@ fill8_computeA2:
 		sta _A2sX
 		lda #OPCODE_DEC_ZERO
 		sta patch_A2stepY_incdec_A2X
+#ifdef USE_SATURATION
+		; sta _patch_A2stepY_A1Right_incdec_A2X
+		; sta _patch_A2stepY_A1Left_incdec_A2X
+#endif
 		jmp fill8_computeDy_02
 	fill8_03_negativ_02:
 		eor #$FF
@@ -1073,7 +1090,10 @@ fill8_computeA2:
 		sta _A2sX
 		lda #OPCODE_INC_ZERO
 		sta patch_A2stepY_incdec_A2X
-
+#ifdef USE_SATURATION		
+		; sta _patch_A2stepY_A1Right_incdec_A2X
+		; sta _patch_A2stepY_A1Left_incdec_A2X
+#endif
 fill8_computeDy_02:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
@@ -1165,6 +1185,10 @@ fill8_brestep1:
 		sta _A1sX
     	lda #OPCODE_DEC_ZERO
     	sta _patch_A1stepY_incdec_A1X
+#ifdef USE_SATURATION
+		; sta _patch_A1stepY_A1Right_incdec_A1X
+		; sta _patch_A1stepY_A1Left_incdec_A1X
+#endif
 		jmp fill8_computeDy_03
 	fill8_05_negativ_02:
 		eor #$FF
@@ -1175,6 +1199,12 @@ fill8_brestep1:
 		sta _A1sX
     	lda #OPCODE_INC_ZERO
     	sta _patch_A1stepY_incdec_A1X
+#ifdef USE_SATURATION
+		; sta _patch_A1stepY_A1Right_incdec_A1X
+		; sta _patch_A1stepY_A1Left_incdec_A1X
+#endif
+
+
 .)
 
 fill8_computeDy_03:		
@@ -1256,6 +1286,10 @@ fill8_DepYEqualsArr1Y:
 		sta _A1sX
     	lda #OPCODE_DEC_ZERO
     	sta _patch_A1stepY_incdec_A1X
+#ifdef USE_SATURATION
+		; sta _patch_A1stepY_A1Right_incdec_A1X
+		; sta _patch_A1stepY_A1Left_incdec_A1X
+#endif
 		jmp fill8_computeDy_04
 	fill8_07_negativ_02:
 		eor #$FF
@@ -1266,6 +1300,10 @@ fill8_DepYEqualsArr1Y:
 		sta _A1sX
     	lda #OPCODE_INC_ZERO
     	sta _patch_A1stepY_incdec_A1X
+#ifdef USE_SATURATION
+		; sta _patch_A1stepY_A1Right_incdec_A1X
+		; sta _patch_A1stepY_A1Left_incdec_A1X
+#endif
 .)
 fill8_computeDy_04:
     //     A1dY    = -abs(A1destY - A1Y);
@@ -1355,6 +1393,10 @@ fill8_computeA2_ter:
 		sta _A2sX
 		lda #OPCODE_DEC_ZERO
 		sta patch_A2stepY_incdec_A2X
+#ifdef USE_SATURATION
+		; sta _patch_A2stepY_A1Right_incdec_A2X
+		; sta _patch_A2stepY_A1Left_incdec_A2X
+#endif
 		jmp fill8_computeDy_08
 	fill8_09_negativ_02:
 		eor #$FF
@@ -1365,7 +1407,10 @@ fill8_computeA2_ter:
 		sta _A2sX
 		lda #OPCODE_INC_ZERO
 		sta patch_A2stepY_incdec_A2X
-
+#ifdef USE_SATURATION
+		; sta _patch_A2stepY_A1Right_incdec_A2X
+		; sta _patch_A2stepY_A1Left_incdec_A2X
+#endif
 fill8_computeDy_08:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
@@ -1546,3 +1591,4 @@ _fillFace:
 .)
 	rts
 #endif // USE_ASM_FILLFACE
+

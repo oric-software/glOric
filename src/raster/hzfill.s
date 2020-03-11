@@ -51,6 +51,23 @@ _hzfill:
 	; bmi hzfill_A2xOverOrEqualA1x
 	lda _A1Right ; (A1X > A2X)
 	beq hzfill_A2xOverOrEqualA1x
+
+
+#ifdef // USE_SATURATION
+
+		lda _A2XSatur
+		beq hzfill_A2XDontSatur_01 
+#ifdef USE_COLOR		
+		lda #COLUMN_OF_COLOR_ATTRIBUTE
+#else
+		lda #0
+#endif
+		jmp hzfill_A2xPositiv
+hzfill_A2XDontSatur_01:
+		lda _A2X		
+
+#else // not USE_SATURATION	
+
 #ifdef USE_COLOR
 //		dx = max(2, A2X);
 		lda _A2X
@@ -68,10 +85,29 @@ hzfill_A2xLowerThan3:
 		lda _A2X
 		bpl hzfill_A2xPositiv
 		lda #0
-#endif
+#endif // USE_COLOR
+
+#endif // USE_SATURATION
+
 hzfill_A2xPositiv:
 		sta departX ; dx
+
+
+
 //         fx = min(A1X, SCREEN_WIDTH - 1);
+#ifdef USE_SATURATION
+		lda _A1XSatur
+		beq hzfill_A1XDontSatur
+			lda #SCREEN_WIDTH - 1
+			sta finX
+			jmp hzfill_computeNbPoints
+hzfill_A1XDontSatur:
+			lda _A1X
+			sta finX
+			jmp hzfill_computeNbPoints
+
+
+#else // USE_SATURATION
 		lda _A1X
 		sta finX
 		sec
@@ -83,8 +119,27 @@ hzfill_A2xPositiv:
 		sta finX
 hzfill_A1xOverScreenWidth:
 		jmp hzfill_computeNbPoints
+
+#endif // USE_SATURATION
+
 hzfill_A2xOverOrEqualA1x:
 //     } else {
+
+#ifdef USE_SATURATION	
+
+		lda _A1XSatur
+		beq hzfill_A1XDontSatur_02
+#ifdef USE_COLOR		
+		lda #COLUMN_OF_COLOR_ATTRIBUTE
+#else
+		lda #0
+#endif
+		jmp hzfill_A1xPositiv
+hzfill_A1XDontSatur_02:
+		lda _A1X
+
+#else // not USE_SATURATION
+
 #ifdef USE_COLOR
 //		dx = max(2, A1X);
 		lda _A1X
@@ -103,9 +158,26 @@ hzfill_A1xLowerThan3:
 		bpl hzfill_A1xPositiv
 		lda #0
 #endif
+
+#endif // USE_SATURATION
+
+
 hzfill_A1xPositiv:
 		sta departX
+
 //         fx = min(A2X, SCREEN_WIDTH - 1);
+
+#ifdef  USE_SATURATION
+		lda _A2XSatur
+		beq hzfill_A2XDontSatur_02		
+			lda #SCREEN_WIDTH - 1
+			sta finX
+		jmp hzfill_computeNbPoints
+hzfill_A2XDontSatur_02:
+		lda _A2X	
+		sta finX	
+
+#else // USE_SATURATION
 		lda _A2X ; p2x
 		sta finX
 		sec
@@ -116,6 +188,8 @@ hzfill_A1xPositiv:
 		lda #SCREEN_WIDTH - 1
 		sta finX
 hzfill_A2xOverScreenWidth:
+#endif // USE_SATURATION
+
 //     }
 hzfill_computeNbPoints:
 //     nbpoints = fx - dx;

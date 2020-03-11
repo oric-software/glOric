@@ -33,6 +33,12 @@ extern signed char A2sX;
 extern signed char A2sY;
 extern char        A2arrived;
 extern unsigned char A1Right;
+
+#ifdef USE_SATURATION
+extern unsigned char A1XSatur;
+extern unsigned char A2XSatur;
+#endif // USE_SATURATION
+
 void fill8();
 
 #ifdef USE_C_BRESFILL
@@ -220,6 +226,8 @@ void prepare_bresrun() {
 }
 #endif  // USE_C_BRESFILL
 
+
+
 #ifdef USE_C_REACHSCREEN
 void reachScreen(){
 #ifdef USE_COLOR
@@ -232,6 +240,383 @@ void reachScreen(){
         }
 }
 #endif // USE_C_REACHSCREEN
+
+
+#ifdef USE_SATURATION
+
+
+void initSatur_A1Right() {
+    if (A1X > SCREEN_WIDTH - 1) {
+        A1XSatur = 1;
+    } else if (A1X == SCREEN_WIDTH - 1) {
+        if (A1sX == 1) {
+            A1XSatur = 1;
+        } else {
+            A1XSatur = 0;
+        }
+    } else {
+        A1XSatur = 0;
+    }
+
+#ifndef USE_COLOR
+    if (A2X < 0) {
+#else
+    if (A2X < COLUMN_OF_COLOR_ATTRIBUTE) {
+#endif             
+        A2XSatur = 1;
+    } 
+#ifndef USE_COLOR
+    else if (A2X == 0) {
+        
+#else
+    else if (A2X == COLUMN_OF_COLOR_ATTRIBUTE) {
+#endif
+        if (A2sX == 1) {
+            A2XSatur = 0;
+        } else {
+            A2XSatur = 1;
+        }
+
+    } else {
+        A2XSatur = 0;
+    }
+}
+
+void initSatur_A1Left() {
+    if (A2X > SCREEN_WIDTH - 1) {
+        A2XSatur = 1;
+    } else if (A2X == SCREEN_WIDTH - 1) {
+        if (A2sX == 1){
+            A2XSatur = 1;
+        } else {
+            A2XSatur = 0;
+        }
+    } else {
+        A2XSatur = 0;
+    }
+
+#ifndef USE_COLOR
+    if (A1X < 0) {
+#else
+    if (A1X < COLUMN_OF_COLOR_ATTRIBUTE) {
+#endif             
+        A1XSatur = 1;
+#ifndef USE_COLOR
+    } else if (A1X == 0) {
+#else
+    } else if (A1X == COLUMN_OF_COLOR_ATTRIBUTE) {
+#endif             
+        if (A1sX == 1){
+            A1XSatur = 0;
+        } else {
+            A1XSatur = 1;
+        }
+    } else {
+        A1XSatur = 0;
+    }
+}
+
+void switch_A1XSatur(){
+    if (A1XSatur == 0) {
+        A1XSatur = 1;
+    } else {
+        A1XSatur = 0;
+    }
+}
+
+void switch_A2XSatur(){
+    if (A2XSatur == 0) {
+        A2XSatur = 1;
+    } else {
+        A2XSatur = 0;
+    }
+}
+
+#ifdef USE_C_AGENTSTEP
+
+void A1stepY_A1Right() {
+    signed char nxtY, e2;
+    nxtY = A1Y + A1sY;
+    //printf ("nxtY = %d\n", nxtY);
+    e2 = (A1err < 0) ? (
+                           ((A1err & 0x40) == 0) ? (
+                                                       0x80)
+                                                 : (
+                                                       A1err << 1))
+                     : (
+                           ((A1err & 0x40) != 0) ? (
+                                                       0x7F)
+                                                 : (
+                                                       A1err << 1));
+    //printf ("e2 = %d\n", e2);
+    while ((A1arrived == 0) && ((e2 > A1dX) || (A1Y != nxtY))) {
+        if (e2 >= A1dY) {
+            A1err += A1dY;
+            //printf ("A1err = %d\n", A1err);
+            A1X += A1sX;
+            //printf ("A1X = %d\n", A1X);
+            if (A1X == SCREEN_WIDTH - 1){
+                switch_A1XSatur();
+            }
+        }
+        if (e2 <= A1dX) {
+            A1err += A1dX;
+            //printf ("A1err = %d\n", A1err);
+            A1Y += A1sY;
+            //printf ("A1Y = %d\n", A1Y);
+        }
+        A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+        e2        = (A1err < 0) ? (
+                               ((A1err & 0x40) == 0) ? (
+                                                           0x80)
+                                                     : (
+                                                           A1err << 1))
+                         : (
+                               ((A1err & 0x40) != 0) ? (
+                                                           0x7F)
+                                                     : (
+                                                           A1err << 1));
+        //printf ("e2 = %d\n", e2);
+    }
+}
+
+void A2stepY_A1Right() {
+    signed char nxtY, e2;
+    nxtY = A2Y + A2sY;
+    e2   = (A2err < 0) ? (
+                           ((A2err & 0x40) == 0) ? (
+                                                       0x80)
+                                                 : (
+                                                       A2err << 1))
+                     : (
+                           ((A2err & 0x40) != 0) ? (
+                                                       0x7F)
+                                                 : (
+                                                       A2err << 1));
+    while ((A2arrived == 0) && ((e2 > A2dX) || (A2Y != nxtY))) {
+        if (e2 >= A2dY) {
+            A2err += A2dY;
+            A2X += A2sX;
+#ifdef USE_COLOR
+            if (A2X == COLUMN_OF_COLOR_ATTRIBUTE){
+#else
+            if (A2X == 0){
+#endif
+                switch_A2XSatur();
+            }
+        }
+        if (e2 <= A2dX) {
+            A2err += A2dX;
+            A2Y += A2sY;
+        }
+        A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+        e2        = (A2err < 0) ? (
+                               ((A2err & 0x40) == 0) ? (
+                                                           0x80)
+                                                     : (
+                                                           A2err << 1))
+                         : (
+                               ((A2err & 0x40) != 0) ? (
+                                                           0x7F)
+                                                     : (
+                                                           A2err << 1));
+    }
+}
+
+void A1stepY_A1Left() {
+    signed char nxtY, e2;
+    nxtY = A1Y + A1sY;
+    //printf ("nxtY = %d\n", nxtY);
+    e2 = (A1err < 0) ? (
+                           ((A1err & 0x40) == 0) ? (
+                                                       0x80)
+                                                 : (
+                                                       A1err << 1))
+                     : (
+                           ((A1err & 0x40) != 0) ? (
+                                                       0x7F)
+                                                 : (
+                                                       A1err << 1));
+    //printf ("e2 = %d\n", e2);
+    while ((A1arrived == 0) && ((e2 > A1dX) || (A1Y != nxtY))) {
+        if (e2 >= A1dY) {
+            A1err += A1dY;
+            //printf ("A1err = %d\n", A1err);
+            A1X += A1sX;
+#ifdef USE_COLOR
+            if (A1X == COLUMN_OF_COLOR_ATTRIBUTE){
+#else
+            if (A1X == 0){
+#endif
+                switch_A1XSatur();
+            }
+            //printf ("A1X = %d\n", A1X);
+        }
+        if (e2 <= A1dX) {
+            A1err += A1dX;
+            //printf ("A1err = %d\n", A1err);
+            A1Y += A1sY;
+            //printf ("A1Y = %d\n", A1Y);
+        }
+        A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+        e2        = (A1err < 0) ? (
+                               ((A1err & 0x40) == 0) ? (
+                                                           0x80)
+                                                     : (
+                                                           A1err << 1))
+                         : (
+                               ((A1err & 0x40) != 0) ? (
+                                                           0x7F)
+                                                     : (
+                                                           A1err << 1));
+        //printf ("e2 = %d\n", e2);
+    }
+}
+
+void A2stepY_A1Left() {
+    signed char nxtY, e2;
+    nxtY = A2Y + A2sY;
+    e2   = (A2err < 0) ? (
+                           ((A2err & 0x40) == 0) ? (
+                                                       0x80)
+                                                 : (
+                                                       A2err << 1))
+                     : (
+                           ((A2err & 0x40) != 0) ? (
+                                                       0x7F)
+                                                 : (
+                                                       A2err << 1));
+    while ((A2arrived == 0) && ((e2 > A2dX) || (A2Y != nxtY))) {
+        if (e2 >= A2dY) {
+            A2err += A2dY;
+            A2X += A2sX;
+            if (A2X == SCREEN_WIDTH - 1){
+                switch_A2XSatur();
+            }
+        }
+        if (e2 <= A2dX) {
+            A2err += A2dX;
+            A2Y += A2sY;
+        }
+        A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+        e2        = (A2err < 0) ? (
+                               ((A2err & 0x40) == 0) ? (
+                                                           0x80)
+                                                     : (
+                                                           A2err << 1))
+                         : (
+                               ((A2err & 0x40) != 0) ? (
+                                                           0x7F)
+                                                     : (
+                                                           A2err << 1));
+    }
+}
+
+
+#endif // USE_C_AGENTSTEP
+
+
+
+
+#ifdef USE_C_BRESTYPE1
+void bresStepType1() {
+    // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+    reachScreen ();
+    // A1Right = (A1X > A2X); 
+
+    
+    if (A1Right == 0) {
+        initSatur_A1Left ();
+        // printf ("bt1 A1L (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+        hzfill();
+        while ((A1arrived == 0) && (A1Y > 1)){
+            A1stepY_A1Left();
+            A2stepY_A1Left();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
+            // printf ("bt1 A1L (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+            hzfill();
+        }
+    } else {
+        initSatur_A1Right ();
+        // printf ("bt1 A1R (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+        hzfill();
+        while ((A1arrived == 0) && (A1Y > 1)){
+            A1stepY_A1Right();
+            A2stepY_A1Right();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
+            // printf ("bt1 A1R (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+            hzfill();
+        }
+    }
+}
+#endif // USE_C_BRESTYPE1
+
+
+#ifdef USE_C_BRESTYPE2
+void bresStepType2() {
+
+    if (A1Right == 0) {
+        initSatur_A1Left ();
+        while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1)) {
+            A1stepY_A1Left();
+            A2stepY_A1Left();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
+            // printf ("bt2 A1L (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+            hzfill();
+        }
+    } else {
+        initSatur_A1Right ();
+        while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1)){
+            A1stepY_A1Right();
+            A2stepY_A1Right();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
+            // printf ("bt2 A1R (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+            hzfill();
+        }
+    }
+
+}
+#endif // USE_C_BRESTYPE2
+
+#ifdef USE_C_BRESTYPE3
+void bresStepType3() {
+
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+
+    reachScreen ();
+
+    // A1Right = (A1X > A2X); 
+    if (A1Right == 0) {
+        initSatur_A1Left ();
+        hzfill();
+        while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
+            A1stepY_A1Left();
+            A2stepY_A1Left();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
+            hzfill();
+        }
+    } else {
+        initSatur_A1Right ();
+        hzfill();
+        while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
+            A1stepY_A1Right();
+            A2stepY_A1Right();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // A1Right = (A1X > A2X); 
+            hzfill();
+        }
+    }
+}
+#endif // USE_C_BRESTYPE3
+
+#else // USE_SATURATION
+
+
 
 #ifdef USE_C_BRESTYPE1
 
@@ -294,6 +679,9 @@ void bresStepType3() {
 
 #endif // USE_C_BRESTYPE3
 
+#endif // USE_SATURATION
+
+
 #ifdef USE_C_ISA1RIGHT1
 void isA1Right1 (){
     
@@ -342,16 +730,18 @@ void isA1Right1 (){
 }
 #endif // USE_C_ISA1RIGHT1
 
-#ifdef USE_C_ISA1RIGHT3
 
+
+#ifdef USE_C_ISA1RIGHT3
 void isA1Right3 (){
  A1Right = (A1X > A2X);
 }
 #endif // USE_C_ISA1RIGHT3
 
+
+
+
 #ifdef USE_C_FILL8
-
-
 void fill8() {
     //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
     prepare_bresrun();
