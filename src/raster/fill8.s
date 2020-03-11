@@ -1442,3 +1442,107 @@ fill8_done:
 
 	rts
 #endif USE_ASM_FILL8
+
+
+
+
+#ifdef USE_ASM_BRESTYPE1
+;; void bresStepType1()
+_bresStepType1:
+.(
+	ldy #0 : jsr _reachScreen :
+	ldy #0 : jsr _hzfill :
+	jmp bresStepType1_Lbresfill133 :
+bresStepType1_Lbresfill132
+	ldy #0 : jsr _A1stepY :
+	ldy #0 : jsr _A2stepY :
+	ldy #0 : jsr _hzfill :
+bresStepType1_Lbresfill133
+	lda _A1arrived : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : beq *+5 : jmp bresStepType1_Lbresfill135 :
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(1) : cmp tmp0 : lda #>(1) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp bresStepType1_Lbresfill132 :skip : .) : : :
+bresStepType1_Lbresfill135
+.)
+	rts
+#endif // USE_ASM_BRESTYPE1
+
+#ifdef USE_ASM_BRESTYPE2
+;; void bresStepType2()
+_bresStepType2:
+.(
+	jmp bresStepType2_Lbresfill137 :
+bresStepType2_Lbresfill136
+	ldy #0 : jsr _A1stepY :
+	ldy #0 : jsr _A2stepY :
+	ldy #0 : jsr _hzfill :
+bresStepType2_Lbresfill137
+	lda _A1arrived : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : beq *+5 : jmp bresStepType2_Lbresfill140 :
+	lda _A2arrived : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : beq *+5 : jmp bresStepType2_Lbresfill140 :
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(1) : cmp tmp0 : lda #>(1) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp bresStepType2_Lbresfill136 :skip : .) : : :
+bresStepType2_Lbresfill140
+.)
+	rts
+#endif // USE_ASM_BRESTYPE2
+
+#ifdef USE_ASM_BRESTYPE3
+;; void bresStepType3()
+_bresStepType3:
+.(
+	ldy #0 : jsr _reachScreen :
+	ldy #0 : jsr _hzfill :
+	jmp bresStepType3_Lbresfill142 :
+bresStepType3_Lbresfill141
+	ldy #0 : jsr _A1stepY :
+	ldy #0 : jsr _A2stepY :
+	ldy #0 : jsr _hzfill :
+bresStepType3_Lbresfill142
+	lda _A1arrived : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : beq *+5 : jmp bresStepType3_Lbresfill145 :
+	lda _A2arrived : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : ora tmp0+1 : beq *+5 : jmp bresStepType3_Lbresfill145 :
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda #<(1) : cmp tmp0 : lda #>(1) : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp bresStepType3_Lbresfill141 :skip : .) : : :
+bresStepType3_Lbresfill145
+.)
+	rts
+#endif // USE_ASM_BRESTYPE3
+
+
+#ifdef USE_ASM_REACHSCREEN
+;; void reachScreen()
+_reachScreen:
+.(
+	jmp reachScreen_Lbresfill130 :
+reachScreen_Lbresfill129
+	ldy #0 : jsr _A1stepY :
+	ldy #0 : jsr _A2stepY :
+reachScreen_Lbresfill130
+	lda _A1Y : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	lda tmp0 : cmp #<(22) : lda tmp0+1 : sbc #>(22) : bvc *+4 : eor #$80 : bmi *+5 : jmp reachScreen_Lbresfill129 
+
+.)
+	rts
+#endif // USE_ASM_REACHSCREEN
+
+#ifdef USE_ASM_FILLFACE
+;; void fillFace()
+_fillFace:
+.(
+	ldy #0 : jsr _angle2screen :
+	ldy #0 : jsr _fill8 :
+.)
+	rts
+#endif // USE_ASM_FILLFACE

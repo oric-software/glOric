@@ -23,7 +23,7 @@ void profbench() {
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
     addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
     
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); get();
 
     text();
 
