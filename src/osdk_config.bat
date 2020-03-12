@@ -52,4 +52,4 @@ SET OSDKTAPNAME="glOric"
 
 ::run99.tap ..\intro\build\intro.tap
 SET OSDKDNAME=" -- glOric --"
-SET OSDKINIST="?\"V0.01\":WAIT20:!RUNME.COM"
+SET OSDKINIST="?\"V1.1\":WAIT20:!RUNME.COM"
