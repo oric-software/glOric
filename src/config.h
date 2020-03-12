@@ -13,12 +13,14 @@
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #define USE_REWORKED_BUFFERS
+#define SAVE_ZERO_PAGE
 #endif
 
 #ifdef HRSDEMO
 #define USE_HIRES_RASTER
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 200
+#define SAVE_ZERO_PAGE
 #endif
 
 #ifdef LRSDEMO

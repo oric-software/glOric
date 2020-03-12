@@ -4,6 +4,11 @@
 .zero
 pSeg .dsb 2
 
+
+#ifdef SAVE_ZERO_PAGE
+.text
+#endif
+
 _Point1X .dsb 1
 _Point1Y .dsb 1
 _Point2X .dsb 1
@@ -15,8 +20,9 @@ idxPt1 .dsb 1
 idxPt2 .dsb 1
 //_char2Display .dsb 1
 
+#ifndef SAVE_ZERO_PAGE
 .text
-
+#endif
 
 #ifdef  TEXTDEMO
 #ifndef USE_REWORKED_BUFFERS
