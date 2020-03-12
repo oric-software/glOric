@@ -618,47 +618,42 @@ _angle2screen:
     pha
 
 //     P1X = (SCREEN_WIDTH - P1AH) >> 1;
-	sec
-	lda #SCREEN_WIDTH
-	sbc _P1AH
-	cmp #$80
-	ror
-	sta _P1X
 //     P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
-	sec
-	lda #SCREEN_HEIGHT
-	sbc _P1AV
-	cmp #$80
-	ror
-	sta _P1Y
 //     P2X = (SCREEN_WIDTH - P2AH) >> 1;
-	sec
-	lda #SCREEN_WIDTH
-	sbc _P2AH
-	cmp #$80
-	ror
-	sta _P2X
 //     P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
-	sec
-	lda #SCREEN_HEIGHT
-	sbc _P2AV
-	cmp #$80
-	ror
-	sta _P2Y
 //     P3X = (SCREEN_WIDTH - P3AH) >> 1;
-	sec
-	lda #SCREEN_WIDTH
-	sbc _P3AH
-	cmp #$80
-	ror
-	sta _P3X
 //     P3Y = (SCREEN_HEIGHT - P3AV) >> 1;
-	sec
-	lda #SCREEN_HEIGHT
-	sbc _P3AV
-	cmp #$80
-	ror
-	sta _P3Y
+
+	lda _P1AH : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	sec : lda #<(40) : sbc tmp0 : sta tmp0 : lda #>(40) : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta tmp : lda tmp0+1 : ldx #1 : beq *+8 : lsr : ror tmp : dex : bne *-4 : ldx tmp : : stx tmp0 : sta tmp0+1 :
+	lda tmp0 : sta _P1X :
+	lda _P1AV : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	sec : lda #<(26) : sbc tmp0 : sta tmp0 : lda #>(26) : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta tmp : lda tmp0+1 : ldx #1 : beq *+8 : lsr : ror tmp : dex : bne *-4 : ldx tmp : : stx tmp0 : sta tmp0+1 :
+	lda tmp0 : sta _P1Y :
+	lda _P2AH : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	sec : lda #<(40) : sbc tmp0 : sta tmp0 : lda #>(40) : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta tmp : lda tmp0+1 : ldx #1 : beq *+8 : lsr : ror tmp : dex : bne *-4 : ldx tmp : : stx tmp0 : sta tmp0+1 :
+	lda tmp0 : sta _P2X :
+	lda _P2AV : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	sec : lda #<(26) : sbc tmp0 : sta tmp0 : lda #>(26) : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta tmp : lda tmp0+1 : ldx #1 : beq *+8 : lsr : ror tmp : dex : bne *-4 : ldx tmp : : stx tmp0 : sta tmp0+1 :
+	lda tmp0 : sta _P2Y :
+	lda _P3AH : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	sec : lda #<(40) : sbc tmp0 : sta tmp0 : lda #>(40) : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta tmp : lda tmp0+1 : ldx #1 : beq *+8 : lsr : ror tmp : dex : bne *-4 : ldx tmp : : stx tmp0 : sta tmp0+1 :
+	lda tmp0 : sta _P3X :
+	lda _P3AV : sta tmp0 :
+	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
+	sec : lda #<(26) : sbc tmp0 : sta tmp0 : lda #>(26) : sbc tmp0+1 : sta tmp0+1 :
+	lda tmp0 : sta tmp : lda tmp0+1 : ldx #1 : beq *+8 : lsr : ror tmp : dex : bne *-4 : ldx tmp : : stx tmp0 : sta tmp0+1 :
+	lda tmp0 : sta _P3Y :
 
 	// restore context
 	pla
