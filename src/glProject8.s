@@ -1,6 +1,10 @@
 #include "config.h"
 
 .zero
+#ifdef SAVE_ZERO_PAGE
+.text
+#endif
+
  // Point 3D Coordinates
 _PointX:		.dsb 2
 _PointY:		.dsb 2

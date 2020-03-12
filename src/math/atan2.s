@@ -21,11 +21,18 @@ FE .byt 00    			;
 
 */
 
+#ifdef SAVE_ZERO_PAGE
+.text
+#endif
+
 _tx .dsb 1
 _ty .dsb 1
 _res .dsb 1
 
+#ifndef SAVE_ZERO_PAGE
 .text
+#endif
+
 /*
 _atan2_8
 .(

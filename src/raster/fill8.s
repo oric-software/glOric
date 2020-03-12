@@ -38,6 +38,9 @@ _mDeltaX1 .dsb 1
 _mDeltaY2 .dsb 1
 _mDeltaX2 .dsb 1
 
+#ifdef SAVE_ZERO_PAGE
+.text
+#endif
 
 _P1X .byt 0
 _P1Y .byt 0
@@ -66,8 +69,9 @@ _distseg .byt 0
 _distpoint .byt 0
 _ch2disp .byt 0
 
+#ifndef SAVE_ZERO_PAGE
 .text
-
+#endif
 
 /*
 void A1stepY(){
