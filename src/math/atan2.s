@@ -21,12 +21,11 @@ FE .byt 00    			;
 
 */
 
-.text
 _tx .dsb 1
 _ty .dsb 1
 _res .dsb 1
 
-
+.text
 /*
 _atan2_8
 .(
@@ -862,8 +861,6 @@ atan_table:
 
 
 */
-
-.text
 
 ;https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
 _atan2_8:
