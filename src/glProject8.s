@@ -1,5 +1,6 @@
 #include "config.h"
 
+.zero
  // Point 3D Coordinates
 _PointX:		.dsb 2
 _PointY:		.dsb 2
@@ -25,7 +26,7 @@ AnglePV .dsb 1 ; vertical angle of point from player pov
 HAngleOverflow .dsb 1
 VAngleOverflow .dsb 1
 
-
+.text
 
 
 #ifdef USE_8BITS_PROJECTION

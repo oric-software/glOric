@@ -1,7 +1,7 @@
 
 #include "config.h"
 
-.text
+.zero
 
  // Camera Position
 _CamPosX:		.dsb 2
@@ -31,7 +31,7 @@ _nbParticules .dsb 1;
 //unsigned char nbFaces=0;
 _nbFaces .dsb 1;
 
-
+.text
 
 //char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
 //.dsb 256-(*&255)

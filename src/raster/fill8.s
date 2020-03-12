@@ -43,10 +43,6 @@ _A1XSatur .dsb 1
 _A2XSatur .dsb 1
 #endif
 
-
-.text
-
-
 _P1X .byt 0
 _P1Y .byt 0
 _P2X .byt 0
@@ -73,6 +69,9 @@ _distface .byt 0
 _distseg .byt 0
 _distpoint .byt 0
 _ch2disp .byt 0
+
+.text
+
 
 /*
 void A1stepY(){

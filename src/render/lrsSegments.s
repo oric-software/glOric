@@ -4,16 +4,18 @@
 .zero
 pSeg .dsb 2
 
-.text
-idxPt1 .dsb 1
-idxPt2 .dsb 1
-//_char2Display .dsb 1
-
 _Point1X .dsb 1
 _Point1Y .dsb 1
 _Point2X .dsb 1
 _Point2Y .dsb 1
 _char2Display .dsb 1
+
+
+idxPt1 .dsb 1
+idxPt2 .dsb 1
+//_char2Display .dsb 1
+
+.text
 
 
 #ifdef  TEXTDEMO
