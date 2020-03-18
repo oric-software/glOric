@@ -1529,10 +1529,18 @@ reachScreen_Lbresfill129
 	ldy #0 : jsr _A1stepY :
 	ldy #0 : jsr _A2stepY :
 reachScreen_Lbresfill130
-	lda _A1Y : sta tmp0 :
-	lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
-	lda tmp0 : cmp #<(22) : lda tmp0+1 : sbc #>(22) : bvc *+4 : eor #$80 : bmi *+5 : jmp reachScreen_Lbresfill129 
+    lda _A1arrived
+    bne reachScreen_done
+    lda _A1Y : sec:
+#ifdef USE_COLOR
+    sbc #SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
+#else
+    sbc #SCREEN_HEIGHT
+#endif
+    bvc *+4 : eor #$80 
 
+    bmi *+5 : jmp reachScreen_Lbresfill129
+reachScreen_done
 .)
 	rts
 #endif // USE_ASM_REACHSCREEN
