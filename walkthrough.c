@@ -51,8 +51,8 @@ void main() {
     /*
      *  Camera (player view) position and orientation 
      */
-    CamPosX = 25;  
-    CamPosY = -14; 
+    CamPosX = 60;  
+    CamPosY = 0; 
     CamPosZ = 6;
     CamRotZ = -127;
     CamRotX = 0;
