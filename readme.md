@@ -40,7 +40,8 @@ A good starting point in using glOric consists in building and testing demos tha
 
 - a color demo 
 
-![LoresDemo](docs/imgs/ColorModeDemo.gif)
+![ColorDemo](docs/imgs/ColorDemo.gif)
+
 
 #### Selecting a demo to build
 To choose between demos, open the `config.h` file located in the `src` directory of glOric and find the following section at the beginning of the file:

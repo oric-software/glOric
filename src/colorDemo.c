@@ -308,6 +308,10 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
             return 0;
         }
     }
+    if ((X >=18) && (X <= 30) && (Y == -18)) return 0;
+    if ((X ==18) && (Y >= -30) && (Y <= -18)) return 0;
+    if ((X ==30) && (Y >= -30) && (Y <= -18)) return 0;
+    
     return 1;
 }
 #endif
