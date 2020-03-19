@@ -550,6 +550,6 @@ zline_done:
 // char          fbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // frame buffer
 
 _fbuffer
-	.dsb 1040
+	.dsb 1080
 _zbuffer
-	.dsb 1040
+	.dsb 1080
