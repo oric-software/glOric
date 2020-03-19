@@ -109,14 +109,14 @@ void player () {
         backward(); break;
     case 11:  // up
         forward(); break;
-    case 80:  // P
-        CamPosZ += 1; break;
-    case 59:  // ;
-        CamPosZ -= 1; break;
+    // case 80:  // P
+    //     CamPosZ += 1; break;
+    // case 59:  // ;
+    //     CamPosZ -= 1; break;
     case 81:  // Q
-        CamRotX += 2; running = 0; break;
-    case 65:  // A
-        CamRotX -= 2; break;
+        running = 0; break;
+    // case 65:  // A
+    //     CamRotX -= 2; break;
     case 90:  // Z
         shiftLeft(); break;
     case 88:  // X
