@@ -1,5 +1,5 @@
 /* 
-    3D Walthrough Template on ORIC with glOric
+    3D Walkthrough Template on ORIC with glOric
 
         by Jean-Baptiste PERIN
 
