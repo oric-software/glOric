@@ -244,7 +244,8 @@ void reachScreen(){
 
 #ifdef USE_SATURATION
 
-
+// #define USE_C_INITSATUR_A1RIGHT
+#ifdef USE_C_INITSATUR_A1RIGHT
 void initSatur_A1Right() {
     if (A1X > SCREEN_WIDTH - 1) {
         A1XSatur = 1;
@@ -281,7 +282,9 @@ void initSatur_A1Right() {
         A2XSatur = 0;
     }
 }
+#endif // USE_C_INITSATUR_A1RIGHT
 
+#ifdef USE_C_INITSATUR_A1LEFT
 void initSatur_A1Left() {
     if (A2X > SCREEN_WIDTH - 1) {
         A2XSatur = 1;
@@ -315,7 +318,9 @@ void initSatur_A1Left() {
         A1XSatur = 0;
     }
 }
+#endif // USE_C_INITSATUR_A1LEFT
 
+#ifdef USE_C_SWITCH_A1XSATUR
 void switch_A1XSatur(){
     if (A1XSatur == 0) {
         A1XSatur = 1;
@@ -323,7 +328,9 @@ void switch_A1XSatur(){
         A1XSatur = 0;
     }
 }
+#endif //USE_C_SWITCH_A1XSATUR
 
+#ifdef USE_C_SWITCH_A2XSATUR
 void switch_A2XSatur(){
     if (A2XSatur == 0) {
         A2XSatur = 1;
@@ -331,6 +338,7 @@ void switch_A2XSatur(){
         A2XSatur = 0;
     }
 }
+#endif //USE_C_SWITCH_A2XSATUR
 
 #ifdef USE_C_AGENTSTEP
 
@@ -743,10 +751,10 @@ void isA1Right3 (){
 
 #ifdef USE_C_FILL8
 void fill8() {
-    //printf ("fill [%d %d] [%d %d] [%d %d] %d %d\n", p1x, p1y, p2x, p2y, p3x, p3y, dist, char2disp); get();
+
     prepare_bresrun();
 
-    //printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);
+    // printf ("Dep = [%d, %d], Arr1 = [%d, %d], Arr2= [%d, %d]\n", pDepX,pDepY, pArr1X, pArr1Y, pArr2X, pArr2Y);get();
     if (pDepY != pArr1Y) {
         //a1 = bres_agent(pDep[0],pDep[1],pArr1[0],pArr1[1])
         //a2 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])

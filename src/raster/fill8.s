@@ -1488,7 +1488,7 @@ fill8_done:
 #endif USE_ASM_FILL8
 
 
-
+#ifndef USE_SATURATION
 
 #ifdef USE_ASM_BRESTYPE1
 ;; void bresStepType1()
@@ -1563,6 +1563,7 @@ bresStepType3_Lbresfill145
 	rts
 #endif // USE_ASM_BRESTYPE3
 
+#endif // USE_SATURATION
 
 #ifdef USE_ASM_REACHSCREEN
 ;; void reachScreen()

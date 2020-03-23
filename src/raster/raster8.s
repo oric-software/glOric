@@ -618,5 +618,399 @@ A2stepY_A1Leftdone:
 #endif USE_ASM_AGENTSTEP
 
 #endif //  USE_ASM_BRESFILL
+
+
+#ifdef USE_ASM_INITSATUR_A1RIGHT
+_initSatur_A1Right:
+.(
+	lda #0
+	sta _A1XSatur
+	sta _A2XSatur
+
+
+	;; if (A1X > SCREEN_WIDTH - 1) {
+	lda _A1X
+	sec
+	sbc #SCREEN_WIDTH-1
+	bvc *+4
+    eor #$80
+	bmi initSatur_A1Right_A1Xdone
+	bne initSatur_A1Right_A1Xsatur
+	;; if (A1sX == 1) {}
+	lda _A1sX
+	bmi initSatur_A1Right_A1Xdone
+initSatur_A1Right_A1Xsatur:
+	lda #1 
+	sta _A1XSatur
+initSatur_A1Right_A1Xdone:
+
+
+	lda _A2X
+#ifndef USE_COLOR
+	bmi initSatur_A1Right_A2Xsatur
+	bne initSatur_A1Right_A2Xdone
+#else
+	sec
+	sbc #COLUMN_OF_COLOR_ATTRIBUTE
+	bvc *+4
+    eor #$80
+	bmi initSatur_A1Right_A2Xsatur
+	bne initSatur_A1Right_A2Xdone
+#endif
+;; #ifndef USE_COLOR
+;;     if (A2X < 0) {
+;; #else
+;;     if (A2X < COLUMN_OF_COLOR_ATTRIBUTE) {
+;; #endif             
+;;         A2XSatur = 1;
+;;     } 
+;; #ifndef USE_COLOR
+;;     else if (A2X == 0) {
+;;         
+;; #else
+;;     else if (A2X == COLUMN_OF_COLOR_ATTRIBUTE) {
+;; #endif
+;;         if (A2sX == 1) {
+	lda _A2sX
+	bmi initSatur_A1Right_A2Xdone
+;;             A2XSatur = 0;
+;;         } else {
+;;             A2XSatur = 1;
+;;         }
+;; 
+;;     } else {
+;;         A2XSatur = 0;
+;;     }
+
+initSatur_A1Right_A2Xsatur:
+	lda #1 
+	sta _A2XSatur
+
+initSatur_A1Right_A2Xdone:
+.)
+	rts
+#endif // USE_ASM_INITSATUR_A1RIGHT
+
+#ifdef USE_ASM_INITSATUR_A1LEFT
+_initSatur_A1Left:
+.(
+	lda #0
+	sta _A2XSatur
+	sta _A1XSatur
+
+//    if (A2X > SCREEN_WIDTH - 1) {
+	lda _A2X
+	sec
+	sbc #SCREEN_WIDTH-1
+	bvc *+4
+    eor #$80
+	bmi initSatur_A1Left_A2done
+	beq initSatur_A1Left_A2OnEdge
+	jmp initSatur_A1Left_A2Satur
+//        A2XSatur = 1;
+//    } else if (A2X == SCREEN_WIDTH - 1) {
+//        if (A2sX == 1){
+initSatur_A1Left_A2OnEdge:	
+	lda _A2sX
+	bmi initSatur_A1Left_A2done
+//            A2XSatur = 1;
+//        } else {
+//            A2XSatur = 0;
+//        }
+//    } else {
+//        A2XSatur = 0;
+//    }
+
+
+initSatur_A1Left_A2Satur:
+	lda #1 
+	sta _A2XSatur
+
+initSatur_A1Left_A2done:
+
+
+
+
+	lda _A1X
+#ifndef USE_COLOR
+	bmi initSatur_A1Left_A1Satur
+	bne initSatur_A1Left_A1done
+#else
+	sec
+	sbc #COLUMN_OF_COLOR_ATTRIBUTE
+	bvc *+4
+    eor #$80
+	bmi initSatur_A1Left_A1Satur
+	bne initSatur_A1Left_A1done
+#endif
+//    #ifndef USE_COLOR
+//        if (A1X < 0) {
+//    #else
+//        if (A1X < COLUMN_OF_COLOR_ATTRIBUTE) {
+//    #endif             
+//            A1XSatur = 1;
+//    #ifndef USE_COLOR
+//        } else if (A1X == 0) {
+//    #else
+//        } else if (A1X == COLUMN_OF_COLOR_ATTRIBUTE) {
+//    #endif             
+//            if (A1sX == 1){
+	lda _A1sX
+	bpl initSatur_A1Left_A1done
+//                A1XSatur = 0;
+//            } else {
+//                A1XSatur = 1;
+//            }
+//        } else {
+//            A1XSatur = 0;
+//        }
+
+initSatur_A1Left_A1Satur:
+	lda #1 
+	sta _A1XSatur
+
+initSatur_A1Left_A1done:
+
+
+
+.)	
+	rts
+#endif // USE_ASM_INITSATUR_A1LEFT
+
+#ifdef USE_ASM_SWITCH_A1XSATUR
+_switch_A1XSatur:
+.(
+	lda _A1XSatur
+	eor #$01
+	sta _A1XSatur
+.)
+	rts
+#endif //USE_ASM_SWITCH_A1XSATUR
+
+#ifdef USE_ASM_SWITCH_A2XSATUR
+_switch_A2XSatur:
+.(
+	lda _A2XSatur
+	eor #$01
+	sta _A2XSatur
+.)
+	rts
+#endif //USE_ASM_SWITCH_A2XSATUR
+
+#ifdef USE_ASM_BRESTYPE1
+_bresStepType1:
+.(
+
+    // reachScreen ();
+	ldy #0 : jsr _reachScreen :
+
+    // if (A1Right == 0) {
+	lda _A1Right
+	bne bresStepType1_A1Right
+    //     initSatur_A1Left ();
+	ldy #0 : jsr _initSatur_A1Left :
+    //     hzfill();
+	ldy #0 : jsr _hzfill :
+    //     while ((A1arrived == 0) && (A1Y > 1)){
+	;; jmp bresStepType1_A1Right_endloop
+bresStepType1_A1Left_loop:
+	lda _A1arrived
+	bne bresStepType1_A1Left_endloop
+	lda #1
+	sec
+	sbc _A1Y
+	bvc *+4
+    eor #$80
+	bpl  bresStepType1_A1Left_endloop
+    //         A1stepY_A1Left();
+		ldy #0 : jsr _A1stepY_A1Left :
+    //         A2stepY_A1Left();
+		ldy #0 : jsr _A2stepY_A1Left :
+    //         hzfill();
+		ldy #0 : jsr _hzfill :
+		jmp bresStepType1_A1Left_loop
+    //     }
+bresStepType1_A1Left_endloop:
+	jmp bresStepType1_done
+bresStepType1_A1Right:
+    // } else {
+    //     initSatur_A1Right ();
+	ldy #0 : jsr _initSatur_A1Right :
+
+    //     hzfill();
+	ldy #0 : jsr _hzfill :
+	
+    //     while ((A1arrived == 0) && (A1Y > 1)){
+bresStepType1_A1Right_loop:		
+	lda _A1arrived
+	bne bresStepType1_A1Right_endloop
+	lda #1
+	sec
+	sbc _A1Y
+	bvc *+4
+    eor #$80
+	bpl  bresStepType1_A1Right_endloop
+    //         A1stepY_A1Right();
+		ldy #0 : jsr _A1stepY_A1Right :
+    //         A2stepY_A1Right();
+		ldy #0 : jsr _A2stepY_A1Right :
+    //         hzfill();
+		ldy #0 : jsr _hzfill :
+    //     }
+	jmp bresStepType1_A1Right_loop
+
+    // }
+bresStepType1_A1Right_endloop:
+bresStepType1_done:
+.)
+	rts
+#endif // USE_ASM_BRESTYPE1
+
+
+#ifdef USE_ASM_BRESTYPE2
+_bresStepType2:
+.(
+    // if (A1Right == 0) {
+	lda _A1Right
+	bne bresStepType2_A1Right
+    //     initSatur_A1Left ();
+		ldy #0 : jsr _initSatur_A1Left
+    //     while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1)) {
+bresStepType2_A1Left_loop:
+		lda _A1arrived
+		bne bresStepType2_A1Left_endloop
+		lda _A2arrived
+		bne bresStepType2_A1Left_endloop
+		lda #1
+		sec
+		sbc _A1Y
+		bvc *+4
+		eor #$80
+		bpl bresStepType2_A1Left_endloop
+    //         A1stepY_A1Left();
+		ldy #0 : jsr _A1stepY_A1Left
+    //         A2stepY_A1Left();
+		ldy #0 : jsr _A2stepY_A1Left
+    //         hzfill();
+		ldy #0 : jsr _hzfill
+		jmp bresStepType2_A1Left_loop
+    //     }
+bresStepType2_A1Left_endloop:	
+	jmp bresStepType2_done
+    // } else {
+bresStepType2_A1Right:
+    //     initSatur_A1Right ();
+		ldy #0 : jsr _initSatur_A1Right
+    //     while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1)){
+bresStepType2_A1Right_loop:
+		lda _A1arrived
+		bne bresStepType2_A1Right_endloop
+		lda _A2arrived
+		bne bresStepType2_A1Right_endloop
+		lda #1
+		sec
+		sbc _A1Y
+		bvc *+4
+		eor #$80
+		bpl  bresStepType2_A1Right_endloop
+
+    //         A1stepY_A1Right();
+		ldy #0 : jsr _A1stepY_A1Right
+    //         A2stepY_A1Right();
+		ldy #0 : jsr _A2stepY_A1Right
+    //         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+    //         // A1Right = (A1X > A2X); 
+    //         // printf ("bt2 A1R (%d: %d, %d) = A1XSatur=%d A2XSatur=%d\n", A1X, A2X, A1Y, A1XSatur, A2XSatur); get();
+    //         hzfill();
+		ldy #0 : jsr _hzfill
+		jmp bresStepType2_A1Right_loop
+    //     }
+
+bresStepType2_A1Right_endloop:
+    // }
+
+bresStepType2_done:
+.)
+	rts
+#endif // USE_ASM_BRESTYPE2
+
+
+#ifdef USE_ASM_BRESTYPE3
+_bresStepType3:
+.(
+    // reachScreen ();
+	ldy #0 : jsr _reachScreen :
+
+    // if (A1Right == 0) {
+	lda _A1Right
+	bne bresStepType3_A1Right
+    //     initSatur_A1Left ();
+	ldy #0 : jsr _initSatur_A1Left :
+    //     hzfill();
+	ldy #0 : jsr _hzfill :
+    //     while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
+bresStepType3_A1Left_loop:
+	lda _A1arrived
+	bne bresStepType3_A1Left_endloop
+	lda _A2arrived
+	bne bresStepType3_A1Left_endloop
+	lda #1
+	sec
+	sbc _A1Y
+	bvc *+4
+    eor #$80
+	bpl bresStepType3_A1Left_endloop
+    //         A1stepY_A1Left();
+		ldy #0 : jsr _A1stepY_A1Left
+    //         A2stepY_A1Left();
+		ldy #0 : jsr _A2stepY_A1Left
+    //         hzfill();
+		ldy #0 : jsr _hzfill
+		jmp bresStepType3_A1Left_loop
+    //     }
+bresStepType3_A1Left_endloop:
+	jmp bresStepType3_done
+bresStepType3_A1Right:
+    // } else {
+    //     initSatur_A1Right ();
+	ldy #0 : jsr _initSatur_A1Right
+    //     hzfill();
+	ldy #0 : jsr _hzfill :
+    //     while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
+bresStepType3_A1Right_loop:
+	lda _A1arrived
+	bne bresStepType3_A1Right_endloop
+	lda _A2arrived
+	bne bresStepType3_A1Right_endloop
+	lda #1
+	sec
+	sbc _A1Y
+	bvc *+4
+    eor #$80
+	bpl bresStepType3_A1Right_endloop
+	
+    //         A1stepY_A1Right();
+		ldy #0 : jsr _A1stepY_A1Right
+    //         A2stepY_A1Right();
+		ldy #0 : jsr _A2stepY_A1Right
+    //         // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+    //         // A1Right = (A1X > A2X); 
+    //         hzfill();
+		ldy #0 : jsr _hzfill
+		jmp bresStepType3_A1Right_loop
+    //     }
+bresStepType3_A1Right_endloop:
+   // }
+
+bresStepType3_done:
+.)
+	rts
+#endif // USE_ASM_BRESTYPE3
+
+
+
+
+
+
 #endif // USE_SATURATION
 
