@@ -16,10 +16,10 @@ Next, you will need a git client to retreive the source code of __glOric__ from 
 
 Getting glOric is simple. If you have a GIT client installed, just clone the [glOric repository](https://github.com/oric-software/glOric)
 ```
-git clone --depth 1 --branch develop https://github.com/oric-software/glOric.git
+git clone --depth 1 --branch master https://github.com/oric-software/glOric.git
 ```
 
-Or, if you don't have GIT client installed, you can download an [archive of the project](https://github.com/oric-software/glOric/archive/develop.zip)
+Or, if you don't have GIT client installed, you can download an [archive of the project](https://github.com/oric-software/glOric/archive/master.zip)
 
 
 
