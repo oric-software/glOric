@@ -8,8 +8,10 @@ _glDrawFaces:
 PROFILE_ENTER(ROUTINE_GLDRAWFACES);
 #endif // USE_PROFILER
 
+#ifdef SAFE_CONTEXT
 	// Save context
-	lda reg0 : pha 
+	lda reg3 : pha 
+#endif // SAFE_CONTEXT
 
 	ldy _nbFaces
 	jmp glDrawFaces_nextFace
@@ -29,7 +31,7 @@ glDrawFaces_loop:
 	lda _facesChar, y
 	sta _ch2disp
 
-	sty reg0 
+	sty reg3 
 
     //     retrieveFaceData();
 	jsr _retrieveFaceData
@@ -44,7 +46,7 @@ glDrawFaces_loop:
 		jsr _fillFace
     //     }
 glDrawFaces_afterFill:
-	ldy reg0
+	ldy reg3
 
 glDrawFaces_nextFace:
 	dey 
@@ -52,8 +54,10 @@ glDrawFaces_nextFace:
     // }
 
 glDrawFaces_done:
+#ifdef SAFE_CONTEXT
 	// Restore context
-	pla : sta reg0
+	pla : sta reg3
+#endif // SAFE_CONTEXT
 
 #ifdef USE_PROFILER
 PROFILE_LEAVE(ROUTINE_GLDRAWFACES);
@@ -180,12 +184,13 @@ _sortPoints:
 .(
 	; ldx #6 : lda #6 : jsr enter :
 
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0:pha
-	lda tmp0:pha ; tmpH
-	lda tmp1:pha ; tmpV
-
+	lda reg4:pha
+	lda reg5:pha ; tmpH
+	lda reg5+1:pha ; tmpV
+#endif // SAFE_CONTEXT
 
     ;; if (abs(P2AH) < abs(P1AH)) {
 .(
@@ -195,7 +200,7 @@ _sortPoints:
 	clc
 	adc #1
 positiv_02:
-	sta reg0
+	sta reg4
 
 	lda _P2AH
 	bpl positiv_01
@@ -204,7 +209,7 @@ positiv_02:
 	adc #1
 positiv_01:
 
-	cmp reg0
+	cmp reg4
 	bcs sortPoints_step01
 .)
     ;;     tmpH = P1AH;
@@ -213,12 +218,12 @@ positiv_01:
     ;;     P1AV = P2AV;
     ;;     P2AH = tmpH;
     ;;     P2AV = tmpV;
-	lda _P1AH : sta tmp0 :
-	lda _P1AV : sta tmp1 :
+	lda _P1AH : sta reg5 :
+	lda _P1AV : sta reg5+1 :
 	lda _P2AH : sta _P1AH :
 	lda _P2AV : sta _P1AV :
-	lda tmp0 : sta _P2AH :
-	lda tmp1 : sta _P2AV :
+	lda reg5 : sta _P2AH :
+	lda reg5+1 : sta _P2AV :
 
 
     ;; }
@@ -231,7 +236,7 @@ sortPoints_step01:
 	clc
 	adc #1
 positiv_02:
-	sta reg0
+	sta reg4
 
 	lda _P3AH
 	bpl positiv_01
@@ -240,7 +245,7 @@ positiv_02:
 	adc #1
 positiv_01:
 
-	cmp reg0
+	cmp reg4
 	bcs sortPoints_step02
 .)
     ;;     tmpH = P1AH;
@@ -249,12 +254,12 @@ positiv_01:
     ;;     P1AV = P3AV;
     ;;     P3AH = tmpH;
     ;;     P3AV = tmpV;
-	lda _P1AH : sta tmp0 :
-	lda _P1AV : sta tmp1 :
+	lda _P1AH : sta reg5 :
+	lda _P1AV : sta reg5+1 :
 	lda _P3AH : sta _P1AH :
 	lda _P3AV : sta _P1AV :
-	lda tmp0 : sta _P3AH :
-	lda tmp1 : sta _P3AV :
+	lda reg5 : sta _P3AH :
+	lda reg5+1 : sta _P3AV :
     ;; }
 sortPoints_step02:	
     ;; if (abs(P3AH) < abs(P2AH)) {
@@ -265,7 +270,7 @@ sortPoints_step02:
 	clc
 	adc #1
 positiv_02:
-	sta reg0
+	sta reg4
 
 	lda _P3AH
 	bpl positiv_01
@@ -274,7 +279,7 @@ positiv_02:
 	adc #1
 positiv_01:
 
-	cmp reg0
+	cmp reg4
 	bcs sortPoints_done
 .)
     ;;     tmpH = P2AH;
@@ -283,23 +288,25 @@ positiv_01:
     ;;     P2AV = P3AV;
     ;;     P3AH = tmpH;
     ;;     P3AV = tmpV;
-	lda _P2AH : sta tmp0 :
-	lda _P2AV : sta tmp1 :
+	lda _P2AH : sta reg5 :
+	lda _P2AV : sta reg5+1 :
 	lda _P3AH : sta _P2AH :
 	lda _P3AV : sta _P2AV :
-	lda tmp0 : sta _P3AH :
-	lda tmp1 :sta _P3AV :
+	lda reg5 : sta _P3AH :
+	lda reg5+1 :sta _P3AV :
 
     ;; }
 
 sortPoints_done:	
+#ifdef SAFE_CONTEXT
 
 	// restore context
-	pla: sta tmp1
-	pla: sta tmp0
-	pla: sta reg0
+	pla: sta reg5+1
+	pla: sta reg5
+	pla: sta reg4
 	pla
 
+#endif // SAFE_CONTEXT
 
 	; jmp leave :
 .)
@@ -311,13 +318,14 @@ _guessIfFace2BeDrawn:
 .(
 	; ldx #10 : lda #8 : jsr enter :
 
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0:pha
-	lda reg1:pha
-	lda tmp0:pha
-	lda tmp1:pha
-
+	lda reg6:pha
+	lda reg6+1:pha
+	lda reg7:pha
+	lda reg7+1:pha
+#endif //  SAFE_CONTEXT
     // m1 = P1AH & ANGLE_MAX;
 	lda _P1AH
 	and #ASM_ANGLE_MAX
@@ -384,7 +392,7 @@ guessIfFace2BeDrawn_midscreencrossed:
 						clc
 						adc #1
 					positiv_01:
-						sta reg0			; reg 0 <- abs(P1AH)
+						sta reg6			; reg 0 <- abs(P1AH)
 
 						lda _P3AH
 						bpl positiv_02
@@ -393,7 +401,7 @@ guessIfFace2BeDrawn_midscreencrossed:
 						adc #1
 					positiv_02:
 						clc
-						adc reg0			; a  <- abs(P3AH) + abs(P1AH)
+						adc reg6			; a  <- abs(P3AH) + abs(P1AH)
 						bpl guessIfFace2BeDrawn_found01 ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 					.)
@@ -469,7 +477,7 @@ guessIfFace2BeDrawn_p3back:
 							clc
 							adc #1
 						positiv_01:
-							sta reg0			; reg 0 <- abs(P1AH)
+							sta reg6			; reg 0 <- abs(P1AH)
 
 							lda _P2AH
 							bpl positiv_02
@@ -478,7 +486,7 @@ guessIfFace2BeDrawn_p3back:
 							adc #1
 						positiv_02:
 							clc
-							adc reg0			; a  <- abs(P2AH) + abs(P1AH)
+							adc reg6			; a  <- abs(P2AH) + abs(P1AH)
 							bpl guessIfFace2BeDrawn_found02 ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 						.)
@@ -504,7 +512,7 @@ guessIfFace2BeDrawn_midscreencrossed_03:
 								clc
 								adc #1
 							positiv_01:
-								sta reg0			; reg 0 <- abs(P1AH)
+								sta reg6			; reg 0 <- abs(P1AH)
 
 								lda _P3AH
 								bpl positiv_02
@@ -513,7 +521,7 @@ guessIfFace2BeDrawn_midscreencrossed_03:
 								adc #1
 							positiv_02:
 								clc
-								adc reg0			; a  <- abs(P3AH) + abs(P1AH)
+								adc reg6			; a  <- abs(P3AH) + abs(P1AH)
 								bpl guessIfFace2BeDrawn_found03 ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 							.)
@@ -531,10 +539,10 @@ guessIfFace2BeDrawn_midscreencrossed_04:
 						lda _P1AH 
 						eor _P3AH
 						and #$80
-						bne guessIfFace2BeDrawn_tmp01
+						bne guessIfFace2BeDrawn_reg71
 						jmp guessIfFace2BeDrawn_done
     //                     if (abs(P3AH) < 127 - abs(P1AH)) {
-guessIfFace2BeDrawn_tmp01:
+guessIfFace2BeDrawn_reg71:
 						.(		
 							lda _P1AH
 							bpl positiv_01
@@ -542,7 +550,7 @@ guessIfFace2BeDrawn_tmp01:
 							clc
 							adc #1
 						positiv_01:
-							sta reg0			; reg 0 <- abs(P1AH)
+							sta reg6			; reg 0 <- abs(P1AH)
 
 							lda _P3AH
 							bpl positiv_02
@@ -551,7 +559,7 @@ guessIfFace2BeDrawn_tmp01:
 							adc #1
 						positiv_02:
 							clc
-							adc reg0			; a  <- abs(P3AH) + abs(P1AH)
+							adc reg6			; a  <- abs(P3AH) + abs(P1AH)
 							bpl guessIfFace2BeDrawn_found04 ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 						.)		
@@ -580,7 +588,7 @@ guessIfFace2BeDrawn_p2back:
 						clc
 						adc #1
 					positiv_01:
-						sta reg0			; reg 0 <- abs(P1AH)
+						sta reg6			; reg 0 <- abs(P1AH)
 
 						lda _P3AH
 						bpl positiv_02
@@ -589,7 +597,7 @@ guessIfFace2BeDrawn_p2back:
 						adc #1
 					positiv_02:
 						clc
-						adc reg0			; a  <- abs(P3AH) + abs(P1AH)
+						adc reg6			; a  <- abs(P3AH) + abs(P1AH)
 						bpl guessIfFace2BeDrawn_found05 ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 					.)	
@@ -615,7 +623,7 @@ guessIfFace2BeDrawn_midscreencrossed_05:
 							clc
 							adc #1
 						positiv_01:
-							sta reg0			; reg 0 <- abs(P1AH)
+							sta reg6			; reg 0 <- abs(P1AH)
 
 							lda _P3AH
 							bpl positiv_02
@@ -624,7 +632,7 @@ guessIfFace2BeDrawn_midscreencrossed_05:
 							adc #1
 						positiv_02:
 							clc
-							adc reg0			; a  <- abs(P3AH) + abs(P1AH)
+							adc reg6			; a  <- abs(P3AH) + abs(P1AH)
 							bpl guessIfFace2BeDrawn_found06 ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 						.)	
@@ -651,7 +659,7 @@ guessIfFace2BeDrawn_midscreencrossed_06:
 							clc
 							adc #1
 						positiv_01:
-							sta reg0			; reg 0 <- abs(P1AH)
+							sta reg6			; reg 0 <- abs(P1AH)
 
 							lda _P3AH
 							bpl positiv_02
@@ -660,7 +668,7 @@ guessIfFace2BeDrawn_midscreencrossed_06:
 							adc #1
 						positiv_02:
 							clc
-							adc reg0			; a  <- abs(P3AH) + abs(P1AH)
+							adc reg6			; a  <- abs(P3AH) + abs(P1AH)
 							bmi guessIfFace2BeDrawn_done ; FIXME if sign bit is set <= 127 considtion rather than < 127
 
 						.)
@@ -680,13 +688,14 @@ guessIfFace2BeDrawn_p1back:
 
 guessIfFace2BeDrawn_done:
 
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta tmp1
-	pla: sta tmp0
-	pla: sta reg1
-	pla: sta reg0
+	pla: sta reg7+1
+	pla: sta reg7
+	pla: sta reg6+1
+	pla: sta reg6
 	pla
-
+#endif // SAFE_CONTEXT
 	; jmp leave :
 
 .)

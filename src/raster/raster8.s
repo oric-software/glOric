@@ -18,15 +18,18 @@
 
 _A1stepY_A1Right:
 
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0: pha: lda reg1 : pha 
+	lda tmp5 : pha      ; e2
+	lda tmp5+1 : pha    ; nxtY
+#endif // SAFE_CONTEXT
 
 	;; nxtY = A1Y+A1sY;
 	clc
 	lda _A1Y
 	adc _A1sY
-	sta reg1
+	sta tmp5+1
 	
 	;; e2 = A1err << 1; // 2*A1err;
 	lda _A1err
@@ -41,7 +44,7 @@ A1stepY_A1Right_errpositiv_01:
 	bpl A1stepY_A1Right_errdone_01
 	lda #$7F
 A1stepY_A1Right_errdone_01:	
-	sta reg0
+	sta tmp5
 	
 	;; while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
 A1stepY_A1Right_loop:
@@ -52,12 +55,12 @@ A1stepY_A1Right_loop:
 A1stepY_A1Right_notarrived:	
 	lda _A1dX 		;; (e2>A1dX)
     sec
-	sbc reg0
+	sbc tmp5
     bvc *+4
     eor #$80
 	bmi A1stepY_A1Right_doloop
 
-	lda reg1 		;; (A1Y!=nxtY)
+	lda tmp5+1 		;; (A1Y!=nxtY)
 	cmp _A1Y
 	bne A1stepY_A1Right_doloop
 	
@@ -65,7 +68,7 @@ A1stepY_A1Right_notarrived:
 A1stepY_A1Right_doloop:
 	
 		;; if (e2 >= A1dY){
-		lda reg0 ; e2
+		lda tmp5 ; e2
         sec
         sbc _A1dY
         bvc *+4
@@ -103,7 +106,7 @@ A1stepY_A1Right_A1Xdone:
 		;; if (e2 <= A1dX){
 		lda _A1dX
         sec
-		sbc reg0
+		sbc tmp5
         bvc *+4
         eor #$80
 		bmi A1stepY_A1Right_A1Ydone
@@ -149,14 +152,16 @@ A1stepY_A1Right_errpositiv_02:
 		bpl A1stepY_A1Right_errdone_02
 		lda #$7F
 A1stepY_A1Right_errdone_02:	
-		sta reg0
+		sta tmp5
 	
 	jmp A1stepY_A1Right_loop
 A1stepY_A1Rightdone:	
 
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta reg1: pla: sta reg0
+	pla: sta tmp5+1: pla: sta tmp5
 	pla
+#endif // SAFE_CONTEXT
 
 
 	rts
@@ -167,15 +172,18 @@ A1stepY_A1Rightdone:
 
 _A1stepY_A1Left:
 
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0: pha: lda reg1 : pha 
+	lda tmp5 : pha      ; e2
+	lda tmp5+1 : pha    ; nxtY
+#endif // SAFE_CONTEXT
 
 	;; nxtY = A1Y+A1sY;
 	clc
 	lda _A1Y
 	adc _A1sY
-	sta reg1
+	sta tmp5+1
 	
 	;; e2 = A1err << 1; // 2*A1err;
 	lda _A1err
@@ -190,7 +198,7 @@ A1stepY_A1Left_errpositiv_01:
 	bpl A1stepY_A1Left_errdone_01
 	lda #$7F
 A1stepY_A1Left_errdone_01:	
-	sta reg0
+	sta tmp5
 	
 	;; while ((A1arrived == 0) && ((e2>A1dX) || (A1Y!=nxtY))){
 A1stepY_A1Left_loop:
@@ -201,12 +209,12 @@ A1stepY_A1Left_loop:
 A1stepY_A1Left_notarrived:	
 	lda _A1dX 		;; (e2>A1dX)
     sec
-	sbc reg0
+	sbc tmp5
     bvc *+4
     eor #$80
 	bmi A1stepY_A1Left_doloop
 
-	lda reg1 		;; (A1Y!=nxtY)
+	lda tmp5+1 		;; (A1Y!=nxtY)
 	cmp _A1Y
 	bne A1stepY_A1Left_doloop
 	
@@ -214,7 +222,7 @@ A1stepY_A1Left_notarrived:
 A1stepY_A1Left_doloop:
 	
 		;; if (e2 >= A1dY){
-		lda reg0 ; e2
+		lda tmp5 ; e2
         sec
         sbc _A1dY
         bvc *+4
@@ -259,7 +267,7 @@ A1stepY_A1Left_A1Xdone:
 		;; if (e2 <= A1dX){
 		lda _A1dX
         sec
-		sbc reg0
+		sbc tmp5
         bvc *+4
         eor #$80
 		bmi A1stepY_A1Left_A1Ydone
@@ -305,15 +313,16 @@ A1stepY_A1Left_errpositiv_02:
 		bpl A1stepY_A1Left_errdone_02
 		lda #$7F
 A1stepY_A1Left_errdone_02:	
-		sta reg0
+		sta tmp5
 	
 	jmp A1stepY_A1Left_loop
 A1stepY_A1Leftdone:	
 
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta reg1: pla: sta reg0
+	pla: sta tmp5+1: pla: sta tmp5
 	pla
-
+#endif // SAFE_CONTEXT
 
 	rts
 
@@ -323,15 +332,16 @@ A1stepY_A1Leftdone:
 
 _A2stepY_A1Right:
 
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0: pha: lda reg1 : pha 
-
-	;; nxtY = A2Y+A2sY;
+	lda tmp5 : pha      ; e2
+	lda tmp5+1 : pha    ; nxtY
+#endif // SAFE_CONTEXT	;; nxtY = A2Y+A2sY;
 	clc
 	lda _A2Y
 	adc _A2sY
-	sta reg1
+	sta tmp5+1
 	
 	;; e2 = A2err << 1; // 2*A2err;
 	lda _A2err
@@ -346,7 +356,7 @@ A2stepY_A1Right_errpositiv_01:
 	bpl A2stepY_A1Right_errdone_01
 	lda #$7F
 A2stepY_A1Right_errdone_01:	
-	sta reg0
+	sta tmp5
 	
 	;; while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
 A2stepY_A1Right_loop:
@@ -357,12 +367,12 @@ A2stepY_A1Right_loop:
 A2stepY_A1Right_notarrived:	
 	lda _A2dX 		;; (e2>A2dX)
     sec
-    sbc reg0
+    sbc tmp5
     bvc *+4
     eor #$80
 	bmi A2stepY_A1Right_doloop
 
-	lda reg1 		;; (A2Y!=nxtY)
+	lda tmp5+1 		;; (A2Y!=nxtY)
 	cmp _A2Y
 	bne A2stepY_A1Right_doloop
 	
@@ -370,7 +380,7 @@ A2stepY_A1Right_notarrived:
 A2stepY_A1Right_doloop:
 	
 		;; if (e2 >= A2dY){
-		lda reg0 ; e2
+		lda tmp5 ; e2
         sec
         sbc _A2dY
         bvc *+4
@@ -411,7 +421,7 @@ A2stepY_A1Right_A2Xdone:
 		;; if (e2 <= A2dX){
 		lda _A2dX
         sec
-        sbc reg0
+        sbc tmp5
         bvc *+4
         eor #$80
 		bmi A2stepY_A1Right_A2Ydone
@@ -457,15 +467,16 @@ A2stepY_A1Right_errpositiv_02:
 		bpl A2stepY_A1Right_errdone_02
 		lda #$7F
 A2stepY_A1Right_errdone_02:	
-		sta reg0
+		sta tmp5
 	
 	jmp A2stepY_A1Right_loop
 A2stepY_A1Rightdone:	
 
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta reg1: pla: sta reg0
+	pla: sta tmp5+1: pla: sta tmp5
 	pla
-
+#endif // SAFE_CONTEXT
 
 	rts
 
@@ -475,15 +486,16 @@ A2stepY_A1Rightdone:
 
 _A2stepY_A1Left:
 
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0: pha: lda reg1 : pha 
-
-	;; nxtY = A2Y+A2sY;
+	lda tmp5 : pha      ; e2
+	lda tmp5+1 : pha    ; nxtY
+#endif // SAFE_CONTEXT	;; nxtY = A2Y+A2sY;
 	clc
 	lda _A2Y
 	adc _A2sY
-	sta reg1
+	sta tmp5+1
 	
 	;; e2 = A2err << 1; // 2*A2err;
 	lda _A2err
@@ -498,7 +510,7 @@ A2stepY_A1Left_errpositiv_01:
 	bpl A2stepY_A1Left_errdone_01
 	lda #$7F
 A2stepY_A1Left_errdone_01:	
-	sta reg0
+	sta tmp5
 	
 	;; while ((A2arrived == 0) && ((e2>A2dX) || (A2Y!=nxtY))){
 A2stepY_A1Left_loop:
@@ -509,12 +521,12 @@ A2stepY_A1Left_loop:
 A2stepY_A1Left_notarrived:	
 	lda _A2dX 		;; (e2>A2dX)
     sec
-    sbc reg0
+    sbc tmp5
     bvc *+4
     eor #$80
 	bmi A2stepY_A1Left_doloop
 
-	lda reg1 		;; (A2Y!=nxtY)
+	lda tmp5+1 		;; (A2Y!=nxtY)
 	cmp _A2Y
 	bne A2stepY_A1Left_doloop
 	
@@ -522,7 +534,7 @@ A2stepY_A1Left_notarrived:
 A2stepY_A1Left_doloop:
 	
 		;; if (e2 >= A2dY){
-		lda reg0 ; e2
+		lda tmp5 ; e2
         sec
         sbc _A2dY
         bvc *+4
@@ -557,7 +569,7 @@ A2stepY_A1Left_A2Xdone:
 		;; if (e2 <= A2dX){
 		lda _A2dX
         sec
-        sbc reg0
+        sbc tmp5
         bvc *+4
         eor #$80
 		bmi A2stepY_A1Left_A2Ydone
@@ -603,15 +615,16 @@ A2stepY_A1Left_errpositiv_02:
 		bpl A2stepY_A1Left_errdone_02
 		lda #$7F
 A2stepY_A1Left_errdone_02:	
-		sta reg0
+		sta tmp5
 	
 	jmp A2stepY_A1Left_loop
 A2stepY_A1Leftdone:	
 
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta reg1: pla: sta reg0
+	pla: sta tmp5+1: pla: sta tmp5
 	pla
-
+#endif // SAFE_CONTEXT
 
 	rts
 

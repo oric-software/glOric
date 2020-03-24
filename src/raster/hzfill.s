@@ -16,19 +16,18 @@ hLineLength .dsb 1
 
 
 // void hzfill() {
+// destroy A, X, Y, tmp6(+1), tmp7(+1)
 _hzfill:
 .(
-; #ifdef USE_PROFILER
-; PROFILE_ENTER(ROUTINE_HZFILL)
-; #endif
+#ifdef SAFE_CONTEXT
 	// save context
     pha:txa:pha:tya:pha
 
-	lda tmp0: pha
-	lda tmp0+1: pha
-	lda tmp1: pha
-	lda tmp1+1: pha
-
+	lda tmp6: pha
+	lda tmp6+1: pha
+	lda tmp7: pha
+	lda tmp7+1: pha
+#endif //  SAFE_CONTEXT
 //     if ((A1Y <= 0) || (A1Y >= SCREEN_HEIGHT)) return;
 	lda _A1Y				; Access Y coordinate
 ;     bpl *+5
@@ -214,7 +213,7 @@ hzfill_computeNbPoints:
 	; sta tmp3+1
 	; adc #0
 	; sta sp+1
-	; lda tmp0 : ldy #0 : sta (sp),y ;; dx
+	; lda tmp6 : ldy #0 : sta (sp),y ;; dx
 	; lda reg2 : ldy #2 : sta (sp),y ;; py
 	; lda tmp2 : ldy #4 : sta (sp),y ;; nbpoints
 	; lda _distface : ldy #6 : sta (sp),y ;; dist
@@ -230,19 +229,19 @@ hzfill_computeNbPoints:
  	lda ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
 	clc						
 	adc departX				; Add dx coordinate
-	sta tmp1                ; ptrZbuf
+	sta tmp7                ; ptrZbuf
 	lda ZBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
 	adc #0					; 
-	sta tmp1+1	 ; ptrZbuf+ 1			
+	sta tmp7+1	 ; ptrZbuf+ 1			
 
     // ptrFbuf = fbuffer + py * SCREEN_WIDTH + dx;
     lda FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
     clc						; 
     adc departX				; Add dx coordinate
-    sta tmp0                ; ptrFbuf
+    sta tmp6                ; ptrFbuf
     lda FBufferAdressHigh,x	; Get the HIGH part of the fbuffer adress
     adc #0					; 
-    sta tmp0+1	            ; ptrFbuf+ 1			
+    sta tmp6+1	            ; ptrFbuf+ 1			
 
    // ptrFbuf = fbuffer + offset;
 
@@ -251,15 +250,15 @@ hzfill_computeNbPoints:
 _hzline_loop: 
 
     //     if (dist < ptrZbuf[nbp]) {
-    lda (tmp1), y
+    lda (tmp7), y
     cmp _distface
     bcc hzline_distOver
     //         ptrFbuf[nbp] = char2disp;
     lda _ch2disp
-    sta (tmp0), y
+    sta (tmp6), y
     //         ptrZbuf[nbp] = dist;
     lda _distface
-    sta (tmp1), y
+    sta (tmp7), y
    //     }
 hzline_distOver:
     //     nbp--;
@@ -277,14 +276,16 @@ hzline_distOver:
 
 
 hzfill_done:
+#ifdef SAFE_CONTEXT
 	// restore context
 
-	pla: sta tmp1+1
-	pla: sta tmp1
- 	pla: sta tmp0+1
-	pla: sta tmp0
+	pla: sta tmp7+1
+	pla: sta tmp7
+ 	pla: sta tmp6+1
+	pla: sta tmp6
  
 	pla:tay:pla:tax:pla
+#endif // SAFE_CONTEXT
 // }
 ; #ifdef USE_PROFILER
 ; PROFILE_LEAVE(ROUTINE_HZFILL)
