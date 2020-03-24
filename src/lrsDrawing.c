@@ -737,7 +737,7 @@ PROFILE_ENTER(ROUTINE_GLDRAWPARTICULES);
     for (ii = 0; ii < nbParticules; ii++) {
         idxPt    = particulesPt[ii];  // ii*SIZEOF_SEGMENT +0
         ch2disp = particulesChar[ii];    // ii*SIZEOF_SEGMENT +2
-        printf ("particules : %d %d\n ", idxPt, ch2disp);
+        // printf ("particules : %d %d\n ", idxPt, ch2disp);
         dchar = points2dL[idxPt]-2 ; //FIXME : -2 to helps particule to be displayed
         P1X = (SCREEN_WIDTH -points2aH[idxPt]) >> 1;
         P1Y = (SCREEN_HEIGHT - points2aV[idxPt]) >> 1;

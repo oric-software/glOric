@@ -70,7 +70,19 @@ void dispInfo() {
 }
 
 
+void quickTest(){
+    CamPosX = -20;
+    CamPosY = 16;
+    CamPosZ = 6;
 
+    CamRotZ = -23;
+    CamRotX = 0;
+    glProjectArrays();
+    initScreenBuffers();
+    glDrawFaces();
+    buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+    get();
+}
 
 void rtDemo() {
 
@@ -100,16 +112,9 @@ void rtDemo() {
 #endif  // TARGET_ORIX
 #ifdef USE_COLOR
     initColors();
-    // memcpy(fbuffer, (void*)ADR_BASE_LORES_SCREEN , SCREEN_HEIGHT* SCREEN_WIDTH);
 #endif
+    // quickTest();
     rtIntro();
-    // CamPosX = -7;
-    // CamPosY = 4;
-    // CamPosZ = 3;
-
-    // CamRotZ = -127;
-    // CamRotX = 0;
-
     rtGameLoop();
 }
 

@@ -195,12 +195,15 @@ A1stepY_doloop:
 A1stepY_debug_moi_la:			
 			sta _A1err
 		;; 	A1X += A1sX;
-_patch_A1stepY_incdec_A1X
+#ifdef USE_PATCHED_AGENT
+_patch_A1stepY_incdec_A1X:
 			inc _A1X 
-			; clc
-			; lda _A1X
-			; adc _A1sX
-			; sta _A1X
+#else
+			clc
+			lda _A1X
+			adc _A1sX
+			sta _A1X
+#endif // USE_PATCHED_AGENT
 		;; }
 A1stepY_A1Xdone:
 		;; if (e2 <= A1dX){
@@ -372,12 +375,15 @@ A2stepY_doloop:
 			adc _A2dY
 			sta _A2err
 		;; 	A2X += A2sX;
+#ifdef USE_PATCHED_AGENT
 patch_A2stepY_incdec_A2X:
 			inc _A2X
-			; clc
-			; lda _A2X
-			; adc _A2sX
-			; sta _A2X
+#else
+			clc
+			lda _A2X
+			adc _A2sX
+			sta _A2X
+#endif // USE_PATCHED_AGENT
 		;; }
 A2stepY_A2Xdone:
 		;; if (e2 <= A2dX){
@@ -970,11 +976,13 @@ fill8_DepYDiffArr1Y:
 		lda #$FF
 		sta _A1sX
     	lda #OPCODE_DEC_ZERO
+#ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION		
 		; sta _patch_A1stepY_A1Right_incdec_A1X
 		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif
+#endif 
+#endif // USE_PATCHED_AGENT
 		jmp fill8_computeDy_01
 	fill8_01_negativ_02:
 		eor #$FF
@@ -984,11 +992,13 @@ fill8_DepYDiffArr1Y:
 		lda #$01
 		sta _A1sX
     	lda #OPCODE_INC_ZERO
+#ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION		
 		; sta _patch_A1stepY_A1Right_incdec_A1X
 		; sta _patch_A1stepY_A1Left_incdec_A1X
 #endif
+#endif // USE_PATCHED_AGENT
 
 fill8_computeDy_01:		
     //     A1dY    = -abs(A1destY - A1Y);
@@ -1074,10 +1084,12 @@ fill8_computeA2:
 		lda #$FF
 		sta _A2sX
 		lda #OPCODE_DEC_ZERO
+#ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION
 		; sta _patch_A2stepY_A1Right_incdec_A2X
 		; sta _patch_A2stepY_A1Left_incdec_A2X
+#endif
 #endif
 		jmp fill8_computeDy_02
 	fill8_03_negativ_02:
@@ -1088,11 +1100,13 @@ fill8_computeA2:
 		lda #$01
 		sta _A2sX
 		lda #OPCODE_INC_ZERO
+#ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION		
 		; sta _patch_A2stepY_A1Right_incdec_A2X
 		; sta _patch_A2stepY_A1Left_incdec_A2X
 #endif
+#endif // USE_PATCHED_AGENT
 fill8_computeDy_02:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
@@ -1183,11 +1197,14 @@ fill8_brestep1:
 		lda #$FF
 		sta _A1sX
     	lda #OPCODE_DEC_ZERO
+#ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
 		; sta _patch_A1stepY_A1Right_incdec_A1X
 		; sta _patch_A1stepY_A1Left_incdec_A1X
 #endif
+#endif // USE_PATCHED_AGENT
+
 		jmp fill8_computeDy_03
 	fill8_05_negativ_02:
 		eor #$FF
@@ -1197,11 +1214,13 @@ fill8_brestep1:
 		lda #$01
 		sta _A1sX
     	lda #OPCODE_INC_ZERO
+#ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
 		; sta _patch_A1stepY_A1Right_incdec_A1X
 		; sta _patch_A1stepY_A1Left_incdec_A1X
 #endif
+#endif // USE_PATCHED_AGENT
 
 
 .)
@@ -1284,11 +1303,13 @@ fill8_DepYEqualsArr1Y:
 		lda #$FF
 		sta _A1sX
     	lda #OPCODE_DEC_ZERO
+#ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
 		; sta _patch_A1stepY_A1Right_incdec_A1X
 		; sta _patch_A1stepY_A1Left_incdec_A1X
 #endif
+#endif // USE_PATCHED_AGENT
 		jmp fill8_computeDy_04
 	fill8_07_negativ_02:
 		eor #$FF
@@ -1298,11 +1319,13 @@ fill8_DepYEqualsArr1Y:
 		lda #$01
 		sta _A1sX
     	lda #OPCODE_INC_ZERO
+#ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
 		; sta _patch_A1stepY_A1Right_incdec_A1X
 		; sta _patch_A1stepY_A1Left_incdec_A1X
 #endif
+#endif // USE_PATCHED_AGENT
 .)
 fill8_computeDy_04:
     //     A1dY    = -abs(A1destY - A1Y);
@@ -1391,11 +1414,13 @@ fill8_computeA2_ter:
 		lda #$FF
 		sta _A2sX
 		lda #OPCODE_DEC_ZERO
+#ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION
 		; sta _patch_A2stepY_A1Right_incdec_A2X
 		; sta _patch_A2stepY_A1Left_incdec_A2X
 #endif
+#endif USE_PATCHED_AGENT
 		jmp fill8_computeDy_08
 	fill8_09_negativ_02:
 		eor #$FF
@@ -1405,11 +1430,13 @@ fill8_computeA2_ter:
 		lda #$01
 		sta _A2sX
 		lda #OPCODE_INC_ZERO
+#ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION
 		; sta _patch_A2stepY_A1Right_incdec_A2X
 		; sta _patch_A2stepY_A1Left_incdec_A2X
 #endif
+#endif // USE_PATCHED_AGENT
 fill8_computeDy_08:
     //     A2dY    = -abs(A2destY - A2Y);
     //     A2sY      = (A2Y < A2destY) ? 1 : -1;
