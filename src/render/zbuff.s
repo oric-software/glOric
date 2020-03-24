@@ -296,11 +296,12 @@ initScreenBuffersDone:
 
 _fastzplot:
 .(
+#ifdef SAFE_CONTEXT
 	// save context
     pha:txa:pha:tya:pha
-	lda tmp0: pha: lda tmp0+1 : pha ;; ptrFbuf
-	lda tmp1: pha: lda tmp1+1 : pha ;; ptrZbuf
-
+	lda tmp6: pha: lda tmp6+1 : pha ;; ptrFbuf
+	lda tmp7: pha: lda tmp7+1 : pha ;; ptrZbuf
+#endif
 
 // #ifdef USE_COLOR
 //    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
@@ -344,44 +345,45 @@ _fastzplot:
 	lda		ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
 	clc						; Clear the carry (because we will do an addition after)
 	adc		_plotX				; Add X coordinate
-	sta		tmp1 ; ptrZbuf
+	sta		tmp7 ; ptrZbuf
 	lda		ZBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
 	adc		#0					; Eventually add the carry to complete the 16 bits addition
-	sta		tmp1+1	 ; ptrZbuf+ 1			
+	sta		tmp7+1	 ; ptrZbuf+ 1			
 
     // if (dist < *ptrZbuf) {
     lda 	_distpoint		; Access dist
     ldx		#0
-    cmp		(tmp1,x)
+    cmp		(tmp7,x)
     bcs		fastzplot_done
 
     //    *ptrZbuf = dist;
         ldx		#0
-        sta		(tmp1, x)
+        sta		(tmp7, x)
     //    *ptrFbuf = char2disp;
         ldx		_plotY    ; reload Y coordinate
     	lda		FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
         clc						; Clear the carry (because we will do an addition after)
         ;;ldy #0
         adc		_plotX				; Add X coordinate
-        sta		tmp0 ; ptrFbuf
+        sta		tmp6 ; ptrFbuf
         lda		FBufferAdressHigh,x	; Get the HIGH part of the fbuffer adress
         adc		#0					; Eventually add the carry to complete the 16 bits addition
-        sta		tmp0+1	 ; ptrFbuf+ 1			
+        sta		tmp6+1	 ; ptrFbuf+ 1			
 
         lda		_ch2disp		; Access char2disp
         ldx		#0
-        sta		(tmp0,x)
+        sta		(tmp6,x)
 
     //}
 
 
 fastzplot_done:
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta tmp1+1: pla: sta tmp1
-	pla: sta tmp0+1: pla: sta tmp0
+	pla: sta tmp7+1: pla: sta tmp7
+	pla: sta tmp6+1: pla: sta tmp6
 	pla:tay:pla:tax:pla
-
+#endif
 .)
 	rts
 

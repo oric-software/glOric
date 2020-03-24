@@ -11,8 +11,10 @@ _glDrawSegments:
 PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 #endif // USE_PROFILER
 
+#ifdef SAFE_CONTEXT
 	// Save context
-	lda reg0 : pha 
+	lda reg3 : pha 
+#endif // SAFE_CONTEXT
 
     ldy _nbSegments
     jmp glDrawSegments_nextSegment
@@ -28,7 +30,7 @@ glDrawSegments_loop:
         lda _segmentsChar,y : sta _ch2disp
 
 //         // dmoy = (d1+d2)/2;
-        sty reg0
+        sty reg3
         ldy _idxPt1
 #ifdef ANGLEONLY
 //         P1AH = points2aH[idxPt1];
@@ -114,7 +116,7 @@ glDrawSegments_drawline:
 //         lrDrawLine();
         jsr _lrDrawLine
 
-    ldy reg0
+    ldy reg3
 
 glDrawSegments_nextSegment:
 	dey 
@@ -123,8 +125,10 @@ glDrawSegments_nextSegment:
     // }
 
 glDrawSegments_done:
+#ifdef SAFE_CONTEXT
 	// Restore context
-	pla : sta reg0
+	pla : sta reg3
+#endif // SAFE_CONTEXT
 
 #ifdef USE_PROFILER
 PROFILE_LEAVE(ROUTINE_GLDRAWSEGMENTS);

@@ -301,14 +301,16 @@ glProjectArrays_done:
 #define OPCODE_INC_NONZERO $EE
 
 #ifdef USE_ASM_DRAWLINE
+
 _lrDrawLine:
 .(
 
-	; ldx #6 : lda #6 : jsr enter :
-
+#ifdef SAFE_CONTEXT
 	// save context
     pha
-	lda reg0:pha
+	lda reg4:pha
+
+#endif // SAFE_CONTEXT
 
 //     A1X     = P1X;
 	lda 	_P1X
@@ -488,7 +490,7 @@ lrDrawLine_errpositiv_01:
 		bpl lrDrawLine_errdone_01
 		lda #$7F
 lrDrawLine_errdone_01:	
-		sta reg0
+		sta reg4
 
 //         if (e2 >= A1dY) {
         sec
@@ -514,7 +516,7 @@ lrDrawLine_dyovera:
 //         if (e2 <= A1dX) {  // e_xy+e_y < 0
 		lda _A1dX
 		sec
-		sbc reg0
+		sbc reg4
 		bvc *+4
 		eor #$80
 		bmi lrDrawLine_e2overdx
@@ -539,11 +541,12 @@ lrDrawLine_e2overdx
 lrDrawLine_endloop:
 lrDrawLine_done:
 
+#ifdef SAFE_CONTEXT
 	// restore context
-	pla: sta reg0
+	pla: sta reg4
 	pla
+#endif // SAFE_CONTEXT
 
-	; jmp leave :
 
 .)
 	rts
