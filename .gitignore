@@ -16,3 +16,5 @@ BUILD/final.out
 BUILD/map.htm
 BUILD/symbols
 BUILD/xaerr.txt
+src/glOric_c.asm
+src/start.asm
