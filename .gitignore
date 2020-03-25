@@ -11,3 +11,8 @@ demo.asm
 *.map
 *.vice
 *.tap
+.vscode/settings.json
+BUILD/final.out
+BUILD/map.htm
+BUILD/symbols
+BUILD/xaerr.txt
