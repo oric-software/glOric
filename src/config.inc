@@ -2,6 +2,7 @@
 ; 
 
 ANGLEONLY = 1
+USE_SATURATION = 1
 
 ;TEXTDEMO = 1
 

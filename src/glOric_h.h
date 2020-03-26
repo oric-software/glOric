@@ -70,4 +70,6 @@ extern unsigned char facesPt2       [NB_MAX_FACES];
 extern unsigned char facesPt3       [NB_MAX_FACES];
 extern unsigned char facesChar      [NB_MAX_FACES];
 
+extern void glDrawFaces();
+
 #endif // GLORIC_H

@@ -10,7 +10,7 @@
 .importzp tmp1, tmp2, tmp3, tmp4; 8 bits
 
 .export _projectPoint
-
+.export _log2_tab
 .import _projOptions
 .import _CamRotX, _CamRotZ, _CamPosZ, _CamPosY, _CamPosX
 
@@ -448,8 +448,8 @@ Ypositiv:
     rol octant
 
     sec
-    lda log2_tab,x
-    sbc log2_tab,y
+    lda _log2_tab,x
+    sbc _log2_tab,y
     bcc *+4
     eor #$ff
     tax
@@ -516,7 +516,7 @@ atan_tab:	.byt $00,$00,$00,$00,$00,$00,$00,$00
 
 		;;;;;;;; log2(x)*32 ;;;;;;;;
 
-log2_tab:	.byt $00,$00,$20,$32,$40,$4a,$52,$59
+_log2_tab:	.byt $00,$00,$20,$32,$40,$4a,$52,$59
 		.byt $60,$65,$6a,$6e,$72,$76,$79,$7d
 		.byt $80,$82,$85,$87,$8a,$8c,$8e,$90
 		.byt $92,$94,$96,$98,$99,$9b,$9d,$9e

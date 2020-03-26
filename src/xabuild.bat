@@ -1,5 +1,5 @@
 
-DEL build\GLORIC.TAP
+DEL build\GLORIC.TAP %OSDK%\Oricutron\OSDK.TAP build\final.out %OSDK%\TMP\linked.s
 
 %OSDK%\bin\cpp.exe -lang-c++ -I %OSDK%\include -D__16BIT__ -D__NOFLOAT__ -DATMOS -DOSDKNAME_GLORIC -DOSDKVER=\"1.15\" -nostdinc start.c %OSDK%\TMP\start.c
 
@@ -23,6 +23,8 @@ REM CALL %OSDK%\TMP\link.bat
 
 %OSDK%\bin\link65.exe  -d %OSDK%\lib/ -o %OSDK%\TMP\linked.s -f -q  %OSDK%\TMP\start %OSDK%\TMP\glOric_c glOric_s.s
 
+IF NOT EXIST %OSDK%\TMP\linked.s GOTO ErBld
+
 %OSDK%\bin\xa.exe -W -C %OSDK%\TMP\linked.s -o build\final.out -e build\xaerr.txt -l build\symbols -bt $500 -DASSEMBLER=XA  -DOSDKNAME_GLORIC
 
 %OSDK%\bin\header.exe  build\final.out build\GLORIC.tap $500
@@ -41,4 +43,9 @@ PUSHD %OSDK%\Oricutron
 START oricutron.exe -t OSDK.TAP -s symbols
 POPD
 
+GOTO End
+
 :ErBld
+ECHO "ERREUR !!! "
+
+:End

@@ -5,10 +5,10 @@
 
 .zero
 
-lineIndex   .dsb 1
-departX     .dsb 1
-finX        .dsb 1
-hLineLength .dsb 1
+_lineIndex   .dsb 1
+_departX     .dsb 1
+_finX        .dsb 1
+_hLineLength .dsb 1
 
 .text
 
@@ -39,7 +39,7 @@ _hzfill:
 ; #endif
 ;     bcc *+5
 ; 	jmp hzfill_done
-    sta lineIndex ; A1Y
+    sta _lineIndex ; A1Y
 
 //     if (A1X > A2X) {
 	; lda _A1X				
@@ -52,7 +52,7 @@ _hzfill:
 	beq hzfill_A2xOverOrEqualA1x
 
 
-#ifdef // USE_SATURATION
+#ifdef USE_SATURATION
 
 		lda _A2XSatur
 		beq hzfill_A2XDontSatur_01 
@@ -89,7 +89,7 @@ hzfill_A2xLowerThan3:
 #endif // USE_SATURATION
 
 hzfill_A2xPositiv:
-		sta departX ; dx
+		sta _departX ; dx
 
 
 
@@ -98,24 +98,24 @@ hzfill_A2xPositiv:
 		lda _A1XSatur
 		beq hzfill_A1XDontSatur
 			lda #SCREEN_WIDTH - 1
-			sta finX
+			sta _finX
 			jmp hzfill_computeNbPoints
 hzfill_A1XDontSatur:
 			lda _A1X
-			sta finX
+			sta _finX
 			jmp hzfill_computeNbPoints
 
 
 #else // USE_SATURATION
 		lda _A1X
-		sta finX
+		sta _finX
 		sec
 		sbc #SCREEN_WIDTH - 1
 		bvc *+4
 		eor #$80
 		bmi hzfill_A1xOverScreenWidth
 		lda #SCREEN_WIDTH - 1
-		sta finX
+		sta _finX
 hzfill_A1xOverScreenWidth:
 		jmp hzfill_computeNbPoints
 
@@ -162,7 +162,7 @@ hzfill_A1xLowerThan3:
 
 
 hzfill_A1xPositiv:
-		sta departX
+		sta _departX
 
 //         fx = min(A2X, SCREEN_WIDTH - 1);
 
@@ -170,22 +170,22 @@ hzfill_A1xPositiv:
 		lda _A2XSatur
 		beq hzfill_A2XDontSatur_02		
 			lda #SCREEN_WIDTH - 1
-			sta finX
+			sta _finX
 		jmp hzfill_computeNbPoints
 hzfill_A2XDontSatur_02:
 		lda _A2X	
-		sta finX	
+		sta _finX	
 
 #else // USE_SATURATION
 		lda _A2X ; p2x
-		sta finX
+		sta _finX
 		sec
 		sbc #SCREEN_WIDTH - 1
 		bvc *+4
 		eor $80
 		bmi hzfill_A2xOverScreenWidth
 		lda #SCREEN_WIDTH - 1
-		sta finX
+		sta _finX
 hzfill_A2xOverScreenWidth:
 #endif // USE_SATURATION
 
@@ -194,11 +194,11 @@ hzfill_computeNbPoints:
 //     nbpoints = fx - dx;
 //     if (nbpoints < 0) return;
 	sec
-	lda finX
-	sbc departX
+	lda _finX
+	sbc _departX
     beq hzfill_done
 	bmi hzfill_done
-	sta hLineLength
+	sta _hLineLength
 
 //     // printf ("dx=%d py=%d nbpoints=%d dist= %d, char2disp= %d\n", dx, py, nbpoints,  dist, char2disp);get();
 
@@ -223,12 +223,12 @@ hzfill_computeNbPoints:
     
 	// ldy #10 : jsr _zline
 
-    ldx lineIndex ; A1Y
+    ldx _lineIndex ; A1Y
 
     // ptrZbuf = zbuffer + py * SCREEN_WIDTH + dx;
  	lda ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
 	clc						
-	adc departX				; Add dx coordinate
+	adc _departX				; Add dx coordinate
 	sta tmp7                ; ptrZbuf
 	lda ZBufferAdressHigh,x	; Get the HIGH part of the zbuffer adress
 	adc #0					; 
@@ -237,7 +237,7 @@ hzfill_computeNbPoints:
     // ptrFbuf = fbuffer + py * SCREEN_WIDTH + dx;
     lda FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
     clc						; 
-    adc departX				; Add dx coordinate
+    adc _departX				; Add dx coordinate
     sta tmp6                ; ptrFbuf
     lda FBufferAdressHigh,x	; Get the HIGH part of the fbuffer adress
     adc #0					; 
@@ -246,7 +246,7 @@ hzfill_computeNbPoints:
    // ptrFbuf = fbuffer + offset;
 
     // while (nbp > 0) {
-    ldy hLineLength
+    ldy _hLineLength
 _hzline_loop: 
 
     //     if (dist < ptrZbuf[nbp]) {

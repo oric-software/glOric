@@ -1,4 +1,6 @@
 
+#include "config.h"
+
 #ifdef TARGET_ORIX
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,6 +10,8 @@
 #endif // TARGET_ORIX
 
 #include "glOric_h.h"
+
+
 
 char geomLetterI[] = {
     /* Nb Coords = */ 6,
@@ -36,6 +40,56 @@ void waitkey(){
     get();
 #endif
 }
+void addGeom2(
+    signed char   X,
+    signed char   Y,
+    signed char   Z,
+    unsigned char sizeX,
+    unsigned char sizeY,
+    unsigned char sizeZ,
+    unsigned char orientation,
+    char          geom[]) {
+
+    int kk=0;
+    int ii;
+    int npt,nfa, nseg, npart;
+    npt = geom[kk++];
+    nfa = geom[kk++];
+    nseg = geom[kk++];
+    npart = geom[kk++];
+    for (ii = 0; ii < npt; ii++){
+        if (orientation == 0) {
+            points3dX[nbPoints] = X + sizeX * geom[kk++];
+            points3dY[nbPoints] = Y + sizeY * geom[kk++];
+        } else {
+            points3dY[nbPoints] = X + sizeY * geom[kk++];
+            points3dX[nbPoints] = Y + sizeX * geom[kk++];
+        }
+        points3dZ[nbPoints] = Z + sizeZ * geom[kk++];
+        nbPoints ++;
+        kk++; // skip unused byte
+    }
+    for (ii = 0; ii < nfa; ii++){
+        facesPt1[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 1
+        facesPt2[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 2
+        facesPt3[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 3
+        facesChar[nbFaces] = geom[kk++];  // Character
+        nbFaces++;
+    }
+    for (ii = 0; ii < nseg; ii++){
+        segmentsPt1[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 1
+        segmentsPt2[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 2
+        segmentsChar[nbSegments] = geom[kk++]; // Character
+        nbSegments++;
+        kk++; // skip unused byte
+    }
+    for (ii = 0; ii < npart; ii++){
+        particulesPt[nbParticules] = nbPoints - (npt-geom[kk++]);  // Index Point
+        particulesChar[nbParticules] = geom[kk++]; // Character
+        nbParticules++;        
+    }
+}    
+
 
 void addGeom(
     signed char   X,
@@ -103,7 +157,7 @@ void main (){
     nbParticules = 0;
 
 
-    addGeom(0, 0, 0, 1, 1, 1, 0, geomLetterI);
+    addGeom2(1, 2, 0, 1, 1, 1, 0, geomLetterI);
     printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces);
     waitkey();
     listPoints3D();
@@ -111,4 +165,6 @@ void main (){
     waitkey();
     glProjectArrays();
     listPoints2D();
+
+    glDrawFaces();
 }
