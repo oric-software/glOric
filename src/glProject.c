@@ -1,15 +1,4 @@
-#include "config.h"
 
-
-#ifdef USE_REWORKED_BUFFERS
-extern signed char points3dX[];
-extern signed char points3dY[];
-extern signed char points3dZ[];
-extern signed char points2aH[];
-extern signed char points2aV[];
-extern signed char points2dH[];
-extern signed char points2dL[];
-extern unsigned char nbPoints;
 
 #ifdef USE_C_ARRAYSPROJECT
 void glProjectArrays(){
@@ -34,4 +23,3 @@ void glProjectArrays(){
     }
 }
 #endif // USE_C_ARRAYSPROJECT
-#endif // USE_REWORKED_BUFFERS

@@ -464,15 +464,15 @@ A2stepYdone:
 	rts
 #endif //  USE_ASM_BRESFILL
 
-#include "hfill.s"
+#include "raster/hfill.s"
 
-#include "angle2screen.s"
+#include "raster/angle2screen.s"
 
 #ifdef USE_ASM_BRESFILL
-#include "prepareBresrun.s"
+#include "raster/prepareBresrun.s"
 #endif
 
-#include "isA1Right.s"
+#include "raster/isA1Right.s"
 
 #ifdef USE_ASM_FILL8
 _fill8:
@@ -1132,6 +1132,6 @@ bresStepType3_Lbresfill145
 
 #endif // USE_SATURATION
 
-#include "reachScreen.s"
+#include "raster/reachScreen.s"
 
-#include "fillFace.s"
+#include "raster/fillFace.s"
