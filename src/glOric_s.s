@@ -31,6 +31,7 @@
 #include "raster/fillFace.s"
     // _fillFace
 #include "temp.s"
+
 #include "render/zbuff.s"
 #include "raster/raster8.s"
 #include "render/face.s"
@@ -39,3 +40,9 @@
     // guessIfFace2BeDrawn
     // retrieveFaceData
 
+// SEGMENTS 
+#include "util/print.s"
+#include "lrDrawLine.s"
+#include "glDrawSegments.s"
+
+#include "glDrawParticules.s"

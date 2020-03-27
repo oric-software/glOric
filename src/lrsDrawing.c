@@ -82,64 +82,7 @@ void plot(signed char X,
 
 
 
-
-#ifdef USE_C_DRAWLINE
-void lrDrawLine() {
-
-    signed char e2;
-    char        ch2dsp;
-
-    A1X     = P1X;
-    A1Y     = P1Y;
-    A1destX = P2X;
-    A1destY = P2Y;
-    A1dX    = abs(P2X - P1X);
-    A1dY    = -abs(P2Y - P1Y);
-    A1sX    = P1X < P2X ? 1 : -1;
-    A1sY    = P1Y < P2Y ? 1 : -1;
-    A1err   = A1dX + A1dY;
-
-    if ((A1err > 64) || (A1err < -63))
-        return;
-
-    if ((ch2disp == '/') && (A1sX == -1)) {
-        ch2dsp = DOLLAR;
-    } else {
-        ch2dsp = ch2disp;
-    }
-
-    while (1) {  // loop
-        //printf ("plot [%d, %d] %d %d\n", _A1X, _A1Y, distseg, ch2disp);get ();          
-#ifdef USE_ZBUFFER
-        zplot(A1X, A1Y, distseg, ch2dsp);
-#else
-        plot(A1X, A1Y, ch2dsp);
-#endif
-        if ((A1X == A1destX) && (A1Y == A1destY))
-            break;
-        //e2 = 2*err;
-        e2 = (A1err < 0) ? (
-                ((A1err & 0x40) == 0) ? (
-                                                0x80)
-                                        : (
-                                            A1err << 1))
-            : (
-                ((A1err & 0x40) != 0) ? (
-                                                0x7F)
-                                        : (
-                                                A1err << 1));
-        if (e2 >= A1dY) {
-            A1err += A1dY;  // e_xy+e_x > 0
-            A1X += A1sX;
-        }
-        if (e2 <= A1dX) {  // e_xy+e_y < 0
-            A1err += A1dX;
-            A1Y += A1sY;
-        }
-    }
-}
-#endif // USE_C_DRAWLINE
-
+#include "lrDrawLine.c"
 /*
 def drawLine( x0,  y0,  x1,  y1):
     points2d = []
@@ -469,97 +412,8 @@ extern    unsigned char isFace2BeDrawn;
 
 #include "glDrawFaces.c"
 
-#ifdef USE_C_GLDRAWSEGMENTS
-void glDrawSegments() {
-    unsigned char ii = 0;
- 
-#ifdef USE_PROFILER
-PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
-#endif // USE_PROFILER
+#include "glDrawSegments.c"
 
-    for (ii = 0; ii < nbSegments; ii++) {
-
-        idxPt1    = segmentsPt1[ii];
-        idxPt2    = segmentsPt2[ii];
-        ch2disp = segmentsChar[ii];
-
-        // dmoy = (d1+d2)/2;
-
-#ifdef ANGLEONLY
-        P1AH = points2aH[idxPt1];
-        P1AV = points2aV[idxPt1];
-#else 
-        P1X = points2aH[idxPt1];
-        P1Y = points2aV[idxPt1];
-#endif
-        dmoy = points2dL[idxPt1];
-
-
-#ifdef ANGLEONLY
-        P2AH = points2aH[idxPt2];
-        P2AV = points2aV[idxPt2];
-#else 
-        P2X = points2aH[idxPt2];
-        P2Y = points2aV[idxPt2];
-#endif        
-        dmoy += points2dL[idxPt2];
-
-        dmoy = dmoy >> 1;
-        
-
-        //if (dmoy >= 256) {
-        if ((dmoy & 0xFF00) != 0)
-            continue;
-        distseg = (unsigned char)((dmoy)&0x00FF);
-        distseg--;  // FIXME
-
-#ifdef ANGLEONLY
-        P1X = (SCREEN_WIDTH - P1AH) >> 1;
-        P1Y = (SCREEN_HEIGHT - P1AV) >> 1;
-        P2X = (SCREEN_WIDTH - P2AH) >> 1;
-        P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
-#endif
-        // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
-        lrDrawLine();
-    }
-#ifdef USE_PROFILER
-PROFILE_LEAVE(ROUTINE_GLDRAWSEGMENTS);
-#endif // USE_PROFILER
-}
-
-#endif // USE_C_GLDRAWSEGMENTS
-
-#ifdef USE_C_GLDRAWPARTICULES
-void glDrawParticules(){
-    unsigned char ii = 0;
-
-    unsigned char idxPt, offPt, dchar;
-    unsigned int  dist;
-
-#ifdef USE_PROFILER
-PROFILE_ENTER(ROUTINE_GLDRAWPARTICULES);
-#endif // USE_PROFILER
-
-    for (ii = 0; ii < nbParticules; ii++) {
-        idxPt    = particulesPt[ii];  // ii*SIZEOF_SEGMENT +0
-        ch2disp = particulesChar[ii];    // ii*SIZEOF_SEGMENT +2
-        // printf ("particules : %d %d\n ", idxPt, ch2disp);
-        dchar = points2dL[idxPt]-2 ; //FIXME : -2 to helps particule to be displayed
-        P1X = (SCREEN_WIDTH -points2aH[idxPt]) >> 1;
-        P1Y = (SCREEN_HEIGHT - points2aV[idxPt]) >> 1;
-#ifdef USE_ZBUFFER
-        zplot(P1X, P1Y, dchar, ch2disp);
-#else
-        // TODO : plot a point with no z-buffer
-        plot(A1X, A1Y, ch2disp);
-#endif
-
-    }
-#ifdef USE_PROFILER
-PROFILE_LEAVE(ROUTINE_GLDRAWPARTICULES);
-#endif // USE_PROFILER
-
-}
-#endif // USE_C_GLDRAWPARTICULES
+#include "glDrawParticules.c"
 
 #endif

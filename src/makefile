@@ -25,18 +25,23 @@ OBJS= $(SRC_ASM:.asm=.o) $(SRC_C:.c=.o)
 %.o: %.asm
 	$(AS) $(ASFLAGS) $^ -l $(@:.o=.lst) -o $@
 
-%.o: %.c
+%.asm: %.c
 	$(CC) $(CFLAGS) $^ -o $@
+
+.PHONY: mrproper all test 
+
 
 $(LIBNAME).lib: $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
-$(PROGNAME).tap: 
+$(PROGNAME).tap: $(LIBNAME).lib start.o
 	$(LD) $(LDFLAGS) start.o $(LIBNAME).lib -o $(PROGNAME).tap
 
-all: $(LIBNAME).lib $(PROGNAME).tap
-	cp $(PROGNAME).tap $(PATH_TO_ORICUTRON)\usbdrive\bin\$(PROGNAME)
 
+all: $(LIBNAME).lib $(PROGNAME).tap
+
+test: $(PROGNAME).tap
+	cp $(PROGNAME).tap $(PATH_TO_ORICUTRON)\usbdrive\bin\$(PROGNAME)
 
 clean:
 	rm -f *.o $(SRC_C:.c=.asm) *.lst *.map *.vice

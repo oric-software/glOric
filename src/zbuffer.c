@@ -16,71 +16,11 @@
 //const int multi40[] = {0, 40, 80, 120, 160, 200, 240, 280, 320,
 //                       360, 400, 440, 480, 520, 560, 600, 640, 680,
 //                       720, 760, 800, 840, 880, 920, 960, 1000, 1040};
+#include "initScreenBuffers.c"
 
-#ifdef USE_C_INITFRAMEBUFFER
-void initScreenBuffers() {
-#ifdef USE_COLOR
-    int ii, jj;
-#endif
-    memset(zbuffer, 0xFF, SCREEN_WIDTH * SCREEN_HEIGHT);
-    
-#ifdef USE_COLOR
-    for (ii=0; ii< SCREEN_HEIGHT; ii++){
-        for (jj=3; jj< SCREEN_WIDTH; jj++){
-            fbuffer[ii*SCREEN_WIDTH+jj] = 0x20;
-        }
-    }
-#else
-    memset(fbuffer, 0x20, SCREEN_WIDTH * SCREEN_HEIGHT);  // Space
-#endif
-}
-#endif // USE_C_INITFRAMEBUFFER
+#include "buffer2screen.c"
 
-
-
-#ifdef USE_C_BUFFER2SCREEN
-void buffer2screen(char destAdr[]) {
-    memcpy(destAdr, fbuffer, SCREEN_HEIGHT* SCREEN_WIDTH);
-}
-#endif
-
-
-#ifdef USE_C_ZPLOT
-
-void zplot(signed char X,
-           signed char Y,
-           unsigned char dist,
-           char          char2disp) {
-    int            offset;
-    char*          ptrFbuf;
-    unsigned char* ptrZbuf;
-
-#ifdef USE_COLOR
-    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
-        return;
-#else
-    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
-        return;
-#endif
-
-#ifdef USE_MULTI40
-    offset = multi40[Y] + X;  // 
-#else
-    offset = Y*SCREEN_WIDTH+X; 
-#endif
-
-    ptrZbuf = zbuffer + offset;
-    ptrFbuf = fbuffer + offset;
-
-    // printf ("pl [%d %d] zbuff = %d , pointDist = %d\n", X, Y, *ptrZbuf, dist);
-    if (dist < *ptrZbuf) {
-        *ptrFbuf = char2disp;
-        *ptrZbuf = dist;
-    }
-}
-
-#endif
-
+#include "zplot_c.c"
 
 #ifdef USE_C_ZLINE
 

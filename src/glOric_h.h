@@ -71,5 +71,8 @@ extern unsigned char facesPt3       [NB_MAX_FACES];
 extern unsigned char facesChar      [NB_MAX_FACES];
 
 extern void glDrawFaces();
-
+extern void glDrawSegments();
+extern void glDrawParticules();
+extern void initScreenBuffers();
+extern void buffer2screen(char destAdr[]);
 #endif // GLORIC_H

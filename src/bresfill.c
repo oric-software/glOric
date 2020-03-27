@@ -74,10 +74,10 @@ extern signed char mDeltaY1, mDeltaX1, mDeltaY2, mDeltaX2;
 #include "satur.c"
 
 
-#include "fill8_bis.c"
+#include "fill8_bresrun.c"
 #include "isA1Right.c"
 
-#include "fill8.c"
+#include "fill8_c.c"
 
 #ifdef USE_C_HFILL
 

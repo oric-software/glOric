@@ -157,7 +157,7 @@ void main (){
     nbParticules = 0;
 
 
-    addGeom2(1, 2, 0, 1, 1, 1, 0, geomLetterI);
+    addGeom(1, 2, 0, 1, 1, 1, 0, geomLetterI);
     printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces);
     waitkey();
     listPoints3D();
@@ -166,5 +166,28 @@ void main (){
     glProjectArrays();
     listPoints2D();
 
+    printf ("initScreenBuffer\n");
+    waitkey();
+    initScreenBuffers();
+
+    printf ("glDrawFaces\n");
+    waitkey();
     glDrawFaces();
+
+    printf ("glDrawParticules\n");
+    waitkey();
+    glDrawParticules();
+
+    printf ("glDrawSegments\n");
+    waitkey();
+    glDrawSegments();
+
+    printf ("buffer2screen\n");
+    waitkey();
+    buffer2screen((char *)ADR_BASE_LORES_SCREEN);
+
+
+
+    printf ("Fin\n");
+
 }
