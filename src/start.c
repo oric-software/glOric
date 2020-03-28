@@ -33,13 +33,7 @@ char geomLetterI[] = {
     // Particule List : idxPoint1, character
 };
 
-void waitkey(){
-#ifdef TARGET_ORIX
-    getchar();
-#else
-    get();
-#endif
-}
+extern void waitkey();
 void addGeom2(
     signed char   X,
     signed char   Y,
@@ -158,35 +152,21 @@ void main (){
 
 
     addGeom(1, 2, 0, 1, 1, 1, 0, geomLetterI);
-    printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces);
-    waitkey();
-    listPoints3D();
+    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
+    // listPoints3D();
 
-    waitkey();
     glProjectArrays();
-    listPoints2D();
+    // listPoints2D();
 
-    printf ("initScreenBuffer\n");
-    waitkey();
     initScreenBuffers();
 
-    printf ("glDrawFaces\n");
-    waitkey();
     glDrawFaces();
 
-    printf ("glDrawParticules\n");
-    waitkey();
-    glDrawParticules();
-
-    printf ("glDrawSegments\n");
-    waitkey();
     glDrawSegments();
 
-    printf ("buffer2screen\n");
-    waitkey();
+    glDrawParticules();
+
     buffer2screen((char *)ADR_BASE_LORES_SCREEN);
-
-
 
     printf ("Fin\n");
 

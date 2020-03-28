@@ -48,7 +48,7 @@ PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
         P2X = (SCREEN_WIDTH - P2AH) >> 1;
         P2Y = (SCREEN_HEIGHT - P2AV) >> 1;
 #endif
-        // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, char2disp); get();
+        // printf ("dl ([%d, %d] , [%d, %d] => %d c=%d\n", P1X, P1Y, P2X, P2Y, distseg, ch2disp); waitkey();
         lrDrawLine();
     }
 #ifdef USE_PROFILER

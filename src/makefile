@@ -35,7 +35,7 @@ $(LIBNAME).lib: $(OBJS)
 	$(AR) $(ARFLAGS) $@ $^
 
 $(PROGNAME).tap: $(LIBNAME).lib start.o
-	$(LD) $(LDFLAGS) start.o $(LIBNAME).lib -o $(PROGNAME).tap
+	$(LD) -m $(@:.tap=.map) -Ln $(@:.tap=.vice) $(LDFLAGS) start.o $(LIBNAME).lib -o $(PROGNAME).tap
 
 
 all: $(LIBNAME).lib $(PROGNAME).tap

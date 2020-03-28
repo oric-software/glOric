@@ -2,7 +2,12 @@
 #include "config.h"
 #ifdef TARGET_ORIX
 #include <string.h>
-#endif
+#include <stdio.h>
+#include <conio.h>
+#else
+#include "lib.h"
+#endif // TARGET_ORIX
+
 #include "glOric_h.h"
 
 #define max(a,b)            (((a) > (b)) ? (a) : (b))
@@ -75,6 +80,16 @@ extern unsigned char A2XSatur;
 
 extern unsigned char zbuffer[];  // z-depth buffer SCREEN_WIDTH * SCREEN_HEIGHT
 extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
+
+
+void waitkey(){
+#ifdef TARGET_ORIX
+    cgetc();
+#else
+    get();
+#endif
+}
+
 #include "initScreenBuffers.c"
 
 #include "glProject.c"
