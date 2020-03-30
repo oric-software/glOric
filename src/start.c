@@ -12,8 +12,25 @@
 #include "glOric_h.h"
 
 
+signed char geomTriangle []= {
+/* Nb Coords = */ 3,
+/* Nb Faces = */ 1,
+/* Nb Segments = */ 3,
+/* Nb Particules = */ 0,
+// Coord List : X, Y, Z, unused
+1, 0, 0, 0, 
+3, 0, 0, 0,
+ 2, 0, 2, 0,
+// Face List : idxPoint1, idxPoint2, idxPoint3, character 
+ 0, 1, 2, '.',
+// Segment List : idxPoint1, idxPoint2, idxPoint3, character 
+0, 2, '/', 0,
+1, 2, '/', 0,
+0, 1, '-', 0,
+// Particule List : idxPoint1, character 
+};
 
-char geomLetterI[] = {
+signed char geomLetterI[] = {
     /* Nb Coords = */ 6,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 3,
@@ -42,7 +59,7 @@ void addGeom2(
     unsigned char sizeY,
     unsigned char sizeZ,
     unsigned char orientation,
-    char          geom[]) {
+    signed char          geom[]) {
 
     int kk=0;
     int ii;
@@ -136,7 +153,7 @@ void listPoints2D(){
     }
 }
 void main (){
-    printf ("coucou \n");
+    // printf ("coucou \n");
 
     CamPosX = -20;
     CamPosY = 16;
@@ -151,7 +168,8 @@ void main (){
     nbParticules = 0;
 
 
-    addGeom(1, 2, 0, 1, 1, 1, 0, geomLetterI);
+    addGeom2(1, 2, 0, 1, 1, 1, 0, geomLetterI);
+    addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
     // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
     // listPoints3D();
 
