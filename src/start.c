@@ -11,46 +11,66 @@
 
 #include "glOric_h.h"
 
+#include "data/traj.h"
 
-signed char geomTriangle []= {
-/* Nb Coords = */ 3,
-/* Nb Faces = */ 1,
-/* Nb Segments = */ 3,
+#define TEXTURE_1 ','
+#define TEXTURE_2 '.'
+#define TEXTURE_3 'u'
+#define TEXTURE_4 '*'
+#define TEXTURE_5 'o'
+#define TEXTURE_6 '+'
+#define TEXTURE_7 'x'
+
+signed char geomHouse []= {
+/* Nb Coords = */ 10,
+/* Nb Faces = */ 11,
+/* Nb Segments = */ 14,
 /* Nb Particules = */ 0,
 // Coord List : X, Y, Z, unused
-1, 0, 0, 0, 
-3, 0, 0, 0,
- 2, 0, 2, 0,
+ 1, 1, 0, 0, 
+-1, 1, 0, 0,
+-1,-1, 0, 0,
+ 1,-1, 0, 0,
+ 1, 1, 2, 0, 
+-1, 1, 2, 0,
+-1,-1, 2, 0,
+ 1,-1, 2, 0,
+ 1, 0, 3, 0,
+-1, 0, 3, 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
- 0, 1, 2, '.',
-// Segment List : idxPoint1, idxPoint2, idxPoint3, character 
-0, 2, '/', 0,
-1, 2, '/', 0,
+ 0, 1, 5, TEXTURE_6,
+ 0, 4, 5, TEXTURE_6,
+ 3, 2, 6, TEXTURE_6,
+ 6, 3, 7, TEXTURE_6,
+ 1, 2, 6, TEXTURE_5,
+ 1, 6, 5, TEXTURE_5,
+ 5, 6, 9, TEXTURE_5,
+ 4, 5, 9, TEXTURE_3,
+ 4, 9, 8, TEXTURE_3,
+ 7, 6, 9, TEXTURE_3,
+ 7, 9, 8, TEXTURE_3,
+// Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '-', 0,
+1, 2, '-', 0,
+2, 3, '-', 0,
+4, 5, '-', 0,
+6, 7, '-', 0,
+0, 4,'|', 0,
+1, 5,'|', 0,
+2, 6,'|', 0,
+3, 7,'|', 0,
+4, 8,'/', 0,
+7, 8,'/', 0,
+5, 9,'/', 0,
+6, 9,'/', 0,
+9, 8,'-', 0,
+
 // Particule List : idxPoint1, character 
 };
 
-signed char geomLetterI[] = {
-    /* Nb Coords = */ 6,
-    /* Nb Faces = */ 0,
-    /* Nb Segments = */ 3,
-    /* Nb Particules = */ 0,
-    // Coord List : X, Y, Z, unused
-    1, 0, 1, 0,   // P0
-    3, 0, 1, 0,   // P1
-    1, 0, 7, 0,   // P2
-    3, 0, 7, 0,   // P3
-    2, 0, 1, 0,   // P4
-    2, 0, 7, 0,   // P5
-    // Face List : idxPoint1, idxPoint2, idxPoint3, character
-    // Segment List : idxPoint1, idxPoint2, idxPoint3, character
-    0, 1, 73, 0,  // 45, 0
-    2, 3, 73, 0,  // 45, 0
-    4, 5, 73, 0   // 124, 0
-    // Particule List : idxPoint1, character
-};
-
 extern void waitkey();
+extern void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08);
+
 void addGeom2(
     signed char   X,
     signed char   Y,
@@ -102,44 +122,6 @@ void addGeom2(
 }    
 
 
-void addGeom(
-    signed char   X,
-    signed char   Y,
-    signed char   Z,
-    unsigned char sizeX,
-    unsigned char sizeY,
-    unsigned char sizeZ,
-    unsigned char orientation,
-    char          geom[]) {
-
-    int kk;
-
-    for (kk=0; kk< geom[0]; kk++){
-        points3dX[nbPoints] = X + ((orientation == 0) ? sizeX * geom[4+kk*SIZEOF_3DPOINT+0]: sizeY * geom[4+kk*SIZEOF_3DPOINT+1]);// X + ii;
-        points3dY[nbPoints] = Y + ((orientation == 0) ? sizeY * geom[4+kk*SIZEOF_3DPOINT+1]: sizeX * geom[4+kk*SIZEOF_3DPOINT+0]);// Y + jj;
-        points3dZ[nbPoints] = Z + geom[4+kk*SIZEOF_3DPOINT+2]*sizeZ;// ;
-        nbPoints++;
-    }
-    for (kk=0; kk< geom[1]; kk++){
-        facesPt1[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+0]);  // Index Point 1
-        facesPt2[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+1]);  // Index Point 2
-        facesPt3[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+2]);  // Index Point 3
-        facesChar[nbFaces] = geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+3];  // Character
-        nbFaces++;
-    }
-    for (kk=0; kk< geom[2]; kk++){
-        segmentsPt1[nbSegments] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 0]);  // Index Point 1
-        segmentsPt2[nbSegments] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 1]);  // Index Point 2
-        segmentsChar[nbSegments] = geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 2]; // Character
-        nbSegments++;
-    }
-    for (kk=0; kk< geom[3]; kk++){
-        particulesPt[nbParticules] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
-        particulesChar[nbParticules] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
-        nbParticules++;
-    }
-}
-
 void listPoints3D(){
     int ii;
     for (ii=0; ii< nbPoints; ii++){
@@ -153,6 +135,7 @@ void listPoints2D(){
     }
 }
 void main (){
+    int i,j;
     // printf ("coucou \n");
 
     CamPosX = -20;
@@ -167,25 +150,34 @@ void main (){
     nbFaces      = 0;
     nbParticules = 0;
 
-
-    addGeom2(1, 2, 0, 1, 1, 1, 0, geomLetterI);
-    addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
+    change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
+    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    // addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
     // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
     // listPoints3D();
 
-    glProjectArrays();
-    // listPoints2D();
+    i       = 0;
 
-    initScreenBuffers();
+    for (j = 0; j < 64; j++) {
+        CamPosX = traj[i++];
+        CamPosY = traj[i++];
+        CamRotZ = traj[i++];
+        i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
-    glDrawFaces();
 
-    glDrawSegments();
+        glProjectArrays();
+        // listPoints2D();
 
-    glDrawParticules();
+        initScreenBuffers();
 
-    buffer2screen((char *)ADR_BASE_LORES_SCREEN);
+        glDrawFaces();
 
+        glDrawSegments();
+
+        glDrawParticules();
+
+        buffer2screen((char *)ADR_BASE_LORES_SCREEN);
+    }
     printf ("Fin\n");
 
 }
