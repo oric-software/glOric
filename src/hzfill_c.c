@@ -7,7 +7,7 @@ void hzfill() {
     char*          ptrFbuf;
     unsigned char* ptrZbuf;
 
-    //printf ("p1x=%d p2x=%d py=%d dist= %d, char2disp= %d\n", p1x, p2x, dist,  dist, char2disp);get();
+//     printf ("A1Right=%d A1XSatur=%d A2XSatur=%d \n", A1Right, A1XSatur, A2XSatur);waitkey();
     lineIndex = A1Y;
     if (A1Right != 0) {
 #ifdef USE_SATURATION
@@ -18,6 +18,8 @@ void hzfill() {
             departX = 0;
 #endif // USE_COLOR
 
+        } else {
+            departX = A2X;
         }
 #else // not USE_SATURATION	
 #ifdef USE_COLOR
@@ -42,10 +44,12 @@ void hzfill() {
 #ifdef USE_SATURATION
         if (A1XSatur != 0) {
 #ifdef USE_COLOR		
-		departX = COLUMN_OF_COLOR_ATTRIBUTE;
+	    departX = COLUMN_OF_COLOR_ATTRIBUTE;
 #else
-		departX = 0;
+	    departX = 0;
 #endif // USE_COLOR
+        } else {
+            departX = A1X;
         }
 #else // not USE_SATURATION
 #ifdef USE_COLOR
@@ -65,21 +69,22 @@ void hzfill() {
         finX = min(A2X, SCREEN_WIDTH - 1);
 #endif // USE_SATURATION
     }
-
-hLineLength = finX - departX;
-if (hLineLength < 0) return;
-
-ptrZbuf = zbuffer + lineIndex * SCREEN_WIDTH + departX;
-ptrFbuf = fbuffer + lineIndex * SCREEN_WIDTH + departX;
-
-
-while (hLineLength > 0) {
+//     printf ("finX=%d, departX=%d \n", finX , departX);waitkey();
+    hLineLength = finX - departX;
+    if (hLineLength < 0) return;
+    
+    ptrZbuf = zbuffer + lineIndex * SCREEN_WIDTH + departX;
+    ptrFbuf = fbuffer + lineIndex * SCREEN_WIDTH + departX;
+    
+    
+    while (hLineLength > 0) {
+        // printf ("hLineLength=%d \n", hLineLength);waitkey();
         if (distface < ptrZbuf[hLineLength]) {
                 ptrFbuf[hLineLength] = ch2disp;
                 ptrZbuf[hLineLength] = distface;
         }
         hLineLength --;
-}
+    }
 
 }
 
