@@ -67,7 +67,7 @@ void bresStepType2() {
 #ifdef USE_C_BRESTYPE3
 void bresStepType3() {
 
-        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+        // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); waitkey();
 
     reachScreen ();
 
@@ -78,7 +78,7 @@ void bresStepType3() {
         while ((A1arrived == 0) && (A2arrived == 0) && (A1Y > 1) ) {
             A1stepY_A1Left();
             A2stepY_A1Left();
-            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); get();
+            // printf ("hf (%d: %d, %d) = %d %d\n", A1X, A2X, A1Y, distface, ch2disp); waitkey();
             // A1Right = (A1X > A2X); 
             hzfill();
         }
