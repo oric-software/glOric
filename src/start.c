@@ -193,11 +193,11 @@ void main (){
 
         initScreenBuffers();
 
-        // glDrawFaces();
+        glDrawFaces();
 
         // glDrawSegments();
 
-        // glDrawParticules();
+        glDrawParticules();
 
         buffer2screen((char *)ADR_BASE_LORES_SCREEN);
     }

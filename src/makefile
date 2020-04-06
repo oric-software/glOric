@@ -2,7 +2,7 @@
 .SUFFIXES: 
 .SUFFIXES: .asm .c
 
-PATH_TO_ORICUTRON=C:\Users\Public\Orix
+PATH_TO_ORICUTRON="C:\Users\Public\Orix"
 
 LIBNAME=glOric
 PROGNAME=glDemo
@@ -28,6 +28,10 @@ OBJS= $(SRC_ASM:.asm=.o) $(SRC_C:.c=.o)
 %.asm: %.c
 	$(CC) $(CFLAGS) $^ -o $@
 
+%.o: %.c
+	$(CC) $(CFLAGS) $^ -o $@
+
+
 .PHONY: mrproper all test 
 
 
@@ -37,12 +41,15 @@ $(LIBNAME).lib: $(OBJS)
 $(PROGNAME).tap: $(LIBNAME).lib start.o
 	$(LD) -m $(@:.tap=.map) -Ln $(@:.tap=.vice) $(LDFLAGS) start.o $(LIBNAME).lib -o $(PROGNAME).tap
 
-GL: glOric_s.s start.c
+GL: glOric_s.s start.o
 	$(XA) -v -R -cc -e error.txt -l xa_labels.txt -DTARGET_ORIX -DSAVE_ZERO_PAGE glOric_s.s -o glOric_s.o
 	co65 glOric_s.o -o glOric_s.asm
-	$(AS) $(ASFLAGS) glOric_s.asm -l glOric_s.lst -o glOric_s.o
-	$(LD) -m GL.map -Ln GL.vice $(LDFLAGS) start.o glOric_s.o -o GL.tap
-	cp GL.tap $(PATH_TO_ORICUTRON)\usbdrive\bin\
+	$(AS) $(ASFLAGS) glOric_s.asm -l glOric_s.lst -o glOric_asm.o
+	$(LD) -m GL.map -Ln GL.vice $(LDFLAGS) start.o glOric_asm.o -o GL.tap
+	sed -re 's/al 00(.{4}) \.(.+)$$/\1 \2/' GL.vice | sort > $(PATH_TO_ORICUTRON)/symbols
+	cp GL.tap $(PATH_TO_ORICUTRON)/usbdrive/bin/d
+	cd $(PATH_TO_ORICUTRON) && ./oricutron.exe -s symbols &
+	cd -
 
 #	cl65 -g -o GL -DTARGET_ORIX -DSAVE_ZERO_PAGE -ttelestrat start.c glOric_s.asm
 #	cp GL $(PATH_TO_ORICUTRON)\usbdrive\bin\
