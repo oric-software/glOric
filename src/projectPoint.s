@@ -428,7 +428,7 @@ prodone:
 
 #endif // USE_16BITS_PROJECTION
 
-
+#ifndef TARGET_ORIX
 _projectPoint
 	ldx #6 : lda #0 : jsr enter :
 
@@ -447,6 +447,6 @@ _projectPoint
 	ldy #0 : lda _Norm : sta (tmp0),y : iny : lda #0 : sta (tmp0),y :
 
 	jmp leave :
-
+#endif
 
 

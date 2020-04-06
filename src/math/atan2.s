@@ -9,21 +9,13 @@
 #define A_7_PI_OVER_4 #$E0
 
 
-.zero
-octant .dsb 1          ;
-
-/*
-; Used by atan2
-
-FC .byt 00    			;
-FD .byt 00    			;
-FE .byt 00    			;
-
-*/
-
 #ifdef SAVE_ZERO_PAGE
 .text
+#else 
+.zero
 #endif
+
+octant .dsb 1          ;
 
 _tx .dsb 1
 _ty .dsb 1

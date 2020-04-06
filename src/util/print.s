@@ -142,6 +142,8 @@ asmplot_done:
 	rts
 
 
+
+#ifndef TARGET_ORIX
 ;; void plot(signed char X,
 ;;           signed char Y,
 ;;           char          char2disp) {
@@ -167,10 +169,11 @@ _plot:
 	jsr _asmplot
 
 .)
-	rts 
+	rts
+#endif // TARGET_ORIXX
 #endif // USE_ASM_PLOT
 
-
+#ifndef TARGET_ORIX
 ;
 ; The message and display position will be read from the stack.
 ; sp+0 => X coordinate
@@ -282,3 +285,4 @@ write
 .)
 	rts
 */
+#endif //  TARGET_ORIX

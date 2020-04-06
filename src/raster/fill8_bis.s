@@ -49,6 +49,9 @@ _A2arrived .dsb 1
 
 _A1Right .dsb 1
 
+#ifdef SAVE_ZERO_PAGE
+.text
+#endif
 _mDeltaY1 .dsb 1
 _mDeltaX1 .dsb 1
 _mDeltaY2 .dsb 1
@@ -59,9 +62,6 @@ _A1XSatur .dsb 1
 _A2XSatur .dsb 1
 #endif
 
-#ifdef SAVE_ZERO_PAGE
-.text
-#endif
 
 _P1X .byt 0
 _P1Y .byt 0
@@ -90,10 +90,12 @@ _distseg .byt 0
 _distpoint .byt 0
 _ch2disp .byt 0
 
-#ifndef SAVE_ZERO_PAGE
 .text
-#endif
 
+#ifdef TARGET_ORIX
+reg0 .dsb 2
+reg1 .dsb 2
+#endif
 /*
 void A1stepY(){
 	signed char  nxtY, e2;

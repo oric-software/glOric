@@ -257,6 +257,7 @@ fastzplot_done:
 .)
 	rts
 
+#ifndef TARGET_ORIX
 // void zplot(unsigned char X,
 //           unsigned char Y,
 //           unsigned char dist,
@@ -296,11 +297,12 @@ zplot_done:
 
 .)
     rts
-
+#endif // TARGET_ORIX
 #endif // USE_ASM_ZPLOT
 
 
 #ifdef USE_ASM_ZLINE
+#ifndef TARGET_ORIX
 
 // void zline(signed char   dx,
 //           signed char   py,
@@ -415,6 +417,7 @@ zline_done:
 .)
     rts
 
+#endif // TARGET_ORIX
 #endif // USE_ASM_ZLINE
 
 

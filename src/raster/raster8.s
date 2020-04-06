@@ -16,6 +16,11 @@
 ;;**************************
 #ifdef USE_ASM_AGENTSTEP
 
+
+#ifdef TARGET_ORIX
+tmp5 .dsb 2
+#endif // TARGET_ORIX
+
 _A1stepY_A1Right:
 
 #ifdef SAFE_CONTEXT

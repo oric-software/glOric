@@ -1,5 +1,17 @@
 #include "config.h"
 
+
+#ifdef TARGET_ORIX
+reg3 .dsb 2
+reg4 .dsb 2
+reg5 .dsb 2
+reg6 .dsb 2
+
+.zero 
+tmp0 .dsb 2
+.text
+#endif
+
 #ifdef USE_ASM_GLDRAWFACES
 _glDrawFaces:
 .(

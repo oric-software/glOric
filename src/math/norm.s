@@ -1,7 +1,19 @@
 
-
+#ifdef SAVE_ZERO_PAGE
+.text
+#else
 .zero
+#endif 
+
 Tmp .dsb 2
+
+tmpufnX .dsb 1
+tmpufnY .dsb 1
+
+absX .dsb 1
+absY .dsb 1
+
+.text
 
 /*
 .text
@@ -99,9 +111,6 @@ fastnorm:
 .)
   rts
 */
-.zero
-tmpufnX .dsb 1
-tmpufnY .dsb 1
 
 /*
 
@@ -209,9 +218,6 @@ tMultSqrt2m1
 	.byt 50, 50, 51, 51, 51, 52, 52, 53
 */
 
-.zero
-absX .dsb 1
-absY .dsb 1
 
 .text
 _norm_8:

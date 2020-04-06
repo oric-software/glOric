@@ -4,11 +4,15 @@
 ;; _\ \   | (__ |  __/| | | ||  __/
 ;; \__/    \___| \___||_| |_| \___|
                                 
+#ifndef TARGET_ORIX
 #ifdef SAVE_ZERO_PAGE
 .text
 #else
 .zero
 #endif
+#else
+.text
+#endif // TARGET_ORIX
 
 //unsigned char nbSegments=0;
 _nbSegments     .dsb 1

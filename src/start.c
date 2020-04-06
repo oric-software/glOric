@@ -68,8 +68,31 @@ signed char geomHouse []= {
 // Particule List : idxPoint1, character 
 };
 
-extern void waitkey();
-extern void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08);
+// extern void waitkey();
+void waitkey(){
+#ifdef TARGET_ORIX
+    cgetc();
+#else
+    get();
+#endif
+}
+
+
+// extern void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08);
+
+
+void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08) {
+    unsigned char* adr;
+    adr      = (unsigned char*)(0xB400 + c * 8);
+    *(adr++) = patt01;
+    *(adr++) = patt02;
+    *(adr++) = patt03;
+    *(adr++) = patt04;
+    *(adr++) = patt05;
+    *(adr++) = patt06;
+    *(adr++) = patt07;
+    *(adr++) = patt08;
+}
 
 void addGeom2(
     signed char   X,
@@ -153,7 +176,7 @@ void main (){
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
     addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
     // addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
+    printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
     // listPoints3D();
 
     i       = 0;
@@ -166,15 +189,15 @@ void main (){
 
 
         glProjectArrays();
-        // listPoints2D();
+        // // listPoints2D();
 
         initScreenBuffers();
 
-        glDrawFaces();
+        // glDrawFaces();
 
-        glDrawSegments();
+        // glDrawSegments();
 
-        glDrawParticules();
+        // glDrawParticules();
 
         buffer2screen((char *)ADR_BASE_LORES_SCREEN);
     }

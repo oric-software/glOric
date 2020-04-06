@@ -4,12 +4,17 @@
 ;;  / /    / _` || '_ ` _ \  / _ \| '__| / _` |
 ;; / /___ | (_| || | | | | ||  __/| |   | (_| |
 ;; \____/  \__,_||_| |_| |_| \___||_|    \__,_|
-                                            
+
+
+#ifndef TARGET_ORIX                                            
 #ifdef SAVE_ZERO_PAGE
 .text
 #else
 .zero
 #endif
+#else
+.text
+#endif // TARGET_ORIX
 
  // Camera Position
 _CamPosX:		.dsb 2
