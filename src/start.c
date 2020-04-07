@@ -195,7 +195,7 @@ void main (){
 
         glDrawFaces();
 
-        // glDrawSegments();
+        glDrawSegments();
 
         glDrawParticules();
 

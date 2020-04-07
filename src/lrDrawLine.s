@@ -1,7 +1,6 @@
 
-// FIXME : why do we use Opcode of non zero page instruction ??
-#define OPCODE_DEC_NONZERO $CE
-#define OPCODE_INC_NONZERO $EE
+#define OPCODE_DEC_ZERO $C6
+#define OPCODE_INC_ZERO $E6
 
 #ifdef USE_ASM_DRAWLINE
 
@@ -40,7 +39,7 @@ _lrDrawLine:
 ;   sx = -1
     lda #$FF
     sta _A1sX
-    lda #OPCODE_DEC_NONZERO
+    lda #OPCODE_DEC_ZERO
     sta patch_lrDrawLine_incdec_A1X
     jmp lrDrawLine_computeDy
 ; else
@@ -53,7 +52,7 @@ lrDrawLine_p2xoverp1x:
 ;   sx =1
     lda #$01
     sta _A1sX
-    lda #OPCODE_INC_NONZERO
+    lda #OPCODE_INC_ZERO
     sta patch_lrDrawLine_incdec_A1X
 ; endif
 
@@ -75,7 +74,7 @@ lrDrawLine_computeDy:
 ;   sy = -1
     lda #$FF
     sta _A1sY
-    lda #OPCODE_DEC_NONZERO
+    lda #OPCODE_DEC_ZERO
     sta patch_lrDrawLine_incdec_A1Y
     jmp lrDrawLine_computeErr
 ; else
@@ -85,7 +84,7 @@ lrDrawLine_p2yoverp1y:
 ;   sy = 1
     lda #$01
     sta _A1sY
-    lda #OPCODE_INC_NONZERO
+    lda #OPCODE_INC_ZERO
     sta patch_lrDrawLine_incdec_A1Y
 ; endif
 

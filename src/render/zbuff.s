@@ -1,5 +1,7 @@
 #include "config.h"
 
+.text 
+
 #ifdef USE_MULTI40
 _multi40
 	.word 0

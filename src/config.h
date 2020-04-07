@@ -98,7 +98,7 @@
 
 
 
-#ifdef TARGET_ORIX
+#ifdef TARGET_ORIX2
 #undef USE_ASM_HFILL
 #define USE_C_HFILL
 #define USE_C_INITFRAMEBUFFER

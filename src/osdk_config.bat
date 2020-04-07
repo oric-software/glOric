@@ -11,7 +11,7 @@ REM SET OSDKLINK=-B
 REM SET OSDKFILE=start glOric_c glOric_s
 
 SET OSDKFILE=main
-
+SET OSDKFILE=%OSDKFILE% raster\fill8 
 SET OSDKFILE=%OSDKFILE%  profile
 SET OSDKFILE=%OSDKFILE%  glOric kernel
 SET OSDKFILE=%OSDKFILE% lrsDemo
@@ -39,7 +39,8 @@ SET OSDKFILE=%OSDKFILE% render\lrsSegments
 SET OSDKFILE=%OSDKFILE% render\face
 
 SET OSDKFILE=%OSDKFILE% raster\buffer raster\line8
-SET OSDKFILE=%OSDKFILE% raster\fill8 raster\line
+
+SET OSDKFILE=%OSDKFILE% raster\line
 SET OSDKFILE=%OSDKFILE% raster\seg8
 SET OSDKFILE=%OSDKFILE% raster\raster8
 SET OSDKFILE=%OSDKFILE% raster\particules
