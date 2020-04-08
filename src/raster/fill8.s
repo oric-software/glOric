@@ -519,9 +519,9 @@ fill8_DepYDiffArr1Y:
 #ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION		
-		; sta _patch_A1stepY_A1Right_incdec_A1X
-		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif 
+		sta _patch_A1stepY_A1Right_incdec_A1X
+		sta _patch_A1stepY_A1Left_incdec_A1X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 		jmp fill8_computeDy_01
 	fill8_01_negativ_02:
@@ -535,9 +535,9 @@ fill8_DepYDiffArr1Y:
 #ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION		
-		; sta _patch_A1stepY_A1Right_incdec_A1X
-		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif
+		sta _patch_A1stepY_A1Right_incdec_A1X
+		sta _patch_A1stepY_A1Left_incdec_A1X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 
 fill8_computeDy_01:		
@@ -627,10 +627,10 @@ fill8_computeA2:
 #ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION
-		; sta _patch_A2stepY_A1Right_incdec_A2X
-		; sta _patch_A2stepY_A1Left_incdec_A2X
-#endif
-#endif
+		sta _patch_A2stepY_A1Right_incdec_A2X
+		sta _patch_A2stepY_A1Left_incdec_A2X
+#endif // USE_SATURATION
+#endif // USE_PATCHED_AGENT
 		jmp fill8_computeDy_02
 	fill8_03_negativ_02:
 		eor #$FF
@@ -643,9 +643,9 @@ fill8_computeA2:
 #ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION		
-		; sta _patch_A2stepY_A1Right_incdec_A2X
-		; sta _patch_A2stepY_A1Left_incdec_A2X
-#endif
+		sta _patch_A2stepY_A1Right_incdec_A2X
+		sta _patch_A2stepY_A1Left_incdec_A2X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 fill8_computeDy_02:
     //     A2dY    = -abs(A2destY - A2Y);
@@ -740,9 +740,9 @@ fill8_brestep1:
 #ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
-		; sta _patch_A1stepY_A1Right_incdec_A1X
-		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif
+		sta _patch_A1stepY_A1Right_incdec_A1X
+		sta _patch_A1stepY_A1Left_incdec_A1X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 
 		jmp fill8_computeDy_03
@@ -757,9 +757,9 @@ fill8_brestep1:
 #ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
-		; sta _patch_A1stepY_A1Right_incdec_A1X
-		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif
+		sta _patch_A1stepY_A1Right_incdec_A1X
+		sta _patch_A1stepY_A1Left_incdec_A1X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 
 
@@ -846,9 +846,9 @@ fill8_DepYEqualsArr1Y:
 #ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
-		; sta _patch_A1stepY_A1Right_incdec_A1X
-		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif
+		sta _patch_A1stepY_A1Right_incdec_A1X
+		sta _patch_A1stepY_A1Left_incdec_A1X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 		jmp fill8_computeDy_04
 	fill8_07_negativ_02:
@@ -862,9 +862,9 @@ fill8_DepYEqualsArr1Y:
 #ifdef USE_PATCHED_AGENT
     	sta _patch_A1stepY_incdec_A1X
 #ifdef USE_SATURATION
-		; sta _patch_A1stepY_A1Right_incdec_A1X
-		; sta _patch_A1stepY_A1Left_incdec_A1X
-#endif
+		sta _patch_A1stepY_A1Right_incdec_A1X
+		sta _patch_A1stepY_A1Left_incdec_A1X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 .)
 fill8_computeDy_04:
@@ -957,10 +957,10 @@ fill8_computeA2_ter:
 #ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION
-		; sta _patch_A2stepY_A1Right_incdec_A2X
-		; sta _patch_A2stepY_A1Left_incdec_A2X
-#endif
-#endif USE_PATCHED_AGENT
+		sta _patch_A2stepY_A1Right_incdec_A2X
+		sta _patch_A2stepY_A1Left_incdec_A2X
+#endif // USE_SATURATION
+#endif // USE_PATCHED_AGENT
 		jmp fill8_computeDy_08
 	fill8_09_negativ_02:
 		eor #$FF
@@ -973,9 +973,9 @@ fill8_computeA2_ter:
 #ifdef USE_PATCHED_AGENT
 		sta patch_A2stepY_incdec_A2X
 #ifdef USE_SATURATION
-		; sta _patch_A2stepY_A1Right_incdec_A2X
-		; sta _patch_A2stepY_A1Left_incdec_A2X
-#endif
+		sta _patch_A2stepY_A1Right_incdec_A2X
+		sta _patch_A2stepY_A1Left_incdec_A2X
+#endif // USE_SATURATION
 #endif // USE_PATCHED_AGENT
 fill8_computeDy_08:
     //     A2dY    = -abs(A2destY - A2Y);

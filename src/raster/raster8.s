@@ -89,13 +89,15 @@ A1stepY_A1Right_debug_moi_la:
 			sta _A1err
 		;; 	A1X += A1sX;
 // OPTIM TO TEST
-; _patch_A1stepY_A1Right_incdec_A1X:
-;  			inc _A1X : lda _A1X
+#ifdef USE_PATCHED_AGENT
+_patch_A1stepY_A1Right_incdec_A1X:
+ 			inc _A1X : lda _A1X
+#else
 			clc
 			lda _A1X
 			adc _A1sX
 			sta _A1X
-
+#endif // USE_PATCHED_AGENT
             ;; TOTEST if (A1X == SCREEN_WIDTH - 1){
             cmp #SCREEN_WIDTH-1
             bne A1stepY_A1Right_DntSwitch
@@ -243,12 +245,15 @@ A1stepY_A1Left_debug_moi_la:
 			sta _A1err
 		;; 	A1X += A1sX;
 // OPTIM 
-; _patch_A1stepY_A1Left_incdec_A1X:
-;  			inc _A1X : lda _A1X
+#ifdef USE_PATCHED_AGENT
+_patch_A1stepY_A1Left_incdec_A1X:
+  			inc _A1X : lda _A1X
+#else
 			clc
 			lda _A1X
 			adc _A1sX
 			sta _A1X
+#endif // USE_PATCHED_AGENT
 
 // TOTEST: 
 #ifdef USE_COLOR
@@ -398,13 +403,16 @@ A2stepY_A1Right_doloop:
 			sta _A2err
 		;; 	A2X += A2sX;
 //OPTIM : 
-; _patch_A2stepY_A1Right_incdec_A2X:
-
-;  			inc _A2X : lda _A2X
+#ifdef USE_PATCHED_AGENT
+_patch_A2stepY_A1Right_incdec_A2X:
+ 			inc _A2X : lda _A2X
+#else
 			clc
 			lda _A2X
 			adc _A2sX
 			sta _A2X
+#endif // USE_PATCHED_AGENT
+
 // TOTEST
 #ifdef USE_COLOR
         ;;    if (A2X == COLUMN_OF_COLOR_ATTRIBUTE){
@@ -552,12 +560,15 @@ A2stepY_A1Left_doloop:
 			sta _A2err
 		;; 	A2X += A2sX;
 //OPTIM : 
-; _patch_A2stepY_A1Left_incdec_A2X:
-; 			inc _A2X : lda _A2X
+#ifdef USE_PATCHED_AGENT
+_patch_A2stepY_A1Left_incdec_A2X:
+			inc _A2X : lda _A2X
+#else
 			clc
 			lda _A2X
 			adc _A2sX
 			sta _A2X
+#endif // USE_PATCHED_AGENT
 
         ;; TOTEST:   if (A2X == SCREEN_WIDTH - 1){
             cmp #SCREEN_WIDTH-1

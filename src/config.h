@@ -383,7 +383,7 @@
 
 #define USE_SATURATION
 
-#undef USE_PATCHED_AGENT
+#define USE_PATCHED_AGENT
 #undef SAFE_CONTEXT
 
 
