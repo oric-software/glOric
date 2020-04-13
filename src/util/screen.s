@@ -1,44 +1,10 @@
-#include "config.h"
-.zero
+// #include "config.h"
 
-ptr_src				.dsb 2
+.text
 
-.text 
 _clearScreen:
 .(
-    //jsr $ccee
-    
-    
-//    lda #<$bbaa
-//	sta ptr_src+0
-//	lda #>$bbaa
-//	sta ptr_src+1
-//
-//	
-//	ldx #23
-//loop_y	
-//	ldy #37
-//
-//loop_x	
-//	lda #$20
-//	; Write character in video memory
-//	sta (ptr_src),y
-//	dey
-//	bne loop_x
-//
-//	clc
-//	lda ptr_src+0
-//	adc #40
-//	sta ptr_src+0
-//	bcc skip
-//	inc ptr_src+1
-//skip		
-//	dex
-//	bne loop_y
 
-    
-    
-    
     lda #$20
 
     ldx #40

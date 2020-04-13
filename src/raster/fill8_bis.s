@@ -23,8 +23,15 @@
 #define OPCODE_DEC_ZERO $C6
 #define OPCODE_INC_ZERO $E6
 
-
+#ifndef TARGET_ORIX                                            
+#ifdef SAVE_ZERO_PAGE
+.text
+#else
 .zero
+#endif
+#else
+.text
+#endif // TARGET_ORIX
 
 _A1X .dsb 1
 _A1Y .dsb 1

@@ -24,3 +24,5 @@ _CamPosZ:		.dsb 2
  // Camera Orientation
 _CamRotZ:		.dsb 1			// -128 -> -127 unit : 2PI/(2^8 - 1)
 _CamRotX:		.dsb 1
+
+.text
