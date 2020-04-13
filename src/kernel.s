@@ -86,7 +86,7 @@ _enterSC:
 .(
     pha
     lda #64
-    sta $030E
+    sta via_ier
     pla
 .)
     rts
@@ -95,7 +95,7 @@ _leaveSC:
 .(
     pha
     lda #192
-    sta $030E
+    sta via_ier
     pla
 .)
     rts

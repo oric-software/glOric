@@ -383,4 +383,4 @@ done
 .)
 
 
-#endif
+#endif // USE_HIRES_RASTER

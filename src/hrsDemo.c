@@ -1,10 +1,11 @@
 
 #include "config.h"
-#include "glOric.h"
+//#include "glOric.h"
+#include "glOric_h.h"
 
 #ifdef HRSDEMO
 
-#include "data\geom.h"
+// #include "data\geom.h"
 #include "data\traj.h"
 
 /*
@@ -18,10 +19,16 @@ extern char          faces[];
 extern unsigned char nbFaces;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
+extern unsigned char particules[];
+extern unsigned char nbParticules;
 
 void                 hiresIntro();
 void                 hiresGameLoop();
 void                 hrDrawFaces();
+
+
+#include "addGeom.c"
+#include "geomCube.c"
 
 void hiresDemo() {
     GenerateTables();  // for line8
@@ -33,18 +40,18 @@ void hiresDemo() {
     nbPts      = 0;
     nbSegments = 0;
 
-    addGeom(-4, -4, 2, 4, 4, 4, 0, geomCube);
-    addGeom(4, 4, 10, 4, 4, 4, 0, geomCube);
-
+    addGeom2(-4, -4, 2, 4, 4, 4, 0, geomCube);
+    addGeom2(4, 4, 10, 4, 4, 4, 0, geomCube);
+    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); get();
     hiresIntro();
 
     hiresGameLoop();
 }
 
 void hiresIntro() {
-    int i;
+    int i, jj;
 
-    enterSC();
+    //enterSC();
 
     CamPosX = -24;
     CamPosY = 0;
@@ -58,13 +65,17 @@ void hiresIntro() {
         CamPosY = traj[i++];
         CamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
-        glProject(points2d, points3d, nbPts, 0);
+        glProject(points2d, points3d, nbPoints, 0);
+        // for (jj=0; jj< nbPoints; jj++){
+        //     printf ("%d %d %d => %d %d \n", points3d[jj*SIZEOF_3DPOINT], points3d[jj*SIZEOF_3DPOINT+1], points3d[jj*SIZEOF_3DPOINT+2], points2d[jj*SIZEOF_2DPOINT], points2d[jj*SIZEOF_2DPOINT+1]);get();
+        // }
+
         memset(0xa000, 64, 8000);  // clear screen
         hrDrawSegments(points2d, segments, nbSegments);
         hrDrawFaces();
     }
 
-    leaveSC();
+    // leaveSC();
 }
 
 void hiresGameLoop() {

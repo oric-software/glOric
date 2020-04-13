@@ -1,7 +1,7 @@
 
 
 #include "config.h"
-#include "glOric.h"
+//#include "glOric.h"
 
 #ifdef TARGET_ORIX
 #include <conio.h>
@@ -10,13 +10,13 @@
 
 #ifdef LRSDEMO
 
-#include "data\geom.h"
+#include "glOric_h.h"
+
+// #include "data\geom.h"
 #include "data\traj.h"
-#include "render\lrsDrawing.h"
-#include "render\zbuffer.h"
+// #include "render\lrsDrawing.h"
+//#include "render\zbuffer.h"
 #include "util\util.h"
-
-
 
 // GEOMETRY BUFFERS
 #ifdef USE_REWORKED_BUFFERS
@@ -65,8 +65,12 @@ extern void shiftLeft();
 extern void shiftRight();
 #endif
 
+#include "geomHouse.c"
+#include "logic_c.c"
 
+#include "changeChar.c"
 
+#include "addGeom.c"
 
 void dispInfo() {
     sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
@@ -100,8 +104,8 @@ void lrsDemo() {
     nbParticules = 0;
 
     // addPlan(0, 0, 12, 64, 'r');
-    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
+    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    //printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); get();
 
 #ifdef TARGET_ORIX
 #else

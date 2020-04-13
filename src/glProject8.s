@@ -209,7 +209,7 @@ project_i8o8_angVpositiv:
 	sta _ResY+1
 
 #endif // TEXTDEMO
-#else
+#else // ANGLEONLY
 	lda AnglePH
 	sta _ResX
 	lda AnglePV
@@ -330,7 +330,7 @@ project_i16_noVAngleOverflow:
 	clc
     adc #SCREEN_HEIGHT/2
 	sta _ResY
-#else
+#else // not TEXTDEMO
 	;; lda AnglePH
 	;; eor #$FF
 	;; sec
@@ -411,13 +411,13 @@ angVpositiv:
 	adc #$00
 	sta _ResY+1
 
-#endif
-#else
+#endif //  TEXTDEMO
+#else // not ANGLEONLY
 	lda AnglePH
 	sta _ResX
 	lda AnglePV
 	sta _ResY
-#endif
+#endif // ANGLEONLY
 
 prodone:
 	// restore context

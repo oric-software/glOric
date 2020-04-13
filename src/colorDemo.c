@@ -1,7 +1,7 @@
 
 
 #include "config.h"
-#include "glOric.h"
+// #include "glOric.h"
 
 #ifdef TARGET_ORIX
 #include <conio.h>
@@ -9,11 +9,11 @@
 #endif
 
 #ifdef COLORDEMO
-
-#include "data\geom.h"
+#include "glOric_h.h"
+// #include "data\geom.h"
 #include "data\traj.h"
-#include "render\lrsDrawing.h"
-#include "render\zbuffer.h"
+// #include "render\lrsDrawing.h"
+// #include "render\zbuffer.h"
 #include "util\util.h"
 
 /*
@@ -70,6 +70,13 @@ void dispInfo() {
     AdvancedPrint(3, 0, status_string);
 #endif  // TARGET_ORIX
 }
+#include "geomHouse.c"
+#include "geomPine.c"
+#include "geomTower.c"
+#include "addGeom.c"
+#include "logic_c.c"
+#include "changeChar.c"
+#include "colors_c.c"
 
 void colorDemo() {
 
@@ -85,9 +92,9 @@ void colorDemo() {
     // addPlan(0, -6, 6, 64, 'b');
     // addPlan(6, 0, 6, 0, 'y');
     // addPlan(-6, 0, 6, 0, 'g');
-    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
-    addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
+    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    addGeom2(24, 12, 0, 9, 9, 9, 0, (signed char *)geomPine);
+    addGeom2(24, -24, 0, 6, 6, 12, 0, (signed char *)geomTower);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
     
     // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();

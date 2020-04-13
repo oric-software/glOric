@@ -46,3 +46,7 @@
 #include "glDrawSegments.s"
 
 #include "glDrawParticules.s"
+
+#include "kernel.s"
+#include "glProject_s.s"
+#include "util/screen.s"

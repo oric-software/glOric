@@ -1,10 +1,14 @@
 #include "config.h"
-#include "glOric.h"
+//#include "glOric.h"
 
 #ifdef TEXTDEMO
 
+#include "glOric_h.h"
+
 #include "data/alphabet.h"
-#include "data/geom.h"
+// #include "data/geom.h"
+
+
 
 // GEOMETRY BUFFERS
 #ifdef USE_REWORKED_BUFFERS
@@ -28,7 +32,9 @@ extern unsigned char        nbPoints;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
 #endif USE_REWORKED_BUFFER
-
+// #include "geomHouse.c"
+#include "logic_c.c"
+#include "addGeom.c"
 
 const char sentence[] = "MERCI RENE";
 
@@ -53,22 +59,22 @@ void initBuffers() {
     while ((c = sentence[ii]) != 0) {
         switch (c) {
         case 'M':
-            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterM);
+            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterM);
             break;
         case 'C':
-            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterC);
+            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterC);
             break;
         case 'I':
-            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterI);
+            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterI);
             break;
         case 'R':
-            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterR);
+            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterR);
             break;
         case 'E':
-            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterE);
+            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterE);
             break;
         case 'N':
-            addGeom(ii*8, 0, 0, 1, 1, 1, 0, geomLetterN);
+            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterN);
             break;
         default:
             break;

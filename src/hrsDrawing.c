@@ -14,7 +14,7 @@ extern unsigned char X1;
 extern unsigned char Y1;
 
 extern unsigned char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
-#endif
+#endif // USE_HIRES_RASTER
 
 #ifdef HRSDEMO
 
@@ -66,7 +66,7 @@ void hrDrawFace(char p2d[], unsigned char idxPt1, unsigned char idxPt2, unsigned
         (pattern & 3));
 }
 
-#endif
+#endif // USE_HIRES_RASTER
 /*
 void hrDrawSegments2(){
 	unsigned char ii = 0;
@@ -121,4 +121,4 @@ void debugHiresIntro (){
 }
 */
 
-#endif
+#endif // HRSDEMO

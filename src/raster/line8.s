@@ -720,4 +720,4 @@ _patch_clc2
 ; draw_mainly_vertical_8   (50.0%): 42.41 (was 43.77)
 ;----------------------------------------
 ; total average           (100.0%): 37.07 (was 37.94)
-#endif
+#endif // USE_HIRES_RASTER

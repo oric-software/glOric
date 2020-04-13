@@ -1,6 +1,7 @@
 
 
 #include "config.h"
+
 #ifdef USE_HIRES_RASTER
 
 /*
@@ -1043,4 +1044,4 @@ _RightPattern
     .byt 64+63-(1+2+4)
     .byt 64+63-(1+2)
     .byt 64+63-(1)
-#endif
+#endif // USE_HIRES_RASTER

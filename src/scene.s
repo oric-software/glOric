@@ -9,7 +9,7 @@
 .text
 #else
 .zero
-#endif
+#endif // SAVE_ZERO_PAGE
 #else
 .text
 #endif // TARGET_ORIX

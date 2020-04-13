@@ -267,125 +267,15 @@ char geomRectangle []= {
 
 #ifdef HRSDEMO
 
-char geomCube []= {
-/* Nb Coords = */ 8,
-/* Nb Faces = */ 12,
-/* Nb Segments = */ 12,
-/* Nb Particules = */ 0,
-// Coord List : X, Y, Z, unused
-    -1, -1, +1, 0,  // P0
-    -1, -1, -1, 0,  // P1
-    +1, -1, -1, 0,  // P2
-    +1, -1, +1, 0,  // P3
-    -1, +1, +1, 0,  // P4
-    -1, +1, -1, 0,  // P5
-    +1, +1, -1, 0,  // P6
-    +1, +1, +1, 0,   // P7
-
-// Face List : idxPoint1, idxPoint2, idxPoint3, character 
-    0, 1, 2, 77,  //124, 0
-    0, 2, 3, 77,  //92, 0
-    4, 5, 1, 78,  //47, 0
-    4, 1, 0, 78,  //124, 0
-    7, 6, 5, 79,  //124, 0
-    7, 5, 4, 79,  //124, 0
-    3, 2, 6, 80,  //92, 0
-    3, 6, 7, 80,  //47, 0
-    4, 0, 3, 81,  //124, 0
-    4, 3, 7, 81,  //124, 0
-    5, 1, 2, 82,  //124, 0
-    5, 2, 6, 82,   //124, 0
-
-// Segment List : idxPoint1, idxPoint2, idxPoint3, character 
-    0, 1, 124, 0,  //124, 0
-    1, 2, 45, 0,   //92, 0
-    2, 3, 124, 0,  //47, 0
-    3, 0, 45, 0,   //124, 0
-    4, 5, 124, 0,  //124, 0
-    5, 6, 45, 0,   //124, 0
-    6, 7, 124, 0,  //92, 0
-    7, 4, 45, 0,   //47, 0
-    0, 4, 45, 0,   //124, 0
-    1, 5, 45, 0,   //124, 0
-    2, 6, 45, 0,   //124, 0
-    3, 7, 45, 0    //124, 0
-
-// Particule List : idxPoint1, character 
-};
-
+#include "geomCube.c"
 #endif // HRSDEMO
 
 #if defined(COLORDEMO) || defined(LRSDEMO) || defined(RTDEMO) || defined(PROFBENCH)
 
 
-#define TRUNC_HEIGHT 1
-#define PINE_WIDTH 1
-#define PINE_HEIGHT 3
+#include "geomPine.c"
 
-char geomPine []= {
-/* Nb Coords = */ 7,
-/* Nb Faces = */ 2,
-/* Nb Segments = */ 1,
-/* Nb Particules = */ 0,
-// Coord List : X, Y, Z, unused
-0, 0, 0, 0,
-0, 0, TRUNC_HEIGHT, 0,
-PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
-0, PINE_WIDTH, TRUNC_HEIGHT, 0,
--PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
-0, -PINE_WIDTH, TRUNC_HEIGHT, 0,
-0, 0, PINE_HEIGHT, 0,
-
-// Face List : idxPoint1, idxPoint2, idxPoint3, character 
-3, 5, 6, TEXTURE_2,
-2, 4, 6, TEXTURE_2,
-// Segment List : idxPoint1, idxPoint2, character , unused
-0, 1, '|', 0,
-// Particule List : idxPoint1, character 
-
-};
-#define TOWER_HEIGHT 3
-char geomTower []= {
-/* Nb Coords = */ 9,
-/* Nb Faces = */ 6, //12,
-/* Nb Segments = */ 8,
-/* Nb Particules = */ 0,
-// Coord List : X, Y, Z, unused
--1, -1,             0, 0,
--1,  1,             0, 0,
- 1,  1,             0, 0,
- 1, -1,             0, 0,
--1, -1, TOWER_HEIGHT, 0,
--1,  1, TOWER_HEIGHT, 0,
- 1,  1, TOWER_HEIGHT, 0,
- 1, -1, TOWER_HEIGHT, 0,
-  0, 0, TOWER_HEIGHT+2, 0,
-// Face List : idxPoint1, idxPoint2, idxPoint3, character 
-// 0, 3, 4, TEXTURE_1,
-// 3, 4, 7, TEXTURE_1,
-0, 1, 4, TEXTURE_4,
-1, 4, 5, TEXTURE_4,
-1, 2, 5, TEXTURE_1,
-2, 5, 6, TEXTURE_1, 
-3, 2, 7, TEXTURE_4,
-2, 7, 6, TEXTURE_4,
-// 4, 5, 8, TEXTURE_6, 
-// 5, 6, 8, TEXTURE_6, 
-// 6, 7, 8, TEXTURE_6, 
-// 7, 4, 8, TEXTURE_6, 
-// Segment List : idxPoint1, idxPoint2, character, unused 
-0, 4, '|', 0,
-3, 7, '|', 0,
-2, 6, '|', 0,
-1, 5, '|', 0,
-4, 8, TEXTURE_6, 0,
-5, 8, TEXTURE_6, 0,
-6, 8, TEXTURE_6, 0,
-7, 8, TEXTURE_6, 0,
-// Particule List : idxPoint1, character 
-
-};
-
+#include "geomTower.c"
 
 char geomHouse []= {
 /* Nb Coords = */ 10,
