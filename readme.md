@@ -27,7 +27,7 @@ Or, if you don't have GIT client installed, you can download an [archive of the 
 
 A good starting point in using glOric consists in building and testing demos that are provided with the project.
 
-3 demos are provided :
+4 demos are provided:
 - a text based demo 
 
 ![TextDemo](docs/imgs/TextModeDemo.gif)
