@@ -1,7 +1,7 @@
 
 
 #include "config.h"
-#include "glOric.h"
+// #include "glOric.h"
 
 #ifdef TARGET_ORIX
 #include <conio.h>
@@ -10,12 +10,13 @@
 
 #ifdef RTDEMO
 
-#include "data\geom.h"
+#include "glOric_h.h"
+// #include "data\geom.h"
 #include "data\traj.h"
-#include "render\lrsDrawing.h"
-#include "render\zbuffer.h"
+// #include "render\lrsDrawing.h"
+// #include "render\zbuffer.h"
 #include "util\util.h"
-#include "util\keyboard.h"
+// #include "util\keyboard.h"
 /*
   * GEOMETRY BUFFERS
   */
@@ -28,8 +29,8 @@ extern signed char points3dZ[];
 
 extern signed char points2aH[];
 extern signed char points2aV[];
-extern signed char points2dH[];
-extern signed char points2dL[];
+// extern signed char points2dH[];
+// extern signed char points2dL[];
 #else
 extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
 extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
@@ -43,8 +44,14 @@ extern unsigned char nbSegments;
 extern unsigned char particules[];
 extern unsigned char nbParticules;
 
+#include "geomHouse.c"
+#include "addGeom.c"
+#include "logic_c.c"
+#include "changeChar.c"
+#include "colors_c.c"
+
 #ifdef USE_RT_KEYBOARD
-#include "keyboard.h"
+#include "keyboard.c"
 #endif //USE_RT_KEYBOARD
 
 void rtIntro();
@@ -100,7 +107,7 @@ void rtDemo() {
     // addPlan(-6, 0, 6, 0, 'g');
     // addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
-    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
     // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
 
     memset (oldKeyBank,0,8);
