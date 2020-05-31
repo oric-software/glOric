@@ -3,7 +3,7 @@
 #define CONFIG_H
 
 // Choose amongst TEXTDEMO, LRSDEMO, HRSDEMO, COLORDEMO, RTDEMO, PROFBENCH
-#define LRSDEMO
+#define COLORDEMO
 
 /*
  *  SCREEN DIMENSION
@@ -13,7 +13,7 @@
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26
 #define USE_REWORKED_BUFFERS
-#define SAVE_ZERO_PAGE
+// #define SAVE_ZERO_PAGE
 #endif
 
 #ifdef HRSDEMO

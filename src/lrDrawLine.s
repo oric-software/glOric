@@ -1,7 +1,11 @@
 
+#ifdef SAVE_ZERO_PAGE
+#define OPCODE_DEC_ZERO $CE
+#define OPCODE_INC_ZERO $EE
+#else
 #define OPCODE_DEC_ZERO $C6
 #define OPCODE_INC_ZERO $E6
-
+#endif
 #ifdef USE_ASM_DRAWLINE
 
 _lrDrawLine:

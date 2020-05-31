@@ -131,7 +131,7 @@ void rtIntro() {
 #ifdef TARGET_ORIX
     // cgetc();
 #else
-    get();
+    // get();
     // enterSC();
 #endif  // TARGET_ORIX
 
