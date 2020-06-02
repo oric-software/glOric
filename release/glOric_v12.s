@@ -20,23 +20,107 @@
 ;;
 
 
-#define COLORDEMO
 
-#define USE_SATURATION
+;;                       __  _        
+;;   ___   ___   _ __   / _|(_)  __ _ 
+;;  / __| / _ \ | '_ \ | |_ | | / _` |
+;; | (__ | (_) || | | ||  _|| || (_| |
+;;  \___| \___/ |_| |_||_|  |_| \__, |
+;;                              |___/ 
+
+;; -------- USAGE MODE --------------
+;; use COLORDEMO for color usage
+;; use LRSDEMO for black and white usage
+#define COLORDEMO // LRSDEMO //
+
+;; -------- PATCHED CODE ------------
+;; Bresenham code can be dynamically patched 
+;; for better performance. But it becomes non-reentrant
+;; Comment or undef following macro 
+;; to disable dynamically patched code
+;; and make glOric routines reentrant
 #define USE_PATCHED_AGENT
+
+
+;; -------- CONTEXT SAVING STRATEGY ------------
+;; For speediness purposes, glOrics'routine does not save 
+;; context in stack. This strategy can lead to system crash
+;; if never glOrics'routines are called from an interrupt 
+;; handler.
+;; Uncomment following macro to force glOrics'routines
+;; to save and restore context when their are entered or exited
+;; and thus make them safely callable from an interrupt handler.
+;; NB: Saving context lowers performance.
+;; Use it only if you plan to call glOric routine from within 
+;; an interrupt handler (Not tested, not recommanded :-)
+
 ;; #define SAFE_CONTEXT
-#define USE_8BITS_PROJECTION
+
+;; -------- ZERO PAGE USAGE ------------
+;; For better performance glOric intensively uses zero
+;; page memory to store inner states and variables
+;; If you want this memory for your own needs, you can 
+;; force glOric to use the zero page ony when 
+;; it is strictly required (for indirection pointers).
+;; This option is also to use glOric on ORIX
+
+;; #define SAVE_ZERO_PAGE
+
+;; -------- HORIZON --------------
+;; Comment or undef following macro 
+;; to disable horizon and use your own 
+;; horizon handling
+#define USE_HORIZON
+
+
+;; -------- SATURATION BASED CLIPPING  ------
+;; Comment or undef following macro 
+;; if your 3D scene does not require clipping 
+;; to use saturation strategy
+;; saturation strategy accelerates clipping when it is 
+;; intensively used.
+;; But it goes slower when clipping is rarely used
+;; 
+#define USE_SATURATION
+
+
+;; -------- GEOMETRY BUFFERS SIZING --------------
+
+#define NB_MAX_POINTS 64
+#define NB_MAX_SEGMENTS 64
+#define NB_MAX_FACES 64
+#define NB_MAX_PARTICULES 64
+
+;; -------- VIEWPORT SIZING --------------
+
+#define SCREEN_WIDTH 40
+#define SCREEN_HEIGHT 26
+
+
+;;============================================
+;; USER CONFIGURATION STOPS HERE
+;; DO NOT MODIFY BELOW UNLESS YOU KNOW WHAT YOU'RE DOING
+;;============================================
+
+
+;;         _    ___        _       
+;;   __ _ | |  /___\ _ __ (_)  ___ 
+;;  / _` || | //  //| '__|| | / __|
+;; | (_| || |/ \_// | |   | || (__ 
+;;  \__, ||_|\___/  |_|   |_| \___|
+;;  |___/                          
 
 
 /*
- *  SCREEN DIMENSION
+ *  SCREEN MEMORY ;;BB80
  */
+#define ADR_BASE_LORES_SCREEN 48040  
+
+#define USE_8BITS_PROJECTION
 
 #ifdef TEXTDEMO
-#define SCREEN_WIDTH 40
-#define SCREEN_HEIGHT 26
 #define USE_REWORKED_BUFFERS
-;; #define SAVE_ZERO_PAGE
+#undef USE_HORIZON
 #endif
 
 #ifdef HRSDEMO
@@ -44,15 +128,14 @@
 #define SCREEN_WIDTH 240
 #define SCREEN_HEIGHT 200
 #define SAVE_ZERO_PAGE
+#undef USE_HORIZON
 #endif
 
 #ifdef LRSDEMO
 #define ANGLEONLY
 #define USE_ZBUFFER
-#define USE_COLLISION_DETECTION
 #define USE_REWORKED_BUFFERS
-#define SCREEN_WIDTH 40
-#define SCREEN_HEIGHT 26
+#undef USE_HORIZON
 #endif
 
 
@@ -61,41 +144,14 @@
 #define ANGLEONLY
 #define USE_ZBUFFER
 #define USE_COLOR
-#define USE_COLLISION_DETECTION
 #define USE_REWORKED_BUFFERS
-#define USE_HORIZON
-#define SCREEN_WIDTH 40
-#define SCREEN_HEIGHT 26
 #endif
 
 
-#ifdef RTDEMO
-#define ANGLEONLY
-#define USE_ZBUFFER
-#define USE_RT_KEYBOARD
-#define USE_COLLISION_DETECTION
-#define USE_COLOR
-#define USE_REWORKED_BUFFERS
-#define SCREEN_WIDTH 40
-#define SCREEN_HEIGHT 26
-#endif ;; RTDEMO
 
 
 /*
- *  BUFFERS DIMENSION
- */
-
-#define NB_MAX_POINTS 64
-#define NB_MAX_SEGMENTS 64
-#define NB_MAX_FACES 64
-#define NB_MAX_PARTICULES 64
-/*
- *  SCREEN MEMORY ;;BB80
- */
-#define ADR_BASE_LORES_SCREEN 48040  
-
-/*
- *  ELEMENTS SIZE
+ *  ELEMENTS SIZE useless with reworked buffers
  */
 
 #define SIZEOF_3DPOINT 4
@@ -153,8 +209,6 @@
 /*
  * VISIBILITY LIMITS
  */
-#define ANGLE_MAX 0xC0
-#define ANGLE_VIEW 0xE0
 #define ASM_ANGLE_MAX $C0
 #define ASM_ANGLE_VIEW $E0
 
