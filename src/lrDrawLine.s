@@ -12,26 +12,26 @@ _lrDrawLine:
 .(
 
 #ifdef SAFE_CONTEXT
-	// save context
+	;; save context
     pha
 	lda reg4:pha
 
-#endif // SAFE_CONTEXT
+#endif ;; SAFE_CONTEXT
 
-//     A1X     = P1X;
+;;     A1X     = P1X;
 	lda 	_P1X
 	sta		_A1X
-//     A1Y     = P1Y;
+;;     A1Y     = P1Y;
 	lda 	_P1Y
 	sta		_A1Y
-//     A1destX = P2X;
+;;     A1destX = P2X;
 	lda 	_P2X
 	sta		_A1destX
-//     A1destY = P2Y;
+;;     A1destY = P2Y;
 	lda 	_P2Y
 	sta		_A1destY
-//     A1dX    = abs(P2X - P1X);
-//     A1sX    = P1X < P2X ? 1 : -1;
+;;     A1dX    = abs(P2X - P1X);
+;;     A1sX    = P1X < P2X ? 1 : -1;
 ; a = P1X-P2X
     sec
     lda _P1X
@@ -62,8 +62,8 @@ lrDrawLine_p2xoverp1x:
 
 
 lrDrawLine_computeDy:
-//     A1dY    = -abs(P2Y - P1Y);
-//     A1sY    = P1Y < P2Y ? 1 : -1;
+;;     A1dY    = -abs(P2Y - P1Y);
+;;     A1sY    = P1Y < P2Y ? 1 : -1;
 ; a = P1Y-P2Y
     lda _P1Y
     sec
@@ -94,7 +94,7 @@ lrDrawLine_p2yoverp1y:
 
 
 lrDrawLine_computeErr:
-//     A1err   = A1dX + A1dY;
+;;     A1err   = A1dX + A1dY;
 ; a = A1dX
     lda		_A1dX
 ; a = a + dy
@@ -103,7 +103,7 @@ lrDrawLine_computeErr:
 ; err = a
     sta		_A1err
 
-//     if ((A1err > 64) || (A1err < -63)) return;
+;;     if ((A1err > 64) || (A1err < -63)) return;
     sec
     sbc #$40
     bvc *+4
@@ -120,11 +120,11 @@ lrDrawLine_goon01:
 	jmp lrDrawLine_endloop
 lrDrawLine_goon02:
 
-//     if ((ch2disp == '/') && (A1sX == -1)) {
-//         ch2dsp = DOLLAR;
-//     } else {
-//         ch2dsp = ch2disp;
-//     }
+;;     if ((ch2disp == '/') && (A1sX == -1)) {
+;;         ch2dsp = DOLLAR;
+;;     } else {
+;;         ch2dsp = ch2disp;
+;;     }
 	lda _ch2disp 
 	cmp #47
 	bne lrDrawLine_loop
@@ -134,17 +134,17 @@ lrDrawLine_goon02:
 	lda #DOLLAR
 	sta _ch2disp 
 
-//     while (1) {  // loop
+;;     while (1) {  ;; loop
 lrDrawLine_loop:
 
-//         //printf ("plot [%d, %d] %d %d\n", _A1X, _A1Y, distseg, ch2disp);get ();          
+;;         ;;printf ("plot [%d, %d] %d %d\n", _A1X, _A1Y, distseg, ch2disp);get ();          
 
 
-// #ifdef USE_ZBUFFER
-//         zplot(A1X, A1Y, distseg, ch2dsp);
-// #else
-//         // TODO : plot a point with no z-buffer
-// #endif
+;; #ifdef USE_ZBUFFER
+;;         zplot(A1X, A1Y, distseg, ch2dsp);
+;; #else
+;;         ;; TODO : plot a point with no z-buffer
+;; #endif
 #ifdef USE_ZBUFFER
 			
 		lda _A1X : sta _plotX :
@@ -157,7 +157,7 @@ lrDrawLine_loop:
 		jsr _asmplot
 #endif
 
-//         if ((A1X == A1destX) && (A1Y == A1destY)) break;
+;;         if ((A1X == A1destX) && (A1Y == A1destY)) break;
 ;       a = A1X
         lda _A1X
 ;       if a != A1destX goto continue
@@ -173,17 +173,17 @@ lrDrawLine_loop:
 ;continue:
 lrDrawLine_continue:
 
-//      e2 = 2*A1err;
-//         e2 = (A1err < 0) ? (
-//                 ((A1err & 0x40) == 0) ? (
-//                                                 0x80)
-//                                         : (
-//                                             A1err << 1))
-//             : (
-//                 ((A1err & 0x40) != 0) ? (
-//                                                 0x7F)
-//                                         : (
-//                                                 A1err << 1));
+;;      e2 = 2*A1err;
+;;         e2 = (A1err < 0) ? (
+;;                 ((A1err & 0x40) == 0) ? (
+;;                                                 0x80)
+;;                                         : (
+;;                                             A1err << 1))
+;;             : (
+;;                 ((A1err & 0x40) != 0) ? (
+;;                                                 0x7F)
+;;                                         : (
+;;                                                 A1err << 1));
 		lda _A1err
 		bpl lrDrawLine_errpositiv_01
 		asl
@@ -198,19 +198,19 @@ lrDrawLine_errpositiv_01:
 lrDrawLine_errdone_01:	
 		sta reg4
 
-//         if (e2 >= A1dY) {
+;;         if (e2 >= A1dY) {
         sec
         sbc _A1dY
         bvc *+4
         eor #$80
         bmi lrDrawLine_dyovera
 
-//             A1err += A1dY;  // e_xy+e_x > 0
+;;             A1err += A1dY;  ;; e_xy+e_x > 0
 			lda _A1err
 			clc
 			adc _A1dY
 			sta _A1err
-//             A1X += A1sX;
+;;             A1X += A1sX;
 patch_lrDrawLine_incdec_A1X:
             inc _A1X
 			; lda _A1X
@@ -218,20 +218,20 @@ patch_lrDrawLine_incdec_A1X:
 			; adc _A1sX
 			; sta _A1X
 lrDrawLine_dyovera:
-//         }
-//         if (e2 <= A1dX) {  // e_xy+e_y < 0
+;;         }
+;;         if (e2 <= A1dX) {  ;; e_xy+e_y < 0
 		lda _A1dX
 		sec
 		sbc reg4
 		bvc *+4
 		eor #$80
 		bmi lrDrawLine_e2overdx
-//             A1err += A1dX;
+;;             A1err += A1dX;
 			lda _A1err
 			clc
 			adc _A1dX
 			sta _A1err
-//             A1Y += A1sY;
+;;             A1Y += A1sY;
 patch_lrDrawLine_incdec_A1Y:
             inc _A1Y
 			; lda _A1Y
@@ -239,21 +239,21 @@ patch_lrDrawLine_incdec_A1Y:
 			; adc _A1sY
 			; sta _A1Y
 lrDrawLine_e2overdx
-//         }
+;;         }
 	jmp lrDrawLine_loop
-//     }
+;;     }
 
 
 lrDrawLine_endloop:
 lrDrawLine_done:
 
 #ifdef SAFE_CONTEXT
-	// restore context
+	;; restore context
 	pla: sta reg4
 	pla
-#endif // SAFE_CONTEXT
+#endif ;; SAFE_CONTEXT
 
 
 .)
 	rts
-#endif // USE_ASM_DRAWLINE
+#endif ;; USE_ASM_DRAWLINE

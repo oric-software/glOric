@@ -117,83 +117,83 @@ fastnorm:
 .text
 ultrafastnorm:
 .(
-//  IF DX == 0 THEN
+;;  IF DX == 0 THEN
 	lda _DeltaX
 	bne dxNotNull
-//  	IF DY > 0 THEN
+;;  	IF DY > 0 THEN
 		lda _DeltaY
 		bmi dyNegative01
-//  		RETURN DY
+;;  		RETURN DY
 			sta _Norm
 			jmp ufndone
 dyNegative01:
-//  	ELSE
-//  		RETURN -DY
+;;  	ELSE
+;;  		RETURN -DY
 			eor #$FF
 			sec
 			adc #$00
 			sta _Norm
 			jmp ufndone
 dxNotNull
-//  ELSE IF DX > 0 THEN
+;;  ELSE IF DX > 0 THEN
 	bmi dxNegative
-//  	TX = DX
+;;  	TX = DX
 		sta tmpufnX
 		jmp computeAbsY
 dxNegative
-//  ELSE (DX < 0)
-//  	TX = -DX
+;;  ELSE (DX < 0)
+;;  	TX = -DX
 		eor #$FF
 		sec
 		adc #$00
 		sta tmpufnX
-//  ENDIF
+;;  ENDIF
 computeAbsY
-//  IF DY == 0 THEN
+;;  IF DY == 0 THEN
 	lda _DeltaY
 	bne dyNotNull
-//  	RETURN TX
+;;  	RETURN TX
 		lda tmpufnX
 		sta _Norm
 		jmp ufndone
 dyNotNull
-//  ELSE IF DY > 0 THEN
+;;  ELSE IF DY > 0 THEN
 	bmi dyNegative02
-//  	TY = DY
+;;  	TY = DY
 		sta tmpufnY
 		jmp lookup
 dyNegative02
-//  ELSE (DY < 0)
-//  	TY = -DY
+;;  ELSE (DY < 0)
+;;  	TY = -DY
 		eor #$FF
 		sec
 		adc #$00
 		sta tmpufnY
-//  ENDIF
+;;  ENDIF
 lookup
-//  IF TX = TY THEN
+;;  IF TX = TY THEN
 	cmp tmpufnX ; TY already in A register
-	;bne txDiffty // FIXME deal with overflow !! result is on more than 8 bits
-//  	RETURN TX * SQRT(2)
+	;bne txDiffty ;; FIXME deal with overflow !! result is on more than 8 bits
+;;  	RETURN TX * SQRT(2)
 txDiffty
-//  ELSE IF TX > TY THEN
+;;  ELSE IF TX > TY THEN
 	bcc txLessThanty
-//  	RETURN TX + TY * (SQRT(2) - 1)
+;;  	RETURN TX + TY * (SQRT(2) - 1)
 		tay ;
 		lda tMultSqrt2m1, y
 		clc
 		adc tmpufnX
 		sta _Norm
 		jmp ufndone
-//  ELSE (TX < TY)
+;;  ELSE (TX < TY)
 txLessThanty
-//  	RETURN TY + TX * (SQRT(2) - 1)
+;;  	RETURN TY + TX * (SQRT(2) - 1)
 		ldy tmpufnX
 		lda tMultSqrt2m1, y
 		clc
 		adc tmpufnY
 		sta _Norm
-//  END IF
+;;  END IF
 ufndone
 .)
   rts
@@ -223,89 +223,89 @@ tMultSqrt2m1
 _norm_8:
 .(
 
-//  IF DX == 0 THEN
+;;  IF DX == 0 THEN
     lda _DeltaX
 	bne norm_8_dxNotNull
-//    IF DY > 0 THEN
+;;    IF DY > 0 THEN
 		lda _DeltaY
 		bmi norm_8_dyNegativ_01
-//      RETURN DY
+;;      RETURN DY
 		sta _Norm
 		jmp norm_8_done
 norm_8_dyNegativ_01
-//    ELSE
-//      RETURN -DY
+;;    ELSE
+;;      RETURN -DY
 		eor #$FF
 		sec
 		adc #$00
 		sta _Norm
 		jmp norm_8_done
 norm_8_dxNotNull
-//  ELSE IF DX > 0 THEN
+;;  ELSE IF DX > 0 THEN
 	bmi norm_8_dxNegativ_01
-//    AX = DX
+;;    AX = DX
 		sta absX
 		jmp norm_8_computeAbsY
 norm_8_dxNegativ_01
-//  ELSE (DX < 0)
-//    AX = -DX
+;;  ELSE (DX < 0)
+;;    AX = -DX
 		eor #$FF
 		sec
 		adc #$00
 		sta absX
-//  ENDIF
+;;  ENDIF
 norm_8_computeAbsY
-//  IF DY == 0 THEN
+;;  IF DY == 0 THEN
 	lda _DeltaY
 	bne norm_8_dyNotNull
-//    RETURN AX
+;;    RETURN AX
 		lda absX
 		sta _Norm
 		jmp norm_8_done
 norm_8_dyNotNull
-//  ELSE IF DY > 0 THEN
+;;  ELSE IF DY > 0 THEN
 	bmi norm_8_dyNegativ_02
-//    AY = DY
+;;    AY = DY
 		sta absY
 		jmp norm_8_sortAbsVal
 norm_8_dyNegativ_02
-//  ELSE (DY < 0)
+;;  ELSE (DY < 0)
 		eor #$FF
 		sec
 		adc #$00
 		sta absY
-//    AY = -DY
-//  ENDIF
+;;    AY = -DY
+;;  ENDIF
 norm_8_sortAbsVal
-//  IF AX > AY THEN
+;;  IF AX > AY THEN
 	cmp absX
 	bcs norm_8_ayOverOrEqualAx
-//    TY = AY
+;;    TY = AY
 		tay
 		sta tmpufnY
-//    TX = AX
+;;    TX = AX
 		lda absX
 		tax
 		sta tmpufnX
 		jmp norm_8_approxim
 norm_8_ayOverOrEqualAx
-//  ELSE
-//    TX = AY
+;;  ELSE
+;;    TX = AY
 		tax
 		sta tmpufnX
-//    TY = AX
+;;    TY = AX
 		lda absX
 		tay
 		sta tmpufnY
-//  END
+;;  END
 norm_8_approxim
-//  IF TY > TX/2 THEN
+;;  IF TY > TX/2 THEN
 	lda tmpufnX
 	lsr
 	cmp tmpufnY
 	bcc norm_8_tyLowerOrEqualTxDiv2
 	beq norm_8_tyLowerOrEqualTxDiv2
-//    RETURN TAB_A[TX] + TAB_B[TY]
+;;    RETURN TAB_A[TX] + TAB_B[TY]
 		lda tabmult_A,X
 		clc
 		adc tabmult_B,Y
@@ -315,8 +315,8 @@ norm_8_approxim
 		sta _Norm+1
 		jmp norm_8_done
 norm_8_tyLowerOrEqualTxDiv2
-//  ELSE (TX/2 <= TY)
-//    RETURN TAB_C[TX] + TAB_D[TY]
+;;  ELSE (TX/2 <= TY)
+;;    RETURN TAB_C[TX] + TAB_D[TY]
 		lda tabmult_C,X
 		clc
 		adc tabmult_D,Y
@@ -324,7 +324,7 @@ norm_8_tyLowerOrEqualTxDiv2
 		lda #$00
 		adc #$00 ; propagate carry
 		sta _Norm+1
-//  END IF
+;;  END IF
 
 norm_8_done:
 .)
@@ -332,89 +332,89 @@ norm_8_done:
 /*_hyperfastnorm:
 .(
 
-//  IF DX == 0 THEN
+;;  IF DX == 0 THEN
     lda _DeltaX
 	bne dxNotNull
-//    IF DY > 0 THEN
+;;    IF DY > 0 THEN
 		lda _DeltaY
 		bmi dyNegativ_01
-//      RETURN DY
+;;      RETURN DY
 		sta _Norm
 		jmp hfndone
 dyNegativ_01
-//    ELSE
-//      RETURN -DY
+;;    ELSE
+;;      RETURN -DY
 		eor #$FF
 		sec
 		adc #$00
 		sta _Norm
 		jmp hfndone
 dxNotNull
-//  ELSE IF DX > 0 THEN
+;;  ELSE IF DX > 0 THEN
 	bmi dxNegativ_01
-//    AX = DX
+;;    AX = DX
 		sta absX
 		jmp computeAbsY
 dxNegativ_01
-//  ELSE (DX < 0)
-//    AX = -DX
+;;  ELSE (DX < 0)
+;;    AX = -DX
 		eor #$FF
 		sec
 		adc #$00
 		sta absX
-//  ENDIF
+;;  ENDIF
 computeAbsY
-//  IF DY == 0 THEN
+;;  IF DY == 0 THEN
 	lda _DeltaY
 	bne dyNotNull
-//    RETURN AX
+;;    RETURN AX
 		lda absX
 		sta _Norm
 		jmp hfndone
 dyNotNull
-//  ELSE IF DY > 0 THEN
+;;  ELSE IF DY > 0 THEN
 	bmi dyNegativ_02
-//    AY = DY
+;;    AY = DY
 		sta absY
 		jmp sortAbsVal
 dyNegativ_02
-//  ELSE (DY < 0)
+;;  ELSE (DY < 0)
 		eor #$FF
 		sec
 		adc #$00
 		sta absY
-//    AY = -DY
-//  ENDIF
+;;    AY = -DY
+;;  ENDIF
 sortAbsVal
-//  IF AX > AY THEN
+;;  IF AX > AY THEN
 	cmp absX
 	bcs ayOverOrEqualAx
-//    TY = AY
+;;    TY = AY
 		tay
 		sta tmpufnY
-//    TX = AX
+;;    TX = AX
 		lda absX
 		tax
 		sta tmpufnX
 		jmp approxim
 ayOverOrEqualAx
-//  ELSE
-//    TX = AY
+;;  ELSE
+;;    TX = AY
 		tax
 		sta tmpufnX
-//    TY = AX
+;;    TY = AX
 		lda absX
 		tay
 		sta tmpufnY
-//  END
+;;  END
 approxim
-//  IF TY > TX/2 THEN
+;;  IF TY > TX/2 THEN
 	lda tmpufnX
 	lsr
 	cmp tmpufnY
 	bcc tyLowerOrEqualTxDiv2
 	beq tyLowerOrEqualTxDiv2
-//    RETURN TAB_A[TX] + TAB_B[TY]
+;;    RETURN TAB_A[TX] + TAB_B[TY]
 		lda tabmult_A,X
 		clc
 		adc tabmult_B,Y
@@ -424,8 +424,8 @@ approxim
 		sta _Norm+1
 		jmp hfndone
 tyLowerOrEqualTxDiv2
-//  ELSE (TX/2 <= TY)
-//    RETURN TAB_C[TX] + TAB_D[TY]
+;;  ELSE (TX/2 <= TY)
+;;    RETURN TAB_C[TX] + TAB_D[TY]
 		lda tabmult_C,X
 		clc
 		adc tabmult_D,Y
@@ -433,7 +433,7 @@ tyLowerOrEqualTxDiv2
 		lda #$00
 		adc #$00 ; propagate carry
 		sta _Norm+1
-//  END IF
+;;  END IF
 
 hfndone
 .)

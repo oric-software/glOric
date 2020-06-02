@@ -170,8 +170,8 @@ _plot:
 
 .)
 	rts
-#endif // TARGET_ORIXX
-#endif // USE_ASM_PLOT
+#endif ;; TARGET_ORIXX
+#endif ;; USE_ASM_PLOT
 
 #ifndef TARGET_ORIX
 ;
@@ -285,4 +285,4 @@ write
 .)
 	rts
 */
-#endif //  TARGET_ORIX
+#endif ;;  TARGET_ORIX

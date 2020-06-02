@@ -31,7 +31,7 @@
 #endif
 #else
 .text
-#endif // TARGET_ORIX
+#endif ;; TARGET_ORIX
 
 _A1X .dsb 1
 _A1Y .dsb 1
@@ -158,7 +158,7 @@ void A1stepY(){
 #ifdef USE_ASM_BRESFILL
 _A1stepY
 
-	// save context
+	;; save context
     pha
 	lda reg0: pha: lda reg1 : pha 
 
@@ -168,7 +168,7 @@ _A1stepY
 	adc _A1sY
 	sta reg1
 	
-	;; e2 = A1err << 1; // 2*A1err;
+	;; e2 = A1err << 1; ;; 2*A1err;
 	lda _A1err
 	bpl A1stepY_errpositiv_01
 	asl
@@ -228,7 +228,7 @@ _patch_A1stepY_incdec_A1X:
 			lda _A1X
 			adc _A1sX
 			sta _A1X
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_PATCHED_AGENT
 		;; }
 A1stepY_A1Xdone:
 		;; if (e2 <= A1dX){
@@ -243,7 +243,7 @@ A1stepY_A1Xdone:
 			lda _A1err
 			adc _A1dX
 			sta _A1err
-		;; 	A1Y += A1sY; // Optim:  substraction by dec _A1Y
+		;; 	A1Y += A1sY; ;; Optim:  substraction by dec _A1Y
 			dec _A1Y
 			;clc
 			;lda _A1Y
@@ -267,7 +267,7 @@ A1stepY_A1Ydone:
 		lda #1
 		sta _A1arrived
 A1stepY_computeE2:
-		;; e2 = A1err << 1; // 2*A1err;
+		;; e2 = A1err << 1; ;; 2*A1err;
 		lda _A1err
 		bpl A1stepY_errpositiv_02
 		asl
@@ -285,7 +285,7 @@ A1stepY_errdone_02:
 	jmp A1stepY_loop
 A1stepYdone:	
 
-	// restore context
+	;; restore context
 	pla: sta reg1: pla: sta reg0
 	pla
 
@@ -341,7 +341,7 @@ void A2stepY(){
 #ifdef USE_ASM_BRESFILL
 _A2stepY
 
-	// save context
+	;; save context
     pha
 	lda reg0: pha: lda reg1 : pha 
 
@@ -351,7 +351,7 @@ _A2stepY
 	adc _A2sY
 	sta reg1
 	
-	;; e2 = A2err << 1; // 2*A2err;
+	;; e2 = A2err << 1; ;; 2*A2err;
 	lda _A2err
 	bpl A2stepY_errpositiv_01
 	asl
@@ -408,7 +408,7 @@ patch_A2stepY_incdec_A2X:
 			lda _A2X
 			adc _A2sX
 			sta _A2X
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_PATCHED_AGENT
 		;; }
 A2stepY_A2Xdone:
 		;; if (e2 <= A2dX){
@@ -423,7 +423,7 @@ A2stepY_A2Xdone:
 			lda _A2err
 			adc _A2dX
 			sta _A2err
-		;; 	A2Y += A2sY; // // Optim:  substraction dec _A2Y
+		;; 	A2Y += A2sY; ;; ;; Optim:  substraction dec _A2Y
 			dec _A2Y
 			;clc
 			;lda _A2Y
@@ -447,7 +447,7 @@ A2stepY_A2Ydone:
 		lda #1
 		sta _A2arrived
 A2stepY_computeE2:
-		;; e2 = A2err << 1; // 2*A2err;
+		;; e2 = A2err << 1; ;; 2*A2err;
 		lda _A2err
 		bpl A2stepY_errpositiv_02
 		asl
@@ -465,45 +465,45 @@ A2stepY_errdone_02:
 	jmp A2stepY_loop
 A2stepYdone:	
 
-	// restore context
+	;; restore context
 	pla: sta reg1: pla: sta reg0
 	pla
 
 
 	rts
-#endif //  USE_ASM_BRESFILL
+#endif ;;  USE_ASM_BRESFILL
 
 #ifdef USE_ASM_FILL8
 _fill8:
 
 
-	// save context
+	;; save context
     ;pha
 	;lda reg0: pha: lda reg1 : pha 
 
-    // prepare_bresrun();
+    ;; prepare_bresrun();
 	ldy #0 : jsr _prepare_bresrun :
 
-    // if (pDepY != pArr1Y) {
+    ;; if (pDepY != pArr1Y) {
 	lda _pDepY
 	cmp _pArr1Y
 	bne fill8_DepYDiffArr1Y
 	jmp fill8_DepYEqualsArr1Y
 fill8_DepYDiffArr1Y:
-    //     A1X     = pDepX;
-    //     A2X     = pDepX;
-    //     A1Y     = pDepY;
-    //     A2Y     = pDepY;
+    ;;     A1X     = pDepX;
+    ;;     A2X     = pDepX;
+    ;;     A1Y     = pDepY;
+    ;;     A2Y     = pDepY;
 		lda _pDepX: sta _A1X: sta _A2X
 		lda _pDepY: sta _A1Y: sta _A2Y
 
-    //     A1destX = pArr1X;
-    //     A1destY = pArr1Y;
+    ;;     A1destX = pArr1X;
+    ;;     A1destY = pArr1Y;
 		lda _pArr1X : sta _A1destX
 		lda _pArr1Y : sta _A1destY
 
-    //     A1dX    = abs(A1destX - A1X);
-    //     A1sX      = (A1X < A1destX) ? 1 : -1;
+    ;;     A1dX    = abs(A1destX - A1X);
+    ;;     A1sX      = (A1X < A1destX) ? 1 : -1;
 		sec
 		lda _A1X
 		sbc _A1destX
@@ -521,7 +521,7 @@ fill8_DepYDiffArr1Y:
 		sta _patch_A1stepY_A1Right_incdec_A1X
 		sta _patch_A1stepY_A1Left_incdec_A1X
 #endif 
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_PATCHED_AGENT
 		jmp fill8_computeDy_01
 	fill8_01_negativ_02:
 		eor #$FF
@@ -536,12 +536,12 @@ fill8_DepYDiffArr1Y:
 #ifdef USE_SATURATION		
 		sta _patch_A1stepY_A1Right_incdec_A1X
 		sta _patch_A1stepY_A1Left_incdec_A1X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 
 fill8_computeDy_01:		
-    //     A1dY    = -abs(A1destY - A1Y);
-    //     A1sY      = (A1Y < A1destY) ? 1 : -1;
+    ;;     A1dY    = -abs(A1destY - A1Y);
+    ;;     A1sY      = (A1Y < A1destY) ? 1 : -1;
 		sec
 		lda _A1Y
 		sbc _A1destY
@@ -566,14 +566,14 @@ fill8_computeDy_01:
 .)
 
 fill8_computeErr_01:
-    //     A1err   = A1dX + A1dY;
+    ;;     A1err   = A1dX + A1dY;
 		clc
 		lda _A1dX
 		adc _A1dY
 		sta _A1err
 
-    //     if ((A1err > 64) || (A1err < -63))
-    //         return;
+    ;;     if ((A1err > 64) || (A1err < -63))
+    ;;         return;
 
 	    sec
 		sbc #$40
@@ -590,7 +590,7 @@ fill8_goon_01:
 		bpl fill8_goon_02
 		jmp fill8_done
 fill8_goon_02:
-    //     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+    ;;     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
 		lda #0
 		sta _A1arrived
 		
@@ -606,12 +606,12 @@ fill8_goon_02:
 		sta _A1arrived
 
 fill8_computeA2:
-    //     A2destX = pArr2X;
+    ;;     A2destX = pArr2X;
 	lda _pArr2X : sta _A2destX
-    //     A2destY = pArr2Y;
+    ;;     A2destY = pArr2Y;
 	lda _pArr2Y : sta _A2destY
-    //     A2dX    = abs(A2destX - A2X);
-    //     A2sX      = (A2X < A2destX) ? 1 : -1;
+    ;;     A2dX    = abs(A2destX - A2X);
+    ;;     A2sX      = (A2X < A2destX) ? 1 : -1;
 		sec
 		lda _A2X
 		sbc _A2destX
@@ -628,8 +628,8 @@ fill8_computeA2:
 #ifdef USE_SATURATION
 		sta _patch_A2stepY_A1Right_incdec_A2X
 		sta _patch_A2stepY_A1Left_incdec_A2X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 		jmp fill8_computeDy_02
 	fill8_03_negativ_02:
 		eor #$FF
@@ -644,11 +644,11 @@ fill8_computeA2:
 #ifdef USE_SATURATION		
 		sta _patch_A2stepY_A1Right_incdec_A2X
 		sta _patch_A2stepY_A1Left_incdec_A2X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 fill8_computeDy_02:
-    //     A2dY    = -abs(A2destY - A2Y);
-    //     A2sY      = (A2Y < A2destY) ? 1 : -1;
+    ;;     A2dY    = -abs(A2destY - A2Y);
+    ;;     A2sY      = (A2Y < A2destY) ? 1 : -1;
 		sec
 		lda _A2Y
 		sbc _A2destY
@@ -670,14 +670,14 @@ fill8_computeDy_02:
 
 fill8_computeErr_02:
 
-    //     A2err   = A2dX + A2dY;
+    ;;     A2err   = A2dX + A2dY;
 		clc
 		lda _A2dX
 		adc _A2dY
 		sta _A2err
 
-    //     if ((A2err > 64) || (A2err < -63))
-    //         return;
+    ;;     if ((A2err > 64) || (A2err < -63))
+    ;;         return;
 .(
 	    sec
 		sbc #$40
@@ -695,7 +695,7 @@ fill8_tmp02:
 		jmp fill8_done
 fill8_tmp03:
 .)
-    //     A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+    ;;     A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 		lda #0
 		sta _A2arrived
 		
@@ -711,22 +711,22 @@ fill8_tmp03:
 		sta _A2arrived
 
 fill8_brestep1:
-   //     isA1Right1();
+   ;;     isA1Right1();
 		ldy #0 : jsr _isA1Right1
-    //     bresStepType1();
+    ;;     bresStepType1();
 		ldy #0 : jsr _bresStepType1
 
-    //     A1X       = pArr1X;
+    ;;     A1X       = pArr1X;
 	lda _pArr1X: sta _A1X
-    //     A1Y       = pArr1Y;
+    ;;     A1Y       = pArr1Y;
 	lda _pArr1Y: sta _A1Y
-    //     A1destX   = pArr2X;
+    ;;     A1destX   = pArr2X;
 	lda _pArr2X : sta _A1destX
-    //     A1destY   = pArr2Y;
+    ;;     A1destY   = pArr2Y;
 	lda _pArr2Y : sta _A1destY
 
-    //     A1dX    = abs(A1destX - A1X);
-    //     A1sX      = (A1X < A1destX) ? 1 : -1;
+    ;;     A1dX    = abs(A1destX - A1X);
+    ;;     A1sX      = (A1X < A1destX) ? 1 : -1;
 		sec
 		lda _A1X
 		sbc _A1destX
@@ -741,8 +741,8 @@ fill8_brestep1:
 #ifdef USE_SATURATION
 		sta _patch_A1stepY_A1Right_incdec_A1X
 		sta _patch_A1stepY_A1Left_incdec_A1X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 
 		jmp fill8_computeDy_03
 	fill8_05_negativ_02:
@@ -758,16 +758,16 @@ fill8_brestep1:
 #ifdef USE_SATURATION
 		sta _patch_A1stepY_A1Right_incdec_A1X
 		sta _patch_A1stepY_A1Left_incdec_A1X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 
 
 .)
 
 fill8_computeDy_03:		
 
-    //     A1dY      = -abs(A1destY - A1Y);
-    //     A1sY      = (A1Y < A1destY) ? 1 : -1;
+    ;;     A1dY      = -abs(A1destY - A1Y);
+    ;;     A1sY      = (A1Y < A1destY) ? 1 : -1;
 		sec
 		lda _A1Y
 		sbc _A1destY
@@ -792,13 +792,13 @@ fill8_computeDy_03:
 
 fill8_computeErr_03:
 
-    //     A1err     = A1dX + A1dY;
+    ;;     A1err     = A1dX + A1dY;
 		clc
 		lda _A1dX
 		adc _A1dY
 		sta _A1err
 
-    //     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+    ;;     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
 		lda #0
 		sta _A1arrived
 		
@@ -814,25 +814,25 @@ fill8_computeErr_03:
 		sta _A1arrived
 
 fill8_brestep2:
-    //     bresStepType2();
+    ;;     bresStepType2();
 		ldy #0 : jsr _bresStepType2
 
 		jmp fill8_done
 
 fill8_DepYEqualsArr1Y:
-    // } else {
-    //     // a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
-    //     A1X     = pDepX;
+    ;; } else {
+    ;;     ;; a1 = bres_agent(pDep[0],pDep[1],pArr2[0],pArr2[1])
+    ;;     A1X     = pDepX;
 		lda _pDepX: sta _A1X
-    //     A1Y     = pDepY;
+    ;;     A1Y     = pDepY;
 		lda _pDepY: sta _A1Y
-    //     A1destX = pArr2X;
+    ;;     A1destX = pArr2X;
 		lda _pArr2X : sta _A1destX
-    //     A1destY = pArr2Y;
+    ;;     A1destY = pArr2Y;
 		lda _pArr2Y : sta _A1destY
 
-    //     A1dX    = abs(A1destX - A1X);
-    //     A1sX = (A1X < A1destX) ? 1 : -1;
+    ;;     A1dX    = abs(A1destX - A1X);
+    ;;     A1sX = (A1X < A1destX) ? 1 : -1;
 		sec
 		lda _A1X
 		sbc _A1destX
@@ -847,8 +847,8 @@ fill8_DepYEqualsArr1Y:
 #ifdef USE_SATURATION
 		sta _patch_A1stepY_A1Right_incdec_A1X
 		sta _patch_A1stepY_A1Left_incdec_A1X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 		jmp fill8_computeDy_04
 	fill8_07_negativ_02:
 		eor #$FF
@@ -863,12 +863,12 @@ fill8_DepYEqualsArr1Y:
 #ifdef USE_SATURATION
 		sta _patch_A1stepY_A1Right_incdec_A1X
 		sta _patch_A1stepY_A1Left_incdec_A1X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 .)
 fill8_computeDy_04:
-    //     A1dY    = -abs(A1destY - A1Y);
-    //     A1sY = (A1Y < A1destY) ? 1 : -1;
+    ;;     A1dY    = -abs(A1destY - A1Y);
+    ;;     A1sY = (A1Y < A1destY) ? 1 : -1;
 		sec
 		lda _A1Y
 		sbc _A1destY
@@ -893,14 +893,14 @@ fill8_computeDy_04:
 
 fill8_computeErr_05:
 
-    //     A1err   = A1dX + A1dY;
+    ;;     A1err   = A1dX + A1dY;
 		clc
 		lda _A1dX
 		adc _A1dY
 		sta _A1err
 
-    //     if ((A1err > 64) || (A1err < -63))
-    //         return;
+    ;;     if ((A1err > 64) || (A1err < -63))
+    ;;         return;
 	    sec
 		sbc #$40
 		bvc *+4
@@ -917,7 +917,7 @@ fill8_goon_05:
 		jmp fill8_done
 fill8_goon_06
 
-    //     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
+    ;;     A1arrived = ((A1X == A1destX) && (A1Y == A1destY)) ? 1 : 0;
 		lda #0
 		sta _A1arrived
 		
@@ -933,17 +933,17 @@ fill8_goon_06
 		sta _A1arrived
 
 fill8_computeA2_ter:
-    //     A2X     = pArr1X;
+    ;;     A2X     = pArr1X;
 		lda _pArr1X : sta _A2X
-    //     A2Y     = pArr1Y;
+    ;;     A2Y     = pArr1Y;
 		lda _pArr1Y : sta _A2Y
-    //     A2destX = pArr2X;
+    ;;     A2destX = pArr2X;
 		lda _pArr2X : sta _A2destX
-    //     A2destY = pArr2Y;
+    ;;     A2destY = pArr2Y;
 		lda _pArr2Y : sta _A2destY
 
-    //     A2dX    = abs(A2destX - A2X);
-    //     A2sX      = (A2X < A2destX) ? 1 : -1;
+    ;;     A2dX    = abs(A2destX - A2X);
+    ;;     A2sX      = (A2X < A2destX) ? 1 : -1;
 		sec
 		lda _A2X
 		sbc _A2destX
@@ -958,8 +958,8 @@ fill8_computeA2_ter:
 #ifdef USE_SATURATION
 		sta _patch_A2stepY_A1Right_incdec_A2X
 		sta _patch_A2stepY_A1Left_incdec_A2X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 		jmp fill8_computeDy_08
 	fill8_09_negativ_02:
 		eor #$FF
@@ -974,11 +974,11 @@ fill8_computeA2_ter:
 #ifdef USE_SATURATION
 		sta _patch_A2stepY_A1Right_incdec_A2X
 		sta _patch_A2stepY_A1Left_incdec_A2X
-#endif // USE_SATURATION
-#endif // USE_PATCHED_AGENT
+#endif ;; USE_SATURATION
+#endif ;; USE_PATCHED_AGENT
 fill8_computeDy_08:
-    //     A2dY    = -abs(A2destY - A2Y);
-    //     A2sY      = (A2Y < A2destY) ? 1 : -1;
+    ;;     A2dY    = -abs(A2destY - A2Y);
+    ;;     A2sY      = (A2Y < A2destY) ? 1 : -1;
 		sec
 		lda _A2Y
 		sbc _A2destY
@@ -998,14 +998,14 @@ fill8_computeDy_08:
 .)
 
 fill8_computeErr_09:
-    //     A2err   = A2dX + A2dY;
+    ;;     A2err   = A2dX + A2dY;
 		clc
 		lda _A2dX
 		adc _A2dY
 		sta _A2err
 
-    //     if ((A2err > 64) || (A2err < -63))
-    //         return;
+    ;;     if ((A2err > 64) || (A2err < -63))
+    ;;         return;
 	    sec
 		sbc #$40
 		bvc *+4
@@ -1022,7 +1022,7 @@ fill8_tmp07:
 		jmp fill8_done
 fill8_tmp08:
 
-    //     A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
+    ;;     A2arrived = ((A2X == A2destX) && (A2Y == A2destY)) ? 1 : 0;
 		lda #0
 		sta _A2arrived
 		
@@ -1038,14 +1038,14 @@ fill8_tmp08:
 		sta _A2arrived
 
 fill8_brestep3:
-   //     isA1Right3();
+   ;;     isA1Right3();
 		ldy #0 : jsr _isA1Right3
-    //     bresStepType3() ;
+    ;;     bresStepType3() ;
 		ldy #0 : jsr _bresStepType3
-    // }
+    ;; }
 
 fill8_done:
-	// restore context
+	;; restore context
 	;pla: sta reg1: pla: sta reg0
 	;pla
 
@@ -1077,7 +1077,7 @@ bresStepType1_Lbresfill133
 bresStepType1_Lbresfill135
 .)
 	rts
-#endif // USE_ASM_BRESTYPE1
+#endif ;; USE_ASM_BRESTYPE1
 
 #ifdef USE_ASM_BRESTYPE2
 ;; void bresStepType2()
@@ -1101,7 +1101,7 @@ bresStepType2_Lbresfill137
 bresStepType2_Lbresfill140
 .)
 	rts
-#endif // USE_ASM_BRESTYPE2
+#endif ;; USE_ASM_BRESTYPE2
 
 #ifdef USE_ASM_BRESTYPE3
 ;; void bresStepType3()
@@ -1127,6 +1127,6 @@ bresStepType3_Lbresfill142
 bresStepType3_Lbresfill145
 .)
 	rts
-#endif // USE_ASM_BRESTYPE3
+#endif ;; USE_ASM_BRESTYPE3
 
-#endif // USE_SATURATION
+#endif ;; USE_SATURATION

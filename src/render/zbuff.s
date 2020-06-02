@@ -31,7 +31,7 @@ _multi40
 	.word 960
 	.word 1000
 	.word 1040
-#endif // USE_MULTI40
+#endif ;; USE_MULTI40
 
 
 ; This table contains lower 8 bits of the adress
@@ -169,19 +169,19 @@ FBufferAdressHigh
 _fastzplot:
 .(
 #ifdef SAFE_CONTEXT
-	// save context
+	;; save context
     pha:txa:pha:tya:pha
 	lda tmp6: pha: lda tmp6+1 : pha ;; ptrFbuf
 	lda tmp7: pha: lda tmp7+1 : pha ;; ptrZbuf
 #endif
 
-// #ifdef USE_COLOR
-//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
-//        return;
-// #else
-//    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
-//        return;
-// #endif
+;; #ifdef USE_COLOR
+;;    if ((Y <= 0) || (Y >= SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR) || (X <= 2) || (X >= SCREEN_WIDTH))
+;;        return;
+;; #else
+;;    if ((Y <= 0) || (Y >= SCREEN_HEIGHT) || (X <= 0) || (X >= SCREEN_WIDTH))
+;;        return;
+;; #endif
 
 	lda		_plotY
     beq		fastzplot_done
@@ -213,7 +213,7 @@ _fastzplot:
     bcs		fastzplot_done
 #endif
 
-    // ptrZbuf = zbuffer + Y*SCREEN_WIDTH+X;;
+    ;; ptrZbuf = zbuffer + Y*SCREEN_WIDTH+X;;
 	lda		ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
 	clc						; Clear the carry (because we will do an addition after)
 	adc		_plotX				; Add X coordinate
@@ -222,16 +222,16 @@ _fastzplot:
 	adc		#0					; Eventually add the carry to complete the 16 bits addition
 	sta		tmp7+1	 ; ptrZbuf+ 1			
 
-    // if (dist < *ptrZbuf) {
+    ;; if (dist < *ptrZbuf) {
     lda 	_distpoint		; Access dist
     ldx		#0
     cmp		(tmp7,x)
     bcs		fastzplot_done
 
-    //    *ptrZbuf = dist;
+    ;;    *ptrZbuf = dist;
         ldx		#0
         sta		(tmp7, x)
-    //    *ptrFbuf = char2disp;
+    ;;    *ptrFbuf = char2disp;
         ldx		_plotY    ; reload Y coordinate
     	lda		FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
         clc						; Clear the carry (because we will do an addition after)
@@ -246,12 +246,12 @@ _fastzplot:
         ldx		#0
         sta		(tmp6,x)
 
-    //}
+    ;;}
 
 
 fastzplot_done:
 #ifdef SAFE_CONTEXT
-	// restore context
+	;; restore context
 	pla: sta tmp7+1: pla: sta tmp7
 	pla: sta tmp6+1: pla: sta tmp6
 	pla:tay:pla:tax:pla
@@ -260,10 +260,10 @@ fastzplot_done:
 	rts
 
 #ifndef TARGET_ORIX
-// void zplot(unsigned char X,
-//           unsigned char Y,
-//           unsigned char dist,
-//           char          char2disp) {
+;; void zplot(unsigned char X,
+;;           unsigned char Y,
+;;           unsigned char dist,
+;;           char          char2disp) {
 
 _zplot:
 .(
@@ -272,7 +272,7 @@ _zplot:
 ; sp+4 => dist
 ; sp+6 => char2disp
 
-	// save context
+	;; save context
     pha:tya:pha
 
 	ldy		#2
@@ -294,23 +294,23 @@ _zplot:
 	jsr 	_fastzplot
 
 zplot_done:
-	// restore context
+	;; restore context
 	pla:tay:pla
 
 .)
     rts
-#endif // TARGET_ORIX
-#endif // USE_ASM_ZPLOT
+#endif ;; TARGET_ORIX
+#endif ;; USE_ASM_ZPLOT
 
 
 #ifdef USE_ASM_ZLINE
 #ifndef TARGET_ORIX
 
-// void zline(signed char   dx,
-//           signed char   py,
-//           signed char   nbpoints,
-//           unsigned char dist,
-//           char          char2disp) {
+;; void zline(signed char   dx,
+;;           signed char   py,
+;;           signed char   nbpoints,
+;;           unsigned char dist,
+;;           char          char2disp) {
 
 _zline:
 .(
@@ -320,7 +320,7 @@ _zline:
 ; sp+6 => dist
 ; sp+8 => char2disp
 
-	// save context
+	;; save context
     pha
 	lda tmp0: pha: lda tmp0+1 : pha ;; ptrFbuf
 	lda tmp1: pha: lda tmp1+1 : pha ;; ptrZbuf
@@ -331,10 +331,10 @@ _zline:
     lda reg4: pha ;; char2disp
 
 
-    // int            offset;   // offset os starting point
-    // char*          ptrFbuf;  // pointer to the frame buffer
-    // unsigned char* ptrZbuf;  // pointer to z-buffer
-    // signed char    nbp;
+    ;; int            offset;   ;; offset os starting point
+    ;; char*          ptrFbuf;  ;; pointer to the frame buffer
+    ;; unsigned char* ptrZbuf;  ;; pointer to z-buffer
+    ;; signed char    nbp;
 
 	ldy #0
 	lda (sp),y				; Access dx 
@@ -358,9 +358,9 @@ _zline:
 	lda (sp),y				; Access char2disp 
     sta reg4
 
-    // nbp     = nbpoints;
+    ;; nbp     = nbpoints;
 
-    // ptrZbuf = zbuffer + py * SCREEN_WIDTH + dx;
+    ;; ptrZbuf = zbuffer + py * SCREEN_WIDTH + dx;
  	lda ZBufferAdressLow,x	; Get the LOW part of the zbuffer adress
 	clc						
 	adc reg2				; Add dx coordinate
@@ -369,7 +369,7 @@ _zline:
 	adc #0					; 
 	sta tmp1+1	 ; ptrZbuf+ 1			
 
-    // ptrFbuf = fbuffer + py * SCREEN_WIDTH + dx;
+    ;; ptrFbuf = fbuffer + py * SCREEN_WIDTH + dx;
     lda FBufferAdressLow,x	; Get the LOW part of the fbuffer adress
     clc						; 
     adc reg2				; Add dx coordinate
@@ -378,35 +378,35 @@ _zline:
     adc #0					; 
     sta tmp0+1	            ; ptrFbuf+ 1			
 
-   // ptrFbuf = fbuffer + offset;
+   ;; ptrFbuf = fbuffer + offset;
 
-    // while (nbp > 0) {
+    ;; while (nbp > 0) {
     ldy reg1
 _zline2_loop:
     
 
-    //     if (dist < ptrZbuf[nbp]) {
+    ;;     if (dist < ptrZbuf[nbp]) {
     lda (tmp1), y
     cmp reg3
     bcc zline_distOver
-    //         // printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf
-    //         // [nbpoints]);
-    //         ptrFbuf[nbp] = char2disp;
+    ;;         ;; printf ("p [%d %d] <- %d. was %d \n", dx+nbpoints, py, dist, ptrZbuf
+    ;;         ;; [nbpoints]);
+    ;;         ptrFbuf[nbp] = char2disp;
     lda reg4
     sta (tmp0), y
-    //         ptrZbuf[nbp] = dist;
+    ;;         ptrZbuf[nbp] = dist;
     lda reg3
     sta (tmp1), y
-   //     }
+   ;;     }
 zline_distOver:
-    //     nbp--;
+    ;;     nbp--;
     dey
     bne _zline2_loop
-    // }
+    ;; }
 
 
 zline_done:
-	// restore context
+	;; restore context
 	pla: sta reg4
 	pla: sta reg3
 	pla: sta reg2
@@ -419,12 +419,12 @@ zline_done:
 .)
     rts
 
-#endif // TARGET_ORIX
-#endif // USE_ASM_ZLINE
+#endif ;; TARGET_ORIX
+#endif ;; USE_ASM_ZLINE
 
 
-// unsigned char zbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // z-depth buffer
-// char          fbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  // frame buffer
+;; unsigned char zbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  ;; z-depth buffer
+;; char          fbuffer[SCREEN_WIDTH * SCREEN_HEIGHT];  ;; frame buffer
 
 _fbuffer
 	.dsb 1080

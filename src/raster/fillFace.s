@@ -6,5 +6,5 @@ _fillFace:
 	ldy #0 : jsr _fill8 :
 .)
 	rts
-#endif // USE_ASM_FILLFACE
+#endif ;; USE_ASM_FILLFACE
 

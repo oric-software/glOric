@@ -13,12 +13,12 @@ ptrpt2H .dsb 1
 #ifndef USE_REWORKED_BUFFERS
 
 
-//  void doFastProjection(){
+;;  void doFastProjection(){
 _doFastProjection:
 .(
-//  	unsigned char ii = 0;
+;;  	unsigned char ii = 0;
 
-//  	for (ii = nbPoints-1; ii< 0; ii--){
+;;  	for (ii = nbPoints-1; ii< 0; ii--){
 
     ldx _nbPoints
     dex
@@ -39,22 +39,22 @@ _doFastProjection:
     tax
 
 dofastprojloop:
-//          Status = points3d[ii*SIZEOF_3DPOINT + 3]
+;;          Status = points3d[ii*SIZEOF_3DPOINT + 3]
         dey
-//  		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
+;;  		PointZ = points3d[ii*SIZEOF_3DPOINT + 2];
         lda (ptrpt3),y
         sta _PointZ
         dey
-//  		PointY = points3d[ii*SIZEOF_3DPOINT + 1];
+;;  		PointY = points3d[ii*SIZEOF_3DPOINT + 1];
         lda (ptrpt3),y
         sta _PointY
         dey
-//  		PointX = points3d[ii*SIZEOF_3DPOINT + 0];
+;;  		PointX = points3d[ii*SIZEOF_3DPOINT + 0];
         lda (ptrpt3),y
         sta _PointX
         dey
 
-//  		project_i16();
+;;  		project_i16();
         ; jsr _project_i16
 		jsr _project_i8o8
 
@@ -64,7 +64,7 @@ dofastprojloop:
         tay
 
 #ifndef HRSDEMO
- //  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
+ ;;  		points2d[ii*SIZEOF_2DPOINT + 1] = ResY;
 
         lda _Norm+1
         sta (ptrpt2), y
@@ -76,7 +76,7 @@ dofastprojloop:
 
         lda _ResY
         sta (ptrpt2), y
-//  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
+;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
         dey
         lda _ResX
         sta (ptrpt2), y
@@ -92,7 +92,7 @@ dofastprojloop:
 
         lda _ResX+1
         sta (ptrpt2), y
-//  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
+;;  		points2d[ii*SIZEOF_2DPOINT + 0] = ResX;
         dey
         lda _ResX
         sta (ptrpt2), y
@@ -102,20 +102,20 @@ dofastprojloop:
         tax
         pla
         tay
-//  	}
+;;  	}
     dex
     txa
     cmp #$FF
     bne dofastprojloop   ;; FIXME : does not allows more than 127 points
 dofastprojdone:
-//  }
+;;  }
 .)
     rts
 
 
 
 
-// void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
+;; void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
 _glProject
 .(
 	ldx #6 : lda #4 : jsr enter :
@@ -127,4 +127,4 @@ _glProject
 	jsr _doFastProjection
 	jmp leave :
 .)
-#endif  // USE_REWORKED_BUFFERS
+#endif  ;; USE_REWORKED_BUFFERS

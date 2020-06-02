@@ -32,4 +32,4 @@ buffer2screen_loop_02:
     rts
 
 
-#endif // USE_ASM_BUFFER2SCREEN
+#endif ;; USE_ASM_BUFFER2SCREEN

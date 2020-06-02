@@ -1,7 +1,7 @@
 
 #ifdef USE_ASM_INITFRAMEBUFFER
 .text
-// void initScreenBuffers()
+;; void initScreenBuffers()
 _initScreenBuffers:
 .(
   
@@ -41,14 +41,14 @@ initScreenBuffersLoop_01:
 
 #ifndef USE_HORIZON
     lda #$20
-#endif // USE_HORIZON
+#endif ;; USE_HORIZON
 
     ldx #SCREEN_WIDTH-1
 
 initScreenBuffersLoop_02:
 #ifdef USE_HORIZON
     lda #$20
-#endif // USE_HORIZON
+#endif ;; USE_HORIZON
     sta _fbuffer+SCREEN_WIDTH*0 , x
     sta _fbuffer+SCREEN_WIDTH*1 , x
     sta _fbuffer+SCREEN_WIDTH*2 , x
@@ -65,7 +65,7 @@ initScreenBuffersLoop_02:
     sta _fbuffer+SCREEN_WIDTH*13 , x
 #ifdef USE_HORIZON
     lda #102 ;; light green
-#endif // USE_HORIZON
+#endif ;; USE_HORIZON
     sta _fbuffer+SCREEN_WIDTH*14 , x
     sta _fbuffer+SCREEN_WIDTH*15 , x
     sta _fbuffer+SCREEN_WIDTH*16 , x
@@ -85,11 +85,11 @@ initScreenBuffersLoop_02:
 #ifdef USE_COLOR
  	cpx #2
  	beq initScreenBuffersDone
-#endif // USE_COLOR
+#endif ;; USE_COLOR
     bpl initScreenBuffersLoop_02
 initScreenBuffersDone:
 .)
     rts
 
 
-#endif // USE_ASM_INITFRAMEBUFFER
+#endif ;; USE_ASM_INITFRAMEBUFFER
