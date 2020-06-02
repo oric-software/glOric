@@ -150,6 +150,7 @@ void colorIntro() {
 #endif //USE_REWORKED_BUFFERS
 
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        dispInfo();
     }
 
 
@@ -178,6 +179,7 @@ void colorIntro() {
 #endif //USE_REWORKED_BUFFERS
 
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        dispInfo();
     }
 
     for (j = 0; j < 32; j++) {
@@ -200,6 +202,7 @@ void colorIntro() {
 #endif //USE_REWORKED_BUFFERS
 
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        dispInfo();
     }
 
 #ifdef TARGET_ORIX
