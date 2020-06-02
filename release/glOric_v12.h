@@ -2,7 +2,7 @@
 #ifndef GLORIC_H
 #define GLORIC_H
 
-#define GLORIC_V11
+#define GLORIC_V12
 
 #define SCREEN_WIDTH 40
 #define SCREEN_HEIGHT 26

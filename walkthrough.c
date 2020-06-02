@@ -38,7 +38,7 @@
 
 
 #include "lib.h"
-#include "release\glOric_v11.h"
+#include "release\glOric_v12.h"
 
 #define abs(x)                 (((x)<0)?-(x):(x))
 
@@ -520,6 +520,7 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
     *(adr++) = patt08;
 }
 
+#ifdef GLORIC_V11
 extern signed char   P1X, P1Y;
 extern signed char points2aH[];
 extern signed char points2aV[];
@@ -539,3 +540,4 @@ void glDrawParticules(){
         );
     }
 }
+#endif
