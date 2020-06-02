@@ -20,8 +20,8 @@ extern int CamPosY;
 extern int CamPosZ;
 
  // Camera Orientation
-extern int CamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-extern int CamRotX;
+extern signed char CamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+extern signed char CamRotX;
 
 /*    ___                 _              _    _               
  *   / _ \ _ __   ___    (_)  ___   ___ | |_ (_)  ___   _ __  
