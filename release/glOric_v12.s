@@ -4,9 +4,13 @@
 ;;     3D graphic library for Oric 
 ;;			
 ;;			by Jean-Baptiste PERIN 
+;;
+;;  advised by Master Mickael POINTIER 
+;;                        (a.k.a DBug)
+;;  for insane optimizations 
 ;; =======================================
 ;; 
-;; Website: https:;;github.com/oric-software/glOric
+;; Website: https://github.com/oric-software/glOric
 ;; 
 ;; Version 1.2
 ;; June 2020
@@ -248,7 +252,7 @@ _res .dsb 1
 
 .text
 
-;https:;;codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
+;https://codebase64.org/doku.php?id=base:8bit_atan2_8-bit_angle
 _atan2_8:
 .(
 
@@ -4466,7 +4470,7 @@ moynottoobig:
         ;; dmoy = dmoy / 3;
 	lda _dmoy
 
-	;Divide by 3 found on http:;;forums.nesdev.com/viewtopic.php?f=2&t=11336
+	;Divide by 3 found on http://forums.nesdev.com/viewtopic.php?f=2&t=11336
 	;18 bytes, 30 cycles
 	sta  tmp0
 	lsr
