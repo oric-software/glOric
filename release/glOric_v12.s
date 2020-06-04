@@ -5,7 +5,7 @@
 ;;			
 ;;			by Jean-Baptiste PERIN 
 ;;
-;;  advised by Master Mickael POINTIER 
+;;  advised by the great Mickael POINTIER 
 ;;                        (a.k.a Dbug)
 ;;  for insane optimizations 
 ;; =======================================
