@@ -1,5 +1,5 @@
 ;; =======================================
-;; 	       glOric 3D 
+;; 	       glOric 3D            v1.2
 ;; =======================================
 ;;     3D graphic library for Oric 
 ;;			
@@ -10,16 +10,26 @@
 ;;  for insane optimizations 
 ;; =======================================
 ;; 
+;; Copyright 2020 Jean-Baptiste PERIN
+;; Email: jbperin@gmail.com
+;;
 ;; Website: https://github.com/oric-software/glOric
+;; 
+;; =======================================
 ;; 
 ;; Version 1.2
 ;; June 2020
 ;; 
-;; Copyright 2020 Jean-Baptiste PERIN
-;; Email: jbperin@gmail.com
-;;
-
-
+;; - glDrawPaticules is now incorporated in glOric
+;; - CPU time optimization
+;;       * dynamically patch bresenham code
+;;       * use zero page 
+;;       * remove useless context saving (pha & pla)
+;;       * speedup face drawing and clipping 
+;; 
+;; Version 1.1
+;; February 2020
+;; 
 
 ;;                       __  _        
 ;;   ___   ___   _ __   / _|(_)  __ _ 
