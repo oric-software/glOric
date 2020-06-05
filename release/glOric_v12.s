@@ -17,19 +17,19 @@
 ;; 
 ;; =======================================
 ;; 
-;; Version 1.2
-;; June 2020
-;; 
+;; Version 1.2: June 2020
+;; ------------------------
 ;; - glDrawPaticules is now incorporated in glOric
+;;       no need to define it in C
 ;; - CPU time optimization
 ;;       * dynamically patch bresenham code
 ;;       * use zero page 
 ;;       * remove useless context saving (pha & pla)
 ;;       * speedup face drawing and clipping 
 ;; 
-;; Version 1.1
-;; February 2020
-;; 
+;; Version 1.1 :  February 2020
+;; ----------------------------
+;; =======================================
 
 ;;                       __  _        
 ;;   ___   ___   _ __   / _|(_)  __ _ 
