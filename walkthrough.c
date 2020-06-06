@@ -109,7 +109,7 @@ void main() {
 void player ();
 
 void gameLoop() {
-    signed char pX, pY, pZ, aH, aV;
+    signed char pX, pY, pZ, sX, sY, aH, aV;
     unsigned int distance;
     while (running) {
 
@@ -126,14 +126,18 @@ void gameLoop() {
         glDrawSegments();
         glDrawParticules();
 
+        // demonstrate use of projectPoint and zplot to interact with glOric inner functions
+        // display a sprite at a given position
         pX=0; pY=0; pZ=24;
         projectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
-        zplot(
-            (SCREEN_WIDTH -aH) >> 1,      // PX
-            (SCREEN_HEIGHT - aV) >> 1,    // PY
-            distance,                         // distance
-            'H'                         // character 2 display
-        );
+        sX = (SCREEN_WIDTH -aH) >> 1;
+        sY = (SCREEN_HEIGHT - aV) >> 1;
+        zplot(sX  ,sY,distance,'H');
+        zplot(sX+1,sY,distance,'O');
+        zplot(sX+2,sY,distance,'U');
+        zplot(sX+3,sY,distance,'S');
+        zplot(sX+4,sY,distance,'E');
+  
         // update display with buffer
         buffer2screen((void*)0);
         sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
