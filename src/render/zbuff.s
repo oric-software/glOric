@@ -260,8 +260,8 @@ fastzplot_done:
 	rts
 
 #ifndef TARGET_ORIX
-;; void zplot(unsigned char X,
-;;           unsigned char Y,
+;; void zplot(signed char X,
+;;           signed char Y,
 ;;           unsigned char dist,
 ;;           char          char2disp) {
 
