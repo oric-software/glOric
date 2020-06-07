@@ -41,7 +41,7 @@
 ;; -------- USAGE MODE --------------
 ;; use COLORDEMO for color usage
 ;; use LRSDEMO for black and white usage
-#define COLORDEMO // LRSDEMO //
+#define COLORDEMO 
 
 ;; -------- PATCHED CODE ------------
 ;; Bresenham code can be dynamically patched 
