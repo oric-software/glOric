@@ -122,8 +122,7 @@ _isA1Right3:
 	lda _A2X
 	sec
 	sbc _A1X
-	bvc *+4
-	eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bpl isA1Right3_done
 
 	lda #$01 : sta _A1Right
