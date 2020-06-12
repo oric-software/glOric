@@ -247,13 +247,13 @@ There's two reasons to explain that:
 
 Indeed, if you watch the triangle shown earlier from a place located in front of it or from a place located behind it, the tilt of the character used to render inclined edge is different. So it is not possible to say, by advance, how to draw  an oblique character.
 
-Thet's the reason why glOric interprets the '/' as meaning 'I want an oblique character to draw this segment' and glOric will take in charge to draw the appropriate character depending on the place where the segment is seen from.
+That's the reason why glOric interprets the '/' as meaning 'I want an oblique character to draw this segment' and glOric will take in charge to draw the appropriate character depending on the place where the segment is seen from.
 
-glOric will use either the native character '/' or the character '$' redefined into `\\` to draw an oblique segment.
+glOric will use either the native character '/' or the character '$' that you have to redefine into `\\` in order to draw an oblique segment.
 
 As a consequence, if you explictly want to use character  '$' or '/' to draw a given semgent, you will have to redefine an other character with the one you want to use and refer to this new character in segment declaration.
 
-Most glOric sample code comes with a fonction that you can use to redefine a character on an Oric Atmos: 
+Most glOric sample code come with a fonction that you can use to redefine a character on an Oric Atmos: 
 
 ```C
 void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08) {
@@ -270,9 +270,10 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
 }
 ```
 
+In you plan to use oblique segment (specified by the '/' character ), you have to call this function from your initialisation function in order to redefine the `$` character that glOric will use to draw oblique segments:
 
 ```C
-    // Change DOLLAR ($) sign into BACKSLASH (\) to draw oblic lines 
+    // Change DOLLAR ($) sign into BACKSLASH (\) to draw oblique lines 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 ```
 
