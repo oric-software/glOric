@@ -3,6 +3,8 @@ glOric is a library to draw on screen the representation of a 3D scene
 
 This introduction aims at providing developpers with necessary information to create 3D application with glOric
 
+# Core concepts for 3D graphics
+
 First of all, let's see some fundamentals of 3D graphics and how they are implemented in glOric.
 
 Point is just cartesian coordinates in a 3D space. It is not something visible. It is just a positionnal information in space.
@@ -20,10 +22,14 @@ In glOric, the camera position is represented by 3 integer values corresponding 
 
 The Scene is the set of particules, segments and faces that glOric shall draw on screen is never it is in the field of view of the camera.
 
+
 Now, let's have a look on how these concepts are instanciated in glOric.
 For that, open the `glOric_vXY.h` file
 
-The camera position and orientation by five variables
+
+# Where we are watching the scene from
+
+The camera position and orientation is set through five variables.
 
 ```C
  // Camera Position use only low bytes
@@ -42,6 +48,8 @@ extern signed char      CamRotX;
 
 `CamRotZ` and `CamRotX` are respectively pitch and yaw of the camera.
 These angle are 8 bits fixed point values made so that the 2*PI circle fits the whole 256 value range centered on 0. Thus angle excursion goes from -PI coded -128 (0x80) to PI coded 0x7F passing by 0 radians coded 0. Angle resolution is then (2*PI / 256).
+
+# Describing the 3D scene.
 
 ## Declaring points'coordinates
 
@@ -158,7 +166,7 @@ segmentsChar [0] = '-';
 nbSegments = 1;
 ```
 
-# Declaring Faces
+## Declaring Faces
 
 Faces are triangular surfaces delimited by three corners.
 In glOric triangles are declared through the fours following arrays:
@@ -186,7 +194,127 @@ facesPt1[0]=0;
 facesPt2[0]=1;
 facesPt3[0]=2;
 facesChar='*';
+nbPoints = 3;
 ```
+
+## Mixing all primitives
+
+In the examples above, 
+Let's suppose we want to draw a more complex scene that mix several of the element we've see up to know.
+For exemple a triangle similar to the one below:
+```                 
+                    /     <- Point 0     
+                   /*\         
+                  /***\        
+                 /*****\       
+                /*******\      
+               /*********\     
+              /***********\    
+             /*************\   
+ Point 1 -> -----------------   <- Point 2
+```
+
+To render such a shape, we need to declare 3 points 
+We also have to declare a face filling the space bertween the three points with character '*'. 
+And we also have to declare three segments corresponding to the three edge.
+
+```C
+nbPoints = 0;
+
+points3dX[nbPoints] = 8;  points3dY[nbPoints] = 4;  points3dZ[nbPoints] = 0; nbPoints ++;
+points3dX[nbPoints] = -8; points3dY[nbPoints] = 4;  points3dZ[nbPoints] = 0; nbPoints ++;
+points3dX[nbPoints] = 0;  points3dY[nbPoints] = 4;  points3dZ[nbPoints] = 8; nbPoints ++;
+
+
+// Use previously declared points to describe a face that will be filled with character '*'
+
+facesPt1[0]=0; facesPt2[0]=1; facesPt3[0]=2; facesChar='*';
+nbFaces = 1;
+
+//
+nbSegment = 0;
+
+segmentsPt1 [nbSegment] = 0; segmentsPt2 [nbSegment] = 1; segmentsChar [nbSegment] = '/'; nbSegment ++;
+segmentsPt1 [nbSegment] = 1; segmentsPt2 [nbSegment] = 2; segmentsChar [nbSegment] = '-'; nbSegment ++;
+segmentsPt1 [nbSegment] = 2; segmentsPt2 [nbSegment] = 0; segmentsChar [nbSegment] = '/'; nbSegment ++;
+```
+
+You may have noticed that the characters used to draw the last segment (going from point 2 to point 0) is not '\\' (backslah) as could have been expected.
+
+There's two reasons to explain that:
+- The character '\\' (backslah) doesn't exist on Oric 
+- It would have no sens to tell glOric which inclinaison to use to draw an oblique character since the slope of the character depends on where it is seen from.
+
+Indeed, if you watch the triangle shown earlier from a place located in front of it or from a place located behind it, the tilt of the character used to render inclined edge is different. So it is not possible to say, by advance, how to draw  an oblique character.
+
+Thet's the reason why glOric interprets the '/' as meaning 'I want an oblique character to draw this segment' and glOric will take in charge to draw the appropriate character depending on the place where the segment is seen from.
+
+glOric will use either the native character '/' or the character '$' redefined into `\\` to draw an oblique segment.
+
+As a consequence, if you explictly want to use character  '$' or '/' to draw a given semgent, you will have to redefine an other character with the one you want to use and refer to this new character in segment declaration.
+
+Most glOric sample code comes with a fonction that you can use to redefine a character on an Oric Atmos: 
+
+```C
+void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08) {
+    unsigned char* adr;
+    adr      = (unsigned char*)(0xB400 + c * 8);
+    *(adr++) = patt01;
+    *(adr++) = patt02;
+    *(adr++) = patt03;
+    *(adr++) = patt04;
+    *(adr++) = patt05;
+    *(adr++) = patt06;
+    *(adr++) = patt07;
+    *(adr++) = patt08;
+}
+```
+
+
+```C
+    // Change DOLLAR ($) sign into BACKSLASH (\) to draw oblic lines 
+    change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
+```
+
+
+# Getting the 3D scene rendered on screen
+
+Up to now we've only seen how to describe the 3D scene to glOric. 
+
+
+You might be happy to learn that the most difficult part is done.
+
+Indeed, glOric takes in charge all the rest of the process of rendering the scene on the screen of your beloved Oric.
+
+
+
+In order to have a general view of the rendering process before entering into details, let's have a look at a typical game loop using glOric:
+
+```C
+
+    while (inGame) {
+        // project 3D points to 2D coordinates
+        glProjectArrays();
+
+        // empty buffer
+        initScreenBuffers();
+
+        // draw game scene's shapes in buffer
+        glDrawFaces();
+        glDrawSegments();
+        glDrawParticules();
+    }
+
+
+```
+
+
+## Projection
+
+
+## Drawing partcules, segments and 
+
+
 
 
 
