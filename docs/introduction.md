@@ -282,40 +282,74 @@ In you plan to use oblique segment (specified by the '/' character ), you have t
 
 Up to now we've only seen how to describe the 3D scene to glOric. 
 
-
 You might be happy to learn that the most difficult part is done.
 
 Indeed, glOric takes in charge all the rest of the process of rendering the scene on the screen of your beloved Oric.
 
 
 
-In order to have a general view of the rendering process before entering into details, let's have a look at a typical game loop using glOric:
+In order to have a general view of the rendering process before entering into details, let's have a look at an example game loop using glOric:
 
 ```C
+    initGame (); 
 
     while (inGame) {
-        // project 3D points to 2D coordinates
-        glProjectArrays();
+
+        /*
+         ... Insert Here Your Game Stuff  ...
+         */
 
         // empty buffer
         initScreenBuffers();
+
+        // project 3D points to 2D coordinates
+        glProjectArrays();
 
         // draw game scene's shapes in buffer
         glDrawFaces();
         glDrawSegments();
         glDrawParticules();
+
+        // update display with frame buffer
+        buffer2screen();
+
     }
 
 
 ```
 
+`initGame()` contains the shapes declaration and the characters redefinition as seen previously
 
-## Projection
+`initScreenBuffers()` is a glOric's function which initializes two buffers:
+- a frame buffer and a z-buffer. The frame buffer is a buffer which is a copy of the screen memory that glOric uses to prepare what is going to be displayed. Once particules, segments and facces are drawn in this buffer, the call to `buffer2screen()` actually copy the frame buffer to the screen area in memory.
+- a z-buffer which stores, for each position on screen, the distance of the closest  element that was drawn on this position. Read the [wikipedia article on Z-Buffering](https://en.wikipedia.org/wiki/Z-buffering) to better understand this mecanism.
+
+`glProjectArrays()` is a function which computes, for each of the `nbPoints` points in arrays `points3d`, the angular position of the point relatively to the camera position and orientation.
+
+`glDrawFaces()`, `glDrawSegments()`and `glDrawParticules()` are glOric's function which fill the frame buffer with characters used to respectively draw faces, segments and particules found in points, segments and faces. they also fill the z-buffer to keep memory of 
 
 
-## Drawing partcules, segments and 
 
+# Going further
 
+We've seen all function provided by glOric except two the we are now going to explore.
 
+If you remember what we've seen earlier, you know that the function glProjectArrays () computes  angular position of points contained in arrays `points3d` relatively to the camera position and orientation. The function `projectPoint` do the same for a single point and gives you back 
+the resulting angle rather than letting them only available for drawing functions:
+```C
+extern void projectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
+```
+
+This function takes the point of coordinate (x, y, z) and put:
+- in `ah` the horizontal angle between the point and the axis of the camera,
+- in `av` the vertical angle between the point and the axis of the camera,
+- in `dist` the distance between the point and the camera.
+
+Just as camera angle, `ah` and `av` angles are 8 bits fixed point values coding angle from -PI coded -128 (0x80) to PI coded 0x7F passing by 0 radians coded 0. Angle resolution is then (2*PI / 256).
+dist is a 16 bits unsigned value corresponding to the euclidian norm of vector [CamPosX-x, ComPosY-y]
+
+```C
+extern void zplot(signed char X, signed char Y, unsigned char dist, char char2disp);
+```
 
 
