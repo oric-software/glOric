@@ -38,7 +38,7 @@
 
 
 #include "lib.h"
-#include "release\glOric_v12.h"
+#include "release\v12\glOric_v12.h"
 
 #define abs(x)                 (((x)<0)?-(x):(x))
 
