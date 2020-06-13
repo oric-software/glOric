@@ -1,5 +1,5 @@
 
-# INtroduction to glOric
+# Introduction to glOric
 
 glOric is a library to draw ascii art 3D scene on an Oric screen.
 
