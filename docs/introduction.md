@@ -1,32 +1,34 @@
 
 # Introduction to glOric
 
-glOric is a library to draw ascii art 3D scene on an Oric screen.
+**glOric** is a library to draw ascii art 3D scene on an Oric screen.
 
 This introduction aims at providing developers with necessary information to create 3D application with glOric.
 
+[TOC]
 # Core concepts for 3D graphics
 
 First of all, let's see some fundamentals of 3D graphics and how they are implemented in glOric.
 
-A Point is just cartesian coordinates in a 3D space. It is not something visible. It is just a positional information in space.
-In glOric, points are composed of three 8-bits integer value representing the position along the orthogonal X, Y, and Z axes  of an Euclidean space.
-Each point is given a number (its index in a table) by which it is referred.
+A **vertex** is just cartesian coordinates, a point in a 3D space. It is not something visible. It is just a positional information in space.
+In glOric, vertices are composed of three 8-bits integer value representing the position along the orthogonal X, Y, and Z axes  of an Euclidean space.
+Each vertex is given a number (its index in a table) by which it is referred.
+In the rest of this document we'll use the term vertex or point to convey the same concept.
 
-A Segment is a part of a line. It is something visible and drawable on screen. In glOric segments are defined by the index of the two points corresponding to the extremities of the segment and the character that has to be used to render this segment on the screen.
+A **segment** is a part of a line. It is something visible and drawable on screen. In glOric segments are defined by the index of the two points corresponding to the extremities of the segment and the character that has to be used to render this segment on the screen.
 
-A Face is a triangular surface. It is something visible and drawable on screen. In glOric a face is defined by the index of the three points corresponding to the extremities of the triangle and the character that has to be used to fill the surface on the screen.
+A **face** is a triangular surface. It is something visible and drawable on screen. In glOric a face is defined by the index of the three points corresponding to the extremities of the triangle and the character that has to be used to fill the surface on the screen.
 
-A Particle is visible vertex. It is simplest visible and drawable thing on screen. In glOric a particle is defined by the index of the single points where the vertex shall be drawn and by the character that has to be used to draw this vertex on screen.
+A **particle** is visible vertex. It is simplest visible and drawable thing on screen. In glOric a particle is defined by the index of the single points where the vertex shall be drawn and by the character that has to be used to draw this vertex on screen.
  
-The Camera is the point from which particles, segments and  faces are viewed. It is called the point of view.
+The **camera** is the point from which particles, segments and  faces are viewed. It is called the point of view.
 In glOric, the camera position is represented by 3 integer values corresponding to its 3D coordinates in the Euclidean space and the camera orientation is composed of two values for its pitch and yaw angles 
 
-The Scene is the set of particles, segments and faces that glOric shall draw on screen whenever it is in the field of view of the camera.
+The **scene** is the set of particles, segments and faces that glOric shall draw on screen whenever it is in the field of view of the camera.
 
 
-Now, let's have a look on how these concepts are instantiated in glOric.
-Most of what we're going to see can be found in the `glOric_vXY.h` file. (where XY is the actual version of glOric you are using)
+Now, let's have a look at how these concepts are instantiated in glOric.
+Most of what we're going to see can be found in the [`glOric.h`](../release/glOric.h) file.
 
 
 # Where we are watching the scene from
@@ -52,10 +54,10 @@ These angle are 8 bits fixed point values made so that the 2PI circle fits the w
 
 # Describing the 3D scene.
 
-## Declaring points' coordinates
+## Declaring vertices' coordinates
 
 Now let's look at how 3D coordinates involved in scene description are given to glOric.
-As we've seen earlier, points are 3D coordinates. Each of theses 3 coordinates are stored in a corresponding array:
+As we've seen earlier, vertices are 3D coordinates. Each of theses 3 coordinates are stored in a corresponding array:
 ```C
 extern signed char      glVerticesX[];
 extern signed char      glVerticesY[];
@@ -66,14 +68,14 @@ These arrays are respectively position along the X, Y, and Z axes of points in a
 
 In glOric, the convention is that X and Y coordinates are on a horizontal plan while the Z coordinates represents elevation.
 
-If a point numbered `n` of the scene is located at position (X=2, Y=3, Z=1) then we will indicate that by setting
+If a vertex numbered `n` of the scene is located at position (X=2, Y=3, Z=1) then we will indicate that by setting
 glVerticesX[n] = 2,  glVerticesY[n] = 3 and glVerticesZ[n] = 1,
 
-For glOric to know the number of points that are stored in this array, it has to be indicated in the `glNbVertices` variable.
-The maximum number of points is configured througb the constant named `NB_MAX_POINTS` defined in file `glOric_vXY.h`.
-In any circumstance, you must ensure that the value contained in the `glNbVertices` variable is lower than the value of `NB_MAX_POINTS` (which can't be greater or equal to 256). Memory corruption can occur if this constraint is not respected.
+For glOric to know the number of vertices that are stored in this array, it has to be indicated in the `glNbVertices` variable.
+The maximum number of vertices is configured througb the constant named `NB_MAX_VERTICES` defined in file `glOric_vXY.h`.
+In any circumstance, you must ensure that the value contained in the `glNbVertices` variable is lower than the value of `NB_MAX_VERTICES` (which can't be greater or equal to 256). Memory corruption can occur if this constraint is not respected.
 
-Once points of interest of the scene are given to glOric, we can refer to them through their index to tell glOric where to draw particles, segments and faces.
+Once vertex of the scene are given to glOric, we can refer to them through their index to tell glOric where to draw particles, segments and faces.
 
 Let's start to explore this with the simplest drawable element: the particle
 
@@ -86,7 +88,7 @@ extern unsigned char    glParticlesPt[];
 extern unsigned char    glParticlesChar[];
 ```
 
-`glParticlesPt` contains, for each particles, the index of the point containing the position where to draw the particle and `glParticlesChar` contains, for each particles, the character that has to be used to display the particle.
+`glParticlesPt` contains, for each particles, the index of the vertex containing the position where to draw the particle and `glParticlesChar` contains, for each particles, the character that has to be used to display the particle.
 
 For glOric to know the number of particles that are stored in these arrays, it has to be indicated in the `glNbParticles` variable.
 The maximum number of particles is configured througb the constant named `NB_MAX_ParticleS` defined in file `glOric_vXY.h`. Default max is 64.
@@ -326,17 +328,17 @@ In order to have a general view of the rendering process before entering into de
 
 `glProjectArrays()` is a function which computes, for each of the `glNbVertices` points in arrays `points3d`, the angular position of the point relatively to the camera position and orientation.
 
-`glDrawFaces()`, `glDrawSegments()`and `glDrawParticles()` are glOric function which fill the frame buffer with characters used to respectively draw faces, segments and particles found in points, segments and faces. they also fill the z-buffer to keep memory of 
+`glDrawFaces()`, `glDrawSegments()`and `glDrawParticles()` are glOric function which fill the frame buffer with characters used to respectively draw faces, segments and particles.
 
 
 
 # Going further
 
-We've seen all function provided by glOric except two the we are now going to explore because they allow to extend possiblities of glOric while benefiting of its powerful 
+We've seen all functions provided by glOric but two that we are now going to explore because they allow to extend possiblities of glOric while benefiting of its power.
 
 ## 3D to 2D projection
 
-If you remember what we've seen earlier, you know that the function glProjectArrays () computes  angular position of points contained in arrays `points3d` relatively to the camera position and orientation. The function `glProjectPoint` do the same for a single point and gives you back 
+If you remember what we've seen earlier, you know that the function glProjectArrays () computes  angular position of vertices contained in arrays `glVertices` relatively to the camera position and orientation. The function `glProjectPoint` do the same for a single point and gives you back 
 the resulting angle rather than letting them only available for drawing functions:
 ```C
 extern void glProjectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
@@ -375,7 +377,7 @@ Thus, the visibility of what you want to draw is integrally handled by glOric. Y
 The two functions seen above can easily be combined to incorporate sprites in a 3D scene.
 Let's suppose we want to draw the text sprite 'HELLO' at  position (X=0, Y=0, Z=24) in the 3D scene.
 
-This is going to be done in two steps:
+This is going to be done in two steps at each cycle of the game loop:
 
 - First we compute the screen position of the 3D coordinates where we want to draw the sprite
 

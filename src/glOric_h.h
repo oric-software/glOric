@@ -34,14 +34,14 @@ extern signed char glCamRotX;
 extern unsigned char projOptions;
 extern unsigned char glNbVertices;
 
-extern signed char glVerticesX [NB_MAX_POINTS];
-extern signed char glVerticesY [NB_MAX_POINTS];
-extern signed char glVerticesZ [NB_MAX_POINTS];
+extern signed char glVerticesX [NB_MAX_VERTICES];
+extern signed char glVerticesY [NB_MAX_VERTICES];
+extern signed char glVerticesZ [NB_MAX_VERTICES];
 
-extern signed char points2aH [NB_MAX_POINTS];
-extern signed char points2aV [NB_MAX_POINTS];
-extern unsigned char points2dH [NB_MAX_POINTS];
-extern unsigned char points2dL [NB_MAX_POINTS];
+extern signed char points2aH [NB_MAX_VERTICES];
+extern signed char points2aV [NB_MAX_VERTICES];
+extern unsigned char points2dH [NB_MAX_VERTICES];
+extern unsigned char points2dL [NB_MAX_VERTICES];
 
 extern void glProjectArrays();
 

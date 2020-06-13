@@ -26,8 +26,8 @@ extern unsigned char glSegmentsChar[];
 
 
 #else
-extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
-extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
+extern char                 points3d[]; // NB_MAX_VERTICES * SIZEOF_3DPOINT
+extern char                 points2d[]; // NB_MAX_VERTICES * SIZEOF_2DPOINT
 extern unsigned char        glNbVertices;
 extern unsigned char segments[];
 extern unsigned char glNbSegments;

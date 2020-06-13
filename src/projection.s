@@ -25,30 +25,30 @@ _glNbVertices               .dsb 1
 
 .text
 
-;;char points3d[NB_MAX_POINTS*SIZEOF_3DPOINT];
+;;char points3d[NB_MAX_VERTICES*SIZEOF_3DPOINT];
 ;;.dsb 256-(*&255)
-;;_points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
+;;_points3d       .dsb NB_MAX_VERTICES*SIZEOF_3DPOINT
 _points3d:
-_glVerticesX          .dsb NB_MAX_POINTS
-_glVerticesY          .dsb NB_MAX_POINTS
-_glVerticesZ          .dsb NB_MAX_POINTS
+_glVerticesX          .dsb NB_MAX_VERTICES
+_glVerticesY          .dsb NB_MAX_VERTICES
+_glVerticesZ          .dsb NB_MAX_VERTICES
 #ifndef USE_REWORKED_BUFFERS
-_points3unused      .dsb NB_MAX_POINTS
+_points3unused      .dsb NB_MAX_VERTICES
 #endif ;; USE_REWORKED_BUFFERS
 
 
-;;char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
+;;char points2d [NB_MAX_VERTICES*SIZEOF_2DPOINT];
 ;;.dsb 256-(*&255)
-;;_points2d       .dsb NB_MAX_POINTS*SIZEOF_2DPOINT
+;;_points2d       .dsb NB_MAX_VERTICES*SIZEOF_2DPOINT
 
 
 ;;char points2d [NB_MAX_COORDS*SIZEOF_2DPOINT];
 ;;.dsb 256-(*&255)
 ;;_points2d       .dsb NB_MAX_COORDS*SIZEOF_2DPOINT
 _points2d:
-_points2aH          .dsb NB_MAX_POINTS
-_points2aV          .dsb NB_MAX_POINTS
-_points2dH          .dsb NB_MAX_POINTS
-_points2dL          .dsb NB_MAX_POINTS
+_points2aH          .dsb NB_MAX_VERTICES
+_points2aV          .dsb NB_MAX_VERTICES
+_points2dH          .dsb NB_MAX_VERTICES
+_points2dL          .dsb NB_MAX_VERTICES
 
 #include "glProjectArrays.s"

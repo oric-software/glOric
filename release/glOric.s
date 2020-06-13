@@ -100,7 +100,7 @@
 
 ;; -------- GEOMETRY BUFFERS SIZING --------------
 
-#define NB_MAX_POINTS 64
+#define NB_MAX_VERTICES 64
 #define NB_MAX_SEGMENTS 64
 #define NB_MAX_FACES 64
 #define NB_MAX_PARTICLES 64
@@ -915,18 +915,18 @@ _glNbVertices               .dsb 1
 .text
 
 _points3d:
-_glVerticesX          .dsb NB_MAX_POINTS
-_glVerticesY          .dsb NB_MAX_POINTS
-_glVerticesZ          .dsb NB_MAX_POINTS
+_glVerticesX          .dsb NB_MAX_VERTICES
+_glVerticesY          .dsb NB_MAX_VERTICES
+_glVerticesZ          .dsb NB_MAX_VERTICES
 #ifndef USE_REWORKED_BUFFERS
-_points3unused      .dsb NB_MAX_POINTS
+_points3unused      .dsb NB_MAX_VERTICES
 #endif ;; USE_REWORKED_BUFFERS
 
 _points2d:
-_points2aH          .dsb NB_MAX_POINTS
-_points2aV          .dsb NB_MAX_POINTS
-_points2dH          .dsb NB_MAX_POINTS
-_points2dL          .dsb NB_MAX_POINTS
+_points2aH          .dsb NB_MAX_VERTICES
+_points2aV          .dsb NB_MAX_VERTICES
+_points2dH          .dsb NB_MAX_VERTICES
+_points2dL          .dsb NB_MAX_VERTICES
 
 #ifdef USE_ASM_ARRAYSPROJECT
 _glProjectArrays:

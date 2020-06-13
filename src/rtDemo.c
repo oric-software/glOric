@@ -32,8 +32,8 @@ extern signed char points2aV[];
 // extern signed char points2dH[];
 // extern signed char points2dL[];
 #else
-extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
-extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
+extern char                 points3d[]; // NB_MAX_VERTICES * SIZEOF_3DPOINT
+extern char                 points2d[]; // NB_MAX_VERTICES * SIZEOF_2DPOINT
 #endif // USE_REWORKED_BUFFERS
 
 extern unsigned char glNbVertices;
