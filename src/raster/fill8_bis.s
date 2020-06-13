@@ -193,8 +193,7 @@ A1stepY_notarrived:
 	lda _A1dX 		;; (e2>A1dX)
     sec
 	sbc reg0
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
 	bmi A1stepY_doloop
 
 	lda reg1 		;; (A1Y!=nxtY)
@@ -208,8 +207,7 @@ A1stepY_doloop:
 		lda reg0 ; e2
         sec
         sbc _A1dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A1stepY_A1Xdone
 		;; 	A1err += A1dY;
 			clc
@@ -235,8 +233,7 @@ A1stepY_A1Xdone:
 		lda _A1dX
         sec
 		sbc reg0
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A1stepY_A1Ydone
 		;; 	A1err += A1dX;
 			clc
@@ -376,8 +373,7 @@ A2stepY_notarrived:
 	lda _A2dX 		;; (e2>A2dX)
     sec
     sbc reg0
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
 	bmi A2stepY_doloop
 
 	lda reg1 		;; (A2Y!=nxtY)
@@ -391,8 +387,7 @@ A2stepY_doloop:
 		lda reg0 ; e2
         sec
         sbc _A2dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A2stepY_A2Xdone
 		;; 	A2err += A2dY;
 			clc
@@ -415,8 +410,7 @@ A2stepY_A2Xdone:
 		lda _A2dX
         sec
         sbc reg0
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A2stepY_A2Ydone
 		;; 	A2err += A2dX;
 			clc
@@ -577,16 +571,14 @@ fill8_computeErr_01:
 
 	    sec
 		sbc #$40
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi fill8_goon_01
 		jmp fill8_done
 fill8_goon_01:
 		lda _A1err
 		sec
 		sbc #$C0
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bpl fill8_goon_02
 		jmp fill8_done
 fill8_goon_02:
@@ -681,16 +673,14 @@ fill8_computeErr_02:
 .(
 	    sec
 		sbc #$40
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi fill8_tmp02
 		jmp fill8_done
 fill8_tmp02:
 		lda _A2err
 		sec
 		sbc #$C0
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bpl fill8_tmp03
 		jmp fill8_done
 fill8_tmp03:
@@ -903,16 +893,14 @@ fill8_computeErr_05:
     ;;         return;
 	    sec
 		sbc #$40
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi fill8_goon_05
 		jmp fill8_done
 fill8_goon_05:
 		lda _A1err
 		sec
 		sbc #$C0
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bpl fill8_goon_06
 		jmp fill8_done
 fill8_goon_06
@@ -1008,16 +996,14 @@ fill8_computeErr_09:
     ;;         return;
 	    sec
 		sbc #$40
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi fill8_tmp07
 		jmp fill8_done
 fill8_tmp07:
 		lda _A2err
 		sec
 		sbc #$C0
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bpl fill8_tmp08
 		jmp fill8_done
 fill8_tmp08:

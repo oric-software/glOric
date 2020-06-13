@@ -61,8 +61,7 @@ A1stepY_A1Right_notarrived:
 	lda _A1dX 		;; (e2>A1dX)
     sec
 	sbc tmp5
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
 	bmi A1stepY_A1Right_doloop
 
 	lda tmp5+1 		;; (A1Y!=nxtY)
@@ -76,8 +75,7 @@ A1stepY_A1Right_doloop:
 		lda tmp5 ; e2
         sec
         sbc _A1dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A1stepY_A1Right_A1Xdone
 		;; 	A1err += A1dY;
 			clc
@@ -114,8 +112,7 @@ A1stepY_A1Right_A1Xdone:
 		lda _A1dX
         sec
 		sbc tmp5
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A1stepY_A1Right_A1Ydone
 		;; 	A1err += A1dX;
 			clc
@@ -217,8 +214,7 @@ A1stepY_A1Left_notarrived:
 	lda _A1dX 		;; (e2>A1dX)
     sec
 	sbc tmp5
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
 	bmi A1stepY_A1Left_doloop
 
 	lda tmp5+1 		;; (A1Y!=nxtY)
@@ -232,8 +228,7 @@ A1stepY_A1Left_doloop:
 		lda tmp5 ; e2
         sec
         sbc _A1dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A1stepY_A1Left_A1Xdone
 		;; 	A1err += A1dY;
 			clc
@@ -278,8 +273,7 @@ A1stepY_A1Left_A1Xdone:
 		lda _A1dX
         sec
 		sbc tmp5
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A1stepY_A1Left_A1Ydone
 		;; 	A1err += A1dX;
 			clc
@@ -378,8 +372,7 @@ A2stepY_A1Right_notarrived:
 	lda _A2dX 		;; (e2>A2dX)
     sec
     sbc tmp5
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
 	bmi A2stepY_A1Right_doloop
 
 	lda tmp5+1 		;; (A2Y!=nxtY)
@@ -393,8 +386,7 @@ A2stepY_A1Right_doloop:
 		lda tmp5 ; e2
         sec
         sbc _A2dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A2stepY_A1Right_A2Xdone
 		;; 	A2err += A2dY;
 			clc
@@ -435,8 +427,7 @@ A2stepY_A1Right_A2Xdone:
 		lda _A2dX
         sec
         sbc tmp5
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A2stepY_A1Right_A2Ydone
 		;; 	A2err += A2dX;
 			clc
@@ -535,8 +526,7 @@ A2stepY_A1Left_notarrived:
 	lda _A2dX 		;; (e2>A2dX)
     sec
     sbc tmp5
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
 	bmi A2stepY_A1Left_doloop
 
 	lda tmp5+1 		;; (A2Y!=nxtY)
@@ -550,8 +540,7 @@ A2stepY_A1Left_doloop:
 		lda tmp5 ; e2
         sec
         sbc _A2dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A2stepY_A1Left_A2Xdone
 		;; 	A2err += A2dY;
 			clc
@@ -586,8 +575,7 @@ A2stepY_A1Left_A2Xdone:
 		lda _A2dX
         sec
         sbc tmp5
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
 		bmi A2stepY_A1Left_A2Ydone
 		;; 	A2err += A2dX;
 			clc
@@ -661,8 +649,7 @@ _initSatur_A1Right:
 	lda _A1X
 	sec
 	sbc #SCREEN_WIDTH-1
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bmi initSatur_A1Right_A1Xdone
 	bne initSatur_A1Right_A1Xsatur
 	;; if (A1sX == 1) {}
@@ -681,8 +668,7 @@ initSatur_A1Right_A1Xdone:
 #else
 	sec
 	sbc #COLUMN_OF_COLOR_ATTRIBUTE
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bmi initSatur_A1Right_A2Xsatur
 	bne initSatur_A1Right_A2Xdone
 #endif
@@ -731,8 +717,7 @@ _initSatur_A1Left:
 	lda _A2X
 	sec
 	sbc #SCREEN_WIDTH-1
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bmi initSatur_A1Left_A2done
 	beq initSatur_A1Left_A2OnEdge
 	jmp initSatur_A1Left_A2Satur
@@ -767,8 +752,7 @@ initSatur_A1Left_A2done:
 #else
 	sec
 	sbc #COLUMN_OF_COLOR_ATTRIBUTE
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bmi initSatur_A1Left_A1Satur
 	bne initSatur_A1Left_A1done
 #endif
@@ -848,8 +832,7 @@ bresStepType1_A1Left_loop:
 	lda #1
 	sec
 	sbc _A1Y
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bpl  bresStepType1_A1Left_endloop
     ;;         A1stepY_A1Left();
 		ldy #0 : jsr _A1stepY_A1Left :
@@ -876,8 +859,7 @@ bresStepType1_A1Right_loop:
 	lda #1
 	sec
 	sbc _A1Y
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bpl  bresStepType1_A1Right_endloop
     ;;         A1stepY_A1Right();
 		ldy #0 : jsr _A1stepY_A1Right :
@@ -913,8 +895,7 @@ bresStepType2_A1Left_loop:
 		lda #1
 		sec
 		sbc _A1Y
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bpl bresStepType2_A1Left_endloop
     ;;         A1stepY_A1Left();
 		ldy #0 : jsr _A1stepY_A1Left
@@ -939,8 +920,7 @@ bresStepType2_A1Right_loop:
 		lda #1
 		sec
 		sbc _A1Y
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bpl  bresStepType2_A1Right_endloop
 
     ;;         A1stepY_A1Right();
@@ -986,8 +966,7 @@ bresStepType3_A1Left_loop:
 	lda #1
 	sec
 	sbc _A1Y
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bpl bresStepType3_A1Left_endloop
     ;;         A1stepY_A1Left();
 		ldy #0 : jsr _A1stepY_A1Left
@@ -1014,8 +993,7 @@ bresStepType3_A1Right_loop:
 	lda #1
 	sec
 	sbc _A1Y
-	bvc *+4
-    eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bpl bresStepType3_A1Right_endloop
 	
     ;;         A1stepY_A1Right();

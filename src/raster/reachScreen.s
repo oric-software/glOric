@@ -14,9 +14,8 @@ reachScreen_Lbresfill130
     sbc #SCREEN_HEIGHT-NB_LESS_LINES_4_COLOR
 #else
     sbc #SCREEN_HEIGHT
-#endif
-    bvc *+4 : eor #$80 
-
+#endif 
+    .(:bvc skip : eor #$80: skip:.)
     bmi *+5 : jmp reachScreen_Lbresfill129
 reachScreen_done
 .)

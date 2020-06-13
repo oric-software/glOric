@@ -106,16 +106,14 @@ lrDrawLine_computeErr:
 ;;     if ((A1err > 64) || (A1err < -63)) return;
     sec
     sbc #$40
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
     bmi lrDrawLine_goon01
 	jmp lrDrawLine_endloop
 lrDrawLine_goon01:
     lda _A1err
     sec
     sbc #$C0
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
     bpl lrDrawLine_goon02:
 	jmp lrDrawLine_endloop
 lrDrawLine_goon02:
@@ -201,8 +199,7 @@ lrDrawLine_errdone_01:
 ;;         if (e2 >= A1dY) {
         sec
         sbc _A1dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
         bmi lrDrawLine_dyovera
 
 ;;             A1err += A1dY;  ;; e_xy+e_x > 0
@@ -223,8 +220,7 @@ lrDrawLine_dyovera:
 		lda _A1dX
 		sec
 		sbc reg4
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi lrDrawLine_e2overdx
 ;;             A1err += A1dX;
 			lda _A1err

@@ -42,16 +42,14 @@ _hfill:
 	sta reg0
 	sec
 	sbc _A2X				; signed cmp to p2x
-	bvc *+4
-	eor #$80
+	.(:bvc skip : eor #$80: skip:.)
 	bmi hfill_A2xOverOrEqualA1x
 #ifdef USE_COLOR
 //		dx = max(2, A2X);
 		lda _A2X
 		sec
 		sbc #COLUMN_OF_COLOR_ATTRIBUTE
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hfill_A2xLowerThan3
 		lda _A2X
 		jmp hfill_A2xPositiv
@@ -70,8 +68,7 @@ hfill_A2xPositiv:
 		sta tmp1
 		sec
 		sbc #SCREEN_WIDTH - 1
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hfill_A1xOverScreenWidth
 		lda #SCREEN_WIDTH - 1
 		sta tmp1
@@ -84,8 +81,7 @@ hfill_A2xOverOrEqualA1x:
 		lda _A1X
 		sec
 		sbc #COLUMN_OF_COLOR_ATTRIBUTE
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hfill_A1xLowerThan3
 		lda _A1X
 		jmp hfill_A1xPositiv
@@ -104,8 +100,7 @@ hfill_A1xPositiv:
 		sta tmp1
 		sec
 		sbc #SCREEN_WIDTH - 1
-		bvc *+4
-		eor $80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hfill_A2xOverScreenWidth
 		lda #SCREEN_WIDTH - 1
 		sta tmp1

@@ -56,7 +56,7 @@ _prepare_bresrun:
 ; PROFILE_ENTER(ROUTINE_PREPAREBRESRUN)
 ; #endif
     ; if (P1Y <= P2Y) {
-	lda _P2Y: sec: sbc _P1Y : bvc *+4 :	eor #$80
+	lda _P2Y: sec: sbc _P1Y :.(:bvc skip : eor #$80: skip:.)
 .(
 	bpl skip_01
 	jmp prepare_bresrun_Lbresfill129
@@ -67,7 +67,7 @@ skip_01:.)
 	;; lda #0 : ldx tmp1 : stx tmp1 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp1+1 :
 	;; lda tmp1 : cmp tmp0 : lda tmp1+1 : sbc tmp0+1 : .( : bvc *+4 : eor #$80 : bpl skip : jmp prepare_bresrun_Lbresfill129 :skip : .) : : :
     ;     if (P2Y <= P3Y) {
-		lda _P3Y: sec: sbc _P2Y : bvc *+4 :	eor #$80 : 
+		lda _P3Y: sec: sbc _P2Y : .(:bvc skip : eor #$80: skip:.) : 
 .( 
 	bpl skip_01 : jmp prepare_bresrun_Lbresfill131 : 
 skip_01:.)
@@ -88,7 +88,7 @@ prepare_bresrun_Lbresfill131
 	lda _P2X : sta _pDepX :   ;         pDepX = P2X;
 	lda _P2Y : sta _pDepY :   ;         pDepY = P2Y;
     ;         if (P1Y <= P3Y) {
-		lda _P3Y: sec: sbc _P1Y : bvc *+4 :	eor #$80
+		lda _P3Y: sec: sbc _P1Y : .(:bvc skip : eor #$80: skip:.)
 .( : bpl skip_01 : jmp prepare_bresrun_Lbresfill133: skip_01:.)
 	;; lda _P1Y : sta tmp0 :
 	;; lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
@@ -112,7 +112,7 @@ prepare_bresrun_Lbresfill133
     ; } else {
 prepare_bresrun_Lbresfill129
     ;     if (P1Y <= P3Y) {
-		lda _P3Y: sec: sbc _P1Y : bvc *+4 :	eor #$80
+		lda _P3Y: sec: sbc _P1Y : .(:bvc skip : eor #$80: skip:.)
 .( : bpl skip_01 : jmp prepare_bresrun_Lbresfill135 : skip_01:.)
 	;; lda _P1Y : sta tmp0 :
 	;; lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :
@@ -131,7 +131,7 @@ prepare_bresrun_Lbresfill135
 	lda _P1X : sta _pDepX :  ;         pDepX = P1X;
 	lda _P1Y : sta _pDepY :  ;         pDepY = P1Y;
     ;         if (P2Y <= P3Y) {
-		lda _P3Y: sec: sbc _P2Y : bvc *+4 :	eor #$80
+		lda _P3Y: sec: sbc _P2Y : .(:bvc skip : eor #$80: skip:.)
 .( : bpl skip_01 : jmp prepare_bresrun_Lbresfill137 : skip_01:.)
 	;; lda _P2Y : sta tmp0 :
 	;; lda #0 : ldx tmp0 : stx tmp0 : .( : bpl skip : lda #$FF :skip : .)  : sta tmp0+1 :

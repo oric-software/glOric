@@ -141,14 +141,12 @@ computeErr:
 //  if ((A1err >= 64) ||(A1err < -64)) return;
     sec
     sbc #$40
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
     bpl endloop
     lda err
     sec
     sbc #$C0
-    bvc *+4
-    eor #$80
+    .(:bvc skip : eor #$80: skip:.)
     bmi endloop
 
 //  while (true)   /* loop */
@@ -182,8 +180,7 @@ continue:
 ;       if a < dy then goto dyovera
         sec
         sbc dY
-        bvc *+4
-        eor #$80
+        .(:bvc skip : eor #$80: skip:.)
         bmi dyovera
 //          err += dy; /* e_xy+e_x > 0 */
 ;           a = err

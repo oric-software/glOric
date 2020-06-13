@@ -71,8 +71,7 @@ hzfill_A2XDontSatur_01:
 		lda _A2X
 		sec
 		sbc #COLUMN_OF_COLOR_ATTRIBUTE
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hzfill_A2xLowerThan3
 		lda _A2X
 		jmp hzfill_A2xPositiv
@@ -110,8 +109,7 @@ hzfill_A1XDontSatur:
 		sta _finX
 		sec
 		sbc #SCREEN_WIDTH - 1
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hzfill_A1xOverScreenWidth
 		lda #SCREEN_WIDTH - 1
 		sta _finX
@@ -143,8 +141,7 @@ hzfill_A1XDontSatur_02:
 		lda _A1X
 		sec
 		sbc #COLUMN_OF_COLOR_ATTRIBUTE
-		bvc *+4
-		eor #$80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hzfill_A1xLowerThan3
 		lda _A1X
 		jmp hzfill_A1xPositiv
@@ -180,8 +177,7 @@ hzfill_A2XDontSatur_02:
 		sta _finX
 		sec
 		sbc #SCREEN_WIDTH - 1
-		bvc *+4
-		eor $80
+		.(:bvc skip : eor #$80: skip:.)
 		bmi hzfill_A2xOverScreenWidth
 		lda #SCREEN_WIDTH - 1
 		sta _finX

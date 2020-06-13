@@ -3363,8 +3363,8 @@ fastzplot_done:
 .)
 	rts
 
-// void zplot(unsigned char X,
-//           unsigned char Y,
+// void zplot(signed char X,
+//           signed char Y,
 //           unsigned char dist,
 //           char          char2disp) {
 
