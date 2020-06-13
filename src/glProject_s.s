@@ -8,9 +8,17 @@ ptrpt2:
 ptrpt2L .dsb 1
 ptrpt2H .dsb 1
 
-.text
 
-#ifndef USE_REWORKED_BUFFERS
+#ifdef SAVE_ZERO_PAGE
+.text
+#else
+.zero
+#endif
+
+nbPoints				.dsb 1
+pOptions				.dsb 1
+
+.text
 
 
 ;;  void doFastProjection(){
@@ -121,10 +129,10 @@ _glProject
 	ldx #6 : lda #4 : jsr enter :
 	ldy #0 : lda (ap),y : sta reg0 : sta ptrpt2L : iny : lda (ap),y : sta reg0+1 : sta ptrpt2H :
 	ldy #2 : lda (ap),y : sta reg0 : sta ptrpt3L : iny : lda (ap),y : sta reg0+1 : sta ptrpt3H :
-	ldy #4 : lda (ap),y : sta tmp0 : sta _glNbVertices ; iny : lda (ap),y : sta tmp0+1 :
-	ldy #6 : lda (ap),y : sta tmp0 : sta _projOptions ; iny : lda (ap),y : sta tmp0+1 :
+	ldy #4 : lda (ap),y : sta tmp0 : sta nbPoints ; iny : lda (ap),y : sta tmp0+1 :
+	ldy #6 : lda (ap),y : sta tmp0 : sta pOptions ; iny : lda (ap),y : sta tmp0+1 :
 
 	jsr _doFastProjection
 	jmp leave :
 .)
-#endif  ;; USE_REWORKED_BUFFERS
+

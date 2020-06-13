@@ -45,7 +45,7 @@ const char ptsCube3D[]={
 };
 char ptsCube2D [NB_POINTS_CUBE	* SIZEOF_2DPOINT];
 
-glProject (points2D, points3D, NB_POINTS_CUBE, 0);
+glProject (ptsCube2D, ptsCube3D, NB_POINTS_CUBE, 0);
 ```
 
 after the call to `glProject` array `points2D` contains 2D coordinates of points in `points3D`

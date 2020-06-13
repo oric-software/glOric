@@ -72,7 +72,7 @@ If a vertex numbered `n` of the scene is located at position (X=2, Y=3, Z=1) the
 glVerticesX[n] = 2,  glVerticesY[n] = 3 and glVerticesZ[n] = 1,
 
 For glOric to know the number of vertices that are stored in this array, it has to be indicated in the `glNbVertices` variable.
-The maximum number of vertices is configured througb the constant named `NB_MAX_VERTICES` defined in file `glOric_vXY.h`.
+The maximum number of vertices is configured througb the constant named `NB_MAX_VERTICES` defined in file `glOric.h`.
 In any circumstance, you must ensure that the value contained in the `glNbVertices` variable is lower than the value of `NB_MAX_VERTICES` (which can't be greater or equal to 256). Memory corruption can occur if this constraint is not respected.
 
 Once vertex of the scene are given to glOric, we can refer to them through their index to tell glOric where to draw particles, segments and faces.
@@ -91,7 +91,7 @@ extern unsigned char    glParticlesChar[];
 `glParticlesPt` contains, for each particles, the index of the vertex containing the position where to draw the particle and `glParticlesChar` contains, for each particles, the character that has to be used to display the particle.
 
 For glOric to know the number of particles that are stored in these arrays, it has to be indicated in the `glNbParticles` variable.
-The maximum number of particles is configured througb the constant named `NB_MAX_ParticleS` defined in file `glOric_vXY.h`. Default max is 64.
+The maximum number of particles is configured througb the constant named `NB_MAX_ParticleS` defined in file `glOric.h`. Default max is 64.
 In any circumstance, you must ensure that the value contained in the `glNbParticles` variable is lower than the value of `NB_MAX_ParticleS`. Memory corruption can occur if this constraint is not respected.
 
 Now we're going to see how to let glOric know where and how to draw particles.
@@ -334,7 +334,7 @@ In order to have a general view of the rendering process before entering into de
 
 # Going further
 
-We've seen all functions provided by glOric but two that we are now going to explore because they allow to extend possiblities of glOric while benefiting of its power.
+We've seen all functions provided by glOric but three that we are now going to explore because they allow to extend possiblities of glOric while benefiting of its power.
 
 ## 3D to 2D projection
 
@@ -358,6 +358,13 @@ From the horizontal and vertical angles returned by glProjectPoint, it is easy t
     sX = (SCREEN_WIDTH -aH) >> 1;
     sY = (SCREEN_HEIGHT - aV) >> 1;
 ```
+
+As a convenience, a multiple point version of the projection function is provided by glOric:
+```C
+extern void glProject (char points2D[], char points3D[], unsigned char nbVertices, unsigned char options);
+```
+
+TO BE CONTINUED
 
 ## plotting with distance
 

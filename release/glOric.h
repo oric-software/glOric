@@ -79,4 +79,6 @@ extern void glInitScreenBuffers();
 extern void glBuffer2Screen();
 extern void glZPlot(signed char X, signed char Y, unsigned char dist, char char2disp);
 extern void glProjectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
+extern void glProject (char points2D[], char points3D[], unsigned char nbVertices, unsigned char options);
+
 #endif
