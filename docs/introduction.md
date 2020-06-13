@@ -91,8 +91,8 @@ extern unsigned char    glParticlesChar[];
 `glParticlesPt` contains, for each particles, the index of the vertex containing the position where to draw the particle and `glParticlesChar` contains, for each particles, the character that has to be used to display the particle.
 
 For glOric to know the number of particles that are stored in these arrays, it has to be indicated in the `glNbParticles` variable.
-The maximum number of particles is configured througb the constant named `NB_MAX_ParticleS` defined in file `glOric.h`. Default max is 64.
-In any circumstance, you must ensure that the value contained in the `glNbParticles` variable is lower than the value of `NB_MAX_ParticleS`. Memory corruption can occur if this constraint is not respected.
+The maximum number of particles is configured througb the constant named `NB_MAX_PARTICLES` defined in file `glOric.h`. Default max is 64.
+In any circumstance, you must ensure that the value contained in the `glNbParticles` variable is lower than the value of `NB_MAX_PARTICLES`. Memory corruption can occur if this constraint is not respected.
 
 Now we're going to see how to let glOric know where and how to draw particles.
 
