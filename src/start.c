@@ -199,7 +199,7 @@ void main (){
 
         glDrawParticles();
 
-        glBuffer2Screen((char *)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
     }
     printf ("Fin\n");
 

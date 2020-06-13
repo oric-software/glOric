@@ -120,7 +120,7 @@ void profbench() {
         glDrawParticles();
 
         PROFILE_ENTER(ROUTINE_BUFFER2SCREEN);
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         PROFILE_LEAVE(ROUTINE_BUFFER2SCREEN);
 
         PROFILE_LEAVE(ROUTINE_GLOBAL);

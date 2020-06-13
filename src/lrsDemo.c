@@ -90,7 +90,7 @@ void quickTest(){
     glProjectArrays();
     glInitScreenBuffers();
     glDrawFaces();
-    glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+    glBuffer2Screen();
     get();
 }
 
@@ -162,7 +162,7 @@ void lrsIntro() {
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
     }
 #ifdef TARGET_ORIX
 #else
@@ -208,7 +208,7 @@ void lrsGameLoop() {
 #endif //USE_REWORKED_BUFFERS
 
     while (1 == 1) {
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         dispInfo();
 #ifdef TARGET_ORIX
         cgetc();

@@ -87,7 +87,7 @@ void quickTest(){
     glProjectArrays();
     glInitScreenBuffers();
     glDrawFaces();
-    glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+    glBuffer2Screen();
     get();
 }
 
@@ -186,7 +186,7 @@ void rtIntro() {
         // dur = dur - deek(0x276); printf ("dur lrDrawParticles = %d \n", dur); get();
 
         // dur = deek(0x276);
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         // dur = dur - deek(0x276); printf ("dur glBuffer2Screen = %d \n", dur); get();
     }
 #ifdef TARGET_ORIX

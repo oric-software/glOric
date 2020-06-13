@@ -19,7 +19,7 @@ extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
 
 extern void glInitScreenBuffers();
 
-extern void glBuffer2Screen(char destAdr[]); 
+extern void glBuffer2Screen(); 
 extern void glZPlot(signed char X, signed char Y, unsigned char dist, char char2disp);
 
 #ifdef USE_ASM_ZLINE

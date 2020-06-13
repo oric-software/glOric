@@ -74,5 +74,5 @@ extern void glDrawFaces();
 extern void glDrawSegments();
 extern void glDrawParticles();
 extern void glInitScreenBuffers();
-extern void glBuffer2Screen(char destAdr[]);
+extern void glBuffer2Screen();
 #endif // GLORIC_H

@@ -139,7 +139,7 @@ void gameLoop() {
         glZPlot(sX+4,sY,distance,'E');
   
         // update display with buffer
-        glBuffer2Screen((void*)0);
+        glBuffer2Screen();
         sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     }
 }

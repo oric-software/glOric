@@ -149,7 +149,7 @@ void colorIntro() {
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         dispInfo();
     }
 
@@ -178,7 +178,7 @@ void colorIntro() {
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         dispInfo();
     }
 
@@ -201,7 +201,7 @@ void colorIntro() {
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         dispInfo();
     }
 
@@ -247,7 +247,7 @@ void colorGameLoop() {
 #endif //USE_REWORKED_BUFFERS
 
     while (1 == 1) {
-        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         dispInfo();
 #ifdef TARGET_ORIX
         cgetc();
