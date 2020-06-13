@@ -15,8 +15,8 @@ extern void lrsDemo();
 
 /*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
 
-extern int CamPosX, CamPosY, CamPosZ;
-extern char CamRotZ, CamRotX;
+extern int glCamPosX, glCamPosY, glCamPosZ;
+extern char glCamRotZ, glCamRotX;
 
 
 unsigned char nbPts=0;
@@ -79,17 +79,17 @@ void hiresIntro (){
     int i;
 
 
-	CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	glCamPosX = -24;
+	glCamPosY = 0;
+	glCamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
+ 	glCamRotZ = 64 ;
+	glCamRotX = 2;
 
     for (i=0;i<2;) {
-		CamPosX = traj[i++];
-		CamPosY = traj[i++];
-		CamRotZ = traj[i++];
+		glCamPosX = traj[i++];
+		glCamPosY = traj[i++];
+		glCamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts,0);
         //memset ( 0xa000, 64, 8000); // clear screen
@@ -127,12 +127,12 @@ int main ()
 	tgi_line(-10,-10,100,100);
 */
 	//tgi_line(128,96,128,128);
-	/*CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	/*glCamPosX = -24;
+	glCamPosY = 0;
+	glCamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
+ 	glCamRotZ = 64 ;
+	glCamRotX = 2;
 	*/
 	/*nbPts =0 ;
 	nbSegments =0 ;

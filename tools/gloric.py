@@ -16,7 +16,7 @@ nbpoints = 4
 faces = [[3, 2, 6]]
 points = [[4,4,4],[4,4,-4], [-4, 4, -4],[-4, 4, 4],[4,-4,4],[4,-4,-4],[-4,-4,-4],[-4,-4,4]]
 #points = [[-4,4,-4],[-4,-4,-4],[-4,-4,4]]
-campos=[-4, 4, 1]
+glCamPos=[-4, 4, 1]
 camori=[-32, 0] # rotation Z puis X en 127ème de Pi radian
 
 #system
@@ -280,9 +280,9 @@ def project ():
 
     points2 = []
     for p in points:
-        ang1 = math.atan2((p[1]-campos[1]),(p[0]-campos[0])) - camori[0]*(math.pi/128)
-        dist = math.sqrt ((p[1]-campos[1])**2+(p[0]-campos[0])**2)
-        ang2 = math.atan2((p[2]-campos[2]),dist) - camori[1]*(math.pi/128)
+        ang1 = math.atan2((p[1]-glCamPos[1]),(p[0]-glCamPos[0])) - camori[0]*(math.pi/128)
+        dist = math.sqrt ((p[1]-glCamPos[1])**2+(p[0]-glCamPos[0])**2)
+        ang2 = math.atan2((p[2]-glCamPos[2]),dist) - camori[1]*(math.pi/128)
 
         X = ((-ang1 * LV) / math.radians(EAH)) + LV #(ang1 * (127 / math.pi)) / 2 + (LE / 2) #
         Y = ((-ang2 * HV) / math.radians(EAV)) + HV
@@ -295,14 +295,14 @@ def intProject ():
 
     points2 = []
     for p in points:
-        DeltaX = p[0]-campos[0]
-        DeltaY = p[1]-campos[1]
+        DeltaX = p[0]-glCamPos[0]
+        DeltaY = p[1]-glCamPos[1]
 
         AngleH = fastAtan(DeltaY,DeltaX)
 
         Norm = fastNorm (DeltaY,DeltaX)
 
-        DeltaZ = p[2]-campos[2]
+        DeltaZ = p[2]-glCamPos[2]
         AngleV = fastAtan(DeltaZ,Norm)
 
         AnglePH = AngleH - camori[0]

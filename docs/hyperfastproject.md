@@ -9,13 +9,13 @@ Given the camera situation (position and orientation) and a screen configuration
 ```C
 
 // Camera Position
-extern int CamPosX;
-extern int CamPosY;
-extern int CamPosZ;
+extern int glCamPosX;
+extern int glCamPosY;
+extern int glCamPosZ;
 
 // Camera Orientation
-extern char CamRotZ;
-extern char CamRotX;
+extern char glCamRotZ;
+extern char glCamRotX;
 
 void glProject (char points2D[], char points3D[], unsigned char nbPoints, unsigned char options);
 ```

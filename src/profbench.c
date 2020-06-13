@@ -30,12 +30,12 @@ void profbench() {
     initColors();
 
 
-    CamPosX = 74;
-    CamPosY = 0;
-    CamPosZ = 6;
+    glCamPosX = 74;
+    glCamPosY = 0;
+    glCamPosZ = 6;
 
-    CamRotZ = -128;
-    CamRotX = 0;
+    glCamRotZ = -128;
+    glCamRotX = 0;
 
 
 
@@ -54,7 +54,7 @@ void profbench() {
         switch (state) {
             case 0:
                 if (ii > 0) {
-                    CamPosX -- ; 
+                    glCamPosX -- ; 
                     ii--;
                 } else {
                     ii = 32; 
@@ -63,7 +63,7 @@ void profbench() {
             break;
             case 1:
                 if (ii > 0) {
-                    CamRotZ += 4 ; 
+                    glCamRotZ += 4 ; 
                     ii--;
                 } else {
                     ii = 24; 
@@ -72,7 +72,7 @@ void profbench() {
             break;
             case 2:
                 if (ii > 0) {
-                    CamPosX ++ ; 
+                    glCamPosX ++ ; 
                     ii--;
                 } else {
                     ii = 32; 
@@ -81,7 +81,7 @@ void profbench() {
             break;
             case 3:
                 if (ii > 0) {
-                    CamRotZ += 4 ; 
+                    glCamRotZ += 4 ; 
                     ii--;
                 } else {
                     ii = 64; 
@@ -91,9 +91,9 @@ void profbench() {
             break;
             case 4:
                 if (ii > 0) {
-                    CamPosX = traj[kk++];
-                    CamPosY = traj[kk++];
-                    CamRotZ = traj[kk++];
+                    glCamPosX = traj[kk++];
+                    glCamPosY = traj[kk++];
+                    glCamRotZ = traj[kk++];
                     kk       = kk % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
                     ii--;
                 } else {
@@ -136,10 +136,10 @@ void profbench() {
 void move(char key) {
     switch (key) {
         case 8:  // gauche => tourne gauche
-            CamRotZ += 4;
+            glCamRotZ += 4;
             break;
         case 9:  // droite => tourne droite
-            CamRotZ -= 4;
+            glCamRotZ -= 4;
             break;
         case 10:  // bas => recule
             backward();
@@ -148,16 +148,16 @@ void move(char key) {
             forward();
             break;
         case 80:  // P
-            CamPosZ += 1;
+            glCamPosZ += 1;
             break;
         case 59:  // ;
-            CamPosZ -= 1;
+            glCamPosZ -= 1;
             break;
         case 81:  // Q
-            CamRotX += 2;
+            glCamRotX += 2;
             break;
         case 65:  // A
-            CamRotX -= 2;
+            glCamRotX -= 2;
             break;
         case 90:  // Z
             shiftLeft();

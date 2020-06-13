@@ -69,7 +69,7 @@ extern void shiftRight();
 
 
 void dispInfo() {
-    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
 #ifdef TARGET_ORIX
 #else
     AdvancedPrint(3, 0, status_string);
@@ -78,12 +78,12 @@ void dispInfo() {
 
 
 void quickTest(){
-    CamPosX = -20;
-    CamPosY = 16;
-    CamPosZ = 6;
+    glCamPosX = -20;
+    glCamPosY = 16;
+    glCamPosZ = 6;
 
-    CamRotZ = -23;
-    CamRotX = 0;
+    glCamRotZ = -23;
+    glCamRotX = 0;
     glProjectArrays();
     initScreenBuffers();
     glDrawFaces();
@@ -135,18 +135,18 @@ void rtIntro() {
     // enterSC();
 #endif  // TARGET_ORIX
 
-    CamPosX = 0;
-    CamPosY = 0;
-    CamPosZ = 6;
+    glCamPosX = 0;
+    glCamPosY = 0;
+    glCamPosZ = 6;
 
-    CamRotZ = 0;
-    CamRotX = 0;
+    glCamRotZ = 0;
+    glCamRotX = 0;
     i       = 0;
     
     for (j = 0; j < 32; j++) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
+        glCamPosX = traj[i++];
+        glCamPosY = traj[i++];
+        glCamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
         // dur = deek(0x276);
@@ -211,7 +211,7 @@ void rtGameLoop() {
 #endif
     // dur = dur - deek(0x276);printf ("dur glProject = %d \n", dur);dur = deek(0x276);
 
-    // printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    // printf ("(x=%d y=%d z=%d) [%d %d]\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     //     for (ii=0; ii< nbPts; ii++){
     //         printf ("[%d %d %d] => [%d %d] %d \n"
     //         , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
@@ -269,10 +269,10 @@ void rtGameLoop() {
 void move(char key) {
     switch (key) {
         case 8:  // gauche => tourne gauche
-            CamRotZ += 4;
+            glCamRotZ += 4;
             break;
         case 9:  // droite => tourne droite
-            CamRotZ -= 4;
+            glCamRotZ -= 4;
             break;
         case 10:  // bas => recule
             backward();
@@ -281,16 +281,16 @@ void move(char key) {
             forward();
             break;
         case 80:  // P
-            CamPosZ += 1;
+            glCamPosZ += 1;
             break;
         case 59:  // ;
-            CamPosZ -= 1;
+            glCamPosZ -= 1;
             break;
         case 81:  // Q
-            CamRotX += 2;
+            glCamRotX += 2;
             break;
         case 65:  // A
-            CamRotX -= 2;
+            glCamRotX -= 2;
             break;
         case 90:  // Z
             shiftLeft();

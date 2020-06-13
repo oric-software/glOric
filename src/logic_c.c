@@ -5,145 +5,145 @@ extern unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z)
 void forward() {
 #ifdef USE_COLLISION_DETECTION
     signed int X, Y;
-    X = CamPosX;
-    Y = CamPosY;
+    X = glCamPosX;
+    Y = glCamPosY;
 #endif
 
-    if (-112 >= CamRotZ) {
-        CamPosX--;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY--;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY--;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY++;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY++;
+    if (-112 >= glCamRotZ) {
+        glCamPosX--;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY--;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY--;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY++;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY++;
     } else {
-        CamPosX--;
+        glCamPosX--;
     }
 #ifdef USE_COLLISION_DETECTION
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X;
-        CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X;
+        glCamPosY = Y;
     }
 #endif
 }
 void backward() {
 #ifdef USE_COLLISION_DETECTION
     signed int X, Y;
-    X = CamPosX;
-    Y = CamPosY;
+    X = glCamPosX;
+    Y = glCamPosY;
 #endif
-    if (-112 >= CamRotZ) {
-        CamPosX++;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY++;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY++;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY--;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY--;
+    if (-112 >= glCamRotZ) {
+        glCamPosX++;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY++;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY++;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY--;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY--;
     } else {
-        CamPosX++;
+        glCamPosX++;
     }
 #ifdef USE_COLLISION_DETECTION
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X;
-        CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X;
+        glCamPosY = Y;
     }
 #endif
 }
 void shiftLeft() {
 #ifdef USE_COLLISION_DETECTION
     signed int X, Y;
-    X = CamPosX;
-    Y = CamPosY;
+    X = glCamPosX;
+    Y = glCamPosY;
 #endif
-    if (-112 >= CamRotZ) {
-        CamPosY--;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY--;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY++;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY++;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY--;
+    if (-112 >= glCamRotZ) {
+        glCamPosY--;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY--;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY++;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY++;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY--;
     } else {
-        CamPosY--;
+        glCamPosY--;
     }
 #ifdef USE_COLLISION_DETECTION
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X;
-        CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X;
+        glCamPosY = Y;
     }
 #endif
 }
 void shiftRight() {
 #ifdef USE_COLLISION_DETECTION
     signed int X, Y;
-    X = CamPosX;
-    Y = CamPosY;
+    X = glCamPosX;
+    Y = glCamPosY;
 #endif
-    if (-112 >= CamRotZ) {
-        CamPosY++;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY++;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX--;
-        CamPosY--;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY--;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX++;
-        CamPosY++;
+    if (-112 >= glCamRotZ) {
+        glCamPosY++;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY++;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX--;
+        glCamPosY--;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY--;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX++;
+        glCamPosY++;
     } else {
-        CamPosX++;
+        glCamPosX++;
     }
 #ifdef USE_COLLISION_DETECTION
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X;
-        CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X;
+        glCamPosY = Y;
     }
 #endif
 }

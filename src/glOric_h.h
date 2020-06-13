@@ -15,13 +15,13 @@
  */                                            
 
  // Camera Position
-extern int CamPosX;
-extern int CamPosY;
-extern int CamPosZ;
+extern int glCamPosX;
+extern int glCamPosY;
+extern int glCamPosZ;
 
  // Camera Orientation
-extern signed char CamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
-extern signed char CamRotX;
+extern signed char glCamRotZ;			// -128 -> -127 unit : 2PI/(2^8 - 1)
+extern signed char glCamRotX;
 
 /*    ___                 _              _    _               
  *   / _ \ _ __   ___    (_)  ___   ___ | |_ (_)  ___   _ __  

@@ -41,7 +41,7 @@ const char sentence[] = "MERCI RENE";
 char status_string[50];
 
 void dispInfo() {
-    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     AdvancedPrint(3, 0, status_string);
 }
 
@@ -88,12 +88,12 @@ void txtIntro() {
 
     enterSC();
 
-    CamPosX = -15;
-    CamPosY = -85;
-    CamPosZ = 2;
+    glCamPosX = -15;
+    glCamPosY = -85;
+    glCamPosZ = 2;
 
-    CamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
-    CamRotX = -4;
+    glCamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
+    glCamRotX = -4;
 
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
@@ -110,10 +110,10 @@ void txtIntro() {
 #endif // USE_REWORKED_BUFFERS
 
     for (i      = 0; i < 40; i++,
-        CamPosX = (i % 4 == 0) ? CamPosX + 1 : CamPosX,
-        CamPosY += 2,
-        CamRotZ -= 1,
-        CamRotX = (i % 2 == 0) ? CamRotX + 1 : CamRotX) {
+        glCamPosX = (i % 4 == 0) ? glCamPosX + 1 : glCamPosX,
+        glCamPosY += 2,
+        glCamRotZ -= 1,
+        glCamRotX = (i % 2 == 0) ? glCamRotX + 1 : glCamRotX) {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -129,13 +129,13 @@ void txtIntro() {
 #endif // USE_REWORKED_BUFFERS
     }
 
-    CamPosX = -5;
-    CamPosY = -5;
-    CamPosZ = 2;
-    CamRotZ = 24;  // -128 -> -127 unit : 2PI/(2^8 - 1)
-    CamRotX = 16;
+    glCamPosX = -5;
+    glCamPosY = -5;
+    glCamPosZ = 2;
+    glCamRotZ = 24;  // -128 -> -127 unit : 2PI/(2^8 - 1)
+    glCamRotX = 16;
 
-    for (i = 0; i < 72; i++, CamPosX++) {
+    for (i = 0; i < 72; i++, glCamPosX++) {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -149,7 +149,7 @@ void txtIntro() {
 #endif // USE_REWORKED_BUFFERS
     }
 
-    for (i = 0; i < 40; i++, CamPosX = (i % 4 == 0) ? CamPosX - 1 : CamPosX, CamRotX = (i % 4 == 0) ? CamRotX - 1 : CamRotX, CamPosY = (i % 4 == 0) ? CamPosY - 1 : CamPosY, CamRotZ++) {
+    for (i = 0; i < 40; i++, glCamPosX = (i % 4 == 0) ? glCamPosX - 1 : glCamPosX, glCamRotX = (i % 4 == 0) ? glCamRotX - 1 : glCamRotX, glCamPosY = (i % 4 == 0) ? glCamPosY - 1 : glCamPosY, glCamRotZ++) {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -175,7 +175,7 @@ void txtIntro() {
         drawSegments();
 #endif // USE_REWORKED_BUFFERS
 
-    for (i = 0; i < 25; i++, CamPosX -= 2) {
+    for (i = 0; i < 25; i++, glCamPosX -= 2) {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -188,8 +188,8 @@ void txtIntro() {
         drawSegments();
 #endif // USE_REWORKED_BUFFERS
     }
-    CamRotZ -= 1;
-    for (i = 0; i < 11; i++, CamPosY -= 2, CamRotZ -= 3) {
+    glCamRotZ -= 1;
+    for (i = 0; i < 11; i++, glCamPosY -= 2, glCamRotZ -= 3) {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -202,7 +202,7 @@ void txtIntro() {
         drawSegments();
 #endif // USE_REWORKED_BUFFERS
     }
-    CamRotZ -= 3;
+    glCamRotZ -= 3;
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -239,10 +239,10 @@ void txtGameLoop() {
         switch (key)  // key
         {
         case 8:  // gauche => tourne gauche
-            CamRotZ += 4;
+            glCamRotZ += 4;
             break;
         case 9:  // droite => tourne droite
-            CamRotZ -= 4;
+            glCamRotZ -= 4;
             break;
         case 10:  // bas => recule
             backward();
@@ -251,16 +251,16 @@ void txtGameLoop() {
             forward();
             break;
         case 80:  // P
-            CamPosZ += 1;
+            glCamPosZ += 1;
             break;
         case 59:  // ;
-            CamPosZ -= 1;
+            glCamPosZ -= 1;
             break;
         case 81:  // Q
-            CamRotX += 2;
+            glCamRotX += 2;
             break;
         case 65:  // A
-            CamRotX -= 2;
+            glCamRotX -= 2;
             break;
         case 90:  // Z
             shiftLeft();
@@ -283,13 +283,13 @@ void textDemo() {
     initBuffers();
 
     // Camera Position
-    CamPosX = -14;
-    CamPosY = -87;
-    CamPosZ = 2;
+    glCamPosX = -14;
+    glCamPosY = -87;
+    glCamPosZ = 2;
 
     // Camera Orientation
-    CamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
-    CamRotX = 0;
+    glCamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
+    glCamRotX = 0;
 
     txtIntro();
 

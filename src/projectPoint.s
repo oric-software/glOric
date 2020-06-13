@@ -44,18 +44,18 @@ _project_i8o8:
 	sta HAngleOverflow
 	sta VAngleOverflow
 
-	// DeltaX = CamPosX - PointX
+	// DeltaX = glCamPosX - PointX
 	// Divisor = DeltaX
 	sec
 	lda _PointX
-	sbc _CamPosX
+	sbc _glCamPosX
 	sta _DeltaX
     sta _tx
 
-	// DeltaY = CamPosY - PointY
+	// DeltaY = glCamPosY - PointY
 	sec
 	lda _PointY
-	sbc _CamPosY
+	sbc _glCamPosY
 	sta _DeltaY
     sta _ty
 
@@ -67,10 +67,10 @@ _project_i8o8:
 	// Norm = norm (DeltaX, DeltaY)
 	jsr _norm_8
 
-	// DeltaZ = CamPosZ - PointZ
+	// DeltaZ = glCamPosZ - PointZ
 	sec
 	lda _PointZ
-	sbc _CamPosZ
+	sbc _glCamPosZ
 	sta _DeltaZ
 
 	// AngleV = atan2 (DeltaZ, Norm)
@@ -82,20 +82,20 @@ _project_i8o8:
 	lda _res
 	sta _AngleV
 
-	// AnglePH = AngleH - CamRotZ
+	// AnglePH = AngleH - glCamRotZ
 	sec
 	lda _AngleH
-	sbc _CamRotZ
+	sbc _glCamRotZ
 	sta AnglePH
 	bvc project_i8o8_noHAngleOverflow
 	lda #$80
 	sta HAngleOverflow
 
 project_i8o8_noHAngleOverflow:
-	// AnglePV = AngleV - CamRotX
+	// AnglePV = AngleV - glCamRotX
 	sec
 	lda     _AngleV
-	sbc     _CamRotX
+	sbc     _glCamRotX
 	sta     AnglePV
 	bvc     project_i8o8_noVAngleOverflow
 	lda     #$80
@@ -236,23 +236,23 @@ _project_i16:
 	sta HAngleOverflow
 	sta VAngleOverflow
 
-	// DeltaX = CamPosX - PointX
+	// DeltaX = glCamPosX - PointX
 	// Divisor = DeltaX
 	sec
 	lda _PointX
-	sbc _CamPosX
+	sbc _glCamPosX
 	sta _DeltaX
 	lda _PointX+1
-	sbc _CamPosX+1
+	sbc _glCamPosX+1
 	sta _DeltaX+1
 
-	// DeltaY = CamPosY - PointY
+	// DeltaY = glCamPosY - PointY
 	sec
 	lda _PointY
-	sbc _CamPosY
+	sbc _glCamPosY
 	sta _DeltaY
 	lda _PointY+1
-	sbc _CamPosY+1
+	sbc _glCamPosY+1
 	sta _DeltaY+1
 
 	// AngleH = atan2 (DeltaY, DeltaX)
@@ -267,13 +267,13 @@ _project_i16:
 	// Norm = norm (DeltaX, DeltaY)
 	jsr _norm_8
 
-	// DeltaZ = CamPosZ - PointZ
+	// DeltaZ = glCamPosZ - PointZ
 	sec
 	lda _PointZ
-	sbc _CamPosZ
+	sbc _glCamPosZ
 	sta _DeltaZ
 	lda _PointZ+1
-	sbc _CamPosZ+1
+	sbc _glCamPosZ+1
 	sta _DeltaZ+1
 
 	// AngleV = atan2 (DeltaZ, Norm)
@@ -285,20 +285,20 @@ _project_i16:
 	lda _res
 	sta _AngleV
 
-	// AnglePH = AngleH - CamRotZ
+	// AnglePH = AngleH - glCamRotZ
 	sec
 	lda _AngleH
-	sbc _CamRotZ
+	sbc _glCamRotZ
 	sta AnglePH
 	bvc project_i16_noHAngleOverflow
 	lda #$80
 	sta HAngleOverflow
 
 project_i16_noHAngleOverflow:
-	// AnglePV = AngleV - CamRotX
+	// AnglePV = AngleV - glCamRotX
 	sec
 	lda _AngleV
-	sbc _CamRotX
+	sbc _glCamRotX
 	sta AnglePV
 	bvc project_i16_noVAngleOverflow
 	lda #$80

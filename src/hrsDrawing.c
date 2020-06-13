@@ -98,17 +98,17 @@ void debugHiresIntro (){
     int i;
     //hires();
 
-	CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	glCamPosX = -24;
+	glCamPosY = 0;
+	glCamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
+ 	glCamRotZ = 64 ;
+	glCamRotX = 2;
 
     for (i=0;i<2;) {
-		CamPosX = traj[i++];
-		CamPosY = traj[i++];
-		CamRotZ = traj[i++];
+		glCamPosX = traj[i++];
+		glCamPosY = traj[i++];
+		glCamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts, 0);
         //memset ( 0xa000, 64, 8000); // clear screen

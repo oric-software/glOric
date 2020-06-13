@@ -30,20 +30,20 @@
 
 #define SIZEOF_3DPOINT          4
 #define SIZEOF_SEGMENT          4
-#define SIZEOF_PARTICLE        2
+#define SIZEOF_PARTICLE         2
 #define SIZEOF_2DPOINT          4
 #define SIZEOF_FACE             4
 
 #define NB_LESS_LINES_4_COLOR   4
 
  // Camera Position use only low bytes
-extern int              CamPosX;
-extern int              CamPosY;
-extern int              CamPosZ;
+extern int              glCamPosX;
+extern int              glCamPosY;
+extern int              glCamPosZ;
 
  // Camera Orientation
-extern char             CamRotZ;  // -128 -> 127 unit : 2PI/(2^8 - 1)
-extern char             CamRotX;
+extern char             glCamRotZ;  // -128 -> 127 unit : 2PI/(2^8 - 1)
+extern char             glCamRotX;
 
  // Geometry size
 extern unsigned char    nbPoints;

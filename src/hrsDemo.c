@@ -53,17 +53,17 @@ void hiresIntro() {
 
     //enterSC();
 
-    CamPosX = -24;
-    CamPosY = 0;
-    CamPosZ = 3;
+    glCamPosX = -24;
+    glCamPosY = 0;
+    glCamPosZ = 3;
 
-    CamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
-    CamRotX = 2;
+    glCamRotZ = 64;  // -128 -> -127 unit : 2PI/(2^8 - 1)
+    glCamRotX = 2;
 
     for (i = 0; i < 120;) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
+        glCamPosX = traj[i++];
+        glCamPosY = traj[i++];
+        glCamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
         glProject(points2d, points3d, nbPoints, 0);
         // for (jj=0; jj< nbPoints; jj++){
@@ -100,19 +100,19 @@ void hiresGameLoop() {
             i = (i - 3);
             break;
         case 80:  // P
-            if (CamPosZ < 5) {
-                CamPosZ += 1;
+            if (glCamPosZ < 5) {
+                glCamPosZ += 1;
             }
             break;
         case 59:  // ;
-            if (CamPosZ > 0) {
-                CamPosZ -= 1;
+            if (glCamPosZ > 0) {
+                glCamPosZ -= 1;
             }
             break;
         }
-        CamPosX = traj[i + 0];
-        CamPosY = traj[i + 1];
-        CamRotZ = traj[i + 2];
+        glCamPosX = traj[i + 0];
+        glCamPosY = traj[i + 1];
+        glCamRotZ = traj[i + 2];
 
         glProject(points2d, points3d, nbPts, 0);
     }

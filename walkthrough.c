@@ -90,11 +90,11 @@ void main() {
     /*
      *  Camera (player view) position and orientation 
      */
-    CamPosX = 60;  
-    CamPosY = 0; 
-    CamPosZ = 6;
-    CamRotZ = -127;
-    CamRotX = 0;
+    glCamPosX = 60;  
+    glCamPosY = 0; 
+    glCamPosZ = 6;
+    glCamRotZ = -127;
+    glCamRotX = 0;
 
     running = 1;
     gameLoop();
@@ -140,7 +140,7 @@ void gameLoop() {
   
         // update display with buffer
         buffer2screen((void*)0);
-        sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+        sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     }
 }
 /*    ___  _                           
@@ -158,21 +158,21 @@ void shiftRight();
 void player () {
     switch (key()) {
     case 8:  // left 
-        CamRotZ += 4; break;
+        glCamRotZ += 4; break;
     case 9:  // right 
-        CamRotZ -= 4; break;
+        glCamRotZ -= 4; break;
     case 10:  // down
         backward(); break;
     case 11:  // up
         forward(); break;
     // case 80:  // P        HEP !! DONT TOUCH THAT !!!
-    //     CamPosZ += 1; break;
+    //     glCamPosZ += 1; break;
     // case 59:  // ;       FORGET ABOUT IT !!
-    //     CamPosZ -= 1; break;
+    //     glCamPosZ -= 1; break;
     case 81:  // Q
         running = 0; break;
     // case 65:  // A
-    //     CamRotX -= 2; break;
+    //     glCamRotX -= 2; break;
     case 90:  // Z
         shiftLeft(); break;
     case 88:  // X
@@ -208,107 +208,107 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
 }
 void forward() {
     signed int X, Y;
-    X = CamPosX; Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosX--;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
+    X = glCamPosX; Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosX--;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
     } else {
-        CamPosX--;
+        glCamPosX--;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 void backward() {
     signed int X, Y;
-    X = CamPosX; Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosX++;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
+    X = glCamPosX; Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosX++;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
     } else {
-        CamPosX++;
+        glCamPosX++;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 void shiftLeft() {
     signed int X, Y;
-    X = CamPosX; Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosY--;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
+    X = glCamPosX; Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosY--;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
     } else {
-        CamPosY--;
+        glCamPosY--;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 void shiftRight() {
     signed int X, Y;
-    X = CamPosX;
-    Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosY++;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
+    X = glCamPosX;
+    Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosY++;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
     } else {
-        CamPosX++;
+        glCamPosX++;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 /*    ___         _                   

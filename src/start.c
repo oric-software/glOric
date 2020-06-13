@@ -161,12 +161,12 @@ void main (){
     int i,j;
     // printf ("coucou \n");
 
-    CamPosX = -20;
-    CamPosY = 16;
-    CamPosZ = 6;
+    glCamPosX = -20;
+    glCamPosY = 16;
+    glCamPosZ = 6;
 
-    CamRotZ = -23;
-    CamRotX = 0;
+    glCamRotZ = -23;
+    glCamRotX = 0;
     
     nbPoints     = 0;
     nbSegments   = 0;
@@ -182,9 +182,9 @@ void main (){
     i       = 0;
 
     for (j = 0; j < 64; j++) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
+        glCamPosX = traj[i++];
+        glCamPosY = traj[i++];
+        glCamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
 

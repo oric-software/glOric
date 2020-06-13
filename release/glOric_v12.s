@@ -280,13 +280,13 @@
 #endif ;; TARGET_ORIX
 
  ;; Camera Position
-_CamPosX:		.dsb 2
-_CamPosY:		.dsb 2
-_CamPosZ:		.dsb 2
+_glCamPosX:		.dsb 2
+_glCamPosY:		.dsb 2
+_glCamPosZ:		.dsb 2
 
  ;; Camera Orientation
-_CamRotZ:		.dsb 1			;; -128 -> -127 unit : 2PI/(2^8 - 1)
-_CamRotX:		.dsb 1
+_glCamRotZ:		.dsb 1			;; -128 -> -127 unit : 2PI/(2^8 - 1)
+_glCamRotX:		.dsb 1
 
 
 
@@ -694,18 +694,18 @@ _project_i8o8:
 	sta HAngleOverflow
 	sta VAngleOverflow
 
-	;; DeltaX = CamPosX - PointX
+	;; DeltaX = glCamPosX - PointX
 	;; Divisor = DeltaX
 	sec
 	lda _PointX
-	sbc _CamPosX
+	sbc _glCamPosX
 	sta _DeltaX
     sta _tx
 
-	;; DeltaY = CamPosY - PointY
+	;; DeltaY = glCamPosY - PointY
 	sec
 	lda _PointY
-	sbc _CamPosY
+	sbc _glCamPosY
 	sta _DeltaY
     sta _ty
 
@@ -717,10 +717,10 @@ _project_i8o8:
 	;; Norm = norm (DeltaX, DeltaY)
 	jsr _norm_8
 
-	;; DeltaZ = CamPosZ - PointZ
+	;; DeltaZ = glCamPosZ - PointZ
 	sec
 	lda _PointZ
-	sbc _CamPosZ
+	sbc _glCamPosZ
 	sta _DeltaZ
 
 	;; AngleV = atan2 (DeltaZ, Norm)
@@ -732,20 +732,20 @@ _project_i8o8:
 	lda _res
 	sta _AngleV
 
-	;; AnglePH = AngleH - CamRotZ
+	;; AnglePH = AngleH - glCamRotZ
 	sec
 	lda _AngleH
-	sbc _CamRotZ
+	sbc _glCamRotZ
 	sta AnglePH
 	bvc project_i8o8_noHAngleOverflow
 	lda #$80
 	sta HAngleOverflow
 
 project_i8o8_noHAngleOverflow:
-	;; AnglePV = AngleV - CamRotX
+	;; AnglePV = AngleV - glCamRotX
 	sec
 	lda     _AngleV
-	sbc     _CamRotX
+	sbc     _glCamRotX
 	sta     AnglePV
 	bvc     project_i8o8_noVAngleOverflow
 	lda     #$80

@@ -64,7 +64,7 @@ extern void shiftRight();
 #endif
 
 void dispInfo() {
-    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
 #ifdef TARGET_ORIX
 #else
     AdvancedPrint(3, 0, status_string);
@@ -121,17 +121,17 @@ void colorIntro() {
     enterSC();
 #endif  // TARGET_ORIX
 
-    CamPosX = 74;
-    CamPosY = 0;
-    CamPosZ = 6;
+    glCamPosX = 74;
+    glCamPosY = 0;
+    glCamPosZ = 6;
 
-    CamRotZ = -127;
-    CamRotX = 0;
+    glCamRotZ = -127;
+    glCamRotX = 0;
     i       = 0;
 
 
     for (j = 0; j < 50; j++) {
-        CamPosX -- ; // forward();
+        glCamPosX -- ; // forward();
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -156,9 +156,9 @@ void colorIntro() {
 
 
     for (j = 0; j < 64; j++) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
+        glCamPosX = traj[i++];
+        glCamPosY = traj[i++];
+        glCamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
 #ifdef USE_REWORKED_BUFFERS
@@ -183,7 +183,7 @@ void colorIntro() {
     }
 
     for (j = 0; j < 32; j++) {
-        CamPosX ++ ; // backward();
+        glCamPosX ++ ; // backward();
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
@@ -226,7 +226,7 @@ void colorGameLoop() {
         glProject(points2d, points3d, nbPoints, 0);
 #endif
 
-    // printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    // printf ("(x=%d y=%d z=%d) [%d %d]\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     //     for (ii=0; ii< nbPts; ii++){
     //         printf ("[%d %d %d] => [%d %d] %d \n"
     //         , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
@@ -256,10 +256,10 @@ void colorGameLoop() {
 #endif  // TARGET_ORIX
         switch (key) {
         case 8:  // gauche => tourne gauche
-            CamRotZ += 4;
+            glCamRotZ += 4;
             break;
         case 9:  // droite => tourne droite
-            CamRotZ -= 4;
+            glCamRotZ -= 4;
             break;
         case 10:  // bas => recule
             backward();
@@ -268,16 +268,16 @@ void colorGameLoop() {
             forward();
             break;
         case 80:  // P
-            CamPosZ += 1;
+            glCamPosZ += 1;
             break;
         case 59:  // ;
-            CamPosZ -= 1;
+            glCamPosZ -= 1;
             break;
         case 81:  // Q
-            CamRotX += 2;
+            glCamRotX += 2;
             break;
         case 65:  // A
-            CamRotX -= 2;
+            glCamRotX -= 2;
             break;
         case 90:  // Z
             shiftLeft();

@@ -9,24 +9,24 @@ This introduction aims at providing developers with necessary information to cre
 
 First of all, let's see some fundamentals of 3D graphics and how they are implemented in glOric.
 
-Point is just cartesian coordinates in a 3D space. It is not something visible. It is just a positional information in space.
+A Point is just cartesian coordinates in a 3D space. It is not something visible. It is just a positional information in space.
 In glOric, points are composed of three 8-bits integer value representing the position along the orthogonal X, Y, and Z axes  of an Euclidean space.
 Each point is given a number (its index in a table) by which it is referred.
 
-Segment is a part of a line. It is something visible and drawable on screen. In glOric segments are defined by the index of the two points corresponding to the extremities of the segment and the character that has to be used to render this segment on the screen.
+A Segment is a part of a line. It is something visible and drawable on screen. In glOric segments are defined by the index of the two points corresponding to the extremities of the segment and the character that has to be used to render this segment on the screen.
 
-Face is a triangular surface. It is something visible and drawable on screen. In glOric a face is defined by the index of the three points corresponding to the extremities of the triangle and the character that has to be used to fill the surface on the screen.
+A Face is a triangular surface. It is something visible and drawable on screen. In glOric a face is defined by the index of the three points corresponding to the extremities of the triangle and the character that has to be used to fill the surface on the screen.
 
-Particle is visible vertex. It is simplest visible and drawable thing on screen. In glOric a particle is defined by the index of the single points where the vertex shall be drawn and by the character that has to be used to draw this vertex on screen.
+A Particle is visible vertex. It is simplest visible and drawable thing on screen. In glOric a particle is defined by the index of the single points where the vertex shall be drawn and by the character that has to be used to draw this vertex on screen.
  
-the Camera is the point from which particles, segments and  faces are viewed. It is called the point of view.
+The Camera is the point from which particles, segments and  faces are viewed. It is called the point of view.
 In glOric, the camera position is represented by 3 integer values corresponding to its 3D coordinates in the Euclidean space and the camera orientation is composed of two values for its pitch and yaw angles 
 
-The Scene is the set of particles, segments and faces that glOric shall draw on screen is never it is in the field of view of the camera.
+The Scene is the set of particles, segments and faces that glOric shall draw on screen whenever it is in the field of view of the camera.
 
 
 Now, let's have a look on how these concepts are instantiated in glOric.
-Most of what we're going to see can be found in the `glOric_vXY.h` file.
+Most of what we're going to see can be found in the `glOric_vXY.h` file. (where XY is the actual version of glOric you are using)
 
 
 # Where we are watching the scene from
@@ -34,22 +34,21 @@ Most of what we're going to see can be found in the `glOric_vXY.h` file.
 The camera position and orientation is set through five variables.
 
 ```C
- // Camera Position use only low bytes
-extern signed char      CamPosX;
-extern signed char      CamPosY;
-extern signed char      CamPosZ;
+ // Camera Position 
+extern signed char      glCamPosX;
+extern signed char      glCamPosY;
+extern signed char      glCamPosZ;
 
  // Camera Orientation
-extern signed char      CamRotZ;  // -128 -> 127 unit : 2PI/(2^8 - 1)
-extern signed char      CamRotX;
+extern signed char      glCamRotZ;  // -128 -> 127 unit : 2PI/(2^8 - 1)
+extern signed char      glCamRotX;
 
 ```
 
-`CamPosX`, `CamPosY` and `CamPosZ` are the 3D coordinates of the point of view from which the 3D scene is seen (virtual camera).
-`CamPosX`, `CamPosY` and `CamPosZ` are 8 bits signed values.
+`glCamPosX`, `glCamPosY` and `glCamPosZ` are 8 bit signed values representing the 3D coordinates of the point of view from which the 3D scene is seen (virtual camera).
 
-`CamRotZ` and `CamRotX` are respectively pitch and yaw of the camera.
-These angle are 8 bits fixed point values made so that the 2*PI circle fits the whole 256 value range centered on 0. Thus angle excursion goes from -PI coded -128 (0x80) to PI coded 0x7F passing by 0 radians coded 0. Angle resolution is then (2*PI / 256).
+`glCamRotZ` and `glCamRotX` are respectively pitch and yaw of the camera.
+These angle are 8 bits fixed point values made so that the 2PI circle fits the whole 256 value range centered on 0. Thus angle excursion goes from -PI coded -128 (0x80) to PI coded 0x7F passing by 0 radians coded 0. Angle resolution is then (2PI / 256).
 
 # Describing the 3D scene.
 
@@ -72,7 +71,7 @@ points3dX[n] = 2,  points3dY[n] = 3 and points3dZ[n] = 1,
 
 For glOric to know the number of points that are stored in this array, it has to be indicated in the `nbPoints` variable.
 The maximum number of points is configured througb the constant named `NB_MAX_POINTS` defined in file `glOric_vXY.h`.
-In any circumstance, you must ensure that the value contained in the `nbPoints` variable is lower than the value of `NB_MAX_POINTS`. Memory corruption can occur if this constraint is not respected.
+In any circumstance, you must ensure that the value contained in the `nbPoints` variable is lower than the value of `NB_MAX_POINTS` (which can't be greater or equal to 256). Memory corruption can occur if this constraint is not respected.
 
 Once points of interest of the scene are given to glOric, we can refer to them through their index to tell glOric where to draw particles, segments and faces.
 
@@ -349,7 +348,7 @@ This function takes the point of coordinate (x, y, z) and put:
 - in `dist` the distance between the point and the camera.
 
 Just as camera angle, `ah` and `av` angles are 8 bits fixed point values coding angle from -PI coded -128 (0x80) to PI coded 0x7F passing by 0 radians coded 0. Angle resolution is then (2*PI / 256).
-`dist` is a 16 bits unsigned value corresponding to the euclidean norm of vector [CamPosX-x, ComPosY-y]
+`dist` is a 16 bits unsigned value corresponding to the euclidean norm of vector [glCamPosX-x, ComPosY-y]
 
 From the horizontal and vertical angles returned by projectPoint, it is easy to obtain screen coordinates with the following code: 
 
@@ -390,7 +389,7 @@ This is going to be done in two steps:
     sY = (SCREEN_HEIGHT - aV) >> 1;
 ```
 
-- Next we zplot the string so that it will be display if it is in field of view of the camera and is nothing hide it by being closer from the camera:
+- Next we zplot the string so that it will be display if it is in field of view of the camera and if nothing hides it by being closer from the camera:
 
 ```C
     zplot(sX  ,sY,distance,'H');
