@@ -9,9 +9,9 @@ Given the camera situation (position and orientation) and a screen configuration
 ```C
 
 // Camera Position
-extern int glCamPosX;
-extern int glCamPosY;
-extern int glCamPosZ;
+extern signed char glCamPosX;
+extern signed char glCamPosY;
+extern signed char glCamPosZ;
 
 // Camera Orientation
 extern char glCamRotZ;

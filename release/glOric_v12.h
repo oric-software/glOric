@@ -37,9 +37,9 @@
 #define NB_LESS_LINES_4_COLOR   4
 
  // Camera Position use only low bytes
-extern int              glCamPosX;
-extern int              glCamPosY;
-extern int              glCamPosZ;
+extern signed char              glCamPosX;
+extern signed char              glCamPosY;
+extern signed char              glCamPosZ;
 
  // Camera Orientation
 extern char             glCamRotZ;  // -128 -> 127 unit : 2PI/(2^8 - 1)

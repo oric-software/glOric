@@ -17,9 +17,9 @@
 #endif ;; TARGET_ORIX
 
  ;; Camera Position
-_glCamPosX:		.dsb 2
-_glCamPosY:		.dsb 2
-_glCamPosZ:		.dsb 2
+_glCamPosX:		.dsb 1
+_glCamPosY:		.dsb 1
+_glCamPosZ:		.dsb 1
 
  ;; Camera Orientation
 _glCamRotZ:		.dsb 1			;; -128 -> -127 unit : 2PI/(2^8 - 1)

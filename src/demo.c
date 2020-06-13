@@ -15,8 +15,8 @@ extern void lrsDemo();
 
 /*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char glNbVertices, unsigned char opts);
 
-extern int glCamPosX, glCamPosY, glCamPosZ;
-extern char glCamRotZ, glCamRotX;
+extern signed char glCamPosX, glCamPosY, glCamPosZ;
+extern signed char glCamRotZ, glCamRotX;
 
 
 unsigned char nbPts=0;

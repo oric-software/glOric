@@ -189,9 +189,9 @@ void player () {
  *                            
  */
 // Collision Detection 
-unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
-    unsigned int aX = abs(X);
-    unsigned int aY = abs(Y);
+unsigned char isAllowedPosition(signed char X, signed char Y, signed char Z) {
+    unsigned char aX = abs(X);
+    unsigned char aY = abs(Y);
     // Walls of house
     if ((aX <=13) && (aY <= 9)) {
         if ((aY <= 7) && (X > -7)) {

@@ -1,5 +1,5 @@
 #ifdef USE_COLLISION_DETECTION
-extern unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z);
+extern unsigned char isAllowedPosition(signed char X, signed char Y, signed char Z);
 #endif
 
 void forward() {

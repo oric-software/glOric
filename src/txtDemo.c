@@ -46,7 +46,7 @@ void dispInfo() {
 }
 
 #ifdef USE_COLLISION_DETECTION
-unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
+unsigned char isAllowedPosition(signed char X, signed char Y, signed char Z) {
     return 1;
 }
 #endif

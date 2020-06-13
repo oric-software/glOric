@@ -30,7 +30,7 @@
 ;;       * Particule renamed into Particle
 ;;       * Camera position stored on 8 bits value
 ;;       * Remove useless param of glBuffer2Screen function
-;; 
+;;       * all interface is prefixed with gl for uniformity
 ;; Version 1.1 :  February 2020
 ;; ----------------------------
 ;; =======================================
@@ -280,9 +280,9 @@
 #endif ;; TARGET_ORIX
 
  ;; Camera Position
-_glCamPosX:		.dsb 2
-_glCamPosY:		.dsb 2
-_glCamPosZ:		.dsb 2
+_glCamPosX:		.dsb 1
+_glCamPosY:		.dsb 1
+_glCamPosZ:		.dsb 1
 
  ;; Camera Orientation
 _glCamRotZ:		.dsb 1			;; -128 -> -127 unit : 2PI/(2^8 - 1)

@@ -6,13 +6,13 @@
 extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char glNbVertices, unsigned char options);
 
  // Camera Position
-extern int glCamPosX;
-extern int glCamPosY;
-extern int glCamPosZ;
+extern signed char glCamPosX;
+extern signed char glCamPosY;
+extern signed char glCamPosZ;
 
  // Camera Orientation
-extern char glCamRotZ;			// -128 -> 127 unit : 2PI/(2^8 - 1)
-extern char glCamRotX;
+extern signed char glCamRotZ;			// -128 -> 127 unit : 2PI/(2^8 - 1)
+extern signed char glCamRotX;
 
 // Geometry buffers ;
 extern unsigned char glNbVertices;
