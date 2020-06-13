@@ -25,7 +25,7 @@ signed char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
 /* Nb Segments = */ 14,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
  1, 1, 0, 0, 
 -1, 1, 0, 0,
@@ -65,7 +65,7 @@ signed char geomHouse []= {
 6, 9,'/', 0,
 9, 8,'-', 0,
 
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 // extern void waitkey();
@@ -138,9 +138,9 @@ void addGeom2(
         kk++; // skip unused byte
     }
     for (ii = 0; ii < npart; ii++){
-        particulesPt[nbParticules] = nbPoints - (npt-geom[kk++]);  // Index Point
-        particulesChar[nbParticules] = geom[kk++]; // Character
-        nbParticules++;        
+        particlesPt[nbParticles] = nbPoints - (npt-geom[kk++]);  // Index Point
+        particlesChar[nbParticles] = geom[kk++]; // Character
+        nbParticles++;        
     }
 }    
 
@@ -171,12 +171,12 @@ void main (){
     nbPoints     = 0;
     nbSegments   = 0;
     nbFaces      = 0;
-    nbParticules = 0;
+    nbParticles = 0;
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
     addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
     // addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
-    printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
+    printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPoints, nbParticles, nbSegments, nbFaces); waitkey();
     // listPoints3D();
 
     i       = 0;
@@ -197,7 +197,7 @@ void main (){
 
         glDrawSegments();
 
-        glDrawParticules();
+        glDrawParticles();
 
         buffer2screen((char *)ADR_BASE_LORES_SCREEN);
     }

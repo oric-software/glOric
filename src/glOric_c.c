@@ -114,7 +114,7 @@ extern char          fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
 #include "lrDrawLine.c"
 #include "glDrawSegments.c"
 
-#include "glDrawParticules.c"
+#include "glDrawParticles.c"
 
 #include "buffer2screen.c"
 

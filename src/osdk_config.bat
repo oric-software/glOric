@@ -40,7 +40,7 @@ SET OSDKFILE=%OSDKFILE% raster\buffer raster\line8
 :: SET OSDKFILE=%OSDKFILE% raster\line
 :: SET OSDKFILE=%OSDKFILE% raster\seg8
 :: SET OSDKFILE=%OSDKFILE% raster\raster8
-:: SET OSDKFILE=%OSDKFILE% raster\particules
+:: SET OSDKFILE=%OSDKFILE% raster\particles
 SET OSDKFILE=%OSDKFILE% raster\filler
 :: SET OSDKFILE=%OSDKFILE% raster\hzfill
 :: 

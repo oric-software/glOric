@@ -29,7 +29,7 @@
 extern unsigned char nbPoints;
 extern unsigned char nbSegments;
 extern unsigned char nbFaces;
-extern unsigned char nbParticules;
+extern unsigned char nbParticles;
 
 extern signed char points3dX[];
 extern signed char points3dY[];
@@ -39,8 +39,8 @@ extern unsigned char segmentsPt1[];
 extern unsigned char segmentsPt2[];
 extern unsigned char segmentsChar[];
 
-extern unsigned char particulesPt[];
-extern unsigned char particulesChar[];
+extern unsigned char particlesPt[];
+extern unsigned char particlesChar[];
 
 extern unsigned char facesPt1[];
 extern unsigned char facesPt2[];
@@ -79,9 +79,9 @@ void addGeom(
         nbSegments++;
     }
     for (kk=0; kk< geom[3]; kk++){
-        particulesPt[nbParticules] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
-        particulesChar[nbParticules] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
-        nbParticules++;
+        particlesPt[nbParticles] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 0]);  // Index Point
+        particlesChar[nbParticles] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 1]; // Character
+        nbParticles++;
     }
 }
 
@@ -95,8 +95,8 @@ extern char          faces[];
 extern unsigned char nbFaces;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
-extern unsigned char particules[];
-extern unsigned char nbParticules;
+extern unsigned char particles[];
+extern unsigned char nbParticles;
 
 void addGeom(
     signed char   X,
@@ -134,9 +134,9 @@ void addGeom(
         nbSegments++;
     }
     for (kk=0; kk< geom[3]; kk++){
-        particules[nbParticules * SIZEOF_PARTICULE + 0] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
-        particules[nbParticules * SIZEOF_PARTICULE + 1] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
-        nbParticules++;
+        particles[nbParticles * SIZEOF_PARTICLE + 0] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 0]);  // Index Point
+        particles[nbParticles * SIZEOF_PARTICLE + 1] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 1]; // Character
+        nbParticles++;
     }
 }
 #endif
@@ -144,11 +144,11 @@ void addGeom(
 // /* Nb Coords = */ 3,
 // /* Nb Faces = */ 
 // /* Nb Segments = */
-// /* Nb Particules = */
+// /* Nb Particles = */
 // // Coord List : X, Y, Z, unused
 // // Face List : idxPoint1, idxPoint2, idxPoint3, character 
 // // Segment List : idxPoint1, idxPoint2, idxPoint3, character 
-// // Particule List : idxPoint1, character 
+// // Particle List : idxPoint1, character 
 
 // }
 
@@ -230,7 +230,7 @@ char geomTriangle []= {
 /* Nb Coords = */ 3,
 /* Nb Faces = */ 1,
 /* Nb Segments = */ 3,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
 -1, 0, 0, 0, 
  1, 0, 0, 0,
@@ -241,14 +241,14 @@ char geomTriangle []= {
 0, 2, '/', 0,
 1, 2, '/', 0,
 0, 1, '-', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 char geomRectangle []= {
 /* Nb Coords = */ 4,
 /* Nb Faces = */ 2,
 /* Nb Segments = */ 4,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
 -1, 0, 0, 0, 
  1, 0, 0, 0,
@@ -262,7 +262,7 @@ char geomRectangle []= {
 2, 3, '-', 0,
 3, 1, '|', 0,
 1, 0, '-', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 #ifdef HRSDEMO
@@ -281,7 +281,7 @@ char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
 /* Nb Segments = */ 14,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
  1, 1, 0, 0, 
 -1, 1, 0, 0,
@@ -321,6 +321,6 @@ char geomHouse []= {
 6, 9,'/', 0,
 9, 8,'-', 0,
 
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 #endif // LRSDEMO

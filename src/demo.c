@@ -26,8 +26,8 @@ char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 */
 char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
 unsigned char nbSegments=0;
-char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
-unsigned char nbParticules=0;
+char particles[NB_MAX_SEGMENTS*SIZEOF_PARTICLE];
+unsigned char nbParticles=0;
 
 
     

@@ -6,7 +6,7 @@ char geomPine []= {
 /* Nb Coords = */ 7,
 /* Nb Faces = */ 2,
 /* Nb Segments = */ 1,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
 0, 0, 0, 0,
 0, 0, TRUNC_HEIGHT, 0,
@@ -21,6 +21,6 @@ PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
 2, 4, 6, TEXTURE_2,
 // Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '|', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 
 };

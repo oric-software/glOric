@@ -43,9 +43,9 @@ void addGeom2(
         kk++; // skip unused byte
     }
     for (ii = 0; ii < npart; ii++){
-        particulesPt[nbParticules] = nbPoints - (npt-geom[kk++]);  // Index Point
-        particulesChar[nbParticules] = geom[kk++]; // Character
-        nbParticules++;        
+        particlesPt[nbParticles] = nbPoints - (npt-geom[kk++]);  // Index Point
+        particlesChar[nbParticles] = geom[kk++]; // Character
+        nbParticles++;        
     }
 }    
 #else // Not USE_REWORKED_BUFFERS
@@ -85,9 +85,9 @@ void addGeom2(
         nbSegments++;
     }
     for (kk=0; kk< geom[3]; kk++){
-        particules[nbParticules * SIZEOF_PARTICULE + 0] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
-        particules[nbParticules * SIZEOF_PARTICULE + 1] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
-        nbParticules++;
+        particles[nbParticles * SIZEOF_PARTICLE + 0] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 0]);  // Index Point
+        particles[nbParticles * SIZEOF_PARTICLE + 1] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 1]; // Character
+        nbParticles++;
     }
 }
 #endif // USE_REWORKED_BUFFERS

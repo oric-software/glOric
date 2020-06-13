@@ -45,7 +45,7 @@
 #include "lrDrawLine.s"
 #include "glDrawSegments.s"
 
-#include "glDrawParticules.s"
+#include "glDrawParticles.s"
 
 #include "kernel.s"
 #include "glProject_s.s"

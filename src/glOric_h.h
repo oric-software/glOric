@@ -54,12 +54,12 @@ extern void projectPoint(signed char x, signed char y, signed char z, signed cha
  * \__/ \___| \___||_| |_| \___|
  */                        
 
-extern unsigned char nbParticules;
+extern unsigned char nbParticles;
 extern unsigned char nbSegments;
 extern unsigned char nbFaces;
 
-extern unsigned char particulesPt   [NB_MAX_PARTICULES];
-extern unsigned char particulesChar [NB_MAX_PARTICULES];
+extern unsigned char particlesPt   [NB_MAX_PARTICLES];
+extern unsigned char particlesChar [NB_MAX_PARTICLES];
 
 extern unsigned char segmentsPt1 [NB_MAX_SEGMENTS];
 extern unsigned char segmentsPt2 [NB_MAX_SEGMENTS];
@@ -72,7 +72,7 @@ extern unsigned char facesChar      [NB_MAX_FACES];
 
 extern void glDrawFaces();
 extern void glDrawSegments();
-extern void glDrawParticules();
+extern void glDrawParticles();
 extern void initScreenBuffers();
 extern void buffer2screen(char destAdr[]);
 #endif // GLORIC_H

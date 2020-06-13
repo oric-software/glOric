@@ -116,20 +116,20 @@ def drawLine( x0,  y0,  x1,  y1):
             err += dx;
             y0 += sy;
 */
-void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char nbParticules){
+void lrDrawParticles(char points2d[], unsigned char particles[], unsigned char nbParticles){
     unsigned char ii = 0;
     unsigned char jj = 0;
     // unsigned char kk = 0;
     unsigned char idxPt, offPt, dchar;
     unsigned int  dist;
-    for (ii = 0; ii < nbParticules; ii++) {
-        jj = ii << 1;  // ii*SIZEOF_PARTICULES
+    for (ii = 0; ii < nbParticles; ii++) {
+        jj = ii << 1;  // ii*SIZEOF_PARTICLES
         // kk = ii << 2;  // ii*SIZEOF_2DPOINT
-        idxPt    = particules[jj++];  // ii*SIZEOF_SEGMENT +0
-        ch2disp = particules[jj];    // ii*SIZEOF_SEGMENT +2
+        idxPt    = particles[jj++];  // ii*SIZEOF_SEGMENT +0
+        ch2disp = particles[jj];    // ii*SIZEOF_SEGMENT +2
         offPt = idxPt << 2;
         
-        dist = *((int*)(points2d + (offPt | 0x02))) - 2;   // points2d[offPt+2] FIXME : -2 to helps particule to be displayed
+        dist = *((int*)(points2d + (offPt | 0x02))) - 2;   // points2d[offPt+2] FIXME : -2 to helps particle to be displayed
         dchar = (unsigned char)((dist)&0x00FF);
         P1X = (SCREEN_WIDTH -points2d[offPt++]) >> 1;
         P1Y = (SCREEN_HEIGHT - points2d[offPt++]) >> 1;
@@ -370,7 +370,7 @@ void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) 
 #ifdef USE_REWORKED_BUFFERS
 extern unsigned char nbPoints;
 extern unsigned char nbSegments;
-extern unsigned char nbParticules;
+extern unsigned char nbParticles;
 extern unsigned char nbFaces;
 extern unsigned char facesPt1[];
 extern unsigned char facesPt2[];
@@ -383,8 +383,8 @@ extern signed char points2dL[];
 extern unsigned char segmentsPt1[];
 extern unsigned char segmentsPt2[];
 extern unsigned char segmentsChar[];
-extern unsigned char particulesPt[];
-extern unsigned char particulesChar[];
+extern unsigned char particlesPt[];
+extern unsigned char particlesChar[];
 
 
 // used by glDrawFaces
@@ -414,6 +414,6 @@ extern    unsigned char isFace2BeDrawn;
 
 #include "glDrawSegments.c"
 
-#include "glDrawParticules.c"
+#include "glDrawParticles.c"
 
 #endif

@@ -16,8 +16,8 @@
 
 ;;unsigned char nbSegments=0;
 _nbSegments     .dsb 1
-;;unsigned char nbParticules=0;
-_nbParticules .dsb 1;
+;;unsigned char nbParticles=0;
+_nbParticles .dsb 1;
 ;;unsigned char nbFaces=0;
 _nbFaces .dsb 1;
 
@@ -32,11 +32,11 @@ _segmentsPt2        .dsb NB_MAX_SEGMENTS
 _segmentsChar       .dsb NB_MAX_SEGMENTS
 
 
-;;char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
-; _particules       .dsb NB_MAX_PARTICULES*SIZEOF_PARTICULE
-_particules:
-_particulesPt       .dsb NB_MAX_PARTICULES
-_particulesChar     .dsb NB_MAX_PARTICULES
+;;char particles[NB_MAX_SEGMENTS*SIZEOF_PARTICLE];
+; _particles       .dsb NB_MAX_PARTICLES*SIZEOF_PARTICLE
+_particles:
+_particlesPt       .dsb NB_MAX_PARTICLES
+_particlesChar     .dsb NB_MAX_PARTICLES
 
 
 

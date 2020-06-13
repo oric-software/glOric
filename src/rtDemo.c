@@ -41,8 +41,8 @@ extern unsigned char faces[];
 extern unsigned char nbFaces ;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
-extern unsigned char particules[];
-extern unsigned char nbParticules;
+extern unsigned char particles[];
+extern unsigned char nbParticles;
 
 #include "geomHouse.c"
 #include "addGeom.c"
@@ -98,7 +98,7 @@ void rtDemo() {
     nbPoints     = 0;
     nbSegments   = 0;
     nbFaces      = 0;
-    nbParticules = 0;
+    nbParticles = 0;
 
     // addHouse(0, 0, 12, 8);
     // addPlan(0, 6, 6, 64, 'r');
@@ -108,7 +108,7 @@ void rtDemo() {
     // addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
     addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, nbParticles, nbSegments, nbFaces); get();
 
     memset (oldKeyBank,0,8);
     memset (KeyBank,0,8);
@@ -179,11 +179,11 @@ void rtIntro() {
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
-        glDrawParticules();
+        glDrawParticles();
 #else
-        lrDrawParticules(points2d, particules, nbParticules);
+        lrDrawParticles(points2d, particles, nbParticles);
 #endif //USE_REWORKED_BUFFERS
-        // dur = dur - deek(0x276); printf ("dur lrDrawParticules = %d \n", dur); get();
+        // dur = dur - deek(0x276); printf ("dur lrDrawParticles = %d \n", dur); get();
 
         // dur = deek(0x276);
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);
@@ -235,11 +235,11 @@ void rtGameLoop() {
 #endif //USE_REWORKED_BUFFERS
     // dur = dur - deek(0x276);printf ("dur lrDrawSegments = %d \n", dur);dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
-        glDrawParticules();
+        glDrawParticles();
 #else
-        lrDrawParticules(points2d, particules, nbParticules);
+        lrDrawParticles(points2d, particles, nbParticles);
 #endif //USE_REWORKED_BUFFERS
-    // dur = dur - deek(0x276);printf ("dur lrDrawParticules = %d \n", dur);dur = deek(0x276);
+    // dur = dur - deek(0x276);printf ("dur lrDrawParticles = %d \n", dur);dur = deek(0x276);
     // get();
     while (1 == 1) {
         keyEvent();
@@ -256,11 +256,11 @@ void rtGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
-        glDrawParticules();
+        glDrawParticles();
 #else
         lrDrawFaces(points2d, faces, nbFaces);
         lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticules(points2d, particules, nbParticules);
+        lrDrawParticles(points2d, particles, nbParticles);
  #endif //USE_REWORKED_BUFFERS
        
     }

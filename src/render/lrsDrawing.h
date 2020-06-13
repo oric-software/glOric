@@ -4,11 +4,11 @@ extern void change_char(char c, unsigned char patt01, unsigned char patt02, unsi
 #ifdef USE_REWORKED_BUFFERS
 extern void glDrawFaces();
 extern void glDrawSegments();
-extern void glDrawParticules();
+extern void glDrawParticles();
 #else
 extern void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces);
 extern void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbSegments);
-extern void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char nbParticules);
+extern void lrDrawParticles(char points2d[], unsigned char particles[], unsigned char nbParticles);
 
 #endif // USE_REWORKED_BUFFERS
 #endif // LRSDRAWING_H

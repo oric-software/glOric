@@ -3,7 +3,7 @@ char geomTower []= {
 /* Nb Coords = */ 9,
 /* Nb Faces = */ 6, //12,
 /* Nb Segments = */ 8,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
 -1, -1,             0, 0,
 -1,  1,             0, 0,
@@ -36,6 +36,6 @@ char geomTower []= {
 5, 8, TEXTURE_6, 0,
 6, 8, TEXTURE_6, 0,
 7, 8, TEXTURE_6, 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 
 };

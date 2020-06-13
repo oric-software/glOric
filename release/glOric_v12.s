@@ -26,6 +26,10 @@
 ;;       * use zero page 
 ;;       * remove useless context saving (pha & pla)
 ;;       * speedup face drawing and clipping 
+;; - Fix some interface mistakes
+;;       * Particule renamed into Particle
+;;       * Camera position stored on 8 bits value
+;;       * Remove useless param of buffer2screen function
 ;; 
 ;; Version 1.1 :  February 2020
 ;; ----------------------------
@@ -99,7 +103,7 @@
 #define NB_MAX_POINTS 64
 #define NB_MAX_SEGMENTS 64
 #define NB_MAX_FACES 64
-#define NB_MAX_PARTICULES 64
+#define NB_MAX_PARTICLES 64
 
 ;; -------- VIEWPORT SIZING --------------
 
@@ -166,7 +170,7 @@
 
 #define SIZEOF_3DPOINT 4
 #define SIZEOF_SEGMENT 4
-#define SIZEOF_PARTICULE 2
+#define SIZEOF_PARTICLE 2
 #define SIZEOF_2DPOINT 4
 #define SIZEOF_FACE 4
 
@@ -208,7 +212,7 @@
 #define USE_ASM_REACHSCREEN
 #define USE_ASM_FILLFACE
 #define USE_ASM_AGENTSTEP
-#define USE_ASM_GLDRAWPARTICULES
+#define USE_ASM_GLDRAWPARTICLES
 
 #define USE_ASM_HZFILL
 
@@ -985,8 +989,8 @@ glProjectArrays_done:
 
 ;;unsigned char nbSegments=0;
 _nbSegments     .dsb 1
-;;unsigned char nbParticules=0;
-_nbParticules .dsb 1;
+;;unsigned char nbParticles=0;
+_nbParticles .dsb 1;
 ;;unsigned char nbFaces=0;
 _nbFaces .dsb 1;
 
@@ -1001,11 +1005,11 @@ _segmentsPt2        .dsb NB_MAX_SEGMENTS
 _segmentsChar       .dsb NB_MAX_SEGMENTS
 
 
-;;char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
-; _particules       .dsb NB_MAX_PARTICULES*SIZEOF_PARTICULE
-_particules:
-_particulesPt       .dsb NB_MAX_PARTICULES
-_particulesChar     .dsb NB_MAX_PARTICULES
+;;char particles[NB_MAX_SEGMENTS*SIZEOF_PARTICLE];
+; _particles       .dsb NB_MAX_PARTICLES*SIZEOF_PARTICLE
+_particles:
+_particlesPt       .dsb NB_MAX_PARTICLES
+_particlesChar     .dsb NB_MAX_PARTICLES
 
 
 
@@ -5748,28 +5752,28 @@ PROFILE_LEAVE(ROUTINE_GLDRAWSEGMENTS);
     rts
 #endif ;; USE_ASM_GLDRAWSEGMENTS
 
-#ifdef USE_ASM_GLDRAWPARTICULES
-;; void glDrawParticules(){
-_glDrawParticules:
+#ifdef USE_ASM_GLDRAWPARTICLES
+;; void glDrawParticles(){
+_glDrawParticles:
 .(
 ;;     unsigned char ii = 0;
 #ifdef SAFE_CONTEXT
     lda reg5 : pha 
 #endif ;; SAFE_CONTEXT
 
-    ldy _nbParticules
-    jmp glDrawParticules_nextParticule
-;;     for (ii = 0; ii < nbParticules; ii++) {
+    ldy _nbParticles
+    jmp glDrawParticles_nextParticle
+;;     for (ii = 0; ii < nbParticles; ii++) {
 
-glDrawParticules_loop:
+glDrawParticles_loop:
 
-;;         idxPt1    = particulesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
-        lda _particulesPt,y : sta _idxPt1
-;;         ch2disp = particulesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
-        lda _particulesChar,y : sta _ch2disp
+;;         idxPt1    = particlesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
+        lda _particlesPt,y : sta _idxPt1
+;;         ch2disp = particlesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
+        lda _particlesChar,y : sta _ch2disp
 
         sty reg5 : ldy _idxPt1
-;;         dchar = points2dL[idxPt]-2 ; ;;FIXME : -2 to helps particule to be displayed
+;;         dchar = points2dL[idxPt]-2 ; ;;FIXME : -2 to helps particle to be displayed
         lda _points2dL,y : sta _distpoint
 
 ;;         P1X = (SCREEN_WIDTH -points2aH[idxPt]) >> 1;
@@ -5788,13 +5792,13 @@ glDrawParticules_loop:
 ;;         plot(A1X, A1Y, ch2disp);
 #endif
         ldy reg5
-glDrawParticules_nextParticule:
+glDrawParticles_nextParticle:
 	dey 
-    bmi glDrawParticules_done
-	jmp glDrawParticules_loop
+    bmi glDrawParticles_done
+	jmp glDrawParticles_loop
 ;;     }
 
-glDrawParticules_done:
+glDrawParticles_done:
 
 #ifdef SAFE_CONTEXT
 	;; Restore context
@@ -5803,7 +5807,7 @@ glDrawParticules_done:
 ;; }
 .)
     rts
-#endif ;; USE_ASM_GLDRAWPARTICULES
+#endif ;; USE_ASM_GLDRAWPARTICLES
 
 
 

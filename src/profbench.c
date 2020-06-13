@@ -17,13 +17,13 @@ void profbench() {
     nbPoints        = 0;
     nbSegments   = 0;
     nbFaces      = 0;
-    nbParticules = 0;
+    nbParticles = 0;
 
     addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
     addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
     
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPoints, nbParticles, nbSegments, nbFaces); get();
 
     text();
 
@@ -117,7 +117,7 @@ void profbench() {
 
         glDrawFaces();
         glDrawSegments();
-        glDrawParticules();
+        glDrawParticles();
 
         PROFILE_ENTER(ROUTINE_BUFFER2SCREEN);
         buffer2screen((void*)ADR_BASE_LORES_SCREEN);

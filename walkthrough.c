@@ -74,7 +74,7 @@ void main() {
     nbPoints     = 0;
     nbSegments   = 0;
     nbFaces      = 0;
-    nbParticules = 0;
+    nbParticles = 0;
 
     addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
@@ -124,7 +124,7 @@ void gameLoop() {
         // draw game scene's shapes in buffer
         glDrawFaces();
         glDrawSegments();
-        glDrawParticules();
+        glDrawParticles();
 
         // demonstrate use of projectPoint and zplot to interact with glOric inner functions
         // display a sprite at a given position
@@ -381,7 +381,7 @@ signed char geomPine []= {                   //          /\
 /* Nb Coords = */ 7,                         //        //   \\    
 /* Nb Faces = */ 2,                          //       //    \ \3   
 /* Nb Segments = */ 1,                       //      / /     \/   
-/* Nb Particules = */ 0,                     //     / /       \   
+/* Nb Particles = */ 0,                     //     / /       \   
                                              //    /  /        \  
 // Coord List : X, Y, Z, unused              //   /  /         \  
 0,          0,          0,              0,   //  4---/   1------2 
@@ -397,7 +397,7 @@ PINE_WIDTH, 0,          TRUNC_HEIGHT,   2,   //     / /  |
 2, 4, 6, TEXTURE_GREEN,
 // Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '|', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 #define TOWER_HEIGHT 3       
@@ -405,7 +405,7 @@ signed char geomTower []= {    //           7---------------6
 /* Nb Coords = */ 8,           //           |             //|
 /* Nb Faces = */ 6,            //           |           //  |
 /* Nb Segments = */ 4,         //           |         //    |
-/* Nb Particules = */ 0,       //           |       //      |
+/* Nb Particles = */ 0,       //           |       //      |
 // Coord List : X, Y, Z, Id    //  4--------------5/        |
 -1, -1,             0, 0,      //  |        .     |         |
 -1,  1,             0, 1,      //  |        .     |         |
@@ -434,7 +434,7 @@ signed char geomHouse []= {        //              /  \
 /* Nb Coords = */ 10,              //            /      \   
 /* Nb Faces = */ 11,               //           /        \   
 /* Nb Segments = */ 14,            //          5         4  
-/* Nb Particules = */ 0,           //         /.        /|  
+/* Nb Particles = */ 0,           //         /.        /|  
                                    //        8 .       / |  
 // Coord List : X, Y, Z, unused    //       / \.      /  |  
  1, 1, 0, 0,                       //      /   \     /   |                            
@@ -520,9 +520,9 @@ void addGeom(
         kk++; // skip unused byte
     }
     for (ii = 0; ii < npart; ii++){
-        particulesPt[nbParticules] = nbPoints - (npt-geom[kk++]);  // Index Point
-        particulesChar[nbParticules] = geom[kk++]; // Character
-        nbParticules++;        
+        particlesPt[nbParticles] = nbPoints - (npt-geom[kk++]);  // Index Point
+        particlesChar[nbParticles] = geom[kk++]; // Character
+        nbParticles++;        
     }
 }    
 

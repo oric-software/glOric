@@ -7,7 +7,7 @@ char geomLetterM[] = {
     /* Nb Coords = */ 5,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 4,
-    /* Nb Particules = */ 0,
+    /* Nb Particles = */ 0,
     // Coord List : X, Y, Z, unused
     0, 0, 1, 0,   // P0
     0, 0, 7, 0,   // P1
@@ -20,7 +20,7 @@ char geomLetterM[] = {
     1, 2, 77, 0,  //92, 0
     2, 3, 77, 0,  //47, 0
     3, 4, 77, 0   //124, 0
-    // Particule List : idxPoint1, character
+    // Particle List : idxPoint1, character
 
 };
 
@@ -28,7 +28,7 @@ char geomLetterC[] = {
     /* Nb Coords = */ 8,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 7,
-    /* Nb Particules = */ 0,
+    /* Nb Particles = */ 0,
     // Coord List : X, Y, Z, unused
     4, 0, 2, 0,   // P0
     3, 0, 1, 0,   // P1
@@ -47,7 +47,7 @@ char geomLetterC[] = {
     4, 5, 67, 0,  // 47, 0
     5, 6, 67, 0,  // 45, 0
     6, 7, 67, 0   // 92, 0
-    // Particule List : idxPoint1, character
+    // Particle List : idxPoint1, character
 
 };
 
@@ -55,7 +55,7 @@ char geomLetterI[] = {
     /* Nb Coords = */ 6,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 3,
-    /* Nb Particules = */ 0,
+    /* Nb Particles = */ 0,
     // Coord List : X, Y, Z, unused
     1, 0, 1, 0,   // P0
     3, 0, 1, 0,   // P1
@@ -68,14 +68,14 @@ char geomLetterI[] = {
     0, 1, 73, 0,  // 45, 0
     2, 3, 73, 0,  // 45, 0
     4, 5, 73, 0   // 124, 0
-    // Particule List : idxPoint1, character
+    // Particle List : idxPoint1, character
 };
 
 char geomLetterR[] = {
     /* Nb Coords = */ 9,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 7,
-    /* Nb Particules = */ 0,
+    /* Nb Particles = */ 0,
     // Coord List : X, Y, Z, unused
     0, 0, 1, 0,   // P0
     0, 0, 7, 0,   // P1
@@ -95,14 +95,14 @@ char geomLetterR[] = {
     4, 5, 82, 0,  // 47, 0
     5, 6, 82, 0,  // 45, 0
     7, 8, 82, 0   // 92, 0
-    // Particule List : idxPoint1, character
+    // Particle List : idxPoint1, character
 };
 
 char geomLetterE[] = {
     /* Nb Coords = */ 6,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 4,
-    /* Nb Particules = */ 0,
+    /* Nb Particles = */ 0,
     // Coord List : X, Y, Z, unused
     0, 0, 7, 0,   // P0
     4, 0, 7, 0,   // P1
@@ -116,14 +116,14 @@ char geomLetterE[] = {
     0, 2, 69, 0,  // 124, 0
     2, 3, 69, 0,  // 45, 0
     5, 4, 69, 0   // 45, 0
-    // Particule List : idxPoint1, character
+    // Particle List : idxPoint1, character
 };
 
 char geomLetterN[] = {
     /* Nb Coords = */ 4,
     /* Nb Faces = */ 0,
     /* Nb Segments = */ 3,
-    /* Nb Particules = */ 0,
+    /* Nb Particles = */ 0,
     // Coord List : X, Y, Z, unused
     0, 0, 1, 0,   // P0
     0, 0, 7, 0,   // P1
@@ -134,7 +134,7 @@ char geomLetterN[] = {
     0, 1, 78, 0,  //124, 0
     1, 2, 78, 0,  //92 , 0
     2, 3, 78, 0   //124, 0
-    // Particule List : idxPoint1, character
+    // Particle List : idxPoint1, character
 };
 
 #endif  //TEXTDEMO

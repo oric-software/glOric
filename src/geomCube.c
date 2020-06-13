@@ -2,7 +2,7 @@ char geomCube []= {
 /* Nb Coords = */ 8,
 /* Nb Faces = */ 12,
 /* Nb Segments = */ 12,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
     -1, -1, +1, 0,  // P0
     -1, -1, -1, 0,  // P1
@@ -41,5 +41,5 @@ char geomCube []= {
     2, 6, 45, 0,   //124, 0
     3, 7, 45, 0    //124, 0
 
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };

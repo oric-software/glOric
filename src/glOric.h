@@ -18,6 +18,6 @@ extern char CamRotX;
 extern unsigned char nbPoints;
 extern unsigned char nbFaces;
 extern unsigned char nbSegments;
-extern unsigned char nbParticules;
+extern unsigned char nbParticles;
 
 #endif

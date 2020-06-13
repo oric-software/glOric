@@ -30,7 +30,7 @@
 
 #define SIZEOF_3DPOINT          4
 #define SIZEOF_SEGMENT          4
-#define SIZEOF_PARTICULE        2
+#define SIZEOF_PARTICLE        2
 #define SIZEOF_2DPOINT          4
 #define SIZEOF_FACE             4
 
@@ -49,15 +49,15 @@ extern char             CamRotX;
 extern unsigned char    nbPoints;
 extern unsigned char    nbFaces;
 extern unsigned char    nbSegments;
-extern unsigned char    nbParticules;
+extern unsigned char    nbParticles;
 
  // Geometry buffers
 extern signed char      points3dX[];
 extern signed char      points3dY[];
 extern signed char      points3dZ[];
 
-extern unsigned char    particulesPt[];
-extern unsigned char    particulesChar[];
+extern unsigned char    particlesPt[];
+extern unsigned char    particlesChar[];
 
 extern unsigned char    segmentsPt1[];
 extern unsigned char    segmentsPt2[];
@@ -74,7 +74,7 @@ extern char             fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
 extern void glProjectArrays();
 extern void glDrawFaces();
 extern void glDrawSegments();
-extern void glDrawParticules();
+extern void glDrawParticles();
 extern void initScreenBuffers();
 extern void buffer2screen(char *);
 extern void zplot(signed char X, signed char Y, unsigned char dist, char char2disp);

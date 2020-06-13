@@ -19,8 +19,8 @@ extern char          faces[];
 extern unsigned char nbFaces;
 extern unsigned char segments[];
 extern unsigned char nbSegments;
-extern unsigned char particules[];
-extern unsigned char nbParticules;
+extern unsigned char particles[];
+extern unsigned char nbParticles;
 
 void                 hiresIntro();
 void                 hiresGameLoop();
@@ -42,7 +42,7 @@ void hiresDemo() {
 
     addGeom2(-4, -4, 2, 4, 4, 4, 0, geomCube);
     addGeom2(4, 4, 10, 4, 4, 4, 0, geomCube);
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPoints, nbParticles, nbSegments, nbFaces); get();
     hiresIntro();
 
     hiresGameLoop();
