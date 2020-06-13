@@ -161,8 +161,8 @@ FBufferAdressHigh
 
 
 
-#include "render/buffer2screen.s"
-#include "render/initScreenBuffers.s"
+#include "render/glBuffer2Screen.s"
+#include "render/glInitScreenBuffers.s"
 
 #ifdef USE_ASM_ZPLOT
 
@@ -260,12 +260,12 @@ fastzplot_done:
 	rts
 
 #ifndef TARGET_ORIX
-;; void zplot(signed char X,
+;; void glZPlot(signed char X,
 ;;           signed char Y,
 ;;           unsigned char dist,
 ;;           char          char2disp) {
 
-_zplot:
+_glZPlot:
 .(
 ; sp+0 => X coordinate
 ; sp+2 => Y coordinate

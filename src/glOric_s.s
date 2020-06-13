@@ -4,7 +4,7 @@
 
 #include "math/atan2.s"
 #include "math/norm.s"
-#include "projectPoint.s"
+#include "glProjectPoint.s"
 
 #include "projection.s"
 
@@ -45,7 +45,7 @@
 #include "lrDrawLine.s"
 #include "glDrawSegments.s"
 
-#include "glDrawParticules.s"
+#include "glDrawParticles.s"
 
 #include "kernel.s"
 #include "glProject_s.s"

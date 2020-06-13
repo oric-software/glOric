@@ -21,7 +21,7 @@ signed char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
 /* Nb Segments = */ 14,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
  1, 1, 0, 0, 
 -1, 1, 0, 0,
@@ -61,5 +61,5 @@ signed char geomHouse []= {
 6, 9,'/', 0,
 9, 8,'-', 0,
 
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };

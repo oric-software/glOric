@@ -25,7 +25,7 @@ signed char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
 /* Nb Segments = */ 14,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
  1, 1, 0, 0, 
 -1, 1, 0, 0,
@@ -65,7 +65,7 @@ signed char geomHouse []= {
 6, 9,'/', 0,
 9, 8,'-', 0,
 
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 // extern void waitkey();
@@ -113,47 +113,47 @@ void addGeom2(
     npart = geom[kk++];
     for (ii = 0; ii < npt; ii++){
         if (orientation == 0) {
-            points3dX[nbPoints] = X + sizeX * geom[kk++];
-            points3dY[nbPoints] = Y + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = X + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = Y + sizeY * geom[kk++];
         } else {
-            points3dY[nbPoints] = X + sizeY * geom[kk++];
-            points3dX[nbPoints] = Y + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = X + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = Y + sizeX * geom[kk++];
         }
-        points3dZ[nbPoints] = Z + sizeZ * geom[kk++];
-        nbPoints ++;
+        glVerticesZ[glNbVertices] = Z + sizeZ * geom[kk++];
+        glNbVertices ++;
         kk++; // skip unused byte
     }
     for (ii = 0; ii < nfa; ii++){
-        facesPt1[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 1
-        facesPt2[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 2
-        facesPt3[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 3
-        facesChar[nbFaces] = geom[kk++];  // Character
-        nbFaces++;
+        glFacesPt1[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
+        glFacesPt2[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
+        glFacesPt3[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 3
+        glFacesChar[glNbFaces] = geom[kk++];  // Character
+        glNbFaces++;
     }
     for (ii = 0; ii < nseg; ii++){
-        segmentsPt1[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 1
-        segmentsPt2[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 2
-        segmentsChar[nbSegments] = geom[kk++]; // Character
-        nbSegments++;
+        glSegmentsPt1[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
+        glSegmentsPt2[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
+        glSegmentsChar[glNbSegments] = geom[kk++]; // Character
+        glNbSegments++;
         kk++; // skip unused byte
     }
     for (ii = 0; ii < npart; ii++){
-        particulesPt[nbParticules] = nbPoints - (npt-geom[kk++]);  // Index Point
-        particulesChar[nbParticules] = geom[kk++]; // Character
-        nbParticules++;        
+        glParticlesPt[glNbParticles] = glNbVertices - (npt-geom[kk++]);  // Index Point
+        glParticlesChar[glNbParticles] = geom[kk++]; // Character
+        glNbParticles++;        
     }
 }    
 
 
 void listPoints3D(){
     int ii;
-    for (ii=0; ii< nbPoints; ii++){
-        printf ("Pt %d (%d %d %d)\n", ii, points3dX[ii],points3dY[ii],points3dZ[ii]);
+    for (ii=0; ii< glNbVertices; ii++){
+        printf ("Pt %d (%d %d %d)\n", ii, glVerticesX[ii],glVerticesY[ii],glVerticesZ[ii]);
     }
 }
 void listPoints2D(){
     int ii;
-    for (ii=0; ii< nbPoints; ii++){
+    for (ii=0; ii< glNbVertices; ii++){
         printf ("Pt %d (%d %d) dist = %d\n", ii, points2aH[ii],points2aV[ii],points2dL[ii]);
     }
 }
@@ -161,45 +161,45 @@ void main (){
     int i,j;
     // printf ("coucou \n");
 
-    CamPosX = -20;
-    CamPosY = 16;
-    CamPosZ = 6;
+    glCamPosX = -20;
+    glCamPosY = 16;
+    glCamPosZ = 6;
 
-    CamRotZ = -23;
-    CamRotX = 0;
+    glCamRotZ = -23;
+    glCamRotX = 0;
     
-    nbPoints     = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticules = 0;
+    glNbVertices     = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
     addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
     // addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
-    printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); waitkey();
+    printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); waitkey();
     // listPoints3D();
 
     i       = 0;
 
     for (j = 0; j < 64; j++) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
+        glCamPosX = traj[i++];
+        glCamPosY = traj[i++];
+        glCamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
 
         glProjectArrays();
         // // listPoints2D();
 
-        initScreenBuffers();
+        glInitScreenBuffers();
 
         glDrawFaces();
 
         glDrawSegments();
 
-        glDrawParticules();
+        glDrawParticles();
 
-        buffer2screen((char *)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
     }
     printf ("Fin\n");
 

@@ -12,18 +12,18 @@ PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 	lda reg3 : pha 
 #endif ;; SAFE_CONTEXT
 
-    ldy _nbSegments
+    ldy _glNbSegments
     jmp glDrawSegments_nextSegment
-;;     for (ii = 0; ii < nbSegments; ii++) {
+;;     for (ii = 0; ii < glNbSegments; ii++) {
 
 glDrawSegments_loop:
 
-;;         idxPt1    = segmentsPt1[ii];
-        lda _segmentsPt1,y : sta _idxPt1
-;;         idxPt2    = segmentsPt2[ii];
-        lda _segmentsPt2,y : sta _idxPt2
-;;         ch2disp = segmentsChar[ii];
-        lda _segmentsChar,y : sta _ch2disp
+;;         idxPt1    = glSegmentsPt1[ii];
+        lda _glSegmentsPt1,y : sta _idxPt1
+;;         idxPt2    = glSegmentsPt2[ii];
+        lda _glSegmentsPt2,y : sta _idxPt2
+;;         ch2disp = glSegmentsChar[ii];
+        lda _glSegmentsChar,y : sta _ch2disp
 
 ;;         ;; dmoy = (d1+d2)/2;
         sty reg3

@@ -18,10 +18,10 @@ extern unsigned char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
 
 #ifdef HRSDEMO
 
-void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char nbSegments) {
+void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char glNbSegments) {
     unsigned char ii = 0;
     unsigned char idxPt1, idxPt2;
-    for (ii = 0; ii < nbSegments; ii++) {
+    for (ii = 0; ii < glNbSegments; ii++) {
         idxPt1 = segments[ii * SIZEOF_SEGMENT + 0];
         idxPt2 = segments[ii * SIZEOF_SEGMENT + 1];
         //char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
@@ -72,7 +72,7 @@ void hrDrawSegments2(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
 	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
-	for (ii = 0; ii< nbSegments; ii++){
+	for (ii = 0; ii< glNbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
@@ -98,17 +98,17 @@ void debugHiresIntro (){
     int i;
     //hires();
 
-	CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	glCamPosX = -24;
+	glCamPosY = 0;
+	glCamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
+ 	glCamRotZ = 64 ;
+	glCamRotX = 2;
 
     for (i=0;i<2;) {
-		CamPosX = traj[i++];
-		CamPosY = traj[i++];
-		CamRotZ = traj[i++];
+		glCamPosX = traj[i++];
+		glCamPosY = traj[i++];
+		glCamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts, 0);
         //memset ( 0xa000, 64, 8000); // clear screen

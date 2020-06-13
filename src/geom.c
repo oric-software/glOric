@@ -26,26 +26,26 @@
 
 #ifdef USE_REWORKED_BUFFERS
 
-extern unsigned char nbPoints;
-extern unsigned char nbSegments;
-extern unsigned char nbFaces;
-extern unsigned char nbParticules;
+extern unsigned char glNbVertices;
+extern unsigned char glNbSegments;
+extern unsigned char glNbFaces;
+extern unsigned char glNbParticles;
 
-extern signed char points3dX[];
-extern signed char points3dY[];
-extern signed char points3dZ[];
+extern signed char glVerticesX[];
+extern signed char glVerticesY[];
+extern signed char glVerticesZ[];
 
-extern unsigned char segmentsPt1[];
-extern unsigned char segmentsPt2[];
-extern unsigned char segmentsChar[];
+extern unsigned char glSegmentsPt1[];
+extern unsigned char glSegmentsPt2[];
+extern unsigned char glSegmentsChar[];
 
-extern unsigned char particulesPt[];
-extern unsigned char particulesChar[];
+extern unsigned char glParticlesPt[];
+extern unsigned char glParticlesChar[];
 
-extern unsigned char facesPt1[];
-extern unsigned char facesPt2[];
-extern unsigned char facesPt3[];
-extern unsigned char facesChar[];
+extern unsigned char glFacesPt1[];
+extern unsigned char glFacesPt2[];
+extern unsigned char glFacesPt3[];
+extern unsigned char glFacesChar[];
 
 void addGeom(
     signed char   X,
@@ -60,28 +60,28 @@ void addGeom(
     int kk;
 
     for (kk=0; kk< geom[0]; kk++){
-        points3dX[nbPoints] = X + ((orientation == 0) ? sizeX * geom[4+kk*SIZEOF_3DPOINT+0]: sizeY * geom[4+kk*SIZEOF_3DPOINT+1]);// X + ii;
-        points3dY[nbPoints] = Y + ((orientation == 0) ? sizeY * geom[4+kk*SIZEOF_3DPOINT+1]: sizeX * geom[4+kk*SIZEOF_3DPOINT+0]);// Y + jj;
-        points3dZ[nbPoints] = Z + geom[4+kk*SIZEOF_3DPOINT+2]*sizeZ;// ;
-        nbPoints++;
+        glVerticesX[glNbVertices] = X + ((orientation == 0) ? sizeX * geom[4+kk*SIZEOF_3DPOINT+0]: sizeY * geom[4+kk*SIZEOF_3DPOINT+1]);// X + ii;
+        glVerticesY[glNbVertices] = Y + ((orientation == 0) ? sizeY * geom[4+kk*SIZEOF_3DPOINT+1]: sizeX * geom[4+kk*SIZEOF_3DPOINT+0]);// Y + jj;
+        glVerticesZ[glNbVertices] = Z + geom[4+kk*SIZEOF_3DPOINT+2]*sizeZ;// ;
+        glNbVertices++;
     }
     for (kk=0; kk< geom[1]; kk++){
-        facesPt1[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+0]);  // Index Point 1
-        facesPt2[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+1]);  // Index Point 2
-        facesPt3[nbFaces] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+2]);  // Index Point 3
-        facesChar[nbFaces] = geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+3];  // Character
-        nbFaces++;
+        glFacesPt1[glNbFaces] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+0]);  // Index Point 1
+        glFacesPt2[glNbFaces] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+1]);  // Index Point 2
+        glFacesPt3[glNbFaces] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+2]);  // Index Point 3
+        glFacesChar[glNbFaces] = geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+3];  // Character
+        glNbFaces++;
     }
     for (kk=0; kk< geom[2]; kk++){
-        segmentsPt1[nbSegments] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 0]);  // Index Point 1
-        segmentsPt2[nbSegments] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 1]);  // Index Point 2
-        segmentsChar[nbSegments] = geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 2]; // Character
-        nbSegments++;
+        glSegmentsPt1[glNbSegments] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 0]);  // Index Point 1
+        glSegmentsPt2[glNbSegments] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 1]);  // Index Point 2
+        glSegmentsChar[glNbSegments] = geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 2]; // Character
+        glNbSegments++;
     }
     for (kk=0; kk< geom[3]; kk++){
-        particulesPt[nbParticules] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
-        particulesChar[nbParticules] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
-        nbParticules++;
+        glParticlesPt[glNbParticles] = glNbVertices - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 0]);  // Index Point
+        glParticlesChar[glNbParticles] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 1]; // Character
+        glNbParticles++;
     }
 }
 
@@ -89,14 +89,14 @@ void addGeom(
 
 
 extern char          points3d[];
-extern unsigned char nbPoints;
+extern unsigned char glNbVertices;
 extern char          points2d[];
 extern char          faces[];
-extern unsigned char nbFaces;
+extern unsigned char glNbFaces;
 extern unsigned char segments[];
-extern unsigned char nbSegments;
-extern unsigned char particules[];
-extern unsigned char nbParticules;
+extern unsigned char glNbSegments;
+extern unsigned char particles[];
+extern unsigned char glNbParticles;
 
 void addGeom(
     signed char   X,
@@ -112,31 +112,31 @@ void addGeom(
     // unsigned char oldNbPoints;
     // ii = (orientation == 0) ? 0 : -L;
     // jj = (orientation == 0) ? -L : 0;
-    // oldNbPoints = nbPoints;
+    // oldNbPoints = glNbVertices;
 
     for (kk=0; kk< geom[0]; kk++){
-        points3d[nbPoints * SIZEOF_3DPOINT + 0] = X + ((orientation == 0) ? sizeX * geom[4+kk*SIZEOF_3DPOINT+0]: sizeY * geom[4+kk*SIZEOF_3DPOINT+1]);// X + ii;
-        points3d[nbPoints * SIZEOF_3DPOINT + 1] = Y + ((orientation == 0) ? sizeY * geom[4+kk*SIZEOF_3DPOINT+1]: sizeX * geom[4+kk*SIZEOF_3DPOINT+0]);// Y + jj;
-        points3d[nbPoints * SIZEOF_3DPOINT + 2] = Z + geom[4+kk*SIZEOF_3DPOINT+2]*sizeZ;// ;
-        nbPoints++;
+        points3d[glNbVertices * SIZEOF_3DPOINT + 0] = X + ((orientation == 0) ? sizeX * geom[4+kk*SIZEOF_3DPOINT+0]: sizeY * geom[4+kk*SIZEOF_3DPOINT+1]);// X + ii;
+        points3d[glNbVertices * SIZEOF_3DPOINT + 1] = Y + ((orientation == 0) ? sizeY * geom[4+kk*SIZEOF_3DPOINT+1]: sizeX * geom[4+kk*SIZEOF_3DPOINT+0]);// Y + jj;
+        points3d[glNbVertices * SIZEOF_3DPOINT + 2] = Z + geom[4+kk*SIZEOF_3DPOINT+2]*sizeZ;// ;
+        glNbVertices++;
     }
     for (kk=0; kk< geom[1]; kk++){
-        faces[nbFaces * SIZEOF_FACE + 0] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+0]);  // Index Point 1
-        faces[nbFaces * SIZEOF_FACE + 1] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+1]);  // Index Point 2
-        faces[nbFaces * SIZEOF_FACE + 2] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+2]);  // Index Point 3
-        faces[nbFaces * SIZEOF_FACE + 3] = geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+3];  // Character
-        nbFaces++;
+        faces[glNbFaces * SIZEOF_FACE + 0] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+0]);  // Index Point 1
+        faces[glNbFaces * SIZEOF_FACE + 1] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+1]);  // Index Point 2
+        faces[glNbFaces * SIZEOF_FACE + 2] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+2]);  // Index Point 3
+        faces[glNbFaces * SIZEOF_FACE + 3] = geom[4+geom[0]*SIZEOF_3DPOINT+kk*SIZEOF_FACE+3];  // Character
+        glNbFaces++;
     }
     for (kk=0; kk< geom[2]; kk++){
-        segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 0]);  // Index Point 1
-        segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPoints - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 1]);  // Index Point 2
-        segments[nbSegments * SIZEOF_SEGMENT + 2] = geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 2]; // Character
-        nbSegments++;
+        segments[glNbSegments * SIZEOF_SEGMENT + 0] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 0]);  // Index Point 1
+        segments[glNbSegments * SIZEOF_SEGMENT + 1] = glNbVertices - (geom[0]-geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 1]);  // Index Point 2
+        segments[glNbSegments * SIZEOF_SEGMENT + 2] = geom[4+geom[0]*SIZEOF_3DPOINT+geom[1]*SIZEOF_FACE+kk*SIZEOF_SEGMENT + 2]; // Character
+        glNbSegments++;
     }
     for (kk=0; kk< geom[3]; kk++){
-        particules[nbParticules * SIZEOF_PARTICULE + 0] = nbPoints - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 0]);  // Index Point
-        particules[nbParticules * SIZEOF_PARTICULE + 1] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICULE + 1]; // Character
-        nbParticules++;
+        particles[glNbParticles * SIZEOF_PARTICLE + 0] = glNbVertices - (geom[0]-geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 0]);  // Index Point
+        particles[glNbParticles * SIZEOF_PARTICLE + 1] = geom[4 + geom[0]*SIZEOF_3DPOINT + geom[1]*SIZEOF_FACE + geom[2]*SIZEOF_SEGMENT + kk*SIZEOF_PARTICLE + 1]; // Character
+        glNbParticles++;
     }
 }
 #endif
@@ -144,11 +144,11 @@ void addGeom(
 // /* Nb Coords = */ 3,
 // /* Nb Faces = */ 
 // /* Nb Segments = */
-// /* Nb Particules = */
+// /* Nb Particles = */
 // // Coord List : X, Y, Z, unused
 // // Face List : idxPoint1, idxPoint2, idxPoint3, character 
 // // Segment List : idxPoint1, idxPoint2, idxPoint3, character 
-// // Particule List : idxPoint1, character 
+// // Particle List : idxPoint1, character 
 
 // }
 
@@ -163,63 +163,63 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
     ii = (orientation == 0) ? 0 : -L;
     jj = (orientation == 0) ? -L : 0;
     //printf ("plane [%d %d], l= %d, ori = %d, t = %c\n", X	, Y, L, orientation, char2disp); get();
-    points3d[nbPoints * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPoints * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPoints * SIZEOF_3DPOINT + 2] = 8;
-    //printf ("p3d [%d %d %d]\n", points3d[nbPoints* SIZEOF_3DPOINT + 0]	, points3d[nbPoints* SIZEOF_3DPOINT + 1], points3d[nbPoints* SIZEOF_3DPOINT + 2]); get();
-    nbPoints++;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 1] = Y + jj;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 2] = 8;
+    //printf ("p3d [%d %d %d]\n", points3d[glNbVertices* SIZEOF_3DPOINT + 0]	, points3d[glNbVertices* SIZEOF_3DPOINT + 1], points3d[glNbVertices* SIZEOF_3DPOINT + 2]); get();
+    glNbVertices++;
     ii                                   = (orientation == 0) ? 0 : -L;
     jj                                   = (orientation == 0) ? -L : 0;
-    points3d[nbPoints * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPoints * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPoints * SIZEOF_3DPOINT + 2] = 0;
-    //printf ("p3d [%d %d %d]\n", points3d[nbPoints* SIZEOF_3DPOINT + 0]	, points3d[nbPoints* SIZEOF_3DPOINT + 1], points3d[nbPoints* SIZEOF_3DPOINT + 2]); get();
-    nbPoints++;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 1] = Y + jj;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 2] = 0;
+    //printf ("p3d [%d %d %d]\n", points3d[glNbVertices* SIZEOF_3DPOINT + 0]	, points3d[glNbVertices* SIZEOF_3DPOINT + 1], points3d[glNbVertices* SIZEOF_3DPOINT + 2]); get();
+    glNbVertices++;
     ii                                   = (orientation == 0) ? (0) : L;
     jj                                   = (orientation == 0) ? (L) : 0;
-    points3d[nbPoints * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPoints * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPoints * SIZEOF_3DPOINT + 2] = 0;
-    //printf ("p3d [%d %d %d]\n", points3d[nbPoints* SIZEOF_3DPOINT + 0]	, points3d[nbPoints* SIZEOF_3DPOINT + 1], points3d[nbPoints* SIZEOF_3DPOINT + 2]); get();
-    nbPoints++;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 1] = Y + jj;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 2] = 0;
+    //printf ("p3d [%d %d %d]\n", points3d[glNbVertices* SIZEOF_3DPOINT + 0]	, points3d[glNbVertices* SIZEOF_3DPOINT + 1], points3d[glNbVertices* SIZEOF_3DPOINT + 2]); get();
+    glNbVertices++;
     ii                                   = (orientation == 0) ? (0) : L;
     jj                                   = (orientation == 0) ? (L) : 0;
-    points3d[nbPoints * SIZEOF_3DPOINT + 0] = X + ii;
-    points3d[nbPoints * SIZEOF_3DPOINT + 1] = Y + jj;
-    points3d[nbPoints * SIZEOF_3DPOINT + 2] = 8;
-    //printf ("p3d [%d %d %d]\n", points3d[nbPoints* SIZEOF_3DPOINT + 0]	, points3d[nbPoints* SIZEOF_3DPOINT + 1], points3d[nbPoints* SIZEOF_3DPOINT + 2]); get();
-    nbPoints++;
-    faces[nbFaces * SIZEOF_FACE + 0] = nbPoints - 4;  // Index Point 1
-    faces[nbFaces * SIZEOF_FACE + 1] = nbPoints - 3;  // Index Point 2
-    faces[nbFaces * SIZEOF_FACE + 2] = nbPoints - 2;  // Index Point 3
-    faces[nbFaces * SIZEOF_FACE + 3] = char2disp;  // Index Point 3
-    nbFaces++;
-    faces[nbFaces * SIZEOF_FACE + 0] = nbPoints - 4;  // Index Point 1
-    faces[nbFaces * SIZEOF_FACE + 1] = nbPoints - 2;  // Index Point 2
-    faces[nbFaces * SIZEOF_FACE + 2] = nbPoints - 1;  // Index Point 3
-    faces[nbFaces * SIZEOF_FACE + 3] = char2disp;  // Index Point 3
-    nbFaces++;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 0] = X + ii;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 1] = Y + jj;
+    points3d[glNbVertices * SIZEOF_3DPOINT + 2] = 8;
+    //printf ("p3d [%d %d %d]\n", points3d[glNbVertices* SIZEOF_3DPOINT + 0]	, points3d[glNbVertices* SIZEOF_3DPOINT + 1], points3d[glNbVertices* SIZEOF_3DPOINT + 2]); get();
+    glNbVertices++;
+    faces[glNbFaces * SIZEOF_FACE + 0] = glNbVertices - 4;  // Index Point 1
+    faces[glNbFaces * SIZEOF_FACE + 1] = glNbVertices - 3;  // Index Point 2
+    faces[glNbFaces * SIZEOF_FACE + 2] = glNbVertices - 2;  // Index Point 3
+    faces[glNbFaces * SIZEOF_FACE + 3] = char2disp;  // Index Point 3
+    glNbFaces++;
+    faces[glNbFaces * SIZEOF_FACE + 0] = glNbVertices - 4;  // Index Point 1
+    faces[glNbFaces * SIZEOF_FACE + 1] = glNbVertices - 2;  // Index Point 2
+    faces[glNbFaces * SIZEOF_FACE + 2] = glNbVertices - 1;  // Index Point 3
+    faces[glNbFaces * SIZEOF_FACE + 3] = char2disp;  // Index Point 3
+    glNbFaces++;
 
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPoints - 4;  // Index Point 1
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPoints - 3;  // Index Point 2
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';        // Character
-    nbSegments++;
+    segments[glNbSegments * SIZEOF_SEGMENT + 0] = glNbVertices - 4;  // Index Point 1
+    segments[glNbSegments * SIZEOF_SEGMENT + 1] = glNbVertices - 3;  // Index Point 2
+    segments[glNbSegments * SIZEOF_SEGMENT + 2] = '|';        // Character
+    glNbSegments++;
 
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPoints - 3;  // Index Point 1
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPoints - 2;  // Index Point 2
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';        // Character
-    nbSegments++;
+    segments[glNbSegments * SIZEOF_SEGMENT + 0] = glNbVertices - 3;  // Index Point 1
+    segments[glNbSegments * SIZEOF_SEGMENT + 1] = glNbVertices - 2;  // Index Point 2
+    segments[glNbSegments * SIZEOF_SEGMENT + 2] = '-';        // Character
+    glNbSegments++;
 
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPoints - 2;  // Index Point 1
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPoints - 1;  // Index Point 2
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '|';        // Character
-    nbSegments++;
+    segments[glNbSegments * SIZEOF_SEGMENT + 0] = glNbVertices - 2;  // Index Point 1
+    segments[glNbSegments * SIZEOF_SEGMENT + 1] = glNbVertices - 1;  // Index Point 2
+    segments[glNbSegments * SIZEOF_SEGMENT + 2] = '|';        // Character
+    glNbSegments++;
 
-    segments[nbSegments * SIZEOF_SEGMENT + 0] = nbPoints - 4;  // Index Point 1
-    segments[nbSegments * SIZEOF_SEGMENT + 1] = nbPoints - 1;  // Index Point 2
-    segments[nbSegments * SIZEOF_SEGMENT + 2] = '-';        // Character
-    nbSegments++;
-    //printf ("%d Points, %d Segments, %d Faces\n", nbPoints, nbSegments, nbFaces); get();
+    segments[glNbSegments * SIZEOF_SEGMENT + 0] = glNbVertices - 4;  // Index Point 1
+    segments[glNbSegments * SIZEOF_SEGMENT + 1] = glNbVertices - 1;  // Index Point 2
+    segments[glNbSegments * SIZEOF_SEGMENT + 2] = '-';        // Character
+    glNbSegments++;
+    //printf ("%d Points, %d Segments, %d Faces\n", glNbVertices, glNbSegments, glNbFaces); get();
 }
 #endif // USE_REWORKED_BUFFERS
 #endif  // COLORDEMO
@@ -230,7 +230,7 @@ char geomTriangle []= {
 /* Nb Coords = */ 3,
 /* Nb Faces = */ 1,
 /* Nb Segments = */ 3,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
 -1, 0, 0, 0, 
  1, 0, 0, 0,
@@ -241,14 +241,14 @@ char geomTriangle []= {
 0, 2, '/', 0,
 1, 2, '/', 0,
 0, 1, '-', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 char geomRectangle []= {
 /* Nb Coords = */ 4,
 /* Nb Faces = */ 2,
 /* Nb Segments = */ 4,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
 -1, 0, 0, 0, 
  1, 0, 0, 0,
@@ -262,7 +262,7 @@ char geomRectangle []= {
 2, 3, '-', 0,
 3, 1, '|', 0,
 1, 0, '-', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 #ifdef HRSDEMO
@@ -281,7 +281,7 @@ char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
 /* Nb Segments = */ 14,
-/* Nb Particules = */ 0,
+/* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
  1, 1, 0, 0, 
 -1, 1, 0, 0,
@@ -321,6 +321,6 @@ char geomHouse []= {
 6, 9,'/', 0,
 9, 8,'-', 0,
 
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 #endif // LRSDEMO

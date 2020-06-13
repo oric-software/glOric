@@ -139,7 +139,7 @@ lrDrawLine_loop:
 
 
 ;; #ifdef USE_ZBUFFER
-;;         zplot(A1X, A1Y, distseg, ch2dsp);
+;;         glZPlot(A1X, A1Y, distseg, ch2dsp);
 ;; #else
 ;;         ;; TODO : plot a point with no z-buffer
 ;; #endif

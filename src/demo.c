@@ -13,10 +13,10 @@
 extern unsigned char une_fonction();
 extern void lrsDemo();
 
-/*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
+/*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char glNbVertices, unsigned char opts);
 
-extern int CamPosX, CamPosY, CamPosZ;
-extern char CamRotZ, CamRotX;
+extern signed char glCamPosX, glCamPosY, glCamPosZ;
+extern signed char glCamRotZ, glCamRotX;
 
 
 unsigned char nbPts=0;
@@ -25,9 +25,9 @@ char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
 */
 char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
-unsigned char nbSegments=0;
-char particules[NB_MAX_SEGMENTS*SIZEOF_PARTICULE];
-unsigned char nbParticules=0;
+unsigned char glNbSegments=0;
+char particles[NB_MAX_SEGMENTS*SIZEOF_PARTICLE];
+unsigned char glNbParticles=0;
 
 
     
@@ -40,12 +40,12 @@ void addCube(char X, char Y, char Z){
 		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
 	}
 	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
+		segments[(glNbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
+		segments[(glNbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
+		segments[(glNbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
 	nbPts += NB_POINTS_CUBE;
-	nbSegments += NB_SEGMENTS_CUBE;
+	glNbSegments += NB_SEGMENTS_CUBE;
 }
 
 void hrDrawSegments(){
@@ -53,7 +53,7 @@ void hrDrawSegments(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
 	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
-	for (ii = 0; ii< nbSegments; ii++){
+	for (ii = 0; ii< glNbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
@@ -79,17 +79,17 @@ void hiresIntro (){
     int i;
 
 
-	CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	glCamPosX = -24;
+	glCamPosY = 0;
+	glCamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
+ 	glCamRotZ = 64 ;
+	glCamRotX = 2;
 
     for (i=0;i<2;) {
-		CamPosX = traj[i++];
-		CamPosY = traj[i++];
-		CamRotZ = traj[i++];
+		glCamPosX = traj[i++];
+		glCamPosY = traj[i++];
+		glCamRotZ = traj[i++];
 		i = i % (NB_POINTS_TRAJ*SIZE_POINTS_TRAJ);
         glProject (points2d, points3d, nbPts,0);
         //memset ( 0xa000, 64, 8000); // clear screen
@@ -127,15 +127,15 @@ int main ()
 	tgi_line(-10,-10,100,100);
 */
 	//tgi_line(128,96,128,128);
-	/*CamPosX = -24;
-	CamPosY = 0;
-	CamPosZ = 3;
+	/*glCamPosX = -24;
+	glCamPosY = 0;
+	glCamPosZ = 3;
 
- 	CamRotZ = 64 ;
-	CamRotX = 2;
+ 	glCamRotZ = 64 ;
+	glCamRotX = 2;
 	*/
 	/*nbPts =0 ;
-	nbSegments =0 ;
+	glNbSegments =0 ;
 	addCube(-4, -4, 2);*/
 
 	/*glProject (points2d, points3d, nbPts, 0);

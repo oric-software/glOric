@@ -2,7 +2,7 @@
 
 .text
 
-_buffer2screen:
+_glBuffer2Screen:
 .(
 	ldy #$00
 

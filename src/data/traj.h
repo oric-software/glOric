@@ -4,7 +4,7 @@
 #define NB_POINTS_TRAJ 64
 #define SIZE_POINTS_TRAJ 3
 
-char traj[] = {
+signed char traj[] = {
     24, 0, 128,
     24, 2, -125,
     24, 5, -120,

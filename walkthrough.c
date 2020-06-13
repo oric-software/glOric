@@ -72,10 +72,10 @@ void main() {
     /*
      *  Game Scene Building
      */
-    nbPoints     = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticules = 0;
+    glNbVertices     = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
@@ -91,11 +91,11 @@ void main() {
     /*
      *  Camera (player view) position and orientation 
      */
-    CamPosX = 60;  
-    CamPosY = 0; 
-    CamPosZ = 6;
-    CamRotZ = -127;
-    CamRotX = 0;
+    glCamPosX = 60;  
+    glCamPosY = 0; 
+    glCamPosZ = 6;
+    glCamRotZ = -127;
+    glCamRotX = 0;
 
     running = 1;
     gameLoop();
@@ -120,28 +120,28 @@ void gameLoop() {
         glProjectArrays();
 
         // empty buffer
-        initScreenBuffers();
+        glInitScreenBuffers();
 
         // draw game scene's shapes in buffer
         glDrawFaces();
         glDrawSegments();
-        glDrawParticules();
+        glDrawParticles();
 
-        // demonstrate use of projectPoint and zplot to interact with glOric inner functions
+        // demonstrate use of glProjectPoint and glZPlot to interact with glOric inner functions
         // display a sprite at a given position
         pX=0; pY=0; pZ=24;
-        projectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
+        glProjectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
         sX = (SCREEN_WIDTH -aH) >> 1;
         sY = (SCREEN_HEIGHT - aV) >> 1;
-        zplot(sX  ,sY,distance,'H');
-        zplot(sX+1,sY,distance,'O');
-        zplot(sX+2,sY,distance,'U');
-        zplot(sX+3,sY,distance,'S');
-        zplot(sX+4,sY,distance,'E');
+        glZPlot(sX  ,sY,distance,'H');
+        glZPlot(sX+1,sY,distance,'O');
+        glZPlot(sX+2,sY,distance,'U');
+        glZPlot(sX+3,sY,distance,'S');
+        glZPlot(sX+4,sY,distance,'E');
   
         // update display with buffer
-        buffer2screen((void*)0);
-        sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+        glBuffer2Screen();
+        sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     }
 }
 /*    ___  _                           
@@ -159,21 +159,21 @@ void shiftRight();
 void player () {
     switch (key()) {
     case 8:  // left 
-        CamRotZ += 4; break;
+        glCamRotZ += 4; break;
     case 9:  // right 
-        CamRotZ -= 4; break;
+        glCamRotZ -= 4; break;
     case 10:  // down
         backward(); break;
     case 11:  // up
         forward(); break;
     // case 80:  // P        HEP !! DONT TOUCH THAT !!!
-    //     CamPosZ += 1; break;
+    //     glCamPosZ += 1; break;
     // case 59:  // ;       FORGET ABOUT IT !!
-    //     CamPosZ -= 1; break;
+    //     glCamPosZ -= 1; break;
     case 81:  // Q
         running = 0; break;
     // case 65:  // A
-    //     CamRotX -= 2; break;
+    //     glCamRotX -= 2; break;
     case 90:  // Z
         shiftLeft(); break;
     case 88:  // X
@@ -190,9 +190,9 @@ void player () {
  *                            
  */
 // Collision Detection 
-unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
-    unsigned int aX = abs(X);
-    unsigned int aY = abs(Y);
+unsigned char isAllowedPosition(signed char X, signed char Y, signed char Z) {
+    unsigned char aX = abs(X);
+    unsigned char aY = abs(Y);
     // Walls of house
     if ((aX <=13) && (aY <= 9)) {
         if ((aY <= 7) && (X > -7)) {
@@ -209,107 +209,107 @@ unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
 }
 void forward() {
     signed int X, Y;
-    X = CamPosX; Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosX--;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
+    X = glCamPosX; Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosX--;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
     } else {
-        CamPosX--;
+        glCamPosX--;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 void backward() {
     signed int X, Y;
-    X = CamPosX; Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosX++;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
+    X = glCamPosX; Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosX++;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
     } else {
-        CamPosX++;
+        glCamPosX++;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 void shiftLeft() {
     signed int X, Y;
-    X = CamPosX; Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosY--;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosY++;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosX--;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
+    X = glCamPosX; Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosY--;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosY++;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosX--;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
     } else {
-        CamPosY--;
+        glCamPosY--;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 void shiftRight() {
     signed int X, Y;
-    X = CamPosX;
-    Y = CamPosY;
-    if (-112 >= CamRotZ) {
-        CamPosY++;
-    } else if ((-112 < CamRotZ) && (-80 >= CamRotZ)) {
-        CamPosX--; CamPosY++;
-    } else if ((-80 < CamRotZ) && (-48 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((-48 < CamRotZ) && (-16 >= CamRotZ)) {
-        CamPosX--; CamPosY--;
-    } else if ((-16 < CamRotZ) && (16 >= CamRotZ)) {
-        CamPosY--;
-    } else if ((16 < CamRotZ) && (48 >= CamRotZ)) {
-        CamPosX++; CamPosY--;
-    } else if ((48 < CamRotZ) && (80 >= CamRotZ)) {
-        CamPosX++;
-    } else if ((80 < CamRotZ) && (112 >= CamRotZ)) {
-        CamPosX++; CamPosY++;
+    X = glCamPosX;
+    Y = glCamPosY;
+    if (-112 >= glCamRotZ) {
+        glCamPosY++;
+    } else if ((-112 < glCamRotZ) && (-80 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY++;
+    } else if ((-80 < glCamRotZ) && (-48 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((-48 < glCamRotZ) && (-16 >= glCamRotZ)) {
+        glCamPosX--; glCamPosY--;
+    } else if ((-16 < glCamRotZ) && (16 >= glCamRotZ)) {
+        glCamPosY--;
+    } else if ((16 < glCamRotZ) && (48 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY--;
+    } else if ((48 < glCamRotZ) && (80 >= glCamRotZ)) {
+        glCamPosX++;
+    } else if ((80 < glCamRotZ) && (112 >= glCamRotZ)) {
+        glCamPosX++; glCamPosY++;
     } else {
-        CamPosX++;
+        glCamPosX++;
     }
-    if (!isAllowedPosition(CamPosX, CamPosY, CamPosZ)) {
-        CamPosX = X; CamPosY = Y;
+    if (!isAllowedPosition(glCamPosX, glCamPosY, glCamPosZ)) {
+        glCamPosX = X; glCamPosY = Y;
     }
 }
 /*    ___         _                   
@@ -382,7 +382,7 @@ signed char geomPine []= {                   //          /\
 /* Nb Coords = */ 7,                         //        //   \\    
 /* Nb Faces = */ 2,                          //       //    \ \3   
 /* Nb Segments = */ 1,                       //      / /     \/   
-/* Nb Particules = */ 0,                     //     / /       \   
+/* Nb Particles = */ 0,                     //     / /       \   
                                              //    /  /        \  
 // Coord List : X, Y, Z, unused              //   /  /         \  
 0,          0,          0,              0,   //  4---/   1------2 
@@ -398,7 +398,7 @@ PINE_WIDTH, 0,          TRUNC_HEIGHT,   2,   //     / /  |
 2, 4, 6, TEXTURE_GREEN,
 // Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '|', 0,
-// Particule List : idxPoint1, character 
+// Particle List : idxPoint1, character 
 };
 
 #define TOWER_HEIGHT 3       
@@ -406,7 +406,7 @@ signed char geomTower []= {    //           7---------------6
 /* Nb Coords = */ 8,           //           |             //|
 /* Nb Faces = */ 6,            //           |           //  |
 /* Nb Segments = */ 4,         //           |         //    |
-/* Nb Particules = */ 0,       //           |       //      |
+/* Nb Particles = */ 0,       //           |       //      |
 // Coord List : X, Y, Z, Id    //  4--------------5/        |
 -1, -1,             0, 0,      //  |        .     |         |
 -1,  1,             0, 1,      //  |        .     |         |
@@ -435,7 +435,7 @@ signed char geomHouse []= {        //              /  \
 /* Nb Coords = */ 10,              //            /      \   
 /* Nb Faces = */ 11,               //           /        \   
 /* Nb Segments = */ 14,            //          5         4  
-/* Nb Particules = */ 0,           //         /.        /|  
+/* Nb Particles = */ 0,           //         /.        /|  
                                    //        8 .       / |  
 // Coord List : X, Y, Z, unused    //       / \.      /  |  
  1, 1, 0, 0,                       //      /   \     /   |                            
@@ -496,34 +496,34 @@ void addGeom(
     npart = geom[kk++];
     for (ii = 0; ii < npt; ii++){
         if (orientation == 0) {
-            points3dX[nbPoints] = X + sizeX * geom[kk++];
-            points3dY[nbPoints] = Y + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = X + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = Y + sizeY * geom[kk++];
         } else {
-            points3dY[nbPoints] = X + sizeY * geom[kk++];
-            points3dX[nbPoints] = Y + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = X + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = Y + sizeX * geom[kk++];
         }
-        points3dZ[nbPoints] = Z + sizeZ * geom[kk++];
-        nbPoints ++;
+        glVerticesZ[glNbVertices] = Z + sizeZ * geom[kk++];
+        glNbVertices ++;
         kk++; // skip unused byte
     }
     for (ii = 0; ii < nfa; ii++){
-        facesPt1[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 1
-        facesPt2[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 2
-        facesPt3[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 3
-        facesChar[nbFaces] = geom[kk++];  // Character
-        nbFaces++;
+        glFacesPt1[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
+        glFacesPt2[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
+        glFacesPt3[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 3
+        glFacesChar[glNbFaces] = geom[kk++];  // Character
+        glNbFaces++;
     }
     for (ii = 0; ii < nseg; ii++){
-        segmentsPt1[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 1
-        segmentsPt2[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 2
-        segmentsChar[nbSegments] = geom[kk++]; // Character
-        nbSegments++;
+        glSegmentsPt1[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
+        glSegmentsPt2[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
+        glSegmentsChar[glNbSegments] = geom[kk++]; // Character
+        glNbSegments++;
         kk++; // skip unused byte
     }
     for (ii = 0; ii < npart; ii++){
-        particulesPt[nbParticules] = nbPoints - (npt-geom[kk++]);  // Index Point
-        particulesChar[nbParticules] = geom[kk++]; // Character
-        nbParticules++;        
+        glParticlesPt[glNbParticles] = glNbVertices - (npt-geom[kk++]);  // Index Point
+        glParticlesChar[glNbParticles] = geom[kk++]; // Character
+        glNbParticles++;        
     }
 }    
 

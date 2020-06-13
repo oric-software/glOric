@@ -1,7 +1,7 @@
 
 #ifdef USE_C_ZPLOT
 
-void zplot(signed char X,
+void glZPlot(signed char X,
            signed char Y,
            unsigned char dist,
            char          char2disp) {

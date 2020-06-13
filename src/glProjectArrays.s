@@ -2,22 +2,22 @@
 #ifdef USE_ASM_ARRAYSPROJECT
 _glProjectArrays:
 .(
-    ;; for (ii = 0; ii < nbPoints; ii++){
-	ldy		_nbPoints
+    ;; for (ii = 0; ii < glNbVertices; ii++){
+	ldy		_glNbVertices
 glProjectArrays_loop:
 	dey
 	bmi		glProjectArrays_done
-		;;     x = points3dX[ii];
-		lda 	_points3dX, y
+		;;     x = glVerticesX[ii];
+		lda 	_glVerticesX, y
 		sta		_PointX
-		;;     y = points3dY[ii];
-		lda 	_points3dY, y
+		;;     y = glVerticesY[ii];
+		lda 	_glVerticesY, y
 		sta		_PointY
-		;;     z = points3dZ[ii];
-		lda 	_points3dZ, y
+		;;     z = glVerticesZ[ii];
+		lda 	_glVerticesZ, y
 		sta		_PointZ
 
-    ;;     projectPoint(x, y, z, options, &ah, &av, &dist);
+    ;;     glProjectPoint(x, y, z, options, &ah, &av, &dist);
 		jsr 	_project_i8o8 :
 
     ;;     points2aH[ii] = ah;

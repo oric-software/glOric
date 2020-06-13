@@ -1,25 +1,25 @@
-#ifdef USE_ASM_GLDRAWPARTICULES
-;; void glDrawParticules(){
-_glDrawParticules:
+#ifdef USE_ASM_GLDRAWPARTICLES
+;; void glDrawParticles(){
+_glDrawParticles:
 .(
 ;;     unsigned char ii = 0;
 #ifdef SAFE_CONTEXT
     lda reg5 : pha 
 #endif ;; SAFE_CONTEXT
 
-    ldy _nbParticules
-    jmp glDrawParticules_nextParticule
-;;     for (ii = 0; ii < nbParticules; ii++) {
+    ldy _glNbParticles
+    jmp glDrawParticles_nextParticle
+;;     for (ii = 0; ii < glNbParticles; ii++) {
 
-glDrawParticules_loop:
+glDrawParticles_loop:
 
-;;         idxPt1    = particulesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
-        lda _particulesPt,y : sta _idxPt1
-;;         ch2disp = particulesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
-        lda _particulesChar,y : sta _ch2disp
+;;         idxPt1    = glParticlesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
+        lda _glParticlesPt,y : sta _idxPt1
+;;         ch2disp = glParticlesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
+        lda _glParticlesChar,y : sta _ch2disp
 
         sty reg5 : ldy _idxPt1
-;;         dchar = points2dL[idxPt]-2 ; ;;FIXME : -2 to helps particule to be displayed
+;;         dchar = points2dL[idxPt]-2 ; ;;FIXME : -2 to helps particle to be displayed
         lda _points2dL,y : sta _distpoint
 
 ;;         P1X = (SCREEN_WIDTH -points2aH[idxPt]) >> 1;
@@ -31,20 +31,20 @@ glDrawParticules_loop:
         sta _plotY
 
 #ifdef USE_ZBUFFER
-;;         zplot(P1X, P1Y, dchar, ch2disp);
+;;         glZPlot(P1X, P1Y, dchar, ch2disp);
         jsr _fastzplot
 #else
 ;;         ;; TODO : plot a point with no z-buffer
 ;;         plot(A1X, A1Y, ch2disp);
 #endif
         ldy reg5
-glDrawParticules_nextParticule:
+glDrawParticles_nextParticle:
 	dey 
-    bmi glDrawParticules_done
-	jmp glDrawParticules_loop
+    bmi glDrawParticles_done
+	jmp glDrawParticles_loop
 ;;     }
 
-glDrawParticules_done:
+glDrawParticles_done:
 
 #ifdef SAFE_CONTEXT
 	;; Restore context
@@ -53,4 +53,4 @@ glDrawParticules_done:
 ;; }
 .)
     rts
-#endif ;; USE_ASM_GLDRAWPARTICULES
+#endif ;; USE_ASM_GLDRAWPARTICLES

@@ -18,20 +18,20 @@ _doFastProjection:
 .(
 ;;  	unsigned char ii = 0;
 
-;;  	for (ii = nbPoints-1; ii< 0; ii--){
+;;  	for (ii = glNbVertices-1; ii< 0; ii--){
 
-    ldx _nbPoints
+    ldx _glNbVertices
     dex
-    txa ; ii = nbPoints - 1
+    txa ; ii = glNbVertices - 1
     asl
     asl ; ii * SIZEOF_3DPOINT (4)
     clc
     adc #$03
     tay
 
-    ldx _nbPoints
+    ldx _glNbVertices
     dex
-    txa ; ii = nbPoints - 1
+    txa ; ii = glNbVertices - 1
     asl
     asl ; ii * SIZEOF_2DPOINT (4)
     clc
@@ -115,13 +115,13 @@ dofastprojdone:
 
 
 
-;; void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
+;; void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char glNbVertices, unsigned char options);
 _glProject
 .(
 	ldx #6 : lda #4 : jsr enter :
 	ldy #0 : lda (ap),y : sta reg0 : sta ptrpt2L : iny : lda (ap),y : sta reg0+1 : sta ptrpt2H :
 	ldy #2 : lda (ap),y : sta reg0 : sta ptrpt3L : iny : lda (ap),y : sta reg0+1 : sta ptrpt3H :
-	ldy #4 : lda (ap),y : sta tmp0 : sta _nbPoints ; iny : lda (ap),y : sta tmp0+1 :
+	ldy #4 : lda (ap),y : sta tmp0 : sta _glNbVertices ; iny : lda (ap),y : sta tmp0+1 :
 	ldy #6 : lda (ap),y : sta tmp0 : sta _projOptions ; iny : lda (ap),y : sta tmp0+1 :
 
 	jsr _doFastProjection

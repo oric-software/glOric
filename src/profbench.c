@@ -14,28 +14,28 @@ void profbench() {
     unsigned char state, kk;
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
-    nbPoints        = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticules = 0;
+    glNbVertices        = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
     addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
     
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPoints, nbParticules, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
 
     text();
 
     initColors();
 
 
-    CamPosX = 74;
-    CamPosY = 0;
-    CamPosZ = 6;
+    glCamPosX = 74;
+    glCamPosY = 0;
+    glCamPosZ = 6;
 
-    CamRotZ = -128;
-    CamRotX = 0;
+    glCamRotZ = -128;
+    glCamRotX = 0;
 
 
 
@@ -54,7 +54,7 @@ void profbench() {
         switch (state) {
             case 0:
                 if (ii > 0) {
-                    CamPosX -- ; 
+                    glCamPosX -- ; 
                     ii--;
                 } else {
                     ii = 32; 
@@ -63,7 +63,7 @@ void profbench() {
             break;
             case 1:
                 if (ii > 0) {
-                    CamRotZ += 4 ; 
+                    glCamRotZ += 4 ; 
                     ii--;
                 } else {
                     ii = 24; 
@@ -72,7 +72,7 @@ void profbench() {
             break;
             case 2:
                 if (ii > 0) {
-                    CamPosX ++ ; 
+                    glCamPosX ++ ; 
                     ii--;
                 } else {
                     ii = 32; 
@@ -81,7 +81,7 @@ void profbench() {
             break;
             case 3:
                 if (ii > 0) {
-                    CamRotZ += 4 ; 
+                    glCamRotZ += 4 ; 
                     ii--;
                 } else {
                     ii = 64; 
@@ -91,9 +91,9 @@ void profbench() {
             break;
             case 4:
                 if (ii > 0) {
-                    CamPosX = traj[kk++];
-                    CamPosY = traj[kk++];
-                    CamRotZ = traj[kk++];
+                    glCamPosX = traj[kk++];
+                    glCamPosY = traj[kk++];
+                    glCamRotZ = traj[kk++];
                     kk       = kk % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
                     ii--;
                 } else {
@@ -112,15 +112,15 @@ void profbench() {
 
 
         PROFILE_ENTER(ROUTINE_INITSCREENBUFFERS);
-        initScreenBuffers();
+        glInitScreenBuffers();
         PROFILE_LEAVE(ROUTINE_INITSCREENBUFFERS);
 
         glDrawFaces();
         glDrawSegments();
-        glDrawParticules();
+        glDrawParticles();
 
         PROFILE_ENTER(ROUTINE_BUFFER2SCREEN);
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen();
         PROFILE_LEAVE(ROUTINE_BUFFER2SCREEN);
 
         PROFILE_LEAVE(ROUTINE_GLOBAL);
@@ -136,10 +136,10 @@ void profbench() {
 void move(char key) {
     switch (key) {
         case 8:  // gauche => tourne gauche
-            CamRotZ += 4;
+            glCamRotZ += 4;
             break;
         case 9:  // droite => tourne droite
-            CamRotZ -= 4;
+            glCamRotZ -= 4;
             break;
         case 10:  // bas => recule
             backward();
@@ -148,16 +148,16 @@ void move(char key) {
             forward();
             break;
         case 80:  // P
-            CamPosZ += 1;
+            glCamPosZ += 1;
             break;
         case 59:  // ;
-            CamPosZ -= 1;
+            glCamPosZ -= 1;
             break;
         case 81:  // Q
-            CamRotX += 2;
+            glCamRotX += 2;
             break;
         case 65:  // A
-            CamRotX -= 2;
+            glCamRotX -= 2;
             break;
         case 90:  // Z
             shiftLeft();

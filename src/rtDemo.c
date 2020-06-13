@@ -23,9 +23,9 @@
 
 #ifdef USE_REWORKED_BUFFERS
 
-extern signed char points3dX[];
-extern signed char points3dY[];
-extern signed char points3dZ[];
+extern signed char glVerticesX[];
+extern signed char glVerticesY[];
+extern signed char glVerticesZ[];
 
 extern signed char points2aH[];
 extern signed char points2aV[];
@@ -36,13 +36,13 @@ extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
 extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
 #endif // USE_REWORKED_BUFFERS
 
-extern unsigned char nbPoints;
+extern unsigned char glNbVertices;
 extern unsigned char faces[];
-extern unsigned char nbFaces ;
+extern unsigned char glNbFaces ;
 extern unsigned char segments[];
-extern unsigned char nbSegments;
-extern unsigned char particules[];
-extern unsigned char nbParticules;
+extern unsigned char glNbSegments;
+extern unsigned char particles[];
+extern unsigned char glNbParticles;
 
 #include "geomHouse.c"
 #include "addGeom.c"
@@ -69,7 +69,7 @@ extern void shiftRight();
 
 
 void dispInfo() {
-    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
 #ifdef TARGET_ORIX
 #else
     AdvancedPrint(3, 0, status_string);
@@ -78,16 +78,16 @@ void dispInfo() {
 
 
 void quickTest(){
-    CamPosX = -20;
-    CamPosY = 16;
-    CamPosZ = 6;
+    glCamPosX = -20;
+    glCamPosY = 16;
+    glCamPosZ = 6;
 
-    CamRotZ = -23;
-    CamRotX = 0;
+    glCamRotZ = -23;
+    glCamRotX = 0;
     glProjectArrays();
-    initScreenBuffers();
+    glInitScreenBuffers();
     glDrawFaces();
-    buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+    glBuffer2Screen();
     get();
 }
 
@@ -95,10 +95,10 @@ void rtDemo() {
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
-    nbPoints     = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticules = 0;
+    glNbVertices     = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     // addHouse(0, 0, 12, 8);
     // addPlan(0, 6, 6, 64, 'r');
@@ -108,7 +108,7 @@ void rtDemo() {
     // addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
     addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    // printf ("%d Points, %d Particules, %d Segments, %d Faces\n", nbPts, nbParticules, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, glNbParticles, glNbSegments, glNbFaces); get();
 
     memset (oldKeyBank,0,8);
     memset (KeyBank,0,8);
@@ -135,37 +135,37 @@ void rtIntro() {
     // enterSC();
 #endif  // TARGET_ORIX
 
-    CamPosX = 0;
-    CamPosY = 0;
-    CamPosZ = 6;
+    glCamPosX = 0;
+    glCamPosY = 0;
+    glCamPosZ = 6;
 
-    CamRotZ = 0;
-    CamRotX = 0;
+    glCamRotZ = 0;
+    glCamRotX = 0;
     i       = 0;
     
     for (j = 0; j < 32; j++) {
-        CamPosX = traj[i++];
-        CamPosY = traj[i++];
-        CamRotZ = traj[i++];
+        glCamPosX = traj[i++];
+        glCamPosY = traj[i++];
+        glCamRotZ = traj[i++];
         i       = i % (NB_POINTS_TRAJ * SIZE_POINTS_TRAJ);
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
         // dur = dur - deek(0x276); printf ("dur glProject = %d \n", dur); get();
 
         // dur = deek(0x276);
-        initScreenBuffers();
-        // dur = dur - deek(0x276); printf ("dur initScreenBuffers = %d \n", dur); get ();
+        glInitScreenBuffers();
+        // dur = dur - deek(0x276); printf ("dur glInitScreenBuffers = %d \n", dur); get ();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
+        lrDrawFaces(points2d, faces, glNbFaces);
 #endif //USE_REWORKED_BUFFERS
         // dur = dur - deek(0x276); printf ("dur lrDrawFaces = %d \n", dur); get ();
 
@@ -173,21 +173,21 @@ void rtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glDrawSegments();
 #else
-        lrDrawSegments(points2d, segments, nbSegments);
+        lrDrawSegments(points2d, segments, glNbSegments);
 #endif //USE_REWORKED_BUFFERS
         // dur = dur - deek(0x276); printf ("dur lrDrawSegments = %d \n", dur); get();
 
         // dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
-        glDrawParticules();
+        glDrawParticles();
 #else
-        lrDrawParticules(points2d, particules, nbParticules);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
-        // dur = dur - deek(0x276); printf ("dur lrDrawParticules = %d \n", dur); get();
+        // dur = dur - deek(0x276); printf ("dur lrDrawParticles = %d \n", dur); get();
 
         // dur = deek(0x276);
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
-        // dur = dur - deek(0x276); printf ("dur buffer2screen = %d \n", dur); get();
+        glBuffer2Screen();
+        // dur = dur - deek(0x276); printf ("dur glBuffer2Screen = %d \n", dur); get();
     }
 #ifdef TARGET_ORIX
 #else
@@ -207,11 +207,11 @@ void rtGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
     // dur = dur - deek(0x276);printf ("dur glProject = %d \n", dur);dur = deek(0x276);
 
-    // printf ("(x=%d y=%d z=%d) [%d %d]\n", CamPosX, CamPosY, CamPosZ, CamRotZ, CamRotX);
+    // printf ("(x=%d y=%d z=%d) [%d %d]\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     //     for (ii=0; ii< nbPts; ii++){
     //         printf ("[%d %d %d] => [%d %d] %d \n"
     //         , points3d [ii*SIZEOF_3DPOINT+0], points3d[ii*SIZEOF_3DPOINT+1], points3d[ii*SIZEOF_3DPOINT+2]
@@ -220,47 +220,47 @@ void rtGameLoop() {
     //     }
     //     get();
 
-    initScreenBuffers();
-    // dur = dur - deek(0x276);printf ("dur initScreenBuffers = %d \n", dur);dur = deek(0x276);
+    glInitScreenBuffers();
+    // dur = dur - deek(0x276);printf ("dur glInitScreenBuffers = %d \n", dur);dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
+        lrDrawFaces(points2d, faces, glNbFaces);
 #endif //USE_REWORKED_BUFFERS
     // dur = dur - deek(0x276);printf ("dur lrDrawFaces = %d \n", dur);dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
         glDrawSegments();
 #else
-        lrDrawSegments(points2d, segments, nbSegments);
+        lrDrawSegments(points2d, segments, glNbSegments);
 #endif //USE_REWORKED_BUFFERS
     // dur = dur - deek(0x276);printf ("dur lrDrawSegments = %d \n", dur);dur = deek(0x276);
 #ifdef USE_REWORKED_BUFFERS
-        glDrawParticules();
+        glDrawParticles();
 #else
-        lrDrawParticules(points2d, particules, nbParticules);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
-    // dur = dur - deek(0x276);printf ("dur lrDrawParticules = %d \n", dur);dur = deek(0x276);
+    // dur = dur - deek(0x276);printf ("dur lrDrawParticles = %d \n", dur);dur = deek(0x276);
     // get();
     while (1 == 1) {
         keyEvent();
         // dur = deek(0x276);
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
-        // dur = dur - deek(0x276);printf ("dur buffer2screen = %d \n", dur);dur = deek(0x276);
+        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
+        // dur = dur - deek(0x276);printf ("dur glBuffer2Screen = %d \n", dur);dur = deek(0x276);
         dispInfo();
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
-        initScreenBuffers();
+        glInitScreenBuffers();
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
-        glDrawParticules();
+        glDrawParticles();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
-        lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticules(points2d, particules, nbParticules);
+        lrDrawFaces(points2d, faces, glNbFaces);
+        lrDrawSegments(points2d, segments, glNbSegments);
+        lrDrawParticles(points2d, particles, glNbParticles);
  #endif //USE_REWORKED_BUFFERS
        
     }
@@ -269,10 +269,10 @@ void rtGameLoop() {
 void move(char key) {
     switch (key) {
         case 8:  // gauche => tourne gauche
-            CamRotZ += 4;
+            glCamRotZ += 4;
             break;
         case 9:  // droite => tourne droite
-            CamRotZ -= 4;
+            glCamRotZ -= 4;
             break;
         case 10:  // bas => recule
             backward();
@@ -281,16 +281,16 @@ void move(char key) {
             forward();
             break;
         case 80:  // P
-            CamPosZ += 1;
+            glCamPosZ += 1;
             break;
         case 59:  // ;
-            CamPosZ -= 1;
+            glCamPosZ -= 1;
             break;
         case 81:  // Q
-            CamRotX += 2;
+            glCamRotX += 2;
             break;
         case 65:  // A
-            CamRotX -= 2;
+            glCamRotX -= 2;
             break;
         case 90:  // Z
             shiftLeft();
@@ -310,9 +310,9 @@ void task_100Hz (){
 
 
 #ifdef USE_COLLISION_DETECTION
-unsigned char isAllowedPosition(signed int X, signed int Y, signed int Z) {
-    unsigned int aX = abs(X);
-    unsigned int aY = abs(Y);
+unsigned char isAllowedPosition(signed char X, signed char Y, signed char Z) {
+    unsigned char aX = abs(X);
+    unsigned char aY = abs(Y);
     if ((aX <=13) && (aY <= 9)) {
         if ((aY <= 7) && (X > -7)) {
             return 1;

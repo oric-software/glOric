@@ -116,25 +116,25 @@ def drawLine( x0,  y0,  x1,  y1):
             err += dx;
             y0 += sy;
 */
-void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char nbParticules){
+void lrDrawParticles(char points2d[], unsigned char particles[], unsigned char glNbParticles){
     unsigned char ii = 0;
     unsigned char jj = 0;
     // unsigned char kk = 0;
     unsigned char idxPt, offPt, dchar;
     unsigned int  dist;
-    for (ii = 0; ii < nbParticules; ii++) {
-        jj = ii << 1;  // ii*SIZEOF_PARTICULES
+    for (ii = 0; ii < glNbParticles; ii++) {
+        jj = ii << 1;  // ii*SIZEOF_PARTICLES
         // kk = ii << 2;  // ii*SIZEOF_2DPOINT
-        idxPt    = particules[jj++];  // ii*SIZEOF_SEGMENT +0
-        ch2disp = particules[jj];    // ii*SIZEOF_SEGMENT +2
+        idxPt    = particles[jj++];  // ii*SIZEOF_SEGMENT +0
+        ch2disp = particles[jj];    // ii*SIZEOF_SEGMENT +2
         offPt = idxPt << 2;
         
-        dist = *((int*)(points2d + (offPt | 0x02))) - 2;   // points2d[offPt+2] FIXME : -2 to helps particule to be displayed
+        dist = *((int*)(points2d + (offPt | 0x02))) - 2;   // points2d[offPt+2] FIXME : -2 to helps particle to be displayed
         dchar = (unsigned char)((dist)&0x00FF);
         P1X = (SCREEN_WIDTH -points2d[offPt++]) >> 1;
         P1Y = (SCREEN_HEIGHT - points2d[offPt++]) >> 1;
 #ifdef USE_ZBUFFER
-        zplot(P1X, P1Y, dchar, ch2disp);
+        glZPlot(P1X, P1Y, dchar, ch2disp);
 #else
         plot(P1X, P1Y, ch2disp);
 #endif
@@ -142,14 +142,14 @@ void lrDrawParticules(char points2d[], unsigned char particules[], unsigned char
     }
 }
 
-void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbSegments) {
+void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char glNbSegments) {
     unsigned char ii = 0;
     unsigned char jj = 0;
     unsigned char idxPt1, idxPt2;
     unsigned char offPt1, offPt2;
     int           dmoy;
 
-    for (ii = 0; ii < nbSegments; ii++) {
+    for (ii = 0; ii < glNbSegments; ii++) {
         jj = ii << 2;  // ii*SIZEOF_SEGMENT
 
         idxPt1    = segments[jj++];  // ii*SIZEOF_SEGMENT +0
@@ -201,7 +201,7 @@ void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbS
 }
 
 
-void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) {
+void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char glNbFaces) {
     unsigned char ii = 0;
     unsigned char jj = 0;
     int           d1, d2, d3;
@@ -214,8 +214,8 @@ void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) 
     unsigned char v1, v2, v3;
 #endif
 
-    //printf ("%d Points, %d Segments, %d Faces\n", nbPts, nbSegments, nbFaces); get();
-    for (ii = 0; ii < nbFaces; ii++) {
+    //printf ("%d Points, %d Segments, %d Faces\n", nbPts, glNbSegments, glNbFaces); get();
+    for (ii = 0; ii < glNbFaces; ii++) {
         jj = ii << 2;
 
         offPt1 = faces[jj++] << 2;
@@ -368,23 +368,23 @@ void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces) 
 }
 
 #ifdef USE_REWORKED_BUFFERS
-extern unsigned char nbPoints;
-extern unsigned char nbSegments;
-extern unsigned char nbParticules;
-extern unsigned char nbFaces;
-extern unsigned char facesPt1[];
-extern unsigned char facesPt2[];
-extern unsigned char facesPt3[];
-extern unsigned char facesChar[];
+extern unsigned char glNbVertices;
+extern unsigned char glNbSegments;
+extern unsigned char glNbParticles;
+extern unsigned char glNbFaces;
+extern unsigned char glFacesPt1[];
+extern unsigned char glFacesPt2[];
+extern unsigned char glFacesPt3[];
+extern unsigned char glFacesChar[];
 extern signed char points2aH[];
 extern signed char points2aV[];
 extern signed char points2dH[];
 extern signed char points2dL[];
-extern unsigned char segmentsPt1[];
-extern unsigned char segmentsPt2[];
-extern unsigned char segmentsChar[];
-extern unsigned char particulesPt[];
-extern unsigned char particulesChar[];
+extern unsigned char glSegmentsPt1[];
+extern unsigned char glSegmentsPt2[];
+extern unsigned char glSegmentsChar[];
+extern unsigned char glParticlesPt[];
+extern unsigned char glParticlesChar[];
 
 
 // used by glDrawFaces
@@ -414,6 +414,6 @@ extern    unsigned char isFace2BeDrawn;
 
 #include "glDrawSegments.c"
 
-#include "glDrawParticules.c"
+#include "glDrawParticles.c"
 
 #endif

@@ -1,4 +1,4 @@
 #include "config.h"
 
-#include "glDrawParticules.s"
+#include "glDrawParticles.s"
 
