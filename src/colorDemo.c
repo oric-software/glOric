@@ -21,19 +21,19 @@
   */
  #ifdef USE_REWORKED_BUFFERS
 
-extern signed char points3dX[];
-extern signed char points3dY[];
-extern signed char points3dZ[];
+extern signed char glVerticesX[];
+extern signed char glVerticesY[];
+extern signed char glVerticesZ[];
 
-extern unsigned char segmentsPt1[];
-extern unsigned char segmentsPt2[];
-extern unsigned char segmentsChar[];
+extern unsigned char glSegmentsPt1[];
+extern unsigned char glSegmentsPt2[];
+extern unsigned char glSegmentsChar[];
 
 extern unsigned char faces[];
-extern unsigned char nbPoints;
-extern unsigned char nbFaces;
-extern unsigned char nbSegments;
-extern unsigned char nbParticles;
+extern unsigned char glNbVertices;
+extern unsigned char glNbFaces;
+extern unsigned char glNbSegments;
+extern unsigned char glNbParticles;
 
 #else
 
@@ -44,10 +44,10 @@ extern char points2d[];
 extern unsigned char segments[];
 extern unsigned char particles[];
 extern unsigned char faces[];
-extern unsigned char nbPoints;
-extern unsigned char nbFaces;
-extern unsigned char nbSegments;
-extern unsigned char nbParticles;
+extern unsigned char glNbVertices;
+extern unsigned char glNbFaces;
+extern unsigned char glNbSegments;
+extern unsigned char glNbParticles;
 
 #endif USE_REWORKED_BUFFER
 
@@ -82,10 +82,10 @@ void colorDemo() {
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
-    nbPoints        = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticles = 0;
+    glNbVertices        = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     // addHouse(0, 0, 12, 8);
     // addPlan(0, 6, 6, 64, 'r');
@@ -97,7 +97,7 @@ void colorDemo() {
     addGeom2(24, -24, 0, 6, 6, 12, 0, (signed char *)geomTower);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
     
-    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, nbParticles, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, glNbParticles, glNbSegments, glNbFaces); get();
 
 #ifdef TARGET_ORIX
 #else
@@ -135,21 +135,21 @@ void colorIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
 
-        initScreenBuffers();
+        glInitScreenBuffers();
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
-        lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticles(points2d, particles, nbParticles);
+        lrDrawFaces(points2d, faces, glNbFaces);
+        lrDrawSegments(points2d, segments, glNbSegments);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
         dispInfo();
     }
 
@@ -164,21 +164,21 @@ void colorIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
 
-        initScreenBuffers();
+        glInitScreenBuffers();
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
-        lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticles(points2d, particles, nbParticles);
+        lrDrawFaces(points2d, faces, glNbFaces);
+        lrDrawSegments(points2d, segments, glNbSegments);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
         dispInfo();
     }
 
@@ -187,21 +187,21 @@ void colorIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
 
-        initScreenBuffers();
+        glInitScreenBuffers();
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
-        lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticles(points2d, particles, nbParticles);
+        lrDrawFaces(points2d, faces, glNbFaces);
+        lrDrawSegments(points2d, segments, glNbSegments);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
         dispInfo();
     }
 
@@ -223,7 +223,7 @@ void colorGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
 
     // printf ("(x=%d y=%d z=%d) [%d %d]\n", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
@@ -235,19 +235,19 @@ void colorGameLoop() {
     //     }
     //     get();
 
-    initScreenBuffers();
+    glInitScreenBuffers();
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
-        lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticles(points2d, particles, nbParticles);
+        lrDrawFaces(points2d, faces, glNbFaces);
+        lrDrawSegments(points2d, segments, glNbSegments);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
 
     while (1 == 1) {
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
         dispInfo();
 #ifdef TARGET_ORIX
         cgetc();
@@ -290,19 +290,19 @@ void colorGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif
 
-        initScreenBuffers();
+        glInitScreenBuffers();
 
 #ifdef USE_REWORKED_BUFFERS
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
 #else
-        lrDrawFaces(points2d, faces, nbFaces);
-        lrDrawSegments(points2d, segments, nbSegments);
-        lrDrawParticles(points2d, particles, nbParticles);
+        lrDrawFaces(points2d, faces, glNbFaces);
+        lrDrawSegments(points2d, segments, glNbSegments);
+        lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
     }
 }

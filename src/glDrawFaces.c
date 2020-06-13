@@ -6,13 +6,13 @@ void glDrawFaces() {
 #ifdef USE_PROFILER
 PROFILE_ENTER(ROUTINE_GLDRAWFACES);
 #endif // USE_PROFILER
-    // printf ("%d Points, %d Segments, %d Faces\n", nbPoints, nbSegments, nbFaces); get();
-    for (ii = 0; ii < nbFaces; ii++) {
+    // printf ("%d Points, %d Segments, %d Faces\n", glNbVertices, glNbSegments, glNbFaces); get();
+    for (ii = 0; ii < glNbFaces; ii++) {
 
-        idxPt1 = facesPt1[ii] ;
-        idxPt2 = facesPt2[ii] ;
-        idxPt3 = facesPt3[ii] ;
-        ch2disp = facesChar[ii];
+        idxPt1 = glFacesPt1[ii] ;
+        idxPt2 = glFacesPt2[ii] ;
+        idxPt3 = glFacesPt3[ii] ;
+        ch2disp = glFacesChar[ii];
 
 #ifdef USE_PROFILER
             PROFILE_ENTER(ROUTINE_RETRIEVEFACEDATA);

@@ -17,13 +17,13 @@ extern int glCamPosZ;
 extern char glCamRotZ;
 extern char glCamRotX;
 
-void glProject (char points2D[], char points3D[], unsigned char nbPoints, unsigned char options);
+void glProject (char points2D[], char points3D[], unsigned char glNbVertices, unsigned char options);
 ```
 
 
-As input of the function, array `points3D` contains list of `nbPoints` 3D points stored on 4 bytes: 3 bytes for X, Y and Z coordinates and a spare bytes for futur use.
+As input of the function, array `points3D` contains list of `glNbVertices` 3D points stored on 4 bytes: 3 bytes for X, Y and Z coordinates and a spare bytes for futur use.
 
-As output of function, array `points2D` if filled with `nbPoints` 2D points stored on 4 bytes: 2 bytes for L and C (line and column coordinates) and 2 bytes for distance (between camera and point).
+As output of function, array `points2D` if filled with `glNbVertices` 2D points stored on 4 bytes: 2 bytes for L and C (line and column coordinates) and 2 bytes for distance (between camera and point).
 
 For exemple, here's an exemple of how to project a 3D cube:
 

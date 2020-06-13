@@ -7,16 +7,16 @@ _glDrawParticles:
     lda reg5 : pha 
 #endif ;; SAFE_CONTEXT
 
-    ldy _nbParticles
+    ldy _glNbParticles
     jmp glDrawParticles_nextParticle
-;;     for (ii = 0; ii < nbParticles; ii++) {
+;;     for (ii = 0; ii < glNbParticles; ii++) {
 
 glDrawParticles_loop:
 
-;;         idxPt1    = particlesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
-        lda _particlesPt,y : sta _idxPt1
-;;         ch2disp = particlesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
-        lda _particlesChar,y : sta _ch2disp
+;;         idxPt1    = glParticlesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
+        lda _glParticlesPt,y : sta _idxPt1
+;;         ch2disp = glParticlesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
+        lda _glParticlesChar,y : sta _ch2disp
 
         sty reg5 : ldy _idxPt1
 ;;         dchar = points2dL[idxPt]-2 ; ;;FIXME : -2 to helps particle to be displayed
@@ -31,7 +31,7 @@ glDrawParticles_loop:
         sta _plotY
 
 #ifdef USE_ZBUFFER
-;;         zplot(P1X, P1Y, dchar, ch2disp);
+;;         glZPlot(P1X, P1Y, dchar, ch2disp);
         jsr _fastzplot
 #else
 ;;         ;; TODO : plot a point with no z-buffer

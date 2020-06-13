@@ -6,9 +6,9 @@ extern void glDrawFaces();
 extern void glDrawSegments();
 extern void glDrawParticles();
 #else
-extern void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char nbFaces);
-extern void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char nbSegments);
-extern void lrDrawParticles(char points2d[], unsigned char particles[], unsigned char nbParticles);
+extern void lrDrawFaces(char points2d[], unsigned char faces[], unsigned char glNbFaces);
+extern void lrDrawSegments(char points2d[], unsigned char segments[], unsigned char glNbSegments);
+extern void lrDrawParticles(char points2d[], unsigned char particles[], unsigned char glNbParticles);
 
 #endif // USE_REWORKED_BUFFERS
 #endif // LRSDRAWING_H

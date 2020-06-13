@@ -29,7 +29,7 @@
 ;; - Fix some interface mistakes
 ;;       * Particule renamed into Particle
 ;;       * Camera position stored on 8 bits value
-;;       * Remove useless param of buffer2screen function
+;;       * Remove useless param of glBuffer2Screen function
 ;; 
 ;; Version 1.1 :  February 2020
 ;; ----------------------------
@@ -875,7 +875,7 @@ project_i8o8_done:
 #endif ;; USE_8BITS_PROJECTION
 
 #ifndef TARGET_ORIX
-_projectPoint
+_glProjectPoint
 	ldx #6 : lda #0 : jsr enter :
 
 	ldy #0 : lda (ap),y : sta _PointX 
@@ -910,14 +910,14 @@ _projectPoint
 
 
 _projOptions            .dsb 1
-_nbPoints               .dsb 1
+_glNbVertices               .dsb 1
 
 .text
 
 _points3d:
-_points3dX          .dsb NB_MAX_POINTS
-_points3dY          .dsb NB_MAX_POINTS
-_points3dZ          .dsb NB_MAX_POINTS
+_glVerticesX          .dsb NB_MAX_POINTS
+_glVerticesY          .dsb NB_MAX_POINTS
+_glVerticesZ          .dsb NB_MAX_POINTS
 #ifndef USE_REWORKED_BUFFERS
 _points3unused      .dsb NB_MAX_POINTS
 #endif ;; USE_REWORKED_BUFFERS
@@ -931,22 +931,22 @@ _points2dL          .dsb NB_MAX_POINTS
 #ifdef USE_ASM_ARRAYSPROJECT
 _glProjectArrays:
 .(
-    ;; for (ii = 0; ii < nbPoints; ii++){
-	ldy		_nbPoints
+    ;; for (ii = 0; ii < glNbVertices; ii++){
+	ldy		_glNbVertices
 glProjectArrays_loop:
 	dey
 	bmi		glProjectArrays_done
-		;;     x = points3dX[ii];
-		lda 	_points3dX, y
+		;;     x = glVerticesX[ii];
+		lda 	_glVerticesX, y
 		sta		_PointX
-		;;     y = points3dY[ii];
-		lda 	_points3dY, y
+		;;     y = glVerticesY[ii];
+		lda 	_glVerticesY, y
 		sta		_PointY
-		;;     z = points3dZ[ii];
-		lda 	_points3dZ, y
+		;;     z = glVerticesZ[ii];
+		lda 	_glVerticesZ, y
 		sta		_PointZ
 
-    ;;     projectPoint(x, y, z, options, &ah, &av, &dist);
+    ;;     glProjectPoint(x, y, z, options, &ah, &av, &dist);
 		jsr 	_project_i8o8 :
 
     ;;     points2aH[ii] = ah;
@@ -987,12 +987,12 @@ glProjectArrays_done:
 .text
 #endif ;; TARGET_ORIX
 
-;;unsigned char nbSegments=0;
-_nbSegments     .dsb 1
-;;unsigned char nbParticles=0;
-_nbParticles .dsb 1;
-;;unsigned char nbFaces=0;
-_nbFaces .dsb 1;
+;;unsigned char glNbSegments=0;
+_glNbSegments     .dsb 1
+;;unsigned char glNbParticles=0;
+_glNbParticles .dsb 1;
+;;unsigned char glNbFaces=0;
+_glNbFaces .dsb 1;
 
 .text
 
@@ -1000,25 +1000,25 @@ _nbFaces .dsb 1;
 ; .dsb 256-(*&255)
 ; _segments       .dsb NB_MAX_SEGMENTS*SIZEOF_SEGMENT
 _segments:
-_segmentsPt1        .dsb NB_MAX_SEGMENTS
-_segmentsPt2        .dsb NB_MAX_SEGMENTS
-_segmentsChar       .dsb NB_MAX_SEGMENTS
+_glSegmentsPt1        .dsb NB_MAX_SEGMENTS
+_glSegmentsPt2        .dsb NB_MAX_SEGMENTS
+_glSegmentsChar       .dsb NB_MAX_SEGMENTS
 
 
 ;;char particles[NB_MAX_SEGMENTS*SIZEOF_PARTICLE];
 ; _particles       .dsb NB_MAX_PARTICLES*SIZEOF_PARTICLE
 _particles:
-_particlesPt       .dsb NB_MAX_PARTICLES
-_particlesChar     .dsb NB_MAX_PARTICLES
+_glParticlesPt       .dsb NB_MAX_PARTICLES
+_glParticlesChar     .dsb NB_MAX_PARTICLES
 
 
 
 ; _faces       .dsb NB_MAX_FACES*SIZEOF_FACE
 _faces:
-_facesPt1           .dsb NB_MAX_FACES
-_facesPt2           .dsb NB_MAX_FACES
-_facesPt3           .dsb NB_MAX_FACES
-_facesChar          .dsb NB_MAX_FACES
+_glFacesPt1           .dsb NB_MAX_FACES
+_glFacesPt2           .dsb NB_MAX_FACES
+_glFacesPt3           .dsb NB_MAX_FACES
+_glFacesChar          .dsb NB_MAX_FACES
 
 
 
@@ -2957,7 +2957,7 @@ FBufferAdressHigh
 
 .text
 
-_buffer2screen:
+_glBuffer2Screen:
 .(
 	ldy #$00
 
@@ -2992,8 +2992,8 @@ buffer2screen_loop_02:
 
 #ifdef USE_ASM_INITFRAMEBUFFER
 .text
-;; void initScreenBuffers()
-_initScreenBuffers:
+;; void glInitScreenBuffers()
+_glInitScreenBuffers:
 .(
   
     lda #$FF
@@ -3181,12 +3181,12 @@ fastzplot_done:
 	rts
 
 #ifndef TARGET_ORIX
-;; void zplot(signed char X,
+;; void glZPlot(signed char X,
 ;;           signed char Y,
 ;;           unsigned char dist,
 ;;           char          char2disp) {
 
-_zplot:
+_glZPlot:
 .(
 ; sp+0 => X coordinate
 ; sp+2 => Y coordinate
@@ -4392,22 +4392,22 @@ PROFILE_ENTER(ROUTINE_GLDRAWFACES);
 	lda reg3 : pha 
 #endif ;; SAFE_CONTEXT
 
-	ldy _nbFaces
+	ldy _glNbFaces
 	jmp glDrawFaces_nextFace
-    ;; for (ii = 0; ii < nbFaces; ii++) {
+    ;; for (ii = 0; ii < glNbFaces; ii++) {
 glDrawFaces_loop:
 
-    ;;     idxPt1 = facesPt1[ii] ;
-	lda _facesPt1, y
+    ;;     idxPt1 = glFacesPt1[ii] ;
+	lda _glFacesPt1, y
 	sta _idxPt1
-    ;;     idxPt2 = facesPt2[ii] ;
-	lda _facesPt2, y
+    ;;     idxPt2 = glFacesPt2[ii] ;
+	lda _glFacesPt2, y
 	sta _idxPt2
-    ;;     idxPt3 = facesPt3[ii] ;
-	lda _facesPt3, y
+    ;;     idxPt3 = glFacesPt3[ii] ;
+	lda _glFacesPt3, y
 	sta _idxPt3
-    ;;     ch2disp = facesChar[ii];
-	lda _facesChar, y
+    ;;     ch2disp = glFacesChar[ii];
+	lda _glFacesChar, y
 	sta _ch2disp
 
 	sty reg3 
@@ -5501,7 +5501,7 @@ lrDrawLine_loop:
 
 
 ;; #ifdef USE_ZBUFFER
-;;         zplot(A1X, A1Y, distseg, ch2dsp);
+;;         glZPlot(A1X, A1Y, distseg, ch2dsp);
 ;; #else
 ;;         ;; TODO : plot a point with no z-buffer
 ;; #endif
@@ -5630,18 +5630,18 @@ PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 	lda reg3 : pha 
 #endif ;; SAFE_CONTEXT
 
-    ldy _nbSegments
+    ldy _glNbSegments
     jmp glDrawSegments_nextSegment
-;;     for (ii = 0; ii < nbSegments; ii++) {
+;;     for (ii = 0; ii < glNbSegments; ii++) {
 
 glDrawSegments_loop:
 
-;;         idxPt1    = segmentsPt1[ii];
-        lda _segmentsPt1,y : sta _idxPt1
-;;         idxPt2    = segmentsPt2[ii];
-        lda _segmentsPt2,y : sta _idxPt2
-;;         ch2disp = segmentsChar[ii];
-        lda _segmentsChar,y : sta _ch2disp
+;;         idxPt1    = glSegmentsPt1[ii];
+        lda _glSegmentsPt1,y : sta _idxPt1
+;;         idxPt2    = glSegmentsPt2[ii];
+        lda _glSegmentsPt2,y : sta _idxPt2
+;;         ch2disp = glSegmentsChar[ii];
+        lda _glSegmentsChar,y : sta _ch2disp
 
 ;;         ;; dmoy = (d1+d2)/2;
         sty reg3
@@ -5761,16 +5761,16 @@ _glDrawParticles:
     lda reg5 : pha 
 #endif ;; SAFE_CONTEXT
 
-    ldy _nbParticles
+    ldy _glNbParticles
     jmp glDrawParticles_nextParticle
-;;     for (ii = 0; ii < nbParticles; ii++) {
+;;     for (ii = 0; ii < glNbParticles; ii++) {
 
 glDrawParticles_loop:
 
-;;         idxPt1    = particlesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
-        lda _particlesPt,y : sta _idxPt1
-;;         ch2disp = particlesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
-        lda _particlesChar,y : sta _ch2disp
+;;         idxPt1    = glParticlesPt[ii];  ;; ii*SIZEOF_SEGMENT +0
+        lda _glParticlesPt,y : sta _idxPt1
+;;         ch2disp = glParticlesChar[ii];    ;; ii*SIZEOF_SEGMENT +2
+        lda _glParticlesChar,y : sta _ch2disp
 
         sty reg5 : ldy _idxPt1
 ;;         dchar = points2dL[idxPt]-2 ; ;;FIXME : -2 to helps particle to be displayed
@@ -5785,7 +5785,7 @@ glDrawParticles_loop:
         sta _plotY
 
 #ifdef USE_ZBUFFER
-;;         zplot(P1X, P1Y, dchar, ch2disp);
+;;         glZPlot(P1X, P1Y, dchar, ch2disp);
         jsr _fastzplot
 #else
 ;;         ;; TODO : plot a point with no z-buffer
@@ -5830,20 +5830,20 @@ _doFastProjection:
 .(
 ;;  	unsigned char ii = 0;
 
-;;  	for (ii = nbPoints-1; ii< 0; ii--){
+;;  	for (ii = glNbVertices-1; ii< 0; ii--){
 
-    ldx _nbPoints
+    ldx _glNbVertices
     dex
-    txa ; ii = nbPoints - 1
+    txa ; ii = glNbVertices - 1
     asl
     asl ; ii * SIZEOF_3DPOINT (4)
     clc
     adc #$03
     tay
 
-    ldx _nbPoints
+    ldx _glNbVertices
     dex
-    txa ; ii = nbPoints - 1
+    txa ; ii = glNbVertices - 1
     asl
     asl ; ii * SIZEOF_2DPOINT (4)
     clc
@@ -5927,13 +5927,13 @@ dofastprojdone:
 
 
 
-;; void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char options);
+;; void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char glNbVertices, unsigned char options);
 _glProject
 .(
 	ldx #6 : lda #4 : jsr enter :
 	ldy #0 : lda (ap),y : sta reg0 : sta ptrpt2L : iny : lda (ap),y : sta reg0+1 : sta ptrpt2H :
 	ldy #2 : lda (ap),y : sta reg0 : sta ptrpt3L : iny : lda (ap),y : sta reg0+1 : sta ptrpt3H :
-	ldy #4 : lda (ap),y : sta tmp0 : sta _nbPoints ; iny : lda (ap),y : sta tmp0+1 :
+	ldy #4 : lda (ap),y : sta tmp0 : sta _glNbVertices ; iny : lda (ap),y : sta tmp0+1 :
 	ldy #6 : lda (ap),y : sta tmp0 : sta _projOptions ; iny : lda (ap),y : sta tmp0+1 :
 
 	jsr _doFastProjection

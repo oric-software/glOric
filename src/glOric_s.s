@@ -4,7 +4,7 @@
 
 #include "math/atan2.s"
 #include "math/norm.s"
-#include "projectPoint.s"
+#include "glProjectPoint.s"
 
 #include "projection.s"
 

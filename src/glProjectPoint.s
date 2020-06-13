@@ -429,7 +429,7 @@ prodone:
 #endif // USE_16BITS_PROJECTION
 
 #ifndef TARGET_ORIX
-_projectPoint
+_glProjectPoint
 	ldx #6 : lda #0 : jsr enter :
 
 	ldy #0 : lda (ap),y : sta _PointX 

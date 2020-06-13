@@ -46,27 +46,27 @@ extern char             glCamRotZ;  // -128 -> 127 unit : 2PI/(2^8 - 1)
 extern char             glCamRotX;
 
  // Geometry size
-extern unsigned char    nbPoints;
-extern unsigned char    nbFaces;
-extern unsigned char    nbSegments;
-extern unsigned char    nbParticles;
+extern unsigned char    glNbVertices;
+extern unsigned char    glNbFaces;
+extern unsigned char    glNbSegments;
+extern unsigned char    glNbParticles;
 
  // Geometry buffers
-extern signed char      points3dX[];
-extern signed char      points3dY[];
-extern signed char      points3dZ[];
+extern signed char      glVerticesX[];
+extern signed char      glVerticesY[];
+extern signed char      glVerticesZ[];
 
-extern unsigned char    particlesPt[];
-extern unsigned char    particlesChar[];
+extern unsigned char    glParticlesPt[];
+extern unsigned char    glParticlesChar[];
 
-extern unsigned char    segmentsPt1[];
-extern unsigned char    segmentsPt2[];
-extern unsigned char    segmentsChar[];
+extern unsigned char    glSegmentsPt1[];
+extern unsigned char    glSegmentsPt2[];
+extern unsigned char    glSegmentsChar[];
 
-extern unsigned char    facesPt1[];
-extern unsigned char    facesPt2[];
-extern unsigned char    facesPt3[];
-extern unsigned char    facesChar[];
+extern unsigned char    glFacesPt1[];
+extern unsigned char    glFacesPt2[];
+extern unsigned char    glFacesPt3[];
+extern unsigned char    glFacesChar[];
 
 // Render buffer
 extern char             fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
@@ -75,8 +75,8 @@ extern void glProjectArrays();
 extern void glDrawFaces();
 extern void glDrawSegments();
 extern void glDrawParticles();
-extern void initScreenBuffers();
-extern void buffer2screen(char *);
-extern void zplot(signed char X, signed char Y, unsigned char dist, char char2disp);
-extern void projectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
+extern void glInitScreenBuffers();
+extern void glBuffer2Screen(char *);
+extern void glZPlot(signed char X, signed char Y, unsigned char dist, char char2disp);
+extern void glProjectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
 #endif

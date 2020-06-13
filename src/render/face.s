@@ -25,22 +25,22 @@ PROFILE_ENTER(ROUTINE_GLDRAWFACES);
 	lda reg3 : pha 
 #endif ;; SAFE_CONTEXT
 
-	ldy _nbFaces
+	ldy _glNbFaces
 	jmp glDrawFaces_nextFace
-    ;; for (ii = 0; ii < nbFaces; ii++) {
+    ;; for (ii = 0; ii < glNbFaces; ii++) {
 glDrawFaces_loop:
 
-    ;;     idxPt1 = facesPt1[ii] ;
-	lda _facesPt1, y
+    ;;     idxPt1 = glFacesPt1[ii] ;
+	lda _glFacesPt1, y
 	sta _idxPt1
-    ;;     idxPt2 = facesPt2[ii] ;
-	lda _facesPt2, y
+    ;;     idxPt2 = glFacesPt2[ii] ;
+	lda _glFacesPt2, y
 	sta _idxPt2
-    ;;     idxPt3 = facesPt3[ii] ;
-	lda _facesPt3, y
+    ;;     idxPt3 = glFacesPt3[ii] ;
+	lda _glFacesPt3, y
 	sta _idxPt3
-    ;;     ch2disp = facesChar[ii];
-	lda _facesChar, y
+    ;;     ch2disp = glFacesChar[ii];
+	lda _glFacesChar, y
 	sta _ch2disp
 
 	sty reg3 

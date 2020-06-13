@@ -1,6 +1,6 @@
 
 #ifdef USE_C_INITFRAMEBUFFER
-void initScreenBuffers() {
+void glInitScreenBuffers() {
 #ifdef USE_COLOR
     int ii, jj;
 #endif

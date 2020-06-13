@@ -6,11 +6,11 @@ void glDrawSegments() {
 PROFILE_ENTER(ROUTINE_GLDRAWSEGMENTS);
 #endif // USE_PROFILER
 
-    for (ii = 0; ii < nbSegments; ii++) {
+    for (ii = 0; ii < glNbSegments; ii++) {
 
-        idxPt1    = segmentsPt1[ii];
-        idxPt2    = segmentsPt2[ii];
-        ch2disp = segmentsChar[ii];
+        idxPt1    = glSegmentsPt1[ii];
+        idxPt2    = glSegmentsPt2[ii];
+        ch2disp = glSegmentsChar[ii];
 
         // dmoy = (d1+d2)/2;
 

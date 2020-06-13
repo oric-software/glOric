@@ -18,8 +18,8 @@ _projOptions            .dsb 1
 ; ;;unsigned char nbCoords=0;
 ; _nbCoords           .dsb 1
 ; #else
-;;unsigned char nbPoints=0;
-_nbPoints               .dsb 1
+;;unsigned char glNbVertices=0;
+_glNbVertices               .dsb 1
 ; #endif
 
 
@@ -29,9 +29,9 @@ _nbPoints               .dsb 1
 ;;.dsb 256-(*&255)
 ;;_points3d       .dsb NB_MAX_POINTS*SIZEOF_3DPOINT
 _points3d:
-_points3dX          .dsb NB_MAX_POINTS
-_points3dY          .dsb NB_MAX_POINTS
-_points3dZ          .dsb NB_MAX_POINTS
+_glVerticesX          .dsb NB_MAX_POINTS
+_glVerticesY          .dsb NB_MAX_POINTS
+_glVerticesZ          .dsb NB_MAX_POINTS
 #ifndef USE_REWORKED_BUFFERS
 _points3unused      .dsb NB_MAX_POINTS
 #endif ;; USE_REWORKED_BUFFERS

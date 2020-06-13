@@ -71,10 +71,10 @@ void main() {
     /*
      *  Game Scene Building
      */
-    nbPoints     = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticles = 0;
+    glNbVertices     = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
@@ -119,27 +119,27 @@ void gameLoop() {
         glProjectArrays();
 
         // empty buffer
-        initScreenBuffers();
+        glInitScreenBuffers();
 
         // draw game scene's shapes in buffer
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
 
-        // demonstrate use of projectPoint and zplot to interact with glOric inner functions
+        // demonstrate use of glProjectPoint and glZPlot to interact with glOric inner functions
         // display a sprite at a given position
         pX=0; pY=0; pZ=24;
-        projectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
+        glProjectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
         sX = (SCREEN_WIDTH -aH) >> 1;
         sY = (SCREEN_HEIGHT - aV) >> 1;
-        zplot(sX  ,sY,distance,'H');
-        zplot(sX+1,sY,distance,'O');
-        zplot(sX+2,sY,distance,'U');
-        zplot(sX+3,sY,distance,'S');
-        zplot(sX+4,sY,distance,'E');
+        glZPlot(sX  ,sY,distance,'H');
+        glZPlot(sX+1,sY,distance,'O');
+        glZPlot(sX+2,sY,distance,'U');
+        glZPlot(sX+3,sY,distance,'S');
+        glZPlot(sX+4,sY,distance,'E');
   
         // update display with buffer
-        buffer2screen((void*)0);
+        glBuffer2Screen((void*)0);
         sprintf(ADR_BASE_SCREEN, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
     }
 }
@@ -495,34 +495,34 @@ void addGeom(
     npart = geom[kk++];
     for (ii = 0; ii < npt; ii++){
         if (orientation == 0) {
-            points3dX[nbPoints] = X + sizeX * geom[kk++];
-            points3dY[nbPoints] = Y + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = X + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = Y + sizeY * geom[kk++];
         } else {
-            points3dY[nbPoints] = X + sizeY * geom[kk++];
-            points3dX[nbPoints] = Y + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = X + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = Y + sizeX * geom[kk++];
         }
-        points3dZ[nbPoints] = Z + sizeZ * geom[kk++];
-        nbPoints ++;
+        glVerticesZ[glNbVertices] = Z + sizeZ * geom[kk++];
+        glNbVertices ++;
         kk++; // skip unused byte
     }
     for (ii = 0; ii < nfa; ii++){
-        facesPt1[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 1
-        facesPt2[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 2
-        facesPt3[nbFaces] = nbPoints - (npt-geom[kk++]);  // Index Point 3
-        facesChar[nbFaces] = geom[kk++];  // Character
-        nbFaces++;
+        glFacesPt1[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
+        glFacesPt2[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
+        glFacesPt3[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 3
+        glFacesChar[glNbFaces] = geom[kk++];  // Character
+        glNbFaces++;
     }
     for (ii = 0; ii < nseg; ii++){
-        segmentsPt1[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 1
-        segmentsPt2[nbSegments] = nbPoints - (npt-geom[kk++]);  // Index Point 2
-        segmentsChar[nbSegments] = geom[kk++]; // Character
-        nbSegments++;
+        glSegmentsPt1[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
+        glSegmentsPt2[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
+        glSegmentsChar[glNbSegments] = geom[kk++]; // Character
+        glNbSegments++;
         kk++; // skip unused byte
     }
     for (ii = 0; ii < npart; ii++){
-        particlesPt[nbParticles] = nbPoints - (npt-geom[kk++]);  // Index Point
-        particlesChar[nbParticles] = geom[kk++]; // Character
-        nbParticles++;        
+        glParticlesPt[glNbParticles] = glNbVertices - (npt-geom[kk++]);  // Index Point
+        glParticlesChar[glNbParticles] = geom[kk++]; // Character
+        glNbParticles++;        
     }
 }    
 

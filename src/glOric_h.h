@@ -32,11 +32,11 @@ extern signed char glCamRotX;
  */
 
 extern unsigned char projOptions;
-extern unsigned char nbPoints;
+extern unsigned char glNbVertices;
 
-extern signed char points3dX [NB_MAX_POINTS];
-extern signed char points3dY [NB_MAX_POINTS];
-extern signed char points3dZ [NB_MAX_POINTS];
+extern signed char glVerticesX [NB_MAX_POINTS];
+extern signed char glVerticesY [NB_MAX_POINTS];
+extern signed char glVerticesZ [NB_MAX_POINTS];
 
 extern signed char points2aH [NB_MAX_POINTS];
 extern signed char points2aV [NB_MAX_POINTS];
@@ -45,7 +45,7 @@ extern unsigned char points2dL [NB_MAX_POINTS];
 
 extern void glProjectArrays();
 
-extern void projectPoint(signed char x, signed char y, signed char z, signed char options, signed char *ah, signed char *av, unsigned int *dist);
+extern void glProjectPoint(signed char x, signed char y, signed char z, signed char options, signed char *ah, signed char *av, unsigned int *dist);
 
 /*  __                             
  * / _\   ___   ___  _ __    ___ 
@@ -54,25 +54,25 @@ extern void projectPoint(signed char x, signed char y, signed char z, signed cha
  * \__/ \___| \___||_| |_| \___|
  */                        
 
-extern unsigned char nbParticles;
-extern unsigned char nbSegments;
-extern unsigned char nbFaces;
+extern unsigned char glNbParticles;
+extern unsigned char glNbSegments;
+extern unsigned char glNbFaces;
 
-extern unsigned char particlesPt   [NB_MAX_PARTICLES];
-extern unsigned char particlesChar [NB_MAX_PARTICLES];
+extern unsigned char glParticlesPt   [NB_MAX_PARTICLES];
+extern unsigned char glParticlesChar [NB_MAX_PARTICLES];
 
-extern unsigned char segmentsPt1 [NB_MAX_SEGMENTS];
-extern unsigned char segmentsPt2 [NB_MAX_SEGMENTS];
-extern unsigned char segmentsChar[NB_MAX_SEGMENTS];
+extern unsigned char glSegmentsPt1 [NB_MAX_SEGMENTS];
+extern unsigned char glSegmentsPt2 [NB_MAX_SEGMENTS];
+extern unsigned char glSegmentsChar[NB_MAX_SEGMENTS];
 
-extern unsigned char facesPt1       [NB_MAX_FACES];
-extern unsigned char facesPt2       [NB_MAX_FACES];
-extern unsigned char facesPt3       [NB_MAX_FACES];
-extern unsigned char facesChar      [NB_MAX_FACES];
+extern unsigned char glFacesPt1       [NB_MAX_FACES];
+extern unsigned char glFacesPt2       [NB_MAX_FACES];
+extern unsigned char glFacesPt3       [NB_MAX_FACES];
+extern unsigned char glFacesChar      [NB_MAX_FACES];
 
 extern void glDrawFaces();
 extern void glDrawSegments();
 extern void glDrawParticles();
-extern void initScreenBuffers();
-extern void buffer2screen(char destAdr[]);
+extern void glInitScreenBuffers();
+extern void glBuffer2Screen(char destAdr[]);
 #endif // GLORIC_H

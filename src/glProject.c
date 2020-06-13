@@ -8,12 +8,12 @@ void glProjectArrays(){
     unsigned int dist ;
     unsigned char options=0;
 
-    for (ii = 0; ii < nbPoints; ii++){
-        x = points3dX[ii];
-        y = points3dY[ii];
-        z = points3dZ[ii];
+    for (ii = 0; ii < glNbVertices; ii++){
+        x = glVerticesX[ii];
+        y = glVerticesY[ii];
+        z = glVerticesZ[ii];
 
-        projectPoint(x, y, z, options, &ah, &av, &dist);
+        glProjectPoint(x, y, z, options, &ah, &av, &dist);
 
         points2aH[ii] = ah;
         points2aV[ii] = av;

@@ -57,9 +57,9 @@ These angle are 8 bits fixed point values made so that the 2PI circle fits the w
 Now let's look at how 3D coordinates involved in scene description are given to glOric.
 As we've seen earlier, points are 3D coordinates. Each of theses 3 coordinates are stored in a corresponding array:
 ```C
-extern signed char      points3dX[];
-extern signed char      points3dY[];
-extern signed char      points3dZ[];
+extern signed char      glVerticesX[];
+extern signed char      glVerticesY[];
+extern signed char      glVerticesZ[];
 ```
 
 These arrays are respectively position along the X, Y, and Z axes of points in an Euclidean space.
@@ -67,11 +67,11 @@ These arrays are respectively position along the X, Y, and Z axes of points in a
 In glOric, the convention is that X and Y coordinates are on a horizontal plan while the Z coordinates represents elevation.
 
 If a point numbered `n` of the scene is located at position (X=2, Y=3, Z=1) then we will indicate that by setting
-points3dX[n] = 2,  points3dY[n] = 3 and points3dZ[n] = 1,
+glVerticesX[n] = 2,  glVerticesY[n] = 3 and glVerticesZ[n] = 1,
 
-For glOric to know the number of points that are stored in this array, it has to be indicated in the `nbPoints` variable.
+For glOric to know the number of points that are stored in this array, it has to be indicated in the `glNbVertices` variable.
 The maximum number of points is configured througb the constant named `NB_MAX_POINTS` defined in file `glOric_vXY.h`.
-In any circumstance, you must ensure that the value contained in the `nbPoints` variable is lower than the value of `NB_MAX_POINTS` (which can't be greater or equal to 256). Memory corruption can occur if this constraint is not respected.
+In any circumstance, you must ensure that the value contained in the `glNbVertices` variable is lower than the value of `NB_MAX_POINTS` (which can't be greater or equal to 256). Memory corruption can occur if this constraint is not respected.
 
 Once points of interest of the scene are given to glOric, we can refer to them through their index to tell glOric where to draw particles, segments and faces.
 
@@ -82,15 +82,15 @@ Let's start to explore this with the simplest drawable element: the particle
 As seen previously, a particle is just a single vertice in 3D space.
 Particles are declared to glOric through the following arrays:
 ```C
-extern unsigned char    particlesPt[];
-extern unsigned char    particlesChar[];
+extern unsigned char    glParticlesPt[];
+extern unsigned char    glParticlesChar[];
 ```
 
-`particlesPt` contains, for each particles, the index of the point containing the position where to draw the particle and `particlesChar` contains, for each particles, the character that has to be used to display the particle.
+`glParticlesPt` contains, for each particles, the index of the point containing the position where to draw the particle and `glParticlesChar` contains, for each particles, the character that has to be used to display the particle.
 
-For glOric to know the number of particles that are stored in these arrays, it has to be indicated in the `nbParticles` variable.
+For glOric to know the number of particles that are stored in these arrays, it has to be indicated in the `glNbParticles` variable.
 The maximum number of particles is configured througb the constant named `NB_MAX_ParticleS` defined in file `glOric_vXY.h`. Default max is 64.
-In any circumstance, you must ensure that the value contained in the `nbParticles` variable is lower than the value of `NB_MAX_ParticleS`. Memory corruption can occur if this constraint is not respected.
+In any circumstance, you must ensure that the value contained in the `glNbParticles` variable is lower than the value of `NB_MAX_ParticleS`. Memory corruption can occur if this constraint is not respected.
 
 Now we're going to see how to let glOric know where and how to draw particles.
 
@@ -98,14 +98,14 @@ For example, let's consider we want to draw a character `P` at position (X=8, Y=
 Then we will first declare this coordinate in the points' arrays:
 
 ```C
-points3dX[0] = 8;
-points3dY[0] = 12;
-points3dZ[0] = 4;
+glVerticesX[0] = 8;
+glVerticesY[0] = 12;
+glVerticesZ[0] = 4;
 ```
-Then we declare to glOric that we have stored one point in the array by setting the `nbPoints` variable accordingly:
+Then we declare to glOric that we have stored one point in the array by setting the `glNbVertices` variable accordingly:
 
 ```C
-nbPoints = 1;
+glNbVertices = 1;
 ```
 
 
@@ -113,14 +113,14 @@ nbPoints = 1;
 Now that this point, numbered 0 (because it if the first index in the array) is known by glOric, we can refer to it to say to glOric where to draw the particle and what character shall be used to depict the particle:
 
 ```C
-particlesPt[0]=0;      // particle number 0 shall be drawn at coordinates of point number 0
-particlesChar[0]='P';  // particle number 0 shall display letter 'P'
+glParticlesPt[0]=0;      // particle number 0 shall be drawn at coordinates of point number 0
+glParticlesChar[0]='P';  // particle number 0 shall display letter 'P'
 ```
 
 And finally we indicate that we have stored one particle in the array of particles.
 
 ```C
-nbParticles = 1;
+glNbParticles = 1;
 ```
 
 For now, we've just seen how to declare a 3D coordinate at which we want to draw a specific character. 
@@ -135,11 +135,11 @@ Segments are parts of line. a segment goes from one point in space to another.
 
 Segments are declared to glOric through the following arrays:
 ```C
-extern unsigned char    segmentsPt1[];
-extern unsigned char    segmentsPt2[];
-extern unsigned char    segmentsChar[];
+extern unsigned char    glSegmentsPt1[];
+extern unsigned char    glSegmentsPt2[];
+extern unsigned char    glSegmentsChar[];
 ```
-The number of segments shall be set in variables `nbSegments` which shall never be greater than `NB_MAX_SEGMENTS`.
+The number of segments shall be set in variables `glNbSegments` which shall never be greater than `NB_MAX_SEGMENTS`.
 
 Let's consider we want a segment going from coordinates (X= 8, Y=4, Z= 0) to coordinates (X=-8, Y=4 , Z= 12) and we want this segment to be drawn with character '-' (minus).
 
@@ -147,24 +147,24 @@ To declare such a segment in glOric, we first need to declare the 2 points corre
 
 ```C
 // Point index 0 (X= 8, Y=4, Z= 0)
-points3dX[0] = 8;  points3dY[0] = 4;  points3dZ[0] = 0;
+glVerticesX[0] = 8;  glVerticesY[0] = 4;  glVerticesZ[0] = 0;
 // Point index 1 (X=-8, Y=4 , Z= 12)
-points3dX[1] = -8; points3dY[1] = 4;  points3dZ[1] = 12;
+glVerticesX[1] = -8; glVerticesY[1] = 4;  glVerticesZ[1] = 12;
 // we now have two points
-nbPoints = 2;
+glNbVertices = 2;
 ```
 
 Now we declare one segment going from point numbered 0 to point numbered 1.
 
 ```C
 // first extremity of segement number 0 is point number 0
-segmentsPt1 [0] = 0;
+glSegmentsPt1 [0] = 0;
 // second extremity of segement number 0 is point number 1
-segmentsPt2 [0] = 1;
+glSegmentsPt2 [0] = 1;
 // The segment shall be drawn with character '-'
-segmentsChar [0] = '-';
+glSegmentsChar [0] = '-';
 // We have 1 segment declared
-nbSegments = 1;
+glNbSegments = 1;
 ```
 
 ## Declaring Faces
@@ -172,30 +172,30 @@ nbSegments = 1;
 Faces are triangular surfaces delimited by three corners.
 In glOric triangles are declared through the fours following arrays:
 ```C
-extern unsigned char    facesPt1[];
-extern unsigned char    facesPt2[];
-extern unsigned char    facesPt3[];
-extern unsigned char    facesChar[];
+extern unsigned char    glFacesPt1[];
+extern unsigned char    glFacesPt2[];
+extern unsigned char    glFacesPt3[];
+extern unsigned char    glFacesChar[];
 ```
 
-Where `facesPt1`, `facesPt2` and `facesPt3` are indexes of points used as corners of the triangle and `facesChar` is the character used  to fill the face.
-The number of faces shall be set in variables `nbFaces` which shall never be greater than `NB_MAX_FACES`.
+Where `glFacesPt1`, `glFacesPt2` and `glFacesPt3` are indexes of points used as corners of the triangle and `glFacesChar` is the character used  to fill the face.
+The number of faces shall be set in variables `glNbFaces` which shall never be greater than `NB_MAX_FACES`.
 
 The following code shows how to declare a face based on three points.
 
 ```C
 // Declare points for corners (X= 8, Y=4, Z= 0), (X=-8, Y=4 , Z= 0), (X=0, Y=4 , Z= 8) 
-points3dX[0] = 8;  points3dY[0] = 4;  points3dZ[0] = 0;
-points3dX[1] = -8; points3dY[1] = 4;  points3dZ[1] = 0;
-points3dX[2] = 0;  points3dY[2] = 4;  points3dZ[2] = 8;
-nbPoints = 3;
+glVerticesX[0] = 8;  glVerticesY[0] = 4;  glVerticesZ[0] = 0;
+glVerticesX[1] = -8; glVerticesY[1] = 4;  glVerticesZ[1] = 0;
+glVerticesX[2] = 0;  glVerticesY[2] = 4;  glVerticesZ[2] = 8;
+glNbVertices = 3;
 
 // Use previously declared points to describe a face that will be filled with character '*'
-facesPt1[0]=0;
-facesPt2[0]=1;
-facesPt3[0]=2;
-facesChar='*';
-nbPoints = 3;
+glFacesPt1[0]=0;
+glFacesPt2[0]=1;
+glFacesPt3[0]=2;
+glFacesChar='*';
+glNbVertices = 3;
 ```
 
 ## Mixing all primitives
@@ -220,24 +220,24 @@ We also have to declare a face filling the space between the three points with c
 And we also have to declare three segments corresponding to the three edge.
 
 ```C
-nbPoints = 0;
+glNbVertices = 0;
 
-points3dX[nbPoints] = 8;  points3dY[nbPoints] = 4;  points3dZ[nbPoints] = 0; nbPoints ++;
-points3dX[nbPoints] = -8; points3dY[nbPoints] = 4;  points3dZ[nbPoints] = 0; nbPoints ++;
-points3dX[nbPoints] = 0;  points3dY[nbPoints] = 4;  points3dZ[nbPoints] = 8; nbPoints ++;
+glVerticesX[glNbVertices] = 8;  glVerticesY[glNbVertices] = 4;  glVerticesZ[glNbVertices] = 0; glNbVertices ++;
+glVerticesX[glNbVertices] = -8; glVerticesY[glNbVertices] = 4;  glVerticesZ[glNbVertices] = 0; glNbVertices ++;
+glVerticesX[glNbVertices] = 0;  glVerticesY[glNbVertices] = 4;  glVerticesZ[glNbVertices] = 8; glNbVertices ++;
 
 
 // Use previously declared points to describe a face that will be filled with character '*'
 
-facesPt1[0]=0; facesPt2[0]=1; facesPt3[0]=2; facesChar='*';
-nbFaces = 1;
+glFacesPt1[0]=0; glFacesPt2[0]=1; glFacesPt3[0]=2; glFacesChar='*';
+glNbFaces = 1;
 
 //
 nbSegment = 0;
 
-segmentsPt1 [nbSegment] = 0; segmentsPt2 [nbSegment] = 1; segmentsChar [nbSegment] = '/'; nbSegment ++;
-segmentsPt1 [nbSegment] = 1; segmentsPt2 [nbSegment] = 2; segmentsChar [nbSegment] = '-'; nbSegment ++;
-segmentsPt1 [nbSegment] = 2; segmentsPt2 [nbSegment] = 0; segmentsChar [nbSegment] = '/'; nbSegment ++;
+glSegmentsPt1 [nbSegment] = 0; glSegmentsPt2 [nbSegment] = 1; glSegmentsChar [nbSegment] = '/'; nbSegment ++;
+glSegmentsPt1 [nbSegment] = 1; glSegmentsPt2 [nbSegment] = 2; glSegmentsChar [nbSegment] = '-'; nbSegment ++;
+glSegmentsPt1 [nbSegment] = 2; glSegmentsPt2 [nbSegment] = 0; glSegmentsChar [nbSegment] = '/'; nbSegment ++;
 ```
 
 You may have noticed that the characters used to draw the last segment (going from point 2 to point 0) is not '\\' (backslash) as could have been expected.
@@ -300,7 +300,7 @@ In order to have a general view of the rendering process before entering into de
          */
 
         // empty buffer
-        initScreenBuffers();
+        glInitScreenBuffers();
 
         // project 3D points to 2D coordinates
         glProjectArrays();
@@ -311,7 +311,7 @@ In order to have a general view of the rendering process before entering into de
         glDrawParticles();
 
         // update display with frame buffer
-        buffer2screen();
+        glBuffer2Screen();
 
     }
 
@@ -320,11 +320,11 @@ In order to have a general view of the rendering process before entering into de
 
 `initGame()` contains the shapes declaration and the characters redefinition as seen previously
 
-`initScreenBuffers()` is a glOric's function which initializes two buffers:
-- a frame buffer and a z-buffer. The frame buffer is a buffer which is a copy of the screen memory that glOric uses to prepare what is going to be displayed. Once particles, segments and faces are drawn in this buffer, the call to `buffer2screen()` actually copy the frame buffer to the screen area in memory.
+`glInitScreenBuffers()` is a glOric's function which initializes two buffers:
+- a frame buffer and a z-buffer. The frame buffer is a buffer which is a copy of the screen memory that glOric uses to prepare what is going to be displayed. Once particles, segments and faces are drawn in this buffer, the call to `glBuffer2Screen()` actually copy the frame buffer to the screen area in memory.
 - a z-buffer which stores, for each position on screen, the distance of the closest  element that was drawn on this position. Read the [wikipedia article on Z-Buffering](https://en.wikipedia.org/wiki/Z-buffering) to better understand this mecanism.
 
-`glProjectArrays()` is a function which computes, for each of the `nbPoints` points in arrays `points3d`, the angular position of the point relatively to the camera position and orientation.
+`glProjectArrays()` is a function which computes, for each of the `glNbVertices` points in arrays `points3d`, the angular position of the point relatively to the camera position and orientation.
 
 `glDrawFaces()`, `glDrawSegments()`and `glDrawParticles()` are glOric function which fill the frame buffer with characters used to respectively draw faces, segments and particles found in points, segments and faces. they also fill the z-buffer to keep memory of 
 
@@ -336,10 +336,10 @@ We've seen all function provided by glOric except two the we are now going to ex
 
 ## 3D to 2D projection
 
-If you remember what we've seen earlier, you know that the function glProjectArrays () computes  angular position of points contained in arrays `points3d` relatively to the camera position and orientation. The function `projectPoint` do the same for a single point and gives you back 
+If you remember what we've seen earlier, you know that the function glProjectArrays () computes  angular position of points contained in arrays `points3d` relatively to the camera position and orientation. The function `glProjectPoint` do the same for a single point and gives you back 
 the resulting angle rather than letting them only available for drawing functions:
 ```C
-extern void projectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
+extern void glProjectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
 ```
 
 This function takes the point of coordinate (x, y, z) and put:
@@ -350,7 +350,7 @@ This function takes the point of coordinate (x, y, z) and put:
 Just as camera angle, `ah` and `av` angles are 8 bits fixed point values coding angle from -PI coded -128 (0x80) to PI coded 0x7F passing by 0 radians coded 0. Angle resolution is then (2*PI / 256).
 `dist` is a 16 bits unsigned value corresponding to the euclidean norm of vector [glCamPosX-x, ComPosY-y]
 
-From the horizontal and vertical angles returned by projectPoint, it is easy to obtain screen coordinates with the following code: 
+From the horizontal and vertical angles returned by glProjectPoint, it is easy to obtain screen coordinates with the following code: 
 
 ```C
     sX = (SCREEN_WIDTH -aH) >> 1;
@@ -360,13 +360,13 @@ From the horizontal and vertical angles returned by projectPoint, it is easy to 
 ## plotting with distance
 
 ```C
-extern void zplot(signed char X, signed char Y, unsigned char dist, char char2disp);
+extern void glZPlot(signed char X, signed char Y, unsigned char dist, char char2disp);
 ```
-zplot is a function which allows you to plot a character `char2disp` at position (`X`,`Y`) in glOric's inner frame buffer.
+glZPlot is a function which allows you to plot a character `char2disp` at position (`X`,`Y`) in glOric's inner frame buffer.
 
 The plot will only happens if the distance `dist` is lower than what's stored at position (`X`,`Y`) in glOric's inner z-buffer
 
-It has to be noted that (`X`,`Y`) may be out of screen range. It's not a problem because the zplot will deals with that for you.
+It has to be noted that (`X`,`Y`) may be out of screen range. It's not a problem because the glZPlot will deals with that for you.
 
 Thus, the visibility of what you want to draw is integrally handled by glOric. You don't have to deal with the visibility, glOric does it for you.
 
@@ -384,18 +384,18 @@ This is going to be done in two steps:
     unsigned int distance;
 
     pX=0; pY=0; pZ=24;
-    projectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
+    glProjectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
     sX = (SCREEN_WIDTH -aH) >> 1;
     sY = (SCREEN_HEIGHT - aV) >> 1;
 ```
 
-- Next we zplot the string so that it will be display if it is in field of view of the camera and if nothing hides it by being closer from the camera:
+- Next we glZPlot the string so that it will be display if it is in field of view of the camera and if nothing hides it by being closer from the camera:
 
 ```C
-    zplot(sX  ,sY,distance,'H');
-    zplot(sX+1,sY,distance,'E');
-    zplot(sX+2,sY,distance,'L');
-    zplot(sX+3,sY,distance,'L');
-    zplot(sX+4,sY,distance,'O');
+    glZPlot(sX  ,sY,distance,'H');
+    glZPlot(sX+1,sY,distance,'E');
+    glZPlot(sX+2,sY,distance,'L');
+    glZPlot(sX+3,sY,distance,'L');
+    glZPlot(sX+4,sY,distance,'O');
 ```
 

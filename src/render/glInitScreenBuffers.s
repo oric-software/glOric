@@ -1,8 +1,8 @@
 
 #ifdef USE_ASM_INITFRAMEBUFFER
 .text
-;; void initScreenBuffers()
-_initScreenBuffers:
+;; void glInitScreenBuffers()
+_glInitScreenBuffers:
 .(
   
     lda #$FF

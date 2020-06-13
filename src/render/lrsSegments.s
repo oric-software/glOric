@@ -34,10 +34,10 @@ _drawSegments:
     pha:txa:pha:tya:pha
 //  	unsigned char ii = 0;
 //  	unsigned char idxPt1, idxPt2;
-//  	for (ii = 0; ii< nbSegments; ii++){
+//  	for (ii = 0; ii< glNbSegments; ii++){
     ;lda #<pSeg
 
-    ldx _nbSegments
+    ldx _glNbSegments
     beq drwsgdone
     dex
 
@@ -146,10 +146,10 @@ _fastDrawSegments:
 
 //  	unsigned char ii = 0;
 //  	unsigned char idxPt1, idxPt2;
-//  	for (ii = 0; ii< nbSegments; ii++){
+//  	for (ii = 0; ii< glNbSegments; ii++){
     ;lda #<pSeg
 
-    ldx _nbSegments
+    ldx _glNbSegments
     beq drwsgdone
     dex
 

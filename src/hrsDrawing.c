@@ -18,10 +18,10 @@ extern unsigned char OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
 
 #ifdef HRSDEMO
 
-void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char nbSegments) {
+void hrDrawSegments(char p2d[], unsigned char segments[], unsigned char glNbSegments) {
     unsigned char ii = 0;
     unsigned char idxPt1, idxPt2;
-    for (ii = 0; ii < nbSegments; ii++) {
+    for (ii = 0; ii < glNbSegments; ii++) {
         idxPt1 = segments[ii * SIZEOF_SEGMENT + 0];
         idxPt2 = segments[ii * SIZEOF_SEGMENT + 1];
         //char2Display =      segments[ii*SIZEOF_SEGMENT + 2];
@@ -72,7 +72,7 @@ void hrDrawSegments2(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
 	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
-	for (ii = 0; ii< nbSegments; ii++){
+	for (ii = 0; ii< glNbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];

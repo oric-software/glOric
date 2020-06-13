@@ -13,7 +13,7 @@
 extern unsigned char une_fonction();
 extern void lrsDemo();
 
-/*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char nbPoints, unsigned char opts);
+/*extern void glProject (char *tabpoint2D, char *tabpoint3D, unsigned char glNbVertices, unsigned char opts);
 
 extern int glCamPosX, glCamPosY, glCamPosZ;
 extern char glCamRotZ, glCamRotX;
@@ -25,9 +25,9 @@ char points2d [NB_MAX_POINTS*SIZEOF_2DPOINT];
 
 */
 char segments[NB_MAX_SEGMENTS*SIZEOF_SEGMENT];
-unsigned char nbSegments=0;
+unsigned char glNbSegments=0;
 char particles[NB_MAX_SEGMENTS*SIZEOF_PARTICLE];
-unsigned char nbParticles=0;
+unsigned char glNbParticles=0;
 
 
     
@@ -40,12 +40,12 @@ void addCube(char X, char Y, char Z){
 		points3d[(nbPts+jj)* SIZEOF_3DPOINT + 2] = ptsCube[jj*SIZEOF_3DPOINT + 2] + Z;                // Z coord
 	}
 	for (jj=0; jj < NB_SEGMENTS_CUBE; jj++){
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
-		segments[(nbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
+		segments[(glNbSegments+jj)* SIZEOF_SEGMENT + 0] = segCube[jj*SIZEOF_SEGMENT + 0]+nbPts; // Index Point 1
+		segments[(glNbSegments+jj)* SIZEOF_SEGMENT + 1] = segCube[jj*SIZEOF_SEGMENT + 1]+nbPts; // Index Point 2
+		segments[(glNbSegments+jj)* SIZEOF_SEGMENT + 2] = segCube[jj*SIZEOF_SEGMENT + 2]; // Character
 	}
 	nbPts += NB_POINTS_CUBE;
-	nbSegments += NB_SEGMENTS_CUBE;
+	glNbSegments += NB_SEGMENTS_CUBE;
 }
 
 void hrDrawSegments(){
@@ -53,7 +53,7 @@ void hrDrawSegments(){
 	unsigned char ii = 0;
 	unsigned char idxPt1, idxPt2;
 	int OtherPixelX, OtherPixelY, CurrentPixelX, CurrentPixelY;
-	for (ii = 0; ii< nbSegments; ii++){
+	for (ii = 0; ii< glNbSegments; ii++){
 
 		idxPt1 =            segments[ii*SIZEOF_SEGMENT + 0];
 		idxPt2 =            segments[ii*SIZEOF_SEGMENT + 1];
@@ -135,7 +135,7 @@ int main ()
 	glCamRotX = 2;
 	*/
 	/*nbPts =0 ;
-	nbSegments =0 ;
+	glNbSegments =0 ;
 	addCube(-4, -4, 2);*/
 
 	/*glProject (points2d, points3d, nbPts, 0);

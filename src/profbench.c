@@ -14,16 +14,16 @@ void profbench() {
     unsigned char state, kk;
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
-    nbPoints        = 0;
-    nbSegments   = 0;
-    nbFaces      = 0;
-    nbParticles = 0;
+    glNbVertices        = 0;
+    glNbSegments   = 0;
+    glNbFaces      = 0;
+    glNbParticles = 0;
 
     addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
     addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
     addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
     
-    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPoints, nbParticles, nbSegments, nbFaces); get();
+    // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
 
     text();
 
@@ -112,7 +112,7 @@ void profbench() {
 
 
         PROFILE_ENTER(ROUTINE_INITSCREENBUFFERS);
-        initScreenBuffers();
+        glInitScreenBuffers();
         PROFILE_LEAVE(ROUTINE_INITSCREENBUFFERS);
 
         glDrawFaces();
@@ -120,7 +120,7 @@ void profbench() {
         glDrawParticles();
 
         PROFILE_ENTER(ROUTINE_BUFFER2SCREEN);
-        buffer2screen((void*)ADR_BASE_LORES_SCREEN);
+        glBuffer2Screen((void*)ADR_BASE_LORES_SCREEN);
         PROFILE_LEAVE(ROUTINE_BUFFER2SCREEN);
 
         PROFILE_LEAVE(ROUTINE_GLOBAL);

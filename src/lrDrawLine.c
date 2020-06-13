@@ -27,7 +27,7 @@ void lrDrawLine() {
     while (1) {  // loop
         // printf ("plot [%d, %d] %d %d\n", A1X, A1Y, distseg, ch2disp);waitkey ();          
 #ifdef USE_ZBUFFER
-        zplot(A1X, A1Y, distseg, ch2dsp);
+        glZPlot(A1X, A1Y, distseg, ch2dsp);
 #else
         plot(A1X, A1Y, ch2dsp);
 #endif

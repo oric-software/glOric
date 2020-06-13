@@ -15,22 +15,22 @@
 extern char points3d[];
 extern char points3d[];
 
-extern unsigned char nbPoints;
-extern signed char points3dX[];
-extern signed char points3dY[];
-extern signed char points3dZ[];
+extern unsigned char glNbVertices;
+extern signed char glVerticesX[];
+extern signed char glVerticesY[];
+extern signed char glVerticesZ[];
 
-extern unsigned char segmentsPt1[];
-extern unsigned char segmentsPt2[];
-extern unsigned char segmentsChar[];
+extern unsigned char glSegmentsPt1[];
+extern unsigned char glSegmentsPt2[];
+extern unsigned char glSegmentsChar[];
 
 
 #else
 extern char                 points3d[]; // NB_MAX_POINTS * SIZEOF_3DPOINT
 extern char                 points2d[]; // NB_MAX_POINTS * SIZEOF_2DPOINT
-extern unsigned char        nbPoints;
+extern unsigned char        glNbVertices;
 extern unsigned char segments[];
-extern unsigned char nbSegments;
+extern unsigned char glNbSegments;
 #endif USE_REWORKED_BUFFER
 // #include "geomHouse.c"
 #include "logic_c.c"
@@ -55,7 +55,7 @@ void initBuffers() {
     unsigned char ii;
     char          c;
     ii    = 0;
-    nbPoints = 0;
+    glNbVertices = 0;
     while ((c = sentence[ii]) != 0) {
         switch (c) {
         case 'M':
@@ -98,7 +98,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
 
     clearScreen();
@@ -117,7 +117,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
 
         clearScreen();
@@ -139,7 +139,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
         clearScreen();
 #ifdef USE_REWORKED_BUFFERS
@@ -153,7 +153,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
         clearScreen();
 #ifdef USE_REWORKED_BUFFERS
@@ -166,7 +166,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
     glProjectArrays();
 #else
-    glProject(points2d, points3d, nbPoints, 0);
+    glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
     clearScreen();
 #ifdef USE_REWORKED_BUFFERS
@@ -179,7 +179,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
         clearScreen();
 #ifdef USE_REWORKED_BUFFERS
@@ -193,7 +193,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
         clearScreen();
 #ifdef USE_REWORKED_BUFFERS
@@ -206,7 +206,7 @@ void txtIntro() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
     clearScreen();
 #ifdef USE_REWORKED_BUFFERS
@@ -224,7 +224,7 @@ void txtGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
 
     while (1 == 1) {
@@ -272,7 +272,7 @@ void txtGameLoop() {
 #ifdef USE_REWORKED_BUFFERS
         glProjectArrays();
 #else
-        glProject(points2d, points3d, nbPoints, 0);
+        glProject(points2d, points3d, glNbVertices, 0);
 #endif // USE_REWORKED_BUFFERS
     }
 }
