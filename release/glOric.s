@@ -1,5 +1,5 @@
 ;; =======================================
-;; 	       glOric 3D            v1.2
+;; 	       glOric 3D            v1.3
 ;; =======================================
 ;;     3D graphic library for Oric 
 ;;			
@@ -17,6 +17,13 @@
 ;; 
 ;; =======================================
 ;; 
+;; Version 1.3: June 2020
+;; ------------------------
+;; - Fix some interface mistakes
+;;       * Particule renamed into Particle
+;;       * Camera position stored on 8 bits value
+;;       * Remove useless param of glBuffer2Screen function
+;;       * all interface is prefixed with gl for uniformity
 ;; Version 1.2: June 2020
 ;; ------------------------
 ;; - glDrawPaticules is now incorporated in glOric
@@ -26,11 +33,6 @@
 ;;       * use zero page 
 ;;       * remove useless context saving (pha & pla)
 ;;       * speedup face drawing and clipping 
-;; - Fix some interface mistakes
-;;       * Particule renamed into Particle
-;;       * Camera position stored on 8 bits value
-;;       * Remove useless param of glBuffer2Screen function
-;;       * all interface is prefixed with gl for uniformity
 ;; Version 1.1 :  February 2020
 ;; ----------------------------
 ;; =======================================
