@@ -8,7 +8,7 @@ SET OSDKNAME=3DWALKTHROUGH
 SET OSDKCOMP=-O2
 REM SET OSDKLINK=-B
 
-SET OSDKFILE=walkthrough release\glOric
+SET OSDKFILE=release\glOric walkthrough 
 
 
 
