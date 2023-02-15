@@ -19,3 +19,4 @@ BUILD/xaerr.txt
 src/glOric_c.asm
 src/start.asm
 src/xa_labels.txt
+__pycache__
