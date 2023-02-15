@@ -21,8 +21,8 @@ void addGeom2(
             glVerticesX[glNbVertices] = X + sizeX * geom[kk++];
             glVerticesY[glNbVertices] = Y + sizeY * geom[kk++];
         } else {
-            glVerticesY[glNbVertices] = X + sizeY * geom[kk++];
-            glVerticesX[glNbVertices] = Y + sizeX * geom[kk++];
+            glVerticesY[glNbVertices] = Y + sizeY * geom[kk++];
+            glVerticesX[glNbVertices] = X + sizeX * geom[kk++];
         }
         glVerticesZ[glNbVertices] = Z + sizeZ * geom[kk++];
         glNbVertices ++;
