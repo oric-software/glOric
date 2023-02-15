@@ -19,7 +19,7 @@ void lrDrawLine() {
         return;
 
     if ((ch2disp == '/') && (A1sX == -1)) {
-        ch2dsp = DOLLAR;
+        ch2dsp = BACKSLASH;
     } else {
         ch2dsp = ch2disp;
     }

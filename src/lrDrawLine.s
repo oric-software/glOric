@@ -119,7 +119,7 @@ lrDrawLine_goon01:
 lrDrawLine_goon02:
 
 ;;     if ((ch2disp == '/') && (A1sX == -1)) {
-;;         ch2dsp = DOLLAR;
+;;         ch2dsp = BACKSLASH;
 ;;     } else {
 ;;         ch2dsp = ch2disp;
 ;;     }
@@ -129,7 +129,7 @@ lrDrawLine_goon02:
 	lda _A1sX
 	cmp #$FF
 	bne  lrDrawLine_loop
-	lda #DOLLAR
+	lda #BACKSLASH
 	sta _ch2disp 
 
 ;;     while (1) {  ;; loop

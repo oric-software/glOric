@@ -403,7 +403,7 @@
 /*
  * ASCII TABLE
  */
-#define DOLLAR 36
+#define BACKSLASH 92
 
 /*
  * KEYBOARD TABLE
