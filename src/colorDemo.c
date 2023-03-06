@@ -73,7 +73,8 @@ void dispInfo() {
 #include "geomHouse.c"
 #include "geomPine.c"
 #include "geomTower.c"
-#include "addGeom.c"
+// #include "addGeom.c"
+#include "loadShape.c"
 #include "logic_c.c"
 #include "changeChar.c"
 #include "colors_c.c"
@@ -92,9 +93,9 @@ void colorDemo() {
     // addPlan(0, -6, 6, 64, 'b');
     // addPlan(6, 0, 6, 0, 'y');
     // addPlan(-6, 0, 6, 0, 'g');
-    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    addGeom2(24, 12, 0, 9, 9, 9, 0, (signed char *)geomPine);
-    addGeom2(24, -24, 0, 6, 6, 12, 0, (signed char *)geomTower);
+    addGeom2(0, 0, 0, 0, geomHouse);
+    addGeom2(24, 12, 0, 0, (signed char *)geomPine);
+    addGeom2(24, -24, 0, 0, (signed char *)geomTower);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
     
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, glNbParticles, glNbSegments, glNbFaces); get();

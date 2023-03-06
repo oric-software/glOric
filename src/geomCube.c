@@ -1,17 +1,18 @@
+#define CUBE_SIZE 1
 char geomCube []= {
 /* Nb Coords = */ 8,
 /* Nb Faces = */ 12,
 /* Nb Segments = */ 12,
 /* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
-    -1, -1, +1, 0,  // P0
-    -1, -1, -1, 0,  // P1
-    +1, -1, -1, 0,  // P2
-    +1, -1, +1, 0,  // P3
-    -1, +1, +1, 0,  // P4
-    -1, +1, -1, 0,  // P5
-    +1, +1, -1, 0,  // P6
-    +1, +1, +1, 0,   // P7
+    -CUBE_SIZE, -CUBE_SIZE, +CUBE_SIZE, 0,  // P0
+    -CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE, 0,  // P1
+    +CUBE_SIZE, -CUBE_SIZE, -CUBE_SIZE, 0,  // P2
+    +CUBE_SIZE, -CUBE_SIZE, +CUBE_SIZE, 0,  // P3
+    -CUBE_SIZE, +CUBE_SIZE, +CUBE_SIZE, 0,  // P4
+    -CUBE_SIZE, +CUBE_SIZE, -CUBE_SIZE, 0,  // P5
+    +CUBE_SIZE, +CUBE_SIZE, -CUBE_SIZE, 0,  // P6
+    +CUBE_SIZE, +CUBE_SIZE, +CUBE_SIZE, 0,   // P7
 
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
     0, 1, 2, 77,  //124, 0

@@ -4,11 +4,12 @@
 #ifdef PROFBENCH
 
 #include "glOric.h"
-#include "data\geom.h"
+// #include "data\geom.h"
 #include "util\keyboard.h"
 #include "data\traj.h"
-
-
+#include "geomHouse.c"
+#include "geomPine.c"
+#include "geomTower.c"
 void profbench() {
     int ii;
     unsigned char state, kk;
@@ -19,9 +20,9 @@ void profbench() {
     glNbFaces      = 0;
     glNbParticles = 0;
 
-    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
-    addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
+    addGeom2(0, 0, 0,  0, geomHouse);
+    addGeom2(24, 12, 0, 0, geomPine);
+    addGeom2(24, -24, 0, 0, geomTower);
     
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
 

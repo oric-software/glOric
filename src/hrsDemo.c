@@ -28,6 +28,7 @@ void                 hrDrawFaces();
 
 
 #include "addGeom.c"
+// #include "loadShape.c"
 #include "geomCube.c"
 
 void hiresDemo() {
@@ -42,6 +43,8 @@ void hiresDemo() {
 
     addGeom2(-4, -4, 2, 4, 4, 4, 0, geomCube);
     addGeom2(4, 4, 10, 4, 4, 4, 0, geomCube);
+//    addGeom2(-4, -4, 2, 0, geomCube);
+//    addGeom2(4, 4, 10, 0, geomCube);
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
     hiresIntro();
 

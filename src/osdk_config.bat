@@ -12,7 +12,7 @@ REM SET OSDKFILE=start glOric_c glOric_s
 
 SET OSDKFILE=main
 
-SET OSDKFILE=%OSDKFILE% glOric_s glOric_c
+SET OSDKFILE=%OSDKFILE% glOric_s loadShape_s glOric_c
 
 :: SET OSDKFILE=%OSDKFILE% raster\fill8 
 :: SET OSDKFILE=%OSDKFILE%  profile

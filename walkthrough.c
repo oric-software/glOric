@@ -49,7 +49,7 @@ signed char geomPine [],  geomHouse [],  geomTower [];
 unsigned char running; // game state: 1 = Running, 0 = Leave.
 
 // Add a shape to the game scene
-void addGeom(signed char X, signed char Y, signed char Z, unsigned char sizeX, unsigned char sizeY, unsigned char sizeZ, unsigned char orientation, signed char geom[]);
+void addGeom2(signed char X, signed char Y, signed char Z, unsigned char orientation, signed char geom[]);
 // Redefine a Character
 void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08);
 // Set video attributes for color
@@ -77,9 +77,9 @@ void main() {
     glNbFaces      = 0;
     glNbParticles = 0;
 
-    addGeom(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    addGeom(24, 12, 0, 9, 9, 9, 0, geomPine);
-    addGeom(24, -24, 0, 6, 6, 12, 0, geomTower);
+    addGeom2(0, 0, 0, 0, geomHouse);
+    addGeom2(24, 12, 0, 0, geomPine);
+    addGeom2(24, -24, 0, 0, geomTower);
 
     /*
      *  Configure Drawing
@@ -371,159 +371,209 @@ void initColors(){
  * \__/   |_| |_| \__,_|| .__/  \___||___/
  *                      |_|               
  */
-#define TRUNC_HEIGHT 1
-#define PINE_WIDTH 1
-#define PINE_HEIGHT 3
-                                             //          6
-signed char geomPine []= {                   //          /\       
-                                             //         /| \      
-/* Nb Coords = */ 7,                         //        //   \\    
-/* Nb Faces = */ 2,                          //       //    \ \3   
-/* Nb Segments = */ 1,                       //      / /     \/   
-/* Nb Particles = */ 0,                     //     / /       \   
-                                             //    /  /        \  
-// Coord List : X, Y, Z, unused              //   /  /         \  
-0,          0,          0,              0,   //  4---/   1------2 
-0,          0,          TRUNC_HEIGHT,   1,   //     /  //|        
-PINE_WIDTH, 0,          TRUNC_HEIGHT,   2,   //     / /  |        
-0,          PINE_WIDTH, TRUNC_HEIGHT,   3,   //    ///   |        
--PINE_WIDTH, 0,         TRUNC_HEIGHT,   4,   //    /     |        
-0,          -PINE_WIDTH,TRUNC_HEIGHT,   5,   //   5      |        
-0,          0,          PINE_HEIGHT,    6,   //          |        
-                                             //          0        
+
+
+#define TEXTURE_1 'b'
+#define TEXTURE_2 'g'
+#define TEXTURE_3 'y'
+#define TEXTURE_4 'c'
+#define TEXTURE_5 'm'
+#define TEXTURE_6 'r'
+#define TEXTURE_7 'f'
+
+
+#define TRUNC_HEIGHT 9
+#define PINE_WIDTH 9
+#define PINE_HEIGHT 27
+
+signed char geomPine []= {
+/* Nb Coords = */ 7,
+/* Nb Faces = */ 2,
+/* Nb Segments = */ 1,
+/* Nb Particles = */ 0,
+// Coord List : X, Y, Z, unused
+0, 0, 0, 0,
+0, 0, TRUNC_HEIGHT, 0,
+PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
+0, PINE_WIDTH, TRUNC_HEIGHT, 0,
+-PINE_WIDTH, 0, TRUNC_HEIGHT, 0,
+0, -PINE_WIDTH, TRUNC_HEIGHT, 0,
+0, 0, PINE_HEIGHT, 0,
+
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
-3, 5, 6, TEXTURE_GREEN,
-2, 4, 6, TEXTURE_GREEN,
+3, 5, 6, TEXTURE_2,
+2, 4, 6, TEXTURE_2,
 // Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '|', 0,
 // Particle List : idxPoint1, character 
+
 };
 
-#define TOWER_HEIGHT 3       
-signed char geomTower []= {    //           7---------------6
-/* Nb Coords = */ 8,           //           |             //|
-/* Nb Faces = */ 6,            //           |           //  |
-/* Nb Segments = */ 4,         //           |         //    |
-/* Nb Particles = */ 0,       //           |       //      |
-// Coord List : X, Y, Z, Id    //  4--------------5/        |
--1, -1,             0, 0,      //  |        .     |         |
--1,  1,             0, 1,      //  |        .     |         |
- 1,  1,             0, 2,      //  |        .     |         |
- 1, -1,             0, 3,      //  |        .     |         |
--1, -1,  TOWER_HEIGHT, 4,      //  |        .     |         |
--1,  1,  TOWER_HEIGHT, 5,      //  |        .     |         |
- 1,  1,  TOWER_HEIGHT, 6,      //  |              |         |
- 1, -1,  TOWER_HEIGHT, 7,      //  |        3.....|........ 2
-// Face List                   //  |              |       // 
-0, 1, 4, TEXTURE_CYAN,         //  |              |     //   
-1, 4, 5, TEXTURE_CYAN,         //  |              |    /     
-1, 2, 5, TEXTURE_BLUE,         //  |              |  //      
-2, 5, 6, TEXTURE_BLUE,         //  |               //        
-3, 2, 7, TEXTURE_CYAN,         //  0------------- 1          
-2, 7, 6, TEXTURE_CYAN,
-// Segment List : idxPoint1, idxPoint2, character, unused 
-0, 4, '|',       0,
-3, 7, '|',       0,
-2, 6, '|',       0,
-1, 5, '|',       0,
-};
-                                   //               9
-signed char geomHouse []= {        //              /  \          
-                                   //             /    \    
-/* Nb Coords = */ 10,              //            /      \   
-/* Nb Faces = */ 11,               //           /        \   
-/* Nb Segments = */ 14,            //          5         4  
-/* Nb Particles = */ 0,           //         /.        /|  
-                                   //        8 .       / |  
-// Coord List : X, Y, Z, unused    //       / \.      /  |  
- 1, 1, 0, 0,                       //      /   \     /   |                            
--1, 1, 0, 1,                       //     /    1\.. /. . 0                           
--1,-1, 0, 2,                       //    /     / \ /    /                            
- 1,-1, 0, 3,                       //   6     /   7    /                             
- 1, 1, 2, 4,                       //   |    /    |   /                               
--1, 1, 2, 5,                       //   |   /     |  /                               
--1,-1, 2, 6,                       //   |  /      | /                                
- 1,-1, 2, 7,                       //   | /       |/                                 
- 1, 0, 3, 8,                       //   |/________|                                  
--1, 0, 3, 9,                       //   2         3
+#define TOWER_HEIGHT 3
+#define TOWER_SIZE_X 6
+#define TOWER_SIZE_Y 6
+#define TOWER_SIZE_Z 12
+signed char geomTower []= {
+/* Nb Coords = */ 9,
+/* Nb Faces = */ 6, //12,
+/* Nb Segments = */ 8,
+/* Nb Particles = */ 0,
+// Coord List : X, Y, Z, unused
+-TOWER_SIZE_X, -TOWER_SIZE_Y,             0, 0,
+-TOWER_SIZE_X,  TOWER_SIZE_Y,             0, 0,
+ TOWER_SIZE_X,  TOWER_SIZE_Y,             0, 0,
+ TOWER_SIZE_X, -TOWER_SIZE_Y,             0, 0,
+-TOWER_SIZE_X, -TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+-TOWER_SIZE_X,  TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+ TOWER_SIZE_X,  TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+ TOWER_SIZE_X, -TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+  0,            0,            TOWER_SIZE_Z*(TOWER_HEIGHT+2), 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
- 0, 1, 5, TEXTURE_RED,      // side
- 0, 4, 5, TEXTURE_RED,
- 3, 2, 6, TEXTURE_RED,
- 6, 3, 7, TEXTURE_RED,
- 1, 2, 6, TEXTURE_MAGENTA, // back
- 1, 6, 5, TEXTURE_MAGENTA,
- 5, 6, 9, TEXTURE_MAGENTA,
- 4, 5, 9, TEXTURE_YELLOW,  // roof
- 4, 9, 8, TEXTURE_YELLOW,
- 7, 6, 9, TEXTURE_YELLOW,
- 7, 9, 8, TEXTURE_YELLOW,
+// 0, 3, 4, TEXTURE_1,
+// 3, 4, 7, TEXTURE_1,
+0, 1, 4, TEXTURE_4,
+1, 4, 5, TEXTURE_4,
+1, 2, 5, TEXTURE_1,
+2, 5, 6, TEXTURE_1, 
+3, 2, 7, TEXTURE_4,
+2, 7, 6, TEXTURE_4,
+// 4, 5, 8, TEXTURE_6, 
+// 5, 6, 8, TEXTURE_6, 
+// 6, 7, 8, TEXTURE_6, 
+// 7, 4, 8, TEXTURE_6, 
+// Segment List : idxPoint1, idxPoint2, character, unused 
+0, 4, '|', 0,
+3, 7, '|', 0,
+2, 6, '|', 0,
+1, 5, '|', 0,
+4, 8, TEXTURE_6, 0,
+5, 8, TEXTURE_6, 0,
+6, 8, TEXTURE_6, 0,
+7, 8, TEXTURE_6, 0,
+// Particle List : idxPoint1, character 
+
+};
+
+
+
+#define HOUSE_SIZE_X 12
+#define HOUSE_SIZE_Y 8
+#define HOUSE_SIZE_Z 4
+signed char geomHouse []= {
+/* Nb Coords = */ 10,
+/* Nb Faces = */ 11,
+/* Nb Segments = */ 14,
+/* Nb Particles = */ 0,
+// Coord List : X, Y, Z, unused
+ HOUSE_SIZE_X, HOUSE_SIZE_Y,    0, 0, 
+-HOUSE_SIZE_X, HOUSE_SIZE_Y,    0, 0,
+-HOUSE_SIZE_X,-HOUSE_SIZE_Y,    0, 0,
+ HOUSE_SIZE_X,-HOUSE_SIZE_Y,    0, 0,
+ HOUSE_SIZE_X, HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0, 
+-HOUSE_SIZE_X, HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0,
+-HOUSE_SIZE_X,-HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0,
+ HOUSE_SIZE_X,-HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0,
+ HOUSE_SIZE_X, 0,               HOUSE_SIZE_Z*3, 0,
+-HOUSE_SIZE_X, 0,               HOUSE_SIZE_Z*3, 0,
+// Face List : idxPoint1, idxPoint2, idxPoint3, character 
+ 0, 1, 5, TEXTURE_6,
+ 0, 4, 5, TEXTURE_6,
+ 3, 2, 6, TEXTURE_6,
+ 6, 3, 7, TEXTURE_6,
+ 1, 2, 6, TEXTURE_5,
+ 1, 6, 5, TEXTURE_5,
+ 5, 6, 9, TEXTURE_5,
+ 4, 5, 9, TEXTURE_3,
+ 4, 9, 8, TEXTURE_3,
+ 7, 6, 9, TEXTURE_3,
+ 7, 9, 8, TEXTURE_3,
 // Segment List : idxPoint1, idxPoint2, character , unused
 0, 1, '-', 0,
 1, 2, '-', 0,
 2, 3, '-', 0,
 4, 5, '-', 0,
 6, 7, '-', 0,
-0, 4, '|', 0,
-1, 5, '|', 0,
-2, 6, '|', 0,
-3, 7, '|', 0,
-4, 8, '/', 0,
-7, 8, '/', 0,
-5, 9, '/', 0,
-6, 9, '/', 0,
-9, 8, '-', 0,
-}; 
+0, 4,'|', 0,
+1, 5,'|', 0,
+2, 6,'|', 0,
+3, 7,'|', 0,
+4, 8,'/', 0,
+7, 8,'/', 0,
+5, 9,'/', 0,
+6, 9,'/', 0,
+9, 8,'-', 0,
 
-void addGeom(
+// Particle List : idxPoint1, character 
+};
+
+
+//                                    //               9
+// signed char geomHouse []= {        //              /  \          
+//                                    //             /    \    
+// /* Nb Coords = */ 10,              //            /      \   
+// /* Nb Faces = */ 11,               //           /        \   
+// /* Nb Segments = */ 14,            //          5         4  
+// /* Nb Particles = */ 0,           //         /.        /|  
+//                                    //        8 .       / |  
+// // Coord List : X, Y, Z, unused    //       / \.      /  |  
+//  1, 1, 0, 0,                       //      /   \     /   |                            
+// -1, 1, 0, 1,                       //     /    1\.. /. . 0                           
+// -1,-1, 0, 2,                       //    /     / \ /    /                            
+//  1,-1, 0, 3,                       //   6     /   7    /                             
+//  1, 1, 2, 4,                       //   |    /    |   /                               
+// -1, 1, 2, 5,                       //   |   /     |  /                               
+// -1,-1, 2, 6,                       //   |  /      | /                                
+//  1,-1, 2, 7,                       //   | /       |/                                 
+//  1, 0, 3, 8,                       //   |/________|                                  
+// -1, 0, 3, 9,                       //   2         3
+// // Face List : idxPoint1, idxPoint2, idxPoint3, character 
+//  0, 1, 5, TEXTURE_RED,      // side
+//  0, 4, 5, TEXTURE_RED,
+//  3, 2, 6, TEXTURE_RED,
+//  6, 3, 7, TEXTURE_RED,
+//  1, 2, 6, TEXTURE_MAGENTA, // back
+//  1, 6, 5, TEXTURE_MAGENTA,
+//  5, 6, 9, TEXTURE_MAGENTA,
+//  4, 5, 9, TEXTURE_YELLOW,  // roof
+//  4, 9, 8, TEXTURE_YELLOW,
+//  7, 6, 9, TEXTURE_YELLOW,
+//  7, 9, 8, TEXTURE_YELLOW,
+// // Segment List : idxPoint1, idxPoint2, character , unused
+// 0, 1, '-', 0,
+// 1, 2, '-', 0,
+// 2, 3, '-', 0,
+// 4, 5, '-', 0,
+// 6, 7, '-', 0,
+// 0, 4, '|', 0,
+// 1, 5, '|', 0,
+// 2, 6, '|', 0,
+// 3, 7, '|', 0,
+// 4, 8, '/', 0,
+// 7, 8, '/', 0,
+// 5, 9, '/', 0,
+// 6, 9, '/', 0,
+// 9, 8, '-', 0,
+// }; 
+
+extern unsigned char sl_ori;
+extern signed char          *sl_geom;
+extern signed char sl_X, sl_Y, sl_Z;
+
+void addGeom2(
     signed char   X,
     signed char   Y,
     signed char   Z,
-    unsigned char sizeX,
-    unsigned char sizeY,
-    unsigned char sizeZ,
     unsigned char orientation,
     signed char          geom[]) {
 
-    int kk=0;
-    int ii;
-    int npt,nfa, nseg, npart;
-    npt = geom[kk++];
-    nfa = geom[kk++];
-    nseg = geom[kk++];
-    npart = geom[kk++];
-    for (ii = 0; ii < npt; ii++){
-        if (orientation == 0) {
-            glVerticesX[glNbVertices] = X + sizeX * geom[kk++];
-            glVerticesY[glNbVertices] = Y + sizeY * geom[kk++];
-        } else {
-            glVerticesY[glNbVertices] = X + sizeY * geom[kk++];
-            glVerticesX[glNbVertices] = Y + sizeX * geom[kk++];
-        }
-        glVerticesZ[glNbVertices] = Z + sizeZ * geom[kk++];
-        glNbVertices ++;
-        kk++; // skip unused byte
-    }
-    for (ii = 0; ii < nfa; ii++){
-        glFacesPt1[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
-        glFacesPt2[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
-        glFacesPt3[glNbFaces] = glNbVertices - (npt-geom[kk++]);  // Index Point 3
-        glFacesChar[glNbFaces] = geom[kk++];  // Character
-        glNbFaces++;
-    }
-    for (ii = 0; ii < nseg; ii++){
-        glSegmentsPt1[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 1
-        glSegmentsPt2[glNbSegments] = glNbVertices - (npt-geom[kk++]);  // Index Point 2
-        glSegmentsChar[glNbSegments] = geom[kk++]; // Character
-        glNbSegments++;
-        kk++; // skip unused byte
-    }
-    for (ii = 0; ii < npart; ii++){
-        glParticlesPt[glNbParticles] = glNbVertices - (npt-geom[kk++]);  // Index Point
-        glParticlesChar[glNbParticles] = geom[kk++]; // Character
-        glNbParticles++;        
-    }
-}    
+    sl_X = X;
+    sl_Y = Y;
+    sl_Z = Z;
+    sl_geom = geom;
+    sl_ori = orientation;
+
+    loadShape();
+}
 
 /*     ___                         _               
  *    /   \ _ __   __ _ __      __(_) _ __    __ _ 

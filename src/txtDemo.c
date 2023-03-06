@@ -34,7 +34,8 @@ extern unsigned char glNbSegments;
 #endif USE_REWORKED_BUFFER
 // #include "geomHouse.c"
 #include "logic_c.c"
-#include "addGeom.c"
+// #include "addGeom.c"
+#include "loadShape.c"
 
 const char sentence[] = "MERCI RENE";
 
@@ -59,22 +60,22 @@ void initBuffers() {
     while ((c = sentence[ii]) != 0) {
         switch (c) {
         case 'M':
-            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterM);
+            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterM);
             break;
         case 'C':
-            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterC);
+            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterC);
             break;
         case 'I':
-            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterI);
+            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterI);
             break;
         case 'R':
-            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterR);
+            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterR);
             break;
         case 'E':
-            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterE);
+            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterE);
             break;
         case 'N':
-            addGeom2(ii*8, 0, 0, 1, 1, 1, 0, (signed char *)geomLetterN);
+            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterN);
             break;
         default:
             break;

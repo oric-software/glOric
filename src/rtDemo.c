@@ -45,7 +45,8 @@ extern unsigned char particles[];
 extern unsigned char glNbParticles;
 
 #include "geomHouse.c"
-#include "addGeom.c"
+// #include "addGeom.c"
+#include "loadShape.c"
 #include "logic_c.c"
 #include "changeChar.c"
 #include "colors_c.c"
@@ -107,7 +108,7 @@ void rtDemo() {
     // addPlan(-6, 0, 6, 0, 'g');
     // addGeom(0, 0, 0, 3, 3, 3, 1, geomTriangle);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
-    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    addGeom2(0, 0, 0, 0, geomHouse);
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, glNbParticles, glNbSegments, glNbFaces); get();
 
     memset (oldKeyBank,0,8);

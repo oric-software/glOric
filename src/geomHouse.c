@@ -17,22 +17,25 @@
 
 #endif // USE_COLOR
 
+#define HOUSE_SIZE_X 12
+#define HOUSE_SIZE_Y 8
+#define HOUSE_SIZE_Z 4
 signed char geomHouse []= {
 /* Nb Coords = */ 10,
 /* Nb Faces = */ 11,
 /* Nb Segments = */ 14,
 /* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
- 1, 1, 0, 0, 
--1, 1, 0, 0,
--1,-1, 0, 0,
- 1,-1, 0, 0,
- 1, 1, 2, 0, 
--1, 1, 2, 0,
--1,-1, 2, 0,
- 1,-1, 2, 0,
- 1, 0, 3, 0,
--1, 0, 3, 0,
+ HOUSE_SIZE_X, HOUSE_SIZE_Y,    0, 0, 
+-HOUSE_SIZE_X, HOUSE_SIZE_Y,    0, 0,
+-HOUSE_SIZE_X,-HOUSE_SIZE_Y,    0, 0,
+ HOUSE_SIZE_X,-HOUSE_SIZE_Y,    0, 0,
+ HOUSE_SIZE_X, HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0, 
+-HOUSE_SIZE_X, HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0,
+-HOUSE_SIZE_X,-HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0,
+ HOUSE_SIZE_X,-HOUSE_SIZE_Y,    HOUSE_SIZE_Z*2, 0,
+ HOUSE_SIZE_X, 0,               HOUSE_SIZE_Z*3, 0,
+-HOUSE_SIZE_X, 0,               HOUSE_SIZE_Z*3, 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
  0, 1, 5, TEXTURE_6,
  0, 4, 5, TEXTURE_6,

@@ -225,16 +225,16 @@ void addPlan(signed char X, signed char Y, unsigned char L, signed char orientat
 #endif  // COLORDEMO
 
 
-
+#define TRIANGLE_SIZE 6
 char geomTriangle []= {
 /* Nb Coords = */ 3,
 /* Nb Faces = */ 1,
 /* Nb Segments = */ 3,
 /* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
--1, 0, 0, 0, 
- 1, 0, 0, 0,
- 0, 0, 2, 0,
+-TRIANGLE_SIZE, 0, 0, 0, 
+ TRIANGLE_SIZE, 0, 0, 0,
+ 0, 0, 2*TRIANGLE_SIZE, 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
  0, 1, 2, '.',
 // Segment List : idxPoint1, idxPoint2, idxPoint3, character 

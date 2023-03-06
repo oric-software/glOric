@@ -1,8 +1,8 @@
-#define TRUNC_HEIGHT 1
-#define PINE_WIDTH 1
-#define PINE_HEIGHT 3
+#define TRUNC_HEIGHT 9
+#define PINE_WIDTH 9
+#define PINE_HEIGHT 27
 
-char geomPine []= {
+signed char geomPine []= {
 /* Nb Coords = */ 7,
 /* Nb Faces = */ 2,
 /* Nb Segments = */ 1,

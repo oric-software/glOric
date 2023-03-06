@@ -70,7 +70,8 @@ extern void shiftRight();
 
 #include "changeChar.c"
 
-#include "addGeom.c"
+// #include "addGeom.c"
+#include "loadShape.c"
 
 void dispInfo() {
     sprintf(status_string, "(X=%d Y=%d Z=%d) [%d %d]", glCamPosX, glCamPosY, glCamPosZ, glCamRotZ, glCamRotX);
@@ -96,7 +97,7 @@ void quickTest(){
 
 void lrsDemo() {
 
-    change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
+    // TODO: change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
     glNbVertices        = 0;
     glNbSegments   = 0;
@@ -104,7 +105,7 @@ void lrsDemo() {
     glNbParticles = 0;
 
     // addPlan(0, 0, 12, 64, 'r');
-    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    addGeom2(0, 0, 0, 0, geomHouse);
     //printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
 
 #ifdef TARGET_ORIX

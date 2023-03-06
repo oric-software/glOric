@@ -1,19 +1,22 @@
 #define TOWER_HEIGHT 3
+#define TOWER_SIZE_X 6
+#define TOWER_SIZE_Y 6
+#define TOWER_SIZE_Z 12
 char geomTower []= {
 /* Nb Coords = */ 9,
 /* Nb Faces = */ 6, //12,
 /* Nb Segments = */ 8,
 /* Nb Particles = */ 0,
 // Coord List : X, Y, Z, unused
--1, -1,             0, 0,
--1,  1,             0, 0,
- 1,  1,             0, 0,
- 1, -1,             0, 0,
--1, -1, TOWER_HEIGHT, 0,
--1,  1, TOWER_HEIGHT, 0,
- 1,  1, TOWER_HEIGHT, 0,
- 1, -1, TOWER_HEIGHT, 0,
-  0, 0, TOWER_HEIGHT+2, 0,
+-TOWER_SIZE_X, -TOWER_SIZE_Y,             0, 0,
+-TOWER_SIZE_X,  TOWER_SIZE_Y,             0, 0,
+ TOWER_SIZE_X,  TOWER_SIZE_Y,             0, 0,
+ TOWER_SIZE_X, -TOWER_SIZE_Y,             0, 0,
+-TOWER_SIZE_X, -TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+-TOWER_SIZE_X,  TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+ TOWER_SIZE_X,  TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+ TOWER_SIZE_X, -TOWER_SIZE_Y, TOWER_SIZE_Z*TOWER_HEIGHT, 0,
+  0,            0,            TOWER_SIZE_Z*(TOWER_HEIGHT+2), 0,
 // Face List : idxPoint1, idxPoint2, idxPoint3, character 
 // 0, 3, 4, TEXTURE_1,
 // 3, 4, 7, TEXTURE_1,
