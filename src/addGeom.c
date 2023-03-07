@@ -1,5 +1,5 @@
 #ifdef USE_REWORKED_BUFFERS
-void addGeom2(
+void glLoadShape(
     signed char   X,
     signed char   Y,
     signed char   Z,
@@ -49,7 +49,7 @@ void addGeom2(
     }
 }    
 #else // Not USE_REWORKED_BUFFERS
-void addGeom2(
+void glLoadShape(
     signed char   X,
     signed char   Y,
     signed char   Z,

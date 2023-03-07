@@ -78,25 +78,37 @@ void dispInfo() {
 #include "logic_c.c"
 #include "changeChar.c"
 #include "colors_c.c"
+#include "sprites.c"
+
+
+signed char aSprite[]={5, 
+0, 0, 'H',
+1, 0, 'O',
+1, 0, 'U',
+1, 0, 'S',
+1, 0, 'E'
+};
 
 void colorDemo() {
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
 
     glNbVertices        = 0;
-    glNbSegments   = 0;
-    glNbFaces      = 0;
-    glNbParticles = 0;
+    glNbSegments        = 0;
+    glNbFaces           = 0;
+    glNbParticles       = 0;
+    glNbSprites         = 0;
 
     // addHouse(0, 0, 12, 8);
     // addPlan(0, 6, 6, 64, 'r');
     // addPlan(0, -6, 6, 64, 'b');
     // addPlan(6, 0, 6, 0, 'y');
     // addPlan(-6, 0, 6, 0, 'g');
-    addGeom2(0, 0, 0, 0, geomHouse);
-    addGeom2(24, 12, 0, 0, (signed char *)geomPine);
-    addGeom2(24, -24, 0, 0, (signed char *)geomTower);
+    glLoadShape(0, 0, 0, 0, geomHouse);
+    glLoadShape(24, 12, 0, 0, (signed char *)geomPine);
+    glLoadShape(24, -24, 0, 0, (signed char *)geomTower);
     // addGeom(4, 4, 3, 3, 3, 3, 0, geomRectangle);
+    glAddSprite (0,0,24, aSprite);
     
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", nbPts, glNbParticles, glNbSegments, glNbFaces); get();
 
@@ -149,6 +161,7 @@ void colorIntro() {
         lrDrawSegments(points2d, segments, glNbSegments);
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
+        glDrawSprites();
 
         glBuffer2Screen();
         dispInfo();
@@ -178,6 +191,7 @@ void colorIntro() {
         lrDrawSegments(points2d, segments, glNbSegments);
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
+        glDrawSprites();
 
         glBuffer2Screen();
         dispInfo();
@@ -201,6 +215,7 @@ void colorIntro() {
         lrDrawSegments(points2d, segments, glNbSegments);
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
+        glDrawSprites();
 
         glBuffer2Screen();
         dispInfo();
@@ -246,6 +261,7 @@ void colorGameLoop() {
         lrDrawSegments(points2d, segments, glNbSegments);
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
+        glDrawSprites();
 
     while (1 == 1) {
         glBuffer2Screen();
@@ -305,6 +321,8 @@ void colorGameLoop() {
         lrDrawSegments(points2d, segments, glNbSegments);
         lrDrawParticles(points2d, particles, glNbParticles);
 #endif //USE_REWORKED_BUFFERS
+        glDrawSprites();
+
     }
 }
 

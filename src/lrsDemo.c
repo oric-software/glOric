@@ -105,7 +105,7 @@ void lrsDemo() {
     glNbParticles = 0;
 
     // addPlan(0, 0, 12, 64, 'r');
-    addGeom2(0, 0, 0, 0, geomHouse);
+    glLoadShape(0, 0, 0, 0, geomHouse);
     //printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
 
 #ifdef TARGET_ORIX

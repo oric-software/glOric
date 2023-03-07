@@ -49,7 +49,7 @@ signed char geomPine [],  geomHouse [],  geomTower [];
 unsigned char running; // game state: 1 = Running, 0 = Leave.
 
 // Add a shape to the game scene
-void addGeom2(signed char X, signed char Y, signed char Z, unsigned char orientation, signed char geom[]);
+void glLoadShape(signed char X, signed char Y, signed char Z, unsigned char orientation, signed char geom[]);
 // Redefine a Character
 void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned char patt03, unsigned char patt04, unsigned char patt05, unsigned char patt06, unsigned char patt07, unsigned char patt08);
 // Set video attributes for color
@@ -67,6 +67,14 @@ void glRestoreCanvas(void){
     memcpy(fbuffer, _bufferCopy, 1080*2);
 }
 
+signed char aSprite[]={5, 
+0, 0, 'H',
+1, 0, 'O',
+1, 0, 'U',
+1, 0, 'S',
+1, 0, 'E'
+};
+
 /*                 _        
  *   /\/\    __ _ (_) _ __  
  *  /    \  / _` || || '_ \ 
@@ -82,15 +90,16 @@ void main() {
     /*
      *  Game Scene Building
      */
-    glNbVertices     = 0;
-    glNbSegments   = 0;
-    glNbFaces      = 0;
-    glNbParticles = 0;
+    glNbVertices    = 0;
+    glNbSegments    = 0;
+    glNbFaces       = 0;
+    glNbParticles   = 0;
+    glNbSprites     = 0;
 
-    addGeom2(0, 0, 0, 0, geomHouse);
-    addGeom2(24, 12, 0, 0, geomPine);
-    addGeom2(24, -24, 0, 0, geomTower);
-
+    glLoadShape(0, 0, 0, 0, geomHouse);
+    glLoadShape(24, 12, 0, 0, geomPine);
+    glLoadShape(24, -24, 0, 0, geomTower);
+    glAddSprite (0,0,24, aSprite);
     /*
      *  Configure Drawing
      */
@@ -134,18 +143,19 @@ void gameLoop() {
         glDrawFaces();
         glDrawSegments();
         glDrawParticles();
+        glDrawSprites();
 
         // demonstrate use of glProjectPoint and glZPlot to interact with glOric inner functions
         // display a sprite at a given position
-        pX=0; pY=0; pZ=24;
-        glProjectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
-        sX = (SCREEN_WIDTH -aH) >> 1;
-        sY = (SCREEN_HEIGHT - aV) >> 1;
-        glZPlot(sX  ,sY,distance,'H');
-        glZPlot(sX+1,sY,distance,'O');
-        glZPlot(sX+2,sY,distance,'U');
-        glZPlot(sX+3,sY,distance,'S');
-        glZPlot(sX+4,sY,distance,'E');
+        // pX=0; pY=0; pZ=24;
+        // glProjectPoint(pX, pY, pZ, 0, &aH, &aV , &distance);
+        // sX = (SCREEN_WIDTH -aH) >> 1;
+        // sY = (SCREEN_HEIGHT - aV) >> 1;
+        // glZPlot(sX  ,sY,distance,'H');
+        // glZPlot(sX+1,sY,distance,'O');
+        // glZPlot(sX+2,sY,distance,'U');
+        // glZPlot(sX+3,sY,distance,'S');
+        // glZPlot(sX+4,sY,distance,'E');
   
         // update display with buffer
         glBuffer2Screen();
@@ -565,25 +575,6 @@ signed char geomHouse []= {
 // 9, 8, '-', 0,
 // }; 
 
-extern unsigned char sl_ori;
-extern signed char          *sl_geom;
-extern signed char sl_X, sl_Y, sl_Z;
-
-void addGeom2(
-    signed char   X,
-    signed char   Y,
-    signed char   Z,
-    unsigned char orientation,
-    signed char          geom[]) {
-
-    sl_X = X;
-    sl_Y = Y;
-    sl_Z = Z;
-    sl_geom = geom;
-    sl_ori = orientation;
-
-    loadShape();
-}
 
 /*     ___                         _               
  *    /   \ _ __   __ _ __      __(_) _ __    __ _ 

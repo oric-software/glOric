@@ -50,6 +50,7 @@ extern unsigned char    glNbVertices;
 extern unsigned char    glNbFaces;
 extern unsigned char    glNbSegments;
 extern unsigned char    glNbParticles;
+extern unsigned char    glNbSprites;
 
  // Geometry buffers
 extern signed char      glVerticesX[];
@@ -68,6 +69,13 @@ extern unsigned char    glFacesPt2[];
 extern unsigned char    glFacesPt3[];
 extern unsigned char    glFacesChar[];
 
+
+ // Geometry buffers
+// extern signed char      glSpriteX[];
+// extern signed char      glSpriteY[];
+// extern signed char      glSpriteZ[];
+
+
 // Render buffer
 extern char             fbuffer[];  // frame buffer SCREEN_WIDTH * SCREEN_HEIGHT
 
@@ -75,10 +83,39 @@ extern void glProjectArrays();
 extern void glDrawFaces();
 extern void glDrawSegments();
 extern void glDrawParticles();
+extern void glAddSprite(signed char X, signed char Y, signed char Z, signed char *sprite);
+extern void glDrawSprites();
 extern void glInitScreenBuffers();
 extern void glBuffer2Screen();
 extern void glZPlot(signed char X, signed char Y, unsigned char dist, char char2disp);
 extern void glProjectPoint(signed char x, signed char y, signed char z, unsigned char options, signed char *ah, signed char *av, unsigned int *dist);
 extern void glProject (char points2D[], char points3D[], unsigned char nbVertices, unsigned char options);
+extern void glLoadShape(
+    signed char   X,
+    signed char   Y,
+    signed char   Z,
+    unsigned char orientation,
+    signed char          geom[]);
+
+
+extern unsigned char sl_ori;
+extern signed char          *sl_geom;
+extern signed char sl_X, sl_Y, sl_Z;
+
+void glLoadShape(
+    signed char   X,
+    signed char   Y,
+    signed char   Z,
+    unsigned char orientation,
+    signed char          geom[]) {
+
+    sl_X = X;
+    sl_Y = Y;
+    sl_Z = Z;
+    sl_geom = geom;
+    sl_ori = orientation;
+
+    loadShape();
+}
 
 #endif

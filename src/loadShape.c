@@ -10,7 +10,7 @@ extern unsigned char sl_ori;
 extern signed char          *sl_geom;
 extern signed char sl_X, sl_Y, sl_Z;
 
-void addGeom2(
+void glLoadShape(
     signed char   X,
     signed char   Y,
     signed char   Z,

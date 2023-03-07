@@ -94,7 +94,7 @@ void change_char(char c, unsigned char patt01, unsigned char patt02, unsigned ch
     *(adr++) = patt08;
 }
 
-void addGeom2(
+void glLoadShape(
     signed char   X,
     signed char   Y,
     signed char   Z,
@@ -174,8 +174,8 @@ void main (){
     glNbParticles = 0;
 
     change_char(36, 0x80, 0x40, 020, 0x10, 0x08, 0x04, 0x02, 0x01);
-    addGeom2(0, 0, 0, 12, 8, 4, 0, geomHouse);
-    // addGeom2(5, 2, 0, 6, 6, 6, 1, geomTriangle);
+    glLoadShape(0, 0, 0, 12, 8, 4, 0, geomHouse);
+    // glLoadShape(5, 2, 0, 6, 6, 6, 1, geomTriangle);
     printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); waitkey();
     // listPoints3D();
 

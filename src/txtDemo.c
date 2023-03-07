@@ -60,22 +60,22 @@ void initBuffers() {
     while ((c = sentence[ii]) != 0) {
         switch (c) {
         case 'M':
-            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterM);
+            glLoadShape(ii*8, 0, 0, 0, (signed char *)geomLetterM);
             break;
         case 'C':
-            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterC);
+            glLoadShape(ii*8, 0, 0, 0, (signed char *)geomLetterC);
             break;
         case 'I':
-            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterI);
+            glLoadShape(ii*8, 0, 0, 0, (signed char *)geomLetterI);
             break;
         case 'R':
-            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterR);
+            glLoadShape(ii*8, 0, 0, 0, (signed char *)geomLetterR);
             break;
         case 'E':
-            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterE);
+            glLoadShape(ii*8, 0, 0, 0, (signed char *)geomLetterE);
             break;
         case 'N':
-            addGeom2(ii*8, 0, 0, 0, (signed char *)geomLetterN);
+            glLoadShape(ii*8, 0, 0, 0, (signed char *)geomLetterN);
             break;
         default:
             break;

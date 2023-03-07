@@ -20,9 +20,9 @@ void profbench() {
     glNbFaces      = 0;
     glNbParticles = 0;
 
-    addGeom2(0, 0, 0,  0, geomHouse);
-    addGeom2(24, 12, 0, 0, geomPine);
-    addGeom2(24, -24, 0, 0, geomTower);
+    glLoadShape(0, 0, 0,  0, geomHouse);
+    glLoadShape(24, 12, 0, 0, geomPine);
+    glLoadShape(24, -24, 0, 0, geomTower);
     
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
 

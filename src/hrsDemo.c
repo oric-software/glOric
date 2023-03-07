@@ -41,10 +41,10 @@ void hiresDemo() {
     nbPts      = 0;
     glNbSegments = 0;
 
-    addGeom2(-4, -4, 2, 4, 4, 4, 0, geomCube);
-    addGeom2(4, 4, 10, 4, 4, 4, 0, geomCube);
-//    addGeom2(-4, -4, 2, 0, geomCube);
-//    addGeom2(4, 4, 10, 0, geomCube);
+    glLoadShape(-4, -4, 2, 4, 4, 4, 0, geomCube);
+    glLoadShape(4, 4, 10, 4, 4, 4, 0, geomCube);
+//    glLoadShape(-4, -4, 2, 0, geomCube);
+//    glLoadShape(4, 4, 10, 0, geomCube);
     // printf ("%d Points, %d Particles, %d Segments, %d Faces\n", glNbVertices, glNbParticles, glNbSegments, glNbFaces); get();
     hiresIntro();
 
