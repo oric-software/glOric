@@ -57,6 +57,16 @@ void initColors();
 // Main game loop
 void gameLoop();
 
+// Copy of glOric frame and z buffer for fast save and restore 
+char _bufferCopy [1080*2];
+
+void glSaveCanvas(void){
+    memcpy(_bufferCopy, fbuffer, 1080*2);
+}
+void glRestoreCanvas(void){
+    memcpy(fbuffer, _bufferCopy, 1080*2);
+}
+
 /*                 _        
  *   /\/\    __ _ (_) _ __  
  *  /    \  / _` || || '_ \ 
