@@ -6003,7 +6003,7 @@ _sl_kk .dsb 1
 _sl_npt .dsb 1
 _sl_nfa .dsb 1
 _sl_nseg .dsb 1
-_sl_npart
+_sl_npart .dsb 1
 ;; unsigned char sl_ii;
 _sl_ii .dsb 1
 ;; unsigned char sl_ori;
