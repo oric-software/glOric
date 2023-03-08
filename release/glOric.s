@@ -6265,6 +6265,9 @@ _glDrawSprites:
 .(
     ;;for (glSpriteIdx = 0; glSpriteIdx < 16; glSpriteIdx++)
     lda #0: sta _glSpriteIdx
+    cmp _glNbSprites
+    bne loopSprites
+	rts
 loopSprites:
 
         ;;PointX = starX[glSpriteIdx];
